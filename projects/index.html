@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects — Amir Khademi</title>
+<meta name="description" content="Amir Khademi's projects: a logged and tuned Audi SQ5, an alert board that holds an AI agent accountable, a wall display, a parts price watcher, a patch cycle, and the token bill for all of it.">
+<link rel="canonical" href="https://ahk02x.dev/projects/">
+<link rel="stylesheet" href="/style.css">
+<style>.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:18px 0}table{width:100%;border-collapse:collapse;font-size:.95em}td{padding:7px 6px;border-top:1px solid var(--line)}.soon{font-size:.8em;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:1px 6px;margin-left:6px}</style>
+</head>
+<body>
+<header>
+<nav><a href="/">Home</a><a href="/projects/">Projects</a><a href="/sq/">SQ5 garage</a><a href="/writing/">Writing</a><a href="/about.html">About</a></nav>
+<h1>Projects</h1>
+<p class="muted">A peek at each, not the whole thing. Infrastructure details stay home.</p>
+</header>
+<main>
+<div class="item"><div class="t"><a href="/sq/">The SQ5 garage</a></div><div class="d">A 2025 Audi SQ5, logged five times a second through a reverse-engineered diagnostic cable and a Raspberry Pi in the footwell. What's on it, what the data taught me, and a <a href="/sq/health.html">weekly health card</a> the car writes about itself.</div></div>
+<div class="item"><div class="t"><a href="/writing/claude-code-on-call.html">Alert board</a></div><div class="d">Five alert channels pointed at me and none at the agent doing the work. A board built by cron, four hook rungs, an acknowledgement ledger with verdict words, and a headless responder for the hours nobody is typing.</div></div>
+<div class="item"><div class="t">PHOSPHOR wall display<span class="soon">write-up coming</span></div><div class="d">A portrait screen on the wall that is the alarm surface for everything else. It latches red until a human clears it, on purpose, and is readable from the hallway.</div></div>
+<div class="item"><div class="t">Memory as infrastructure<span class="soon">write-up coming</span></div><div class="d">The agent's memory is a directory of one-fact files with a linter, an index whose lines are triggers rather than summaries, nightly verification of claims against the machines, and git for history.</div></div>
+<div class="item"><div class="t">fleet-patch<span class="soon">write-up coming</span></div><div class="d">A fortnightly patch cycle for a small Proxmox fleet, graded on evidence of what actually updated rather than on the schedule having run.</div></div>
+<div class="item"><div class="t">partswatch<span class="soon">write-up coming</span></div><div class="d">Watches classifieds every fifteen minutes and fifty-odd store prices hourly for a wanted-parts list, and sends one message when something moves. The part is what matters, not the store.</div></div>
+<div class="item"><div class="t">lanwatch<span class="soon">write-up coming</span></div><div class="d">Internal traffic versus traffic that leaves the house, as two different facts, because a home network full of IoT devices should have to explain itself.</div></div>
+<div class="item"><div class="t"><a href="https://github.com/ahk02x/jackal-protocol-re">jackal-protocol-re</a></div><div class="d">Reverse-engineering a proprietary automotive diagnostic cable: USB capture, frame recovery, checksum validation across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</div></div>
+<div class="item"><div class="t"><a href="https://github.com/ahk02x/Crucix">Crucix</a></div><div class="d">A personal intelligence agent that watches several data sources and pings when something changes. A fork I run and extend.</div></div>
+<div class="item"><div class="t"><a href="https://github.com/ahk02x/meanwhile">meanwhile</a></div><div class="d">Horizontal matrix rain where live news and true facts decode out of the code. Zero dependencies, one file.</div></div>
+
+<div class="card" id="built"><h2 style="margin-top:0">Built with Claude Code</h2>
+<p>Everything on this site, and everything it describes, was built in conversation with Claude Code. The transcripts on this Mac add up to:</p>
+<table><tr><td>Tokens</td><td><strong>1.22 billion</strong></td></tr>
+<tr><td>Sessions</td><td>570</td></tr>
+<tr><td>Assistant replies</td><td>9,501</td></tr>
+<tr><td>Since</td><td>2026-09-09 (older transcripts are gone, so this is a floor)</td></tr>
+<tr><td>Of which cache reads</td><td>1.17 billion</td></tr>
+<tr><td>Fresh input</td><td>49 million</td></tr>
+<tr><td>Output</td><td>5 million</td></tr></table>
+<p class="muted" style="margin-top:12px">By project, for the ones on this page:</p>
+<table><tr><td>SQ5 garage</td><td>261 M</td></tr><tr><td>Inbox hub</td><td>126 M</td></tr><tr><td>Alert board</td><td>117 M</td></tr><tr><td>PHOSPHOR wall</td><td>87 M</td></tr><tr><td>IoT</td><td>43 M</td></tr><tr><td>partswatch</td><td>18 M</td></tr><tr><td>Private projects</td><td>571 M</td></tr></table>
+<p class="muted">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>, which dedupes streamed messages and splits a session's tokens evenly across the project folders it touched.</p></div>
+</main>
+<footer>Amir Khademi · Toronto, Canada</footer>
+</body>
+</html>
