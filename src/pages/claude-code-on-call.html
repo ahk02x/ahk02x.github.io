@@ -15,7 +15,7 @@ nav: /writing/
 <p>The board timestamps itself. If the timestamp is more than ten minutes old, the collector is dead and the list is declared not current, in the file's own header. Unknown never means healthy.</p>
 
 <h2>Four rungs</h2>
-<figure><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
 <g class="box"><rect x="10" y="12" width="160" height="56" rx="6"/><rect x="190" y="12" width="160" height="56" rx="6"/><rect x="370" y="12" width="160" height="56" rx="6"/><rect x="550" y="12" width="160" height="56" rx="6"/></g>
 <g class="lbl" text-anchor="middle"><text x="90" y="36">1 · Brief</text><text x="270" y="36">2 · Nag</text><text x="450" y="36">3 · Gate</text><text x="630" y="36">4 · Responder</text></g>
 <g text-anchor="middle"><text x="90" y="56">SessionStart hook</text><text x="270" y="56">UserPromptSubmit hook</text><text x="450" y="56">Stop hook</text><text x="630" y="56">launchd · claude -p</text></g>
@@ -24,7 +24,7 @@ nav: /writing/
 <rect x="10" y="160" width="700" height="54" rx="6" class="box"/>
 <text x="360" y="183" text-anchor="middle" class="lbl">Acknowledgement ledger</text>
 <text x="360" y="203" text-anchor="middle">seen · working (silent)   ·   fixed · blocked · wontfix (page the human, action first)</text>
-</svg><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
+</svg><ol class="mobile-flow"><li><div><strong>Brief · SessionStart</strong><small>The board is in context before the first message.</small></div></li><li><div><strong>Nag · UserPromptSubmit</strong><small>Untouched alerts ride along with every prompt.</small></div></li><li><div><strong>Gate · Stop</strong><small>Each alert needs an acknowledgement ledger line.</small></div></li><li><div><strong>Responder · launchd</strong><small>When no session exists: allowlist, lock, cooldown.</small></div></li></ol><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
 <ul>
 <li><strong>Brief.</strong> A <code>SessionStart</code> hook prints the board into the session's context before the first message. The agent begins knowing what's open.</li>
 <li><strong>Nag.</strong> A <code>UserPromptSubmit</code> hook appends anything untouched to every prompt. You cannot ask the agent about your car without it also being told that the mortgage alert is three days old.</li>
@@ -51,3 +51,4 @@ nav: /writing/
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
+
