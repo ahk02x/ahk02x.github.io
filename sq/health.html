@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SQ5 weekly health — Amir Khademi</title>
+<meta name="description" content="A one-page, plain-language weekly health card for Amir Khademi's Audi SQ5, generated from the car's own data logger.">
+<link rel="canonical" href="https://ahk02x.dev/sq/health.html"><link rel="stylesheet" href="/style.css">
+<style>.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:18px 0}.status{font-size:1.6rem;font-weight:700;color:#c62828}
+table{width:100%;border-collapse:collapse;font-size:.95em}td{padding:8px 6px;border-top:1px solid var(--line);vertical-align:top}td.v{color:var(--muted)}
+.sev{font-size:.75em;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;background:#777;margin-right:6px}.sev.flag{background:#c62828}.sev.watch{background:#b26a00}li em{color:var(--muted)}</style></head>
+<body><header><nav><a href="/">Home</a><a href="/projects/">Projects</a><a href="/sq/">SQ5 garage</a><a href="/writing/">Writing</a><a href="/about.html">About</a></nav>
+<h1>SQ5 weekly health</h1><p class="muted">Week of Oct 20 to Oct 27 · generated 2026-10-27 by the car's own logger</p></header>
+<main>
+<div class="card"><div class="status">Needs attention</div>
+<ul><li><span class="sev flag">FLAG</span> weakest start dipped to 8.43 V — that is a weak battery (healthy is above 10) <em>Do: get the battery load-tested</em></li><li><span class="sev watch">WATCH</span> the Pi rebooted 149 times across 3 overnight park(s) — that is what drains the battery <em>Do: unplug the OBD dongle when the car sits overnight</em></li><li><span class="sev watch">WATCH</span> 38% of your boost was on cold oil <em>Do: oil takes ~30 min to warm up — go easy until then</em></li><li><span class="sev watch">WATCH</span> idle is rougher than normal (fits the misfires)</li></ul></div>
+<h2>The week in plain words</h2>
+<table><tr><td>Hottest the oil got</td><td>104 °C</td><td class="v">fine (worry starts at 130)</td></tr><tr><td>Hottest the transmission fluid got</td><td>93 °C</td><td class="v">fine (worry starts at 110)</td></tr><tr><td>Misfires per 10,000 firings (all six cylinders)</td><td>9.6 (last week 8.5)</td><td class="v">about the same as last week</td></tr><tr><td>Cylinder standing out</td><td>cylinder 3 at 1.7× its siblings</td><td class="v">the long-running one; plugs helped, cause still open</td></tr><tr><td>Boost used before the oil was warm</td><td>38% of boost time</td><td class="v">go easier until the oil is warm</td></tr><tr><td>Deepest knock correction</td><td>-3.8°</td><td class="v">fine (worry at −6 and beyond)</td></tr><tr><td>Driving this week</td><td>14 trips, 112 km, 3.3 engine hours</td><td class="v">7 cold starts, 7 short trips</td></tr></table>
+<p class="muted">How this is made: a Raspberry Pi in the footwell logs 53 engine-computer channels five times a second on every drive, pushes the data home, and a Sunday job compares the week to the week before and to a four-week baseline. The verdict rules are written down; nothing here is a guess. This page is a static snapshot, not a live feed, on purpose. More in <a href="/sq/">the garage</a>.</p>
+</main><footer>Amir Khademi · Toronto, Canada</footer></body></html>

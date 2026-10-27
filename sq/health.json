@@ -1,0 +1,31 @@
+{
+ "status": "FLAG",
+ "window": [
+  "Oct 20",
+  "Oct 27"
+ ],
+ "generated": "2026-10-27",
+ "findings": [
+  {
+   "sev": "FLAG",
+   "text": "weakest start dipped to 8.43 V \u2014 that is a weak battery (healthy is above 10)",
+   "action": "get the battery load-tested"
+  },
+  {
+   "sev": "WATCH",
+   "text": "the Pi rebooted 149 times across 3 overnight park(s) \u2014 that is what drains the battery",
+   "action": "unplug the OBD dongle when the car sits overnight"
+  },
+  {
+   "sev": "WATCH",
+   "text": "38% of your boost was on cold oil",
+   "action": "oil takes ~30 min to warm up \u2014 go easy until then"
+  },
+  {
+   "sev": "WATCH",
+   "text": "idle is rougher than normal (fits the misfires)",
+   "action": null
+  }
+ ],
+ "rows": 7
+}
