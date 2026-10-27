@@ -76,6 +76,7 @@ for g, svg in GLYPHS.items(): subs['{{glyph:' + g + '}}'] = svg
 pages = []
 for src in sorted(glob.glob('src/pages/*.html')):
     raw = open(src).read(); fm, body = raw.split('\n---\n', 1)
+    body = body.strip()
     meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M))
     for a, b in subs.items(): body = body.replace(a, b)
     if 'id="main"' not in body:

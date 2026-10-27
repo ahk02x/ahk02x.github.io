@@ -105,6 +105,13 @@ class SiteChecks(unittest.TestCase):
             self.assertNotIn('PRIVATE_SENTINEL', target.read_text())
             self.assertEqual(clean['first'],'2026-07'); self.assertEqual(clean['last'],'2026-10')
             self.assertEqual(clean['total_tokens'],totals); self.assertEqual(clean['by_kind'],kinds)
+    def test_source_trailing_newlines_do_not_change_generated_pages(self):
+        self.run_script('build.py')
+        before = (self.site/'about.html').read_bytes()
+        source = self.site/'src/pages/about.html'
+        source.write_text(source.read_text().rstrip() + '\n\n\n')
+        self.run_script('build.py')
+        self.assertEqual(before, (self.site/'about.html').read_bytes())
     def test_public_build_links_landmarks_and_packaging(self):
         self.run_script('build.py'); public=self.site/'_site'
         pages={}
