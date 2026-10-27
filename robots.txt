@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ahk02x.dev/sitemap.xml
