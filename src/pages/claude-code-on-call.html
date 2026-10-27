@@ -1,0 +1,53 @@
+title: I gave Claude Code a pager
+description: How Amir Khademi made an AI coding agent accountable for a home fleet's alerts: a board built by cron, four hook rungs, an acknowledgement ledger with verdict words, and a headless responder.
+path: /writing/claude-code-on-call.html
+nav: /writing/
+---
+<main class="wrap narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>I gave Claude Code a pager</h1>
+<p class="lede">I do most of the operations work on my home fleet with Claude Code. For months it had a blind spot I didn't notice: five alerting channels pointed at me, and zero pointed at the agent doing the work.</p></section>
+
+<p>Telegram, a toast on the living-room TV, a wall display, the RGB strip on the rack, a Stream Deck. All of them lit up when something broke. The agent saw none of it. Every session started blind, and a session only exists while someone is typing. One alert sat on the wall for fifty hours across three separate sessions, each of which was briefed, each of which did nothing, because nothing insisted.</p>
+<blockquote>The fix wasn't making the agent smarter. It was making it unable to pretend it hadn't seen the alerts.</blockquote>
+
+<h2>One board, built by cron</h2>
+<p>Every five minutes a cron job assembles a single Markdown file from every alert source on the network: a status JSON from the monitoring box, the alert file on the home server, a health file one container writes, the local Mac watchdog log, a case-tracker's state, and the send spools of two Telegram relays. Each alert comes out as one line with the condition and the action, because a condition alone is half an alert. "Govee light offline" is a fact. "Govee light offline. DO: unplug it at the wall, wait 10 s, plug it back in" is something a person or an agent can act on at three in the morning.</p>
+<p>The board timestamps itself. If the timestamp is more than ten minutes old, the collector is dead and the list is declared not current, in the file's own header. Unknown never means healthy.</p>
+
+<h2>Four rungs</h2>
+<figure><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
+<g class="box"><rect x="10" y="12" width="160" height="56" rx="6"/><rect x="190" y="12" width="160" height="56" rx="6"/><rect x="370" y="12" width="160" height="56" rx="6"/><rect x="550" y="12" width="160" height="56" rx="6"/></g>
+<g class="lbl" text-anchor="middle"><text x="90" y="36">1 · Brief</text><text x="270" y="36">2 · Nag</text><text x="450" y="36">3 · Gate</text><text x="630" y="36">4 · Responder</text></g>
+<g text-anchor="middle"><text x="90" y="56">SessionStart hook</text><text x="270" y="56">UserPromptSubmit hook</text><text x="450" y="56">Stop hook</text><text x="630" y="56">launchd · claude -p</text></g>
+<g class="flow"><path d="M90,68 V96"/><path d="M270,68 V96"/><path d="M450,68 V96"/><path d="M630,68 V96"/></g>
+<g text-anchor="middle"><text x="90" y="116">the board is in context</text><text x="90" y="132">before the first message</text><text x="270" y="116">anything untouched rides</text><text x="270" y="132">along with every prompt</text><text x="450" y="116">the turn cannot end until</text><text x="450" y="132">each alert has a ledger line</text><text x="630" y="116">when no session exists:</text><text x="630" y="132">allowlist, lock, cooldown</text></g>
+<rect x="10" y="160" width="700" height="54" rx="6" class="box"/>
+<text x="360" y="183" text-anchor="middle" class="lbl">Acknowledgement ledger</text>
+<text x="360" y="203" text-anchor="middle">seen · working (silent)   ·   fixed · blocked · wontfix (page the human, action first)</text>
+</svg><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
+<ul>
+<li><strong>Brief.</strong> A <code>SessionStart</code> hook prints the board into the session's context before the first message. The agent begins knowing what's open.</li>
+<li><strong>Nag.</strong> A <code>UserPromptSubmit</code> hook appends anything untouched to every prompt. You cannot ask the agent about your car without it also being told that the mortgage alert is three days old.</li>
+<li><strong>Gate.</strong> A <code>Stop</code> hook refuses to let the turn end, once per alert per session, until each untouched alert has a line in the acknowledgement ledger. The agent has to write down what it did or why it didn't.</li>
+<li><strong>Responder.</strong> For the hours when no session exists at all, launchd runs a headless <code>claude -p</code> against the board on a cadence, with an allowlist of commands, a lock file, a six-hour cooldown per alert and a cap of six runs a day. It records its own verdicts the same way an interactive session does.</li>
+</ul>
+
+<h2>The ledger</h2>
+<p>The ledger has five verdict words: <code>seen</code>, <code>working</code>, <code>fixed</code>, <code>blocked</code>, <code>wontfix</code>. The first two are silent. They are the agent talking to the next agent. The last three page my phone, and the convention is that the note's first line is what I should do, in plain words, with the evidence after it. Re-recording an alert that is still blocked is a <code>seen</code>, not a second <code>blocked</code>, because paging a person twice for the same unchanged thing teaches them to ignore the pager.</p>
+<p>One rule turned out to matter more than the others: never acknowledge <code>fixed</code> on an open alert. The board checks every verdict against the live source. If the ledger says fixed and the source still says firing, the board prints <code>CONTRADICTED</code> next to it in the next brief, and that is the first thing the next session reads. The ledger exists to catch exactly that lie, including when the agent tells it.</p>
+
+<h2>The board never acknowledges</h2>
+<p>This was the design decision I argued with myself about longest. It would be easy for the collector to auto-clear alerts that stop firing. It doesn't. Acknowledging is a decision, and the board shows state and prints the exact command for the decision instead of making it. A latched alarm on the wall stays lit until a human runs the clear command, even after the condition is gone. The nag, gate and responder rungs exist because for weeks the session skipped that decision every time, and a board that quietly tidied up would have hidden that.</p>
+
+<h2>Memory as infrastructure</h2>
+<p>The agent's persistent memory is a directory of small Markdown files, one fact per file, each with frontmatter naming what kind of fact it is. An index file is loaded into every session, and its lines are triggers, not summaries: a short hook that tells the agent which file to open before acting, not a paraphrase of the contents. A linter enforces that every memory is indexed and every index line points at a real file. Claims marked <code>verify:</code> are checked nightly against the machines they describe. The directory is a git repository, so a memory holds current truth and git keeps the history. Rewrite, don't append.</p>
+<p>Several of those memories are rails the agent wrote after getting something wrong: diagnose from numbers before asserting; test the refusal path and the second button press, because that is where the bugs live; read the real field name and the real route before building against it. They get loaded every session. They are the closest thing I have to an on-call runbook for the on-call engineer that isn't a person.</p>
+
+<h2>Alerts you can see across a room</h2>
+<p>The human side is deliberately visual. A portrait display on the wall is the alarm surface: it latches, it is readable from the hallway, and it stays red until cleared. Lights change colour. Stream Deck keys change icon. The TV gets a toast. Each channel is gated separately, so "it's on the wall" and "my phone buzzed" are different statements and the ledger records which one happened.</p>
+
+<h2>What this isn't</h2>
+<p>It isn't a product. It is a single-operator fleet of a few Proxmox containers, a Raspberry Pi and a Mac, held together with Python, cron, launchd and Claude Code hooks. The responder has dispatched a handful of runs and most failed for boring environmental reasons before it could do anything useful. The interesting part was never the agent fixing things. It was the day the agent stopped being able to say it hadn't noticed.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>

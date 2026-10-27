@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Count Claude Code tokens across every transcript on this Mac -> data/tokens.json.
+"""Count Claude Code tokens across every transcript on this Mac (the hourly archive + the live store) -> data/tokens.json.
 Dedupes by assistant message id (streaming writes one line per content block with the same usage).
 Attributes a session's tokens to the ~/Projects/<name> dirs it touched, split evenly."""
 import json, glob, os, re, collections, sys
-root = os.path.expanduser('~/.claude/projects')
-files = [f for f in glob.glob(root + '/**/*.jsonl', recursive=True) if '/tool-results/' not in f]
+roots = [os.path.expanduser('~/claude-archive/raw'), os.path.expanduser('~/.claude/projects')]  # archive first (July 2026 on), then live
+files = [f for r in roots for f in glob.glob(r + '/**/*.jsonl', recursive=True) if '/tool-results/' not in f]
 tot = collections.Counter(); seen = set(); msgs = 0; first = last = None
 per_proj = collections.Counter(); sess_count = 0
 KEYS = ('input_tokens', 'output_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens')
