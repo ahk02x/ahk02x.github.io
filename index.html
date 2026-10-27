@@ -3,45 +3,42 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Amir Khademi</title>
-<meta name="description" content="Amir Khademi is a Site Reliability Engineer in Toronto who logs his car, holds his AI agent accountable, and writes it all up here.">
+<title>Amir Khademi — systems, signals &amp; side quests</title>
+<meta name="description" content="The personal engineering field notes of Amir Khademi. Car telemetry, home infrastructure, and tools that have to earn your trust.">
 <link rel="canonical" href="https://ahk02x.dev/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="Amir Khademi — systems, signals &amp; side quests">
+<meta property="og:description" content="The personal engineering field notes of Amir Khademi. Car telemetry, home infrastructure, and tools that have to earn your trust.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/">
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / Amir Khademi</span></span></a><nav class="main" aria-label="Site"><a href="/" aria-current="page">Home</a><a href="/projects/">Projects</a><a href="/sq/">SQ5 garage</a><a href="/writing/">Writing</a><a href="/about.html">About</a></nav></div></header>
-<main class="wrap">
-<section class="hero">
-<div class="eyebrow">ahk02x · Site Reliability Engineer · Toronto</div>
-<h1>Amir Khademi</h1>
-<p class="lede">I keep systems honest for a living. At home I run a small fleet of my own: monitoring, a wall display, a car that reports on itself, and the agent tooling that holds all of it accountable. This is where I write it up.</p>
-<div class="readouts">
-<a class="readout crit" href="/sq/health.html"><div class="k">SQ5 · this week</div><div class="v">Needs attention</div><div class="s">Week of Oct 20 to Oct 27 · from the car's own logger</div></a>
-<a class="readout" href="/projects/#built"><div class="k">Claude Code · tokens</div><div class="v">7.74<small>billion</small></div><div class="s">2,061 sessions since 2026-07, counted from transcripts</div></a>
-<a class="readout" href="/sq/"><div class="k">SQ5 · logged</div><div class="v">243<small>drives</small></div><div class="s">53 engine channels, five times a second</div></a>
-<a class="readout" href="/writing/claude-code-on-call.html"><div class="k">Alert board</div><div class="v">4<small>rungs</small></div><div class="s">brief, nag, gate, responder</div></a>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/" aria-current="page"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="home">
+<section class="hero-home wrap">
+<div class="hero-top"><span class="eyebrow">The personal field notes of Amir Khademi</span><span class="edition">Independent projects / Toronto</span></div>
+<div class="hero-composition">
+<div class="hero-title"><h1>Systems.<br>Signals.<br><span>Side quests.</span></h1><p class="hero-index"><span class="crosshair" aria-hidden="true">+</span> Infrastructure engineer. Relentless tinkerer.</p></div>
+<div class="hero-side"><div class="signal-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><span class="art-axis axis-x"></span><span class="art-axis axis-y"></span><div class="art-mark"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg></div><span class="art-label">OBSERVE / UNDERSTAND / BUILD</span><span class="art-corner">AK—01</span></div><p>I keep systems honest for a living. At home I run a small fleet of my own: monitoring, a wall display, a car that reports on itself, and the agent tooling that holds all of it accountable.</p><a class="text-link" href="/about.html">Meet the person behind it <span aria-hidden="true">↗</span></a></div>
 </div>
+<div class="hero-bottom"><span>Built at home. Learned the hard way.</span><a href="#selected">Explore the work <span aria-hidden="true">↓</span></a></div>
 </section>
-
-<h2>Projects</h2>
-<div class="grid">
-<a class="card" href="/sq/"><div class="head"><picture><source media="(prefers-color-scheme: light)" srcset="/assets/sq-mark-light.svg"><img class="glyph sq" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"></picture><h3>The SQ5 garage</h3></div><p>A 2025 Audi SQ5, logged through a reverse-engineered diagnostic cable and a Raspberry Pi in the footwell. What's on it, what the data taught me, and a weekly health card.</p><div class="foot"><span class="chip live">live</span><span class="more">Open →</span></div></a>
-<a class="card" href="/writing/claude-code-on-call.html"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M24,36 H104"/><path d="M24,64 H104"/><path d="M24,92 H72"/><path d="M84,92 l8,8 l16,-18"/></g></svg><h3>Alert board</h3></div><p>Five alert channels pointed at me and none at the agent doing the work. A board built by cron, four hook rungs, and a ledger the agent has to write in before it can stop.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
-<a class="card" href="/projects/"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"><path d="M66,20 V108"/><path d="M22,108 L66,20"/><path d="M33,86 H66"/><path d="M66,68 L106,28"/><path d="M66,68 L106,108"/></g></svg><h3>All projects</h3></div><p>The wall display, the memory system, the patch cycle, the parts watcher, the network view, and the token bill for everything.</p><div class="foot"><span class="chip">index</span><span class="more">Browse →</span></div></a>
-</div>
-
-<h2>Writing</h2>
-<div class="items">
-<div class="item"><div class="t"><a href="/writing/claude-code-on-call.html">I gave Claude Code a pager</a></div><time datetime="2026-10-27">Oct 2026</time><p class="d">Making an AI coding agent unable to pretend it hadn't seen the alerts. Hooks, an acknowledgement ledger with verdict words, and a headless responder for the hours nobody is typing.</p></div>
-</div>
-
-<h2>Contact</h2>
-<p><a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a> · <a href="https://github.com/ahk02x">github.com/ahk02x</a>. Text beats calls.</p>
+<section id="selected" class="selected wrap">
+<div class="section-heading"><span class="eyebrow">01 / Selected work</span><h2>Out of curiosity.<br>Into the real world.</h2></div>
+<article class="feature feature-sq"><a class="sq-visual" href="/sq/" aria-label="Explore the SQ5 garage"><div class="visual-top"><span>VEHICLE TELEMETRY</span><span>2025 / SQ5</span></div><div class="sq-insignia"><span class="sq-brand"><img class="glyph sq sq-dark" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"><img class="glyph sq sq-light" src="/assets/sq-mark-light.svg" alt="" width="34" height="34"></span><span class="sq-lettering">SQ<span>5</span></span></div><div class="telemetry-track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="visual-specs"><div><b>53</b><span>ECU channels</span></div><div><b>5 <small>Hz</small></b><span>Logging rate</span></div><div><b>243</b><span>Recorded drives</span></div></div><div class="visual-bottom"><span>ECU → CABLE → PI → FIELD NOTES</span><span aria-hidden="true">↗</span></div></a><div class="feature-copy"><span class="eyebrow">01—A / Automotive</span><h3>The car has<br>a lot to say.</h3><p>A 2025 Audi SQ5, logged through a reverse-engineered diagnostic cable and a Raspberry Pi in the footwell. What's on it, what the data taught me, and a weekly health card.</p><a class="button" href="/sq/">Inside the SQ5 garage <span aria-hidden="true">↗</span></a><a class="health-strip crit" href="/sq/health.html" data-health-date="2026-10-27"><span class="status-dot" aria-hidden="true"></span><span><strong data-health-label>Needs attention</strong><small>Snapshot · Oct 20 to Oct 27</small></span><span aria-hidden="true">→</span></a></div></article>
+<article class="feature feature-alert"><div class="feature-copy"><span class="eyebrow">01—B / Agent infrastructure</span><h3>I gave Claude Code<br>a pager.</h3><p>Five alert channels pointed at me and none at the agent doing the work. A board built by cron, four hook rungs, and a ledger the agent has to write in before it can stop.</p><a class="text-link" href="/writing/claude-code-on-call.html">Read the field notes <span aria-hidden="true">↗</span></a></div><a class="alert-visual" href="/writing/claude-code-on-call.html" aria-label="Read I gave Claude Code a pager"><div class="visual-top"><span>THE ACCOUNTABILITY LOOP</span><span>4 RUNGS</span></div><ol class="rung-list"><li><span>01</span><b>Brief</b><small>Begin with the evidence</small></li><li><span>02</span><b>Nag</b><small>Keep open alerts in view</small></li><li><span>03</span><b>Gate</b><small>Account for every alert</small></li><li><span>04</span><b>Respond</b><small>When nobody is typing</small></li></ol><div class="visual-bottom"><span>UNKNOWN NEVER MEANS HEALTHY</span><span aria-hidden="true">↗</span></div></a></article>
+<div class="project-invitation"><p>The wall display. The memory system.<br>The next thing that needed fixing.</p><a class="button button-outline" href="/projects/">All projects <span aria-hidden="true">↗</span></a></div>
+</section>
+<section class="notes-band"><div class="wrap notes-layout"><div><span class="eyebrow">02 / The notebook</span><h2>Show the work.<br>Include the mistakes.</h2></div><div><p>Hooks, an acknowledgement ledger with verdict words, and a headless responder for the hours nobody is typing.</p><a class="article-link" href="/writing/claude-code-on-call.html"><span>October 2026 · Field note 001</span><strong>I gave Claude Code a pager <span aria-hidden="true">↗</span></strong></a></div></div></section>
+<section class="wrap usage-note"><span class="eyebrow">A note on the tools</span><p>Claude Code, in the loop.<br><a href="/projects/#built">7.74 billion counted tokens across 2,061 sessions <span aria-hidden="true">↗</span></a></p><span class="muted">Includes cached input.<br>Methodology, not a bill.</span></section>
 </main>
-
-<footer><div class="wrap"><span class="word">ahk02x</span><span>Amir Khademi · Toronto, Canada</span><span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a></span><span><a href="https://github.com/ahk02x">GitHub</a></span></div></footer>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
 </body>
 </html>

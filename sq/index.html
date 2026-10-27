@@ -8,16 +8,24 @@
 <link rel="canonical" href="https://ahk02x.dev/sq/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="The SQ5 garage">
+<meta property="og:description" content="Amir Khademi&#x27;s 2025 Audi SQ5: what&#x27;s on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/sq/">
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / Amir Khademi</span></span></a><nav class="main" aria-label="Site"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/sq/" aria-current="page">SQ5 garage</a><a href="/writing/">Writing</a><a href="/about.html">About</a></nav></div></header>
-<main class="wrap">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/" aria-current="page"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="wrap inner-page">
 <section class="hero"><div class="eyebrow">SQ5 · 2025 · 3.0 litre turbo V6</div><h1>The SQ5 garage</h1>
 <p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby.</p>
 <div class="readouts">
-<a class="readout crit" href="/sq/health.html"><div class="k">This week</div><div class="v">Needs attention</div><div class="s">Week of Oct 20 to Oct 27 · <u>open the health card</u></div></a>
+<a class="readout crit" href="/sq/health.html" data-health-date="2026-10-27"><div class="k">This week</div><div class="v" data-health-label>Needs attention</div><div class="s">Week of Oct 20 to Oct 27 · <u>open the health card</u></div></a>
 <div class="readout"><div class="k">Logged</div><div class="v">243<small>drives</small></div><div class="s">just under 600,000 samples, integrity clean</div></div>
 <div class="readout"><div class="k">Channels</div><div class="v">53<small>× 5 Hz</small></div><div class="s">engine-computer RAM, not generic OBD</div></div>
 <div class="readout"><div class="k">Plugs, September</div><div class="v">−37%<small>misfires</small></div><div class="s">the change that mattered most</div></div>
@@ -35,14 +43,14 @@
 </dl>
 
 <h2>How the data gets from the car to this page</h2>
-<figure><svg class="diagram" viewBox="0 0 900 150" role="img" aria-label="Data path: car ECU to diagnostic cable to Raspberry Pi to home server to Sunday job to health card">
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 900 150" role="img" aria-label="Data path: car ECU to diagnostic cable to Raspberry Pi to home server to Sunday job to health card">
 <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
 <g class="box"><rect x="10" y="40" width="130" height="64" rx="6"/><rect x="190" y="40" width="130" height="64" rx="6"/><rect x="370" y="40" width="130" height="64" rx="6"/><rect x="550" y="40" width="130" height="64" rx="6"/><rect x="730" y="40" width="160" height="64" rx="6"/></g>
 <g class="flow" marker-end="url(#ar)"><path d="M140,72 H188"/><path d="M320,72 H368"/><path d="M500,72 H548"/><path d="M680,72 H728"/></g>
 <g class="lbl" text-anchor="middle"><text x="75" y="66">Engine computer</text><text x="255" y="66">Diagnostic cable</text><text x="435" y="66">Raspberry Pi</text><text x="615" y="66">Home server</text><text x="810" y="66">Sunday job</text></g>
 <g text-anchor="middle"><text x="75" y="88">53 RAM variables</text><text x="255" y="88">protocol reverse-engineered</text><text x="435" y="88">logs every drive, 5 Hz</text><text x="615" y="88">master copy, one normalizer</text><text x="810" y="88">week vs week vs baseline</text></g>
 <g text-anchor="middle"><text x="435" y="130">away from home: keeps data, retries every 10 min</text><text x="810" y="130">→ one verdict, in words</text></g>
-</svg><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
+</svg><ol class="mobile-flow"><li><div><strong>Engine computer</strong><small>53 RAM variables</small></div></li><li><div><strong>Diagnostic cable</strong><small>Reverse-engineered serial protocol</small></div></li><li><div><strong>Raspberry Pi</strong><small>Logs every drive, five times a second</small></div></li><li><div><strong>Home server</strong><small>Master copy, one normalizer</small></div></li><li><div><strong>Sunday job</strong><small>Week vs week vs baseline → health card</small></div></li></ol><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
 <p>The car came with a diagnostic cable whose Windows app I didn't want to depend on, so I reverse-engineered the cable. The protocol is request and response over a serial link: a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of 53 engine-computer variables. These are not generic OBD values. They are the ECU's own RAM: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda, voltage at the module. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/jackal-protocol-re">jackal-protocol-re</a>.</p>
 <p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Away from home it keeps the data and tries every ten minutes; back on the home network it pushes everything to a server, which is the master copy. Every row goes through one normalizer so nothing reaches the database by a side door.</p>
 <p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material: 1.2 mm of clearance for a board edge that overhangs 1.2 mm is zero, and the hold-down legs snapped. The second is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
@@ -73,7 +81,6 @@
 <h2>Next</h2>
 <p>A measured low-voltage cutoff for the Pi. Proving which counter index is which physical cylinder before anyone touches a coil. Then the coil swap as a designed experiment with a before and after, not a hunch.</p>
 </main>
-
-<footer><div class="wrap"><span class="word">ahk02x</span><span>Amir Khademi · Toronto, Canada</span><span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a></span><span><a href="https://github.com/ahk02x">GitHub</a></span></div></footer>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
 </body>
 </html>
