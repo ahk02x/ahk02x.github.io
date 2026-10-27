@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+<rect width="256" height="256" rx="56" fill="#0C1014"/>
+<path d="M 176.75 206.02 A 92 92 0 1 1 206.02 176.75" fill="none" stroke="#97A2AE" stroke-width="12" stroke-linecap="round"/>
+<line x1="71.43" y1="184.57" x2="82.75" y2="173.25" stroke="#97A2AE" stroke-width="10" stroke-linecap="round"/>
+<line x1="48" y1="128" x2="64" y2="128" stroke="#97A2AE" stroke-width="10" stroke-linecap="round"/>
+<line x1="71.43" y1="71.43" x2="82.75" y2="82.75" stroke="#97A2AE" stroke-width="10" stroke-linecap="round"/>
+<line x1="128" y1="48" x2="128" y2="64" stroke="#97A2AE" stroke-width="10" stroke-linecap="round"/>
+<line x1="184.57" y1="71.43" x2="173.25" y2="82.75" stroke="#97A2AE" stroke-width="10" stroke-linecap="round"/>
+<line x1="208" y1="128" x2="192" y2="128" stroke="#E8433C" stroke-width="10" stroke-linecap="round"/>
+<path d="M 165.83 175.02 L 211.09 216.03 A 3.5 3.5 0 0 0 216.03 211.09 L 175.02 165.83 A 6.5 6.5 0 0 0 165.83 175.02 Z" fill="#E8433C"/>
+<path d="M 154 96 C 146 87 112 84 103 95 C 94 106 100 118 114 124 C 130 131 150 134 154 148 C 157 163 143 172 126 171 C 113 170 104 164 101 156" transform="translate(-3 -3)" fill="none" stroke="#E8433C" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

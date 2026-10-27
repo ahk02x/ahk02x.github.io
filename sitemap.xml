@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://ahk02x.dev/</loc><lastmod>2026-10-27</lastmod></url>
 <url><loc>https://ahk02x.dev/about.html</loc><lastmod>2026-10-27</lastmod></url>
-<url><loc>https://ahk02x.dev/writing/</loc><lastmod>2026-10-27</lastmod></url>
 <url><loc>https://ahk02x.dev/writing/claude-code-on-call.html</loc><lastmod>2026-10-27</lastmod></url>
+<url><loc>https://ahk02x.dev/</loc><lastmod>2026-10-27</lastmod></url>
 <url><loc>https://ahk02x.dev/projects/</loc><lastmod>2026-10-27</lastmod></url>
-<url><loc>https://ahk02x.dev/sq/</loc><lastmod>2026-10-27</lastmod></url>
 <url><loc>https://ahk02x.dev/sq/health.html</loc><lastmod>2026-10-27</lastmod></url>
+<url><loc>https://ahk02x.dev/sq/</loc><lastmod>2026-10-27</lastmod></url>
+<url><loc>https://ahk02x.dev/writing/</loc><lastmod>2026-10-27</lastmod></url>
 </urlset>

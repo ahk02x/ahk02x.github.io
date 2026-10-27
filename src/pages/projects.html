@@ -1,0 +1,20 @@
+title: Projects
+description: Amir Khademi's projects: a logged and tuned Audi SQ5, an alert board that holds an AI agent accountable, a wall display, a parts price watcher, a patch cycle, and the token bill for all of it.
+path: /projects/
+---
+<main class="wrap">
+<section class="hero"><div class="eyebrow">Projects</div><h1>A peek at each</h1><p class="lede">Not the whole thing. What each one is for, what it taught me, and where it stands. Infrastructure details stay home.</p></section>
+<div class="grid" style="margin-top:28px">
+<a class="card" href="/sq/"><div class="head">{{glyph:sq}}<h3>The SQ5 garage</h3></div><p>A 2025 Audi SQ5, logged five times a second through a reverse-engineered cable and a Pi in the footwell. Build log, lessons, and a <strong>weekly health card</strong> the car writes about itself.</p><div class="foot"><span class="chip live">live</span><span class="more">Open →</span></div></a>
+<a class="card" href="/writing/claude-code-on-call.html"><div class="head">{{glyph:ledger}}<h3>Alert board</h3></div><p>A board built by cron, four hook rungs, an acknowledgement ledger with five verdict words, and a headless responder for the hours nobody is typing.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
+<div class="card"><div class="head">{{glyph:wall}}<h3>PHOSPHOR wall</h3></div><p>A portrait screen on the wall that is the alarm surface for everything else. It latches red until a human clears it, on purpose, and reads from the hallway.</p><div class="foot"><span class="chip soon">write-up coming</span></div></div>
+<div class="card"><div class="head">{{glyph:node}}<h3>Memory as infrastructure</h3></div><p>The agent's memory is a directory of one-fact files with a linter, an index whose lines are triggers rather than summaries, nightly verification against the machines, and git for history.</p><div class="foot"><span class="chip soon">write-up coming</span></div></div>
+<div class="card"><div class="head">{{glyph:patch}}<h3>fleet-patch</h3></div><p>A fortnightly patch cycle for a small Proxmox fleet, graded on evidence of what actually updated rather than on the schedule having run.</p><div class="foot"><span class="chip soon">write-up coming</span></div></div>
+<div class="card"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for a wanted-parts list, and sends one message when something moves. The part matters, not the store.</p><div class="foot"><span class="chip soon">write-up coming</span></div></div>
+<div class="card"><div class="head">{{glyph:tap}}<h3>lanwatch</h3></div><p>Internal traffic versus traffic that leaves the house, as two different facts, because a home network full of IoT devices should have to explain itself.</p><div class="foot"><span class="chip soon">write-up coming</span></div></div>
+<a class="card" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head">{{glyph:cross}}<h3>jackal-protocol-re</h3></div><p>Reverse-engineering a proprietary automotive diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
+<a class="card" href="https://github.com/ahk02x/Crucix"><div class="head">{{glyph:node}}<h3>Crucix</h3></div><p>A personal intelligence agent that watches several data sources and pings when something changes. A fork I run and extend.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
+<a class="card" href="https://github.com/ahk02x/meanwhile"><div class="head">{{glyph:cross}}<h3>meanwhile</h3></div><p>Horizontal matrix rain where live news and true facts decode out of the code. Zero dependencies, one file.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
+</div>
+{{token_card}}
+</main>
