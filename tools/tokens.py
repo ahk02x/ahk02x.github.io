@@ -3,6 +3,7 @@
 Dedupes by assistant message id (streaming writes one line per content block with the same usage).
 Attributes a session's tokens to the ~/Projects/<name> dirs it touched, split evenly."""
 import json, glob, os, re, collections, sys
+from public_data import PUBLIC_PROJECTS, public_tokens
 roots = [os.path.expanduser('~/claude-archive/raw'), os.path.expanduser('~/.claude/projects')]  # archive first (July 2026 on), then live
 files = [f for r in roots for f in glob.glob(r + '/**/*.jsonl', recursive=True) if '/tool-results/' not in f]
 tot = collections.Counter(); seen = set(); msgs = 0; first = last = None
@@ -35,9 +36,11 @@ for f in files:
     for p in projs: per_proj[p] += sess_tok / len(projs)
 total = sum(tot.values())
 out = {'total_tokens': total, 'by_kind': dict(tot), 'assistant_messages': msgs, 'sessions': sess_count,
-       'first': first, 'last': last, 'files': len(files),
-       'top_projects': [{'project': p, 'tokens': int(t)} for p, t in per_proj.most_common(25)]}
+       'first': first[:7] if first else None, 'last': last[:7] if last else None, 'files': len(files),
+       'top_projects': [{'project': p, 'tokens': int(t)} for p, t in per_proj.most_common() if p in PUBLIC_PROJECTS]}
 os.makedirs(os.path.join(os.path.dirname(__file__), '..', 'data'), exist_ok=True)
+out = public_tokens(out)
 json.dump(out, open(os.path.join(os.path.dirname(__file__), '..', 'data', 'tokens.json'), 'w'), indent=1)
 print(json.dumps({k: out[k] for k in ('total_tokens', 'sessions', 'assistant_messages', 'first', 'last')}))
 print('top:', [(d['project'], round(d['tokens'] / 1e9, 2)) for d in out['top_projects'][:12]])
+

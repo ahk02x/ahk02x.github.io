@@ -8,12 +8,20 @@
 <link rel="canonical" href="https://ahk02x.dev/writing/claude-code-on-call.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
 <link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="I gave Claude Code a pager">
+<meta property="og:description" content="How Amir Khademi made an AI coding agent accountable for a home fleet&#x27;s alerts: a board built by cron, four hook rungs, an acknowledgement ledger with verdict words, and a headless responder.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/writing/claude-code-on-call.html">
 </head>
 <body>
-<header class="top"><div class="wrap"><a class="brand" href="/"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / Amir Khademi</span></span></a><nav class="main" aria-label="Site"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/sq/">SQ5 garage</a><a href="/writing/" aria-current="page">Writing</a><a href="/about.html">About</a></nav></div></header>
-<main class="wrap narrow">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/" aria-current="page"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="wrap inner-page narrow">
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>I gave Claude Code a pager</h1>
 <p class="lede">I do most of the operations work on my home fleet with Claude Code. For months it had a blind spot I didn't notice: five alerting channels pointed at me, and zero pointed at the agent doing the work.</p></section>
 
@@ -25,7 +33,7 @@
 <p>The board timestamps itself. If the timestamp is more than ten minutes old, the collector is dead and the list is declared not current, in the file's own header. Unknown never means healthy.</p>
 
 <h2>Four rungs</h2>
-<figure><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
 <g class="box"><rect x="10" y="12" width="160" height="56" rx="6"/><rect x="190" y="12" width="160" height="56" rx="6"/><rect x="370" y="12" width="160" height="56" rx="6"/><rect x="550" y="12" width="160" height="56" rx="6"/></g>
 <g class="lbl" text-anchor="middle"><text x="90" y="36">1 · Brief</text><text x="270" y="36">2 · Nag</text><text x="450" y="36">3 · Gate</text><text x="630" y="36">4 · Responder</text></g>
 <g text-anchor="middle"><text x="90" y="56">SessionStart hook</text><text x="270" y="56">UserPromptSubmit hook</text><text x="450" y="56">Stop hook</text><text x="630" y="56">launchd · claude -p</text></g>
@@ -34,7 +42,7 @@
 <rect x="10" y="160" width="700" height="54" rx="6" class="box"/>
 <text x="360" y="183" text-anchor="middle" class="lbl">Acknowledgement ledger</text>
 <text x="360" y="203" text-anchor="middle">seen · working (silent)   ·   fixed · blocked · wontfix (page the human, action first)</text>
-</svg><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
+</svg><ol class="mobile-flow"><li><div><strong>Brief · SessionStart</strong><small>The board is in context before the first message.</small></div></li><li><div><strong>Nag · UserPromptSubmit</strong><small>Untouched alerts ride along with every prompt.</small></div></li><li><div><strong>Gate · Stop</strong><small>Each alert needs an acknowledgement ledger line.</small></div></li><li><div><strong>Responder · launchd</strong><small>When no session exists: allowlist, lock, cooldown.</small></div></li></ol><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
 <ul>
 <li><strong>Brief.</strong> A <code>SessionStart</code> hook prints the board into the session's context before the first message. The agent begins knowing what's open.</li>
 <li><strong>Nag.</strong> A <code>UserPromptSubmit</code> hook appends anything untouched to every prompt. You cannot ask the agent about your car without it also being told that the mortgage alert is three days old.</li>
@@ -62,6 +70,7 @@
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
 
-<footer><div class="wrap"><span class="word">ahk02x</span><span>Amir Khademi · Toronto, Canada</span><span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a></span><span><a href="https://github.com/ahk02x">GitHub</a></span></div></footer>
+
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
 </body>
 </html>
