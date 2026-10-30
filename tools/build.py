@@ -27,7 +27,7 @@ GLYPHS = {
  'tag': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/><circle cx="44" cy="44" r="7"/></g></svg>',
  'sq': '<span class="sq-brand"><img class="glyph sq sq-dark" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"><img class="glyph sq sq-light" src="/assets/sq-mark-light.svg" alt="" width="34" height="34"></span>',
 }
-def chrome(title, desc, path, body, nav_key):
+def chrome(title, desc, path, body, nav_key, extra_head=''):
     nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == nav_key else '') + f'><span class="nav-index" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(NAV))
     return f'''<!doctype html>
 <html lang="en">
@@ -48,7 +48,7 @@ def chrome(title, desc, path, body, nav_key):
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev{path}">
-</head>
+{extra_head}</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home">{MARK}<span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
@@ -73,6 +73,41 @@ subs = {'{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—'
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
 for g, svg in GLYPHS.items(): subs['{{glyph:' + g + '}}'] = svg
+# Structured data (schema.org JSON-LD): the site and its author on every page, the About page as his
+# profile, each write-up as an Article he wrote. alternateName carries the full name in the spellings
+# people actually type, so a search for any of them matches these pages.
+SITE = 'https://ahk02x.dev'
+PERSON_ID, WEBSITE_ID = SITE + '/#person', SITE + '/#website'
+PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
+          'alternateName': ['Amir Hossein Khademi', 'Amir-Hossein Khademi', 'Amirhossein Khademi'],
+          'givenName': 'Amir Hossein', 'familyName': 'Khademi',
+          'url': SITE + '/', 'mainEntityOfPage': SITE + '/about.html',
+          'jobTitle': 'Site Reliability Engineer',
+          'description': 'Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
+          'email': 'mailto:amir@ahk02x.com',
+          'address': {'@type': 'PostalAddress', 'addressLocality': 'Toronto', 'addressRegion': 'ON', 'addressCountry': 'CA'},
+          'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
+          'sameAs': ['https://github.com/ahk02x']}
+WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
+           'alternateName': 'Amir Khademi — field notes', 'inLanguage': 'en',
+           'author': {'@id': PERSON_ID}, 'publisher': {'@id': PERSON_ID}}
+def jsonld(meta, body):
+    url = SITE + meta['path']; graph = [WEBSITE, PERSON]
+    date = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})"', body)
+    if meta['path'] == '/about.html':
+        graph.append({'@type': 'ProfilePage', '@id': url, 'url': url, 'name': meta['title'], 'description': meta.get('description', ''),
+                      'isPartOf': {'@id': WEBSITE_ID}, 'mainEntity': {'@id': PERSON_ID}})
+    elif meta['path'].startswith('/writing/') and date:
+        art = {'@type': 'Article', '@id': url + '#article', 'url': url, 'mainEntityOfPage': url, 'headline': meta['title'],
+               'description': meta.get('description', ''), 'datePublished': date.group(1), 'inLanguage': 'en',
+               'author': {'@id': PERSON_ID}, 'publisher': {'@id': PERSON_ID}, 'isPartOf': {'@id': WEBSITE_ID}}
+        if os.path.exists('assets/og.png'): art['image'] = SITE + '/assets/og.png'
+        graph.append(art)
+    else:
+        graph.append({'@type': 'WebPage', '@id': url, 'url': url, 'name': meta['title'], 'description': meta.get('description', ''),
+                      'isPartOf': {'@id': WEBSITE_ID}, 'about': {'@id': PERSON_ID}})
+    data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    return '<script type="application/ld+json">' + data + '</script>\n'
 pages = []
 for src in sorted(glob.glob('src/pages/*.html')):
     raw = open(src).read(); fm, body = raw.split('\n---\n', 1)
@@ -82,7 +117,7 @@ for src in sorted(glob.glob('src/pages/*.html')):
     if 'id="main"' not in body:
         body = body.replace('<main ', '<main id="main" ', 1)
     body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')
-    out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']))
+    out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
     os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(out); pages.append(meta['path'])
@@ -101,6 +136,7 @@ for entry in os.scandir(public_root):
 public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
 public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):
         dest = os.path.join(public_root, source)
