@@ -17,3 +17,13 @@ jobs:
       - run: python3 tools/build.py
       - name: Verify committed pages match source
         run: git diff --exit-code -- '*.html' sitemap.xml data/tokens.json
+  indexnow:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Give GitHub Pages time to publish this commit
+        run: sleep 120
+      - name: Tell IndexNow engines the sitemap URLs changed
+        run: python3 tools/indexnow.py
