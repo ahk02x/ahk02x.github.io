@@ -21,4 +21,10 @@ add(){ curl -s "${H[@]}" -X POST "https://api.cloudflare.com/client/v4/zones/$ZO
 for ip in 185.199.108.153 185.199.109.153 185.199.110.153 185.199.111.153; do add A ahk02x.dev $ip; done
 for ip6 in 2606:50c0:8000::153 2606:50c0:8001::153 2606:50c0:8002::153 2606:50c0:8003::153; do add AAAA ahk02x.dev $ip6; done
 add CNAME www.ahk02x.dev ahk02x.github.io
+# Mail: ahk02x.dev sends no mail and has no MX. SPF -all plus DMARC p=reject tell a receiving
+# server to refuse anything forging it. If a sender is ever wired up, BOTH have to change first.
+# Reports go to amir@ahk02x.com, which is a different domain, so ahk02x.com also carries
+# "ahk02x.dev._report._dmarc" TXT "v=DMARC1" (RFC 7489 s7.1) or no reporter will send them.
+add TXT ahk02x.dev '\"v=spf1 -all\"'
+add TXT _dmarc.ahk02x.dev '\"v=DMARC1; p=reject; sp=reject; adkim=s; aspf=s; rua=mailto:amir@ahk02x.com\"'
 echo "records added; https://ahk02x.dev loads within a few minutes, HTTPS cert within the hour"
