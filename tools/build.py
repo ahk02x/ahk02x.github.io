@@ -28,6 +28,7 @@ GLYPHS = {
  'sq': '<span class="sq-brand"><img class="glyph sq sq-dark" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"><img class="glyph sq sq-light" src="/assets/sq-mark-light.svg" alt="" width="34" height="34"></span>',
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
+    if 'Amir Khademi' not in title and title != 'Not found': title = f'{title} · Amir Khademi'  # every indexed page carries the author's name
     nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == nav_key else '') + f'><span class="nav-index" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(NAV))
     return f'''<!doctype html>
 <html lang="en">
@@ -117,6 +118,8 @@ for src in sorted(glob.glob('src/pages/*.html')):
     if 'id="main"' not in body:
         body = body.replace('<main ', '<main id="main" ', 1)
     body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')
+    if meta['path'].startswith('/writing/') and '<time datetime=' in body and 'class="byline"' not in body:
+        body = body.replace('</h1>', '</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>', 1)
     out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
