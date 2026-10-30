@@ -48,6 +48,10 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev{path}">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
 {extra_head}</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -64,15 +68,47 @@ def token_card():
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
+    months = [m for m in (tok.get('by_month') or []) if m.get('tokens')]
+    month_html = ''
+    if months:
+        mmx = max(m['tokens'] for m in months)
+        this_month = (tok.get('last') or '')[:7]
+        def mlabel(ym):
+            try: lbl = datetime.date(int(ym[:4]), int(ym[5:7]), 1).strftime('%b %Y')
+            except ValueError: return ym
+            return lbl + ' <small>so far</small>' if ym == this_month else lbl
+        mbars = ''.join(f'<div>{mlabel(m["month"])}</div><div class="b"><i style="width:{100*m["tokens"]/mmx:.1f}%"></i></div><div class="n">{m["tokens"]/1e9:.2f} B</div>' for m in months)
+        month_html = f'<div class="eyebrow" style="margin-top:26px">By month</div><div class="bars">{mbars}</div>'
     return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["ledger"]}<h3>Built with Claude Code</h3></div>
 <p>Claude Code has been part of the work behind these projects. Usage recorded in its transcripts since {first}, deduplicated:</p>
 <div class="tiles"><div class="tile"><div class="k">Tokens</div><div class="v">{tot/1e9:.2f}<small>billion</small></div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
-<div class="bars">{bars}</div>
+<div class="eyebrow" style="margin-top:26px">By project</div><div class="bars">{bars}</div>
+{month_html}
 <p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 subs = {'{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
 for g, svg in GLYPHS.items(): subs['{{glyph:' + g + '}}'] = svg
+entries = []
+for src in sorted(glob.glob('src/pages/*.html')):
+    raw = open(src).read(); fm, body = raw.split('\n---\n', 1)
+    meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M))
+    m = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})"', body)
+    entries.append({'meta': meta, 'body': body.strip(), 'date': m.group(1) if m else ''})
+posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') and e['meta']['path'] != '/writing/'],
+               key=lambda e: (e['date'], int(e['meta'].get('note', '0') or 0)), reverse=True)
+def when(d):
+    try: return datetime.date.fromisoformat(d).strftime('%b %Y')
+    except ValueError: return ''
+def post_item(e):
+    mt = e['meta']; blurb = mt.get('summary') or mt.get('description', '')
+    return (f'<div class="item"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
+            f'<time datetime="{e["date"]}">{when(e["date"])}</time><p class="d">{html.escape(blurb)}</p></div>')
+subs['{{writing_list}}'] = ''.join(post_item(e) for e in posts)
+def when_long(d):
+    try: return datetime.date.fromisoformat(d).strftime('%B %Y')
+    except ValueError: return ''
+subs['{{latest_notes}}'] = ''.join(f'<a class="article-link" href="{e["meta"]["path"]}"><span>{when_long(e["date"])} · Field note {int(e["meta"].get("note", "0") or 0):03}</span><strong>{html.escape(e["meta"]["title"])} <span aria-hidden="true">↗</span></strong></a>' for e in posts[:3])
 # Structured data (schema.org JSON-LD): the site and its author on every page, the About page as his
 # profile, each write-up as an Article he wrote. alternateName carries the full name in the spellings
 # people actually type, so a search for any of them matches these pages.
@@ -109,10 +145,8 @@ def jsonld(meta, body):
     data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     return '<script type="application/ld+json">' + data + '</script>\n'
 pages = []
-for src in sorted(glob.glob('src/pages/*.html')):
-    raw = open(src).read(); fm, body = raw.split('\n---\n', 1)
-    body = body.strip()
-    meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M))
+for e in entries:
+    meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
     if 'id="main"' not in body:
         body = body.replace('<main ', '<main id="main" ', 1)
@@ -121,6 +155,12 @@ for src in sorted(glob.glob('src/pages/*.html')):
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
     os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(out); pages.append(meta['path'])
+def rfc822(d):
+    try: return datetime.datetime.fromisoformat(d).replace(tzinfo=datetime.timezone.utc).strftime('%a, %d %b %Y 00:00:00 +0000')
+    except ValueError: return ''
+feed_items = ''.join(f'<item><title>{html.escape(e["meta"]["title"])}</title><link>https://ahk02x.dev{e["meta"]["path"]}</link><guid isPermaLink="true">https://ahk02x.dev{e["meta"]["path"]}</guid>'
+                     + (f'<pubDate>{rfc822(e["date"])}</pubDate>' if e['date'] else '') + f'<description>{html.escape(e["meta"].get("description", ""))}</description></item>\n' for e in posts)
+open('feed.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ahk02x — field notes</title><link>https://ahk02x.dev/</link><atom:link href="https://ahk02x.dev/feed.xml" rel="self" type="application/rss+xml"/><description>Engineering write-ups by Amir Khademi: car telemetry, home infrastructure, and tools that have to earn your trust.</description><language>en</language>\n' + feed_items + '</channel></rss>\n')
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>https://ahk02x.dev{p}</loc></url>\n' for p in pages if not p.startswith('/404')) + '</urlset>\n')
 print('built', len(pages), 'pages:', ' '.join(pages))
 
@@ -133,7 +173,7 @@ for entry in os.scandir(public_root):
         shutil.rmtree(entry.path)
     else:
         os.unlink(entry.path)
-public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
+public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
 public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py

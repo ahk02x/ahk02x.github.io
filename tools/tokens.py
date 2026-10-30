@@ -7,7 +7,7 @@ from public_data import PUBLIC_PROJECTS, public_tokens
 roots = [os.path.expanduser('~/claude-archive/raw'), os.path.expanduser('~/.claude/projects')]  # archive first (July 2026 on), then live
 files = [f for r in roots for f in glob.glob(r + '/**/*.jsonl', recursive=True) if '/tool-results/' not in f]
 tot = collections.Counter(); seen = set(); msgs = 0; first = last = None
-per_proj = collections.Counter(); sess_count = 0
+per_proj = collections.Counter(); sess_count = 0; per_month = collections.Counter()
 KEYS = ('input_tokens', 'output_tokens', 'cache_read_input_tokens', 'cache_creation_input_tokens')
 PROJ = re.compile(rb'Projects/([A-Za-z0-9_.-]{2,40})')
 for f in files:
@@ -29,6 +29,7 @@ for f in files:
                 seen.add(mid); msgs += 1; any_usage = True
                 for k in KEYS:
                     v = u.get(k) or 0; tot[k] += v; sess_tok += v
+                    if ts: per_month[ts[:7]] += v
     except Exception as e:
         print('skip', f, e, file=sys.stderr); continue
     if any_usage: sess_count += 1
@@ -37,7 +38,8 @@ for f in files:
 total = sum(tot.values())
 out = {'total_tokens': total, 'by_kind': dict(tot), 'assistant_messages': msgs, 'sessions': sess_count,
        'first': first[:7] if first else None, 'last': last[:7] if last else None, 'files': len(files),
-       'top_projects': [{'project': p, 'tokens': int(t)} for p, t in per_proj.most_common() if p in PUBLIC_PROJECTS]}
+       'top_projects': [{'project': p, 'tokens': int(t)} for p, t in per_proj.most_common() if p in PUBLIC_PROJECTS],
+       'by_month': [{'month': m, 'tokens': int(v)} for m, v in sorted(per_month.items())]}
 os.makedirs(os.path.join(os.path.dirname(__file__), '..', 'data'), exist_ok=True)
 out = public_tokens(out)
 json.dump(out, open(os.path.join(os.path.dirname(__file__), '..', 'data', 'tokens.json'), 'w'), indent=1)

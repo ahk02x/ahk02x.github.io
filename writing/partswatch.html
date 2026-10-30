@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The part matters, not the store</title>
+<meta name="description" content="How Amir Khademi watches classifieds every fifteen minutes and fifty-two store prices every hour for a short list of Audi SQ5 parts, and gets one message when something actually moves.">
+<link rel="canonical" href="https://ahk02x.dev/writing/partswatch.html">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="The part matters, not the store">
+<meta property="og:description" content="How Amir Khademi watches classifieds every fifteen minutes and fifty-two store prices every hour for a short list of Audi SQ5 parts, and gets one message when something actually moves.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/writing/partswatch.html">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","address":{"@type":"PostalAddress","addressLocality":"Toronto","addressRegion":"ON","addressCountry":"CA"},"knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/partswatch.html#article","url":"https://ahk02x.dev/writing/partswatch.html","mainEntityOfPage":"https://ahk02x.dev/writing/partswatch.html","headline":"The part matters, not the store","description":"How Amir Khademi watches classifieds every fifteen minutes and fifty-two store prices every hour for a short list of Audi SQ5 parts, and gets one message when something actually moves.","datePublished":"2026-10-27","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/" aria-current="page"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="wrap inner-page narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>The part matters, not the store</h1>
+<p class="lede">The SQ5's wanted list has eight entries, counting the rotors as two kits. Ten Canadian retailers sell some subset of them, and used ones turn up on Kijiji and Facebook Marketplace. I wanted to know the moment one got cheaper or appeared second-hand. So I wrote a watcher.</p></section>
+
+<p>I don't care which store has the charge pipe. I care about the charge pipe. The question is: for this part, what is the lowest price in the country today, and did it just change? Once the question is per part, the design follows.</p>
+<blockquote>A retailer's sale is a fact about the retailer. A price drop is a fact about the part.</blockquote>
+
+<h2>Three loops, one messenger</h2>
+<p>One stdlib Python script on the home server, run by a systemd timer every fifteen minutes with up to two minutes of jitter so requests never land on the same second. Everything ends in one Telegram channel.</p>
+<ol>
+<li><strong>Classifieds, every run.</strong> Seven Kijiji searches across Canada and six Marketplace queries in each of two cities, logged out, with a two-to-six-second pause between fetches.</li>
+<li><strong>Store prices, hourly.</strong> Fifty-two product pages: fifty Canadian listings across the ten retailers, plus two US reference prices from the manufacturer, converted at the Bank of Canada rate and never allowed to win "cheapest", because a US sticker doesn't include shipping or brokerage.</li>
+<li><strong>Whole catalogs, one store per run, each every twelve hours.</strong> Shopify serves a full catalog as JSON, 250 products a page. I walk five stores, record every product that fits the car and isn't already on it, and call a ten percent drop against my own record a sale. Shopify stops at page 100, so a store with over 25,000 products is only partly seen.</li>
+</ol>
+
+<h2>Reading a price</h2>
+<p>A Shopify product page with <code>.js</code> appended returns the variants with prices in cents and an availability flag. BigCommerce and custom stores put the price in a <code>product:price:amount</code> meta tag. Kijiji's RSS is dead, but its search pages carry the results as JSON in a <code>__NEXT_DATA__</code> block. Marketplace, logged out, gives title, price, city and photo; no description. One distributor hides prices behind a login, so it isn't watched; a hole in the table beats a guess.</p>
+
+<h2>What counts as a drop</h2>
+<p>A naive diff against the last reading goes wrong three ways.</p>
+<ul>
+<li><strong>Thresholds.</strong> At least three percent and at least fifteen dollars, or it is logged and not sent. Exchange-rate wobble alone would otherwise page me daily.</li>
+<li><strong>The reference moves up freely and down only on an alert.</strong> Diffed against the previous reading, a price sliding under three percent per step never trips the gate, however far it falls. So each store has a reference price that follows every rise, resets when an alert fires, and is otherwise left alone. Small drops accumulate until they are worth saying.</li>
+<li><strong>Only my own history counts.</strong> One retailer's compare-at price has shown the same fifteen percent off for as long as I've looked. So claimed sales are ignored and every price is compared with what I recorded last time. The first read of any source records everything silently; the watcher sends nothing on the day it is installed.</li>
+</ul>
+<p>A per-part floor, the lowest Canadian price yet, is separate: beating it by two percent is its own event, as is a store coming back into stock.</p>
+
+<h2>Matching an ad</h2>
+<p>Classifieds are where the time went, because "SQ5" in a title is a weak signal. Grep for the model and you get whole cars, tire sizes with no wheels, the previous generation, and body parts from the three model years before the facelift, which don't fit. A 2019 SQ5 is a car; a 2021 SQ5 carbon hood is a part; price (eight thousand dollars and up is a car) and wording tell them apart. The matcher reads the title and any description snippet and sorts ads into four tiers:</p>
+<ul>
+<li><strong>Wanted.</strong> One of the eight parts, in a version that fits. "034 sway bar bushings" is not the sway bar bundle; the rear rotor pattern runs before the front so an ad that doesn't say which end can't land on the front kit.</li>
+<li><strong>Mod.</strong> Fits the car and names an aftermarket brand or a mod word. Parts already on the car are muted; "OEM stock exhaust" is a spare, not a mod; 2.0T parts don't bolt onto the 3.0T.</li>
+<li><strong>Maybe.</strong> A brand part for this engine, model not stated. Sent with "check it fits".</li>
+<li><strong>Plain part.</strong> OEM bits, wheels, part-outs. One list at seven in the evening, two provinces.</li>
+</ul>
+<p>The matcher has thirty regression cases; the rest of the script has none. About the right ratio.</p>
+
+<h2>One message</h2>
+<p>Every listing id is remembered for 120 days, so an ad is scored once; one already fourteen days old when first seen is recorded silently, because "popped up" means new. A used wanted part goes out as a photo message with the cheapest new price beside it. Store events are collected per part, not per store: one message per part, every store's current price underneath. A failed send puts the id back in the queue for the next run.</p>
+<p>It also knows when it is blind: no good read from a source for six hours is one message, and recovery is another. A silent watcher and a broken one look identical from the phone, and the whole point was never having to wonder.</p>
+
+<h2>What it taught me</h2>
+<ul>
+<li><strong>Compare to your own record.</strong> Any seller's label is marketing. Only a number you wrote down yourself is a baseline.</li>
+<li><strong>Quiet by default.</strong> The first read, the stale ad, the exchange-rate wobble, the part I already own: all recorded, none sent. Every message I mute costs the next real one its credibility.</li>
+<li><strong>Shape the data per question, not per source.</strong> I was comparing stores because that is how the web is organised. The part is what I wanted.</li>
+</ul>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
+</body>
+</html>

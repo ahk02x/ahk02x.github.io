@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Memory as infrastructure</title>
+<meta name="description" content="How Amir Khademi runs an AI coding agent&#x27;s memory as infrastructure: one fact per Markdown file, an index of triggers, a linter in the commit hook, nightly checks against the real machines, and git for the history.">
+<link rel="canonical" href="https://ahk02x.dev/writing/memory-as-infrastructure.html">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="Memory as infrastructure">
+<meta property="og:description" content="How Amir Khademi runs an AI coding agent&#x27;s memory as infrastructure: one fact per Markdown file, an index of triggers, a linter in the commit hook, nightly checks against the real machines, and git for the history.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/writing/memory-as-infrastructure.html">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","address":{"@type":"PostalAddress","addressLocality":"Toronto","addressRegion":"ON","addressCountry":"CA"},"knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/memory-as-infrastructure.html#article","url":"https://ahk02x.dev/writing/memory-as-infrastructure.html","mainEntityOfPage":"https://ahk02x.dev/writing/memory-as-infrastructure.html","headline":"Memory as infrastructure","description":"How Amir Khademi runs an AI coding agent's memory as infrastructure: one fact per Markdown file, an index of triggers, a linter in the commit hook, nightly checks against the real machines, and git for the history.","datePublished":"2026-10-27","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/" aria-current="page"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="wrap inner-page narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>Memory as infrastructure</h1>
+<p class="lede">Claude Code forgets everything between sessions, so it keeps notes. I treat those notes the way I treat any other state on my network: a schema, a linter, a nightly check against reality, and a repository. Every rule below exists because the version without it failed.</p></section>
+
+<p>The memory is a directory of Markdown files. One file is one current fact about a machine, a project, or a way I want the agent to work. Each has front matter: a <code>name</code> that must equal the filename, a <code>description</code> that is the recall signal, and one of four types (user, feedback, project, reference). Missing front matter fails lint. That is fussy for a pile of notes, right up until the agent confidently acts on a fact that has been wrong for weeks.</p>
+
+<h2>The index is a list of triggers</h2>
+<p>One file, <code>MEMORY.md</code>, is loaded into every session; everything else costs nothing until opened. So the core index is a per-session tax, and it has a budget: the linter warns at 8 KB and refuses the commit at 12 KB. In August I cut it to about 8 KB; by October it was 19.8 KB, because every new memory landed in it. Now the core holds only the rails, the staged work and the hubs, plus one line per domain pointing at an <code>index-&lt;domain&gt;.md</code> that is opened on demand. It is 7.8 KB, roughly 1.9k tokens per session; the six domain indexes total about 16 KB and are paid only when used.</p>
+<p>The rule that matters more: an index line is a trigger, not a summary. A title and the condition under which the agent should open the file, in 120 characters or fewer. <code>Verify The Contract — read the real field/value/route first; unknown NEVER means healthy</code> tells the agent when to stop and look. A paraphrase of the contents invites it to act on the paraphrase instead of opening the file.</p>
+
+<h2>Rewrite, don't append</h2>
+<p>The natural way to update a note is a dated section under the old one. In August I measured that across 107 memories: 34 contained supersede-or-correction language, and the home server's build record had 17 dated headers and had reached 53 KB, about 13k tokens for a single recall. An append-log presents dead facts with the same confidence as live ones, recall surfaces the file and not a diff, and whichever line is read first wins. A memory that needs 300 lines read and a judgment about which half is dead is worse than no memory, because it is trusted.</p>
+<p>So a memory holds current truth only. When a fact changes, the wrong sentence is replaced and the old one deleted. The directory is a git repository with over 440 commits; that is where history lives. Dated headers are the smell: more than three fails lint, as does any file of 12 KB or more. Past about 8 KB a file is no longer one fact; cut dead state or split it.</p>
+
+<h2>A rule nobody runs is not a rule</h2>
+<p>The linter was correct from August, and the memory about it said to run it before every commit. For nine days nothing did, and seven memories blew past the old 20 KB cap. That is the whole case for hooks over instructions. <code>memlint.py</code> now runs from a tracked <code>hooks/pre-commit</code> and blocks the commit on an unindexed file, a link to a missing file, an index line over 120 characters, a dangling wikilink, too many dated headers, an oversized file, or anything that looks like a credential. It blocks on errors only: there are around 40 standing warnings, and a gate that fires every time gets bypassed. The credential check holds the SHA-256 of known-bad strings, never the strings, and never echoes a hit, because a secret echoed while hunting for it re-leaks into a transcript that gets archived.</p>
+<blockquote>An instruction nobody executes is not a control.</blockquote>
+
+<h2>Staleness is the real damage</h2>
+<p>Size lint cannot see a wrong fact. In August the home server's container table in memory was four containers behind, and the Stream Deck memory described a key layout I had renamed nine days earlier. Neither tripped a lint. By October, 87 memories asserted live state nobody had re-checked in 30 days or more.</p>
+<p>Two mechanisms now. The linter flags any memory that asserts live state (an IP address, a LIVE or DEPLOYED verdict, the words "verified" or "measured") and has not changed in git for 30 days; rails and the indexes are exempt, since they encode judgment, not the state of a machine. And a memory can carry its own check: a top-level <code>verify:</code> line with one read-only, non-interactive shell command that finishes in under 25 seconds, plus an optional <code>expect:</code> regex. <code>memverify.py</code> runs them nightly from cron and records VERIFIED, FAILED, UNREACHABLE or BLOCKED. A recent VERIFIED counts as fresh. FAILED means the memory is wrong or the thing is down, so look before repeating it; a one-line summary prints at session start, only when something failed.</p>
+<p>BLOCKED is for commands on a never-run list: anything that writes, restarts, elevates, kills or pings. One Windows box drops ICMP, so ping lies about it; one macOS command pops a password box on my screen. The verifier cannot judge a claim's meaning, only whether the box still agrees with it.</p>
+
+<h2>Three layers and a recall tool</h2>
+<ul>
+<li><strong>Memory.</strong> Current truth, hand-kept, in git.</li>
+<li><strong>Digest.</strong> Every past chat as plain text, rebuilt hourly from the archive. Grep it; never open a big one whole.</li>
+<li><strong>Distilled.</strong> Per-session decisions, facts, open items and memory candidates, extracted overnight by a small local model on the home server. Its output is a suggestion, not a memory.</li>
+</ul>
+<p>A <code>brain recall</code> command searches all three at once. Each memory records the session it came from, so <code>brain show</code> opens a memory next to the conversation that produced it; 130 of 168 memories resolve that way. The standing rule: recall before asking me to repeat anything, and keep the fact in memory and the reasoning in the digest.</p>
+
+<h2>What it taught me</h2>
+<p>Most of the cost of an agent session is carrying context, not generating; when I measured mine, 85 percent of spend was context. An unindexed memory is one the agent will never recall. An over-long one costs more per recall than the whole core index. A stale one is trusted. Every control here is cheap, stdlib Python and a git hook, and each replaced a sentence that said "remember to". The sentences did not work. The hooks do.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
+</body>
+</html>

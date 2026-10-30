@@ -1,4 +1,5 @@
 """The only project identifiers allowed in the public token export."""
+import re
 PUBLIC_PROJECTS = frozenset({
     'sq-garage', 'Sq', 'iot', 'flowtrace', 'phosphor', 'Crucix', 'alertboard',
     'macwatch', 'netdash', 'partswatch', 'fleet-patch', 'lanwatch', 'inbox',
@@ -16,5 +17,9 @@ def public_tokens(data):
     result['top_projects'] = [
         {'project': p['project'], 'tokens': p['tokens']}
         for p in data.get('top_projects', []) if p.get('project') in PUBLIC_PROJECTS
+    ]
+    result['by_month'] = [
+        {'month': str(m['month'])[:7], 'tokens': int(m['tokens'])}
+        for m in data.get('by_month', []) if m.get('month') and re.match(r'^\d{4}-\d{2}', str(m['month']))
     ]
     return result

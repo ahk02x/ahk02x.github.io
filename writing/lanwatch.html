@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Internal is not internet</title>
+<meta name="description" content="How Amir Khademi built lanwatch, a two-collector tool that reports a home network&#x27;s device-to-device traffic and its internet traffic as separate facts, after finding the firewall could not see one and double-counted the other.">
+<link rel="canonical" href="https://ahk02x.dev/writing/lanwatch.html">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="/assets/theme-init.js"></script>
+<link rel="stylesheet" href="/style.css">
+<script src="/assets/site.js" defer></script>
+<meta name="theme-color" content="#f2f0e9">
+<meta property="og:title" content="Internal is not internet">
+<meta property="og:description" content="How Amir Khademi built lanwatch, a two-collector tool that reports a home network&#x27;s device-to-device traffic and its internet traffic as separate facts, after finding the firewall could not see one and double-counted the other.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/writing/lanwatch.html">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","address":{"@type":"PostalAddress","addressLocality":"Toronto","addressRegion":"ON","addressCountry":"CA"},"knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/lanwatch.html#article","url":"https://ahk02x.dev/writing/lanwatch.html","mainEntityOfPage":"https://ahk02x.dev/writing/lanwatch.html","headline":"Internal is not internet","description":"How Amir Khademi built lanwatch, a two-collector tool that reports a home network's device-to-device traffic and its internet traffic as separate facts, after finding the firewall could not see one and double-counted the other.","datePublished":"2026-10-27","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation"><a href="/"><span class="nav-index" aria-hidden="true">00</span>Home</a><a href="/projects/"><span class="nav-index" aria-hidden="true">01</span>Projects</a><a href="/sq/"><span class="nav-index" aria-hidden="true">02</span>SQ5 garage</a><a href="/writing/" aria-current="page"><span class="nav-index" aria-hidden="true">03</span>Writing</a><a href="/about.html"><span class="nav-index" aria-hidden="true">04</span>About</a></nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<main id="main" class="wrap inner-page narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>Internal is not internet</h1>
+<p class="lede">A house full of smart devices should have to explain itself. "What left the house today" and "what talked to what inside it" are two different facts, and the obvious place to ask answers only one of them, and inflates the other.</p></section>
+
+<p>The network has a TV, phones, a smart speaker, a microcontroller board, a Windows PC and a rack of small Linux boxes. My first plan was the obvious one: read the firewall's flow aggregates, split rows by whether the far end was a private address, draw two lines. One measurement showed both halves of that were wrong.</p>
+
+<h2>The zero is the topology</h2>
+<p>Ten minutes of raw flow records in August, sorted by class: 329.66 MB to the internet, 0.62 MB to the firewall itself (DNS, ssh, syslog), 0.02 MB broadcast, and 0.00 MB machine to machine. Not because the house was quiet: that class of traffic is structurally invisible there. The LAN is one switched subnet. A frame from one box to another goes host, switch, host, and never arrives at the firewall's LAN interface. The firewall is not filtering it out. It never sees it. Every "LAN to LAN" row in its own daily aggregate turned out to have the firewall as one endpoint.</p>
+<p>No NetFlow setting changes that. Only the endpoints, or a mirror port on the switch, can see it.</p>
+
+<h2>The aggregates double count</h2>
+<p>The internet half had its own problem. The firewall keeps per-interface SQLite aggregates, and one download is exported on both interfaces: the daily table showed 17513.3 MB out on the LAN side and 17513.3 MB in on the WAN side, the same bytes, with nothing in the schema saying so. Sum across interfaces and every number doubles. And the only aggregate that carries a destination address is the daily one, so it can tell internal from internet only at one row per day.</p>
+<p>The raw flow log has neither problem. One hour of it held 16,695 IPv4 records, each conversation exactly once, with the LAN address intact, and the rotations hold about two days.</p>
+
+<h2>Two collectors, one owner per half</h2>
+<p>lanwatch is two scripts, each owning the half it can see, feeding one SQLite store kept for 45 days. Neither script is installed anywhere: both are piped to <code>python3 -</code> over ssh keys that already existed.</p>
+<ul>
+<li><strong>The firewall script.</strong> Parses the raw flow log into 60-second buckets. It orients each flow so the private side is the device, then classifies the peer as <code>net</code> (crossed the internet), <code>lan</code> (both ends inside the house), <code>fw</code> (the other end is the firewall itself) or <code>bcast</code> (multicast, link-local and directed broadcast).</li>
+<li><strong>The host script.</strong> Runs on each Linux box and on my Mac and prints current cumulative counters: per-socket bytes from <code>ss</code> and interface totals from sysfs, including each container's veth on the Proxmox host, so per-container traffic comes free. It is stateless on purpose; the collector keeps the previous snapshot and subtracts.</li>
+<li><strong>Priority.</strong> A conversation seen by both must resolve to one stored row or everything doubles again. Each row carries a small integer priority: the firewall wins on internet (it counts UDP and QUIC, which <code>ss</code> cannot), the endpoints win on machine-to-machine, and neither can outrank the other on its own turf.</li>
+</ul>
+<p>Directed broadcast bit me: <code>ipaddress</code> has no idea the network is a /24, so the broadcast address looks like an ordinary host and NetBIOS and discovery chatter buried the real pairs in the machine-to-machine panel. It is now special-cased on the last octet.</p>
+
+<h2>An unobserved hour must not look quiet</h2>
+<p>The predecessor died this way: its feeder ran on my Mac, the lid closed, and the chart kept rendering for 15 days. The internet half survives collector downtime for free: the firewall records around the clock and the collector catches up from its watermark. The machine-to-machine half has no off-box recorder, and cumulative counters diffed across a sleep would dump the whole gap into one bucket.</p>
+<p>So gaps are recorded as rows and the chart greys them. A delta older than about four minutes is a gap, not a sample. A counter that went backwards is a recycled socket, counted whole, never a negative. The first version held the last snapshot in memory, so a restart skipped the gap silently and a three-hour blackout drew as a quiet afternoon; the last-seen timestamp is now persisted so the hole outlives the process that missed it. Retention is measured on every pull, after the firewall once held 38 hours of log while the collector asked for 48 and quietly got less.</p>
+<blockquote>Unknown never means healthy. A dead collector flips the wall display to NO COLLECTOR within three and a half minutes instead of showing yesterday's shape.</blockquote>
+
+<h2>What it keeps showing</h2>
+<p>About 1% of a day's bytes stay home. Almost nothing in the internal panel is two of my boxes talking; it is traffic to the firewall, hence the separate tag. The standing anomaly was one container at 11 to 15 GB a day, the top LAN talker: it was re-downloading three public data files of about 250 MB each every 15 minutes and throwing them away. Bursts like that are irregular, so a short window reads as "stopped"; trust the day series.</p>
+<p>The dashboard lists its own blind spots: two devices with no sampler talking over the switch (the TV, the PC, the phones), a second segment in front of the firewall, and UDP between hosts, because the kernel keeps no per-socket byte counter for UDP. Totals are scoped to the calendar day in Toronto time, so a DST day comes out as 23 or 25 hours.</p>
+<p>A home network is a small place with an inconvenient shape. The box with the best view of what leaves has no view of what stays, and the summary it hands you double-counts. Two facts, two vantage points, and a chart that admits when it was not looking.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word"><svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg> ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
+</body>
+</html>

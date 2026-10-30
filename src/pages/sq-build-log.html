@@ -1,0 +1,56 @@
+title: The SQ5 build log
+description: A dated build log for Amir Khademi's 2025 Audi SQ5: what went on the car and when, why, and what each change did to the logged numbers.
+path: /sq/build-log.html
+nav: /sq/
+---
+<main class="wrap narrow">
+<section class="hero"><div class="eyebrow">SQ5 · build log</div><h1>The SQ5 build log</h1>
+<p class="lede">The garage page says what is on the car. This is the order it went on, with the numbers each change moved where I have them. Where I kept no date, I say so.</p></section>
+
+<h2>Earlier</h2>
+<p>No dates kept for these.</p>
+<ul>
+<li><strong>Air in, air cooled.</strong> 034 S34 carbon intake with the aluminium turbo inlet; IE FDS intercooler.</li>
+<li><strong>Chassis.</strong> 034 Dynamic+ lowering springs, 034 billet mount inserts and the Street Density transmission mount, CTS flush spacers (15 mm front, 20 mm rear). Alignment after.</li>
+<li><strong>A gearbox-computer unlock.</strong> The logger saw nothing: the request frames came back byte-identical, and shift firmness lives at 100 to 300 ms, under what five reads a second can resolve.</li>
+<li><strong>The logger.</strong> Reverse-engineered the diagnostic cable and wrote my own reader: one request every 0.18 s, about five a second.</li>
+</ul>
+
+<h2>July 2026</h2>
+<ul>
+<li><strong>Stage 2 engine and gearbox tune.</strong> These drives are the baseline. Measured charge pressure peaks at about 23 to 24 psi between 4,500 and 5,500 rpm and tapers to about 21 by 6,000; wastegate duty sits at 87 to 95% at full throttle up top. That curve has not moved through October. The extra torque plus brake-boosting put a lock-up clutch code, P1812, in the gearbox. I stopped brake-boosting.</li>
+</ul>
+
+<h2>August 2026</h2>
+<ul>
+<li><strong>Pi onto the diagnostic port's always-on pin; power bank retired.</strong> The bank had cut the Pi dead for 4 h 41 min while charging and discharging at once. The pin is hot with the car off.</li>
+<li><strong>CAN tap for gearbox temperature.</strong> The engine-computer column I had labelled transmission temperature was intake air. The real number: 122 sessions, 16 to 102 °C, median trip maximum 74 °C.</li>
+<li><strong>First boot storm.</strong> 60 reboots in one parked day. On the alternator the Pi held ten minutes clean; on the battery every boot died at about 4.5 minutes. The 3.4 W draw I had budgeted on was a model, off by about ten times.</li>
+</ul>
+
+<h2>September 2026</h2>
+<ul>
+<li><strong>NGK Laser Iridium plugs.</strong> The change that mattered most. Warm misfire rate across all six cylinders went from 12.11 to 7.49 per 10,000 firings, 38% down, as a step at the plug boundary: seven weeks of 9.7 to 15.5 before, then 8.52, 8.43, 7.13. Cylinder 3 improved most, 3.89 to 2.01, but its ratio to its siblings went 2.37 to 1.83, unchanged within the noise.</li>
+<li><strong>Cylinder 3 plan.</strong> Ten weekly ratios of cylinder 3 to the pack: 1.52 to 3.63, mean about 2.7, flat. One new coil, old coil shelved, codes cleared, the counter judged from zero. At or under 1.2 is fixed; back in 1.9 to 3.6 and it was never the coil.</li>
+<li><strong>Away test passed.</strong> Five days off the home network: 27 drives held, shipped in about two minutes on rejoin. 243 drives, 592,917 samples.</li>
+<li><strong>Boot storms, the bad month.</strong> Peak 128 reboots in a day. They start 5 to 14.5 hours into a park, each boot lives 285 to 295 seconds, and an engine start ends it. The Pi was on 64 to 83% of parked hours.</li>
+</ul>
+
+<h2>October 2026</h2>
+<ul>
+<li><strong>Cylinder 3 faded on its own.</strong> From about 2.3 times its siblings to 1.5 with no part changed. A perfect fix would remove at most 190 of 1,407 post-plug counts. The excess only shows at light load, 3.6 times below 25% load and nothing at 80% and up, which points at an injector, intake-valve deposits or a runner leak more than a coil.</li>
+<li><strong>Found a dead channel.</strong> The fuel-trim column has decoded to a constant since July. "Trim is +2.9%, so no vacuum leak" rested on nothing. Smoke test back on the list.</li>
+<li><strong>Knock got more frequent, not deeper.</strong> Warm cruise rows with any retard: 0 to 2.5% on September days, 13.4% on the worst October day. A fuel batch is the lead; there is no fuel-level channel to check it.</li>
+<li><strong>Corrected my boost channel.</strong> I had been reporting the setpoint; measured pressure runs 145 to 173 hPa under it up top.</li>
+</ul>
+
+<h2>Not yet</h2>
+<ul>
+<li><strong>The cylinder-3 coil.</strong> Not fitted. The counters have never reset.</li>
+<li><strong>Free reads first.</strong> Per-cylinder counts by physical cylinder, both banks' trims, a smoke test. A leakdown on cylinder 3 is the honest close.</li>
+<li><strong>The newer tune file.</strong> Boost 19.6 to 23.0 psi then flat from 5,500 rpm: spool, not power. After the coil verdict, because the flash resets the counters and the baseline takes 6 to 9 engine-hours to rebuild.</li>
+<li><strong>A hardware low-voltage cutoff for the Pi,</strong> with a current sensor so the draw is measured, not modelled. Until then: unplug on overnight parks, load-test the battery.</li>
+<li><strong>Parts.</strong> IE cat-back, IE charge pipe, 034 front strut brace, 034 sway bar bundle (one listing says air suspension only; confirming first), 034 two-piece rotors, 350×34 front and 330×22 rear, and a carbon hood.</li>
+</ul>
+<p class="muted">Part of <a href="/sq/">the SQ5 garage</a>.</p>
+</main>
