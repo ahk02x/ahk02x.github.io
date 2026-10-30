@@ -1,0 +1,5 @@
+# Security contact for ahk02x.dev. Reports are welcome; there is no bounty.
+Contact: mailto:amir@ahk02x.com
+Expires: 2027-10-29T00:00:00Z
+Preferred-Languages: en
+Canonical: https://ahk02x.dev/.well-known/security.txt

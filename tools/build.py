@@ -98,7 +98,7 @@ for entry in os.scandir(public_root):
         shutil.rmtree(entry.path)
     else:
         os.unlink(entry.path)
-public_files = ['style.css', 'robots.txt', 'sitemap.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
+public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
 public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
 for source in public_files:
