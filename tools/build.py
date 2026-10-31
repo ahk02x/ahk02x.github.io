@@ -54,7 +54,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home">{MARK}<span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
 {body}
-<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word">{MARK} ahk02x / Amir Khademi</span><span>Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
+<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word">{MARK} ahk02x / Amir Khademi</span><span>Site and writing by Amir Hossein Khademi · Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
 </body>
 </html>'''
 def token_card():
