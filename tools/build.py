@@ -207,6 +207,15 @@ def bare(title, desc, path, body, extra_head=''):
     head = re.sub(r'<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https://fonts[^\n]*\n', '', head)
     head = head.replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
     return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
+def bust(page):
+    """Content-hash every local CSS/JS link, so new HTML never pairs with a stylesheet an edge or browser cached earlier."""
+    import hashlib
+    def ver(m):
+        path = m.group(2)
+        try: v = hashlib.sha256(open(path.lstrip('/'), 'rb').read()).hexdigest()[:10]
+        except OSError: return m.group(0)
+        return f'{m.group(1)}{path}?v={v}"'
+    return re.sub(r'((?:href|src)=")(/(?:style\.css|assets/[\w.-]+\.(?:css|js)))"', ver, page)
 pages = []
 for e in entries:
     meta, body = e['meta'], e['body']
@@ -227,7 +236,7 @@ for e in entries:
         out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
-    os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(out); pages.append(meta['path'])
+    os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(bust(out)); pages.append(meta['path'])
 def rfc822(d):
     try: return datetime.datetime.fromisoformat(d).replace(tzinfo=datetime.timezone.utc).strftime('%a, %d %b %Y 00:00:00 +0000')
     except ValueError: return ''
