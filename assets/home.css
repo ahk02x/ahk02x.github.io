@@ -39,3 +39,8 @@
 .act-tabs button[aria-selected="true"]{color:#efefeb}
 .act-tabs button:focus-visible{outline:1px solid #efefeb;outline-offset:3px}
 .act-p{display:grid;gap:6px}.act-p[hidden]{display:none}
+.activity{gap:16px}
+.act-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px;border-bottom:1px solid #3a3a37;padding-bottom:5px}
+.act-h b{font:700 10px Arial,Helvetica,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#efefeb}
+.act-h span{font:9px monospace;color:#8d8d89}
+.hm{gap:2px}
