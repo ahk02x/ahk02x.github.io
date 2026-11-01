@@ -70,6 +70,17 @@
     return `<div class="tr-card"><div class="tr-head"><b>${c.title}</b>${badge}<span class="tr-u">${c.unit}</span></div>${svg}${legend}</div>`;
   }
 
+  // The jarvis feed rewrites the file every night, even when the car sat, so >2 days old means the feed stopped.
+  function updated(iso) {
+    const el = $('updated'), t = iso ? new Date(iso) : null;
+    if (!t || isNaN(t)) { el.innerHTML = '<i></i>Last updated: unknown'; el.classList.add('tr-stale'); return; }
+    const h = (Date.now() - t) / 36e5;
+    const ago = h < 1 ? 'under an hour ago' : h < 48 ? `${Math.round(h)} h ago` : `${Math.round(h / 24)} days ago`;
+    const when = t.toLocaleString('en', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    el.innerHTML = `<i></i>Last updated ${ago} · ${when}` + (h > 48 ? ' · the feed has stopped, these numbers are old' : '');
+    el.classList.toggle('tr-stale', h > 48);
+  }
+
   function render(d, w, cmp) {
     const all = d.weeks, n = w && w < all.length ? w : all.length, cur = all.slice(-n);
     const prev = cmp && w && all.length >= 2 * n ? all.slice(-2 * n, -n) : null;
@@ -81,7 +92,8 @@
   fetch('/data/sq_trends.json').then(r => r.json()).then(d => {
     let w = 8;
     baseline(d);
-    $('asof').textContent = `Through the week of ${day(d.through_week)}. Weeks only, never trip dates or times. The current week fills in as it is driven.`;
+    updated(d.generated);
+    $('asof').textContent = `Through the week of ${day(d.through_week)}. Completed weeks only, never trip dates or times; a week appears the Monday after it ends.`;
     $('win').addEventListener('click', e => {
       const b = e.target.closest('button'); if (!b) return;
       w = +b.dataset.w;
