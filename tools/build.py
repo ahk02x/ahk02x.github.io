@@ -67,8 +67,11 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'SQ5 garage', 'Sq': 'SQ platform', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'Crucix': 'Crucix', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'jackal-protocol-re'}
-    shares = [(pub[p['project']], p['tokens']) for p in tok['top_projects'] if p['project'] in pub]
+    pub = {'sq-garage': 'VIP', 'Sq': 'VIP', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'Crucix': 'Crucix', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'VIP'}  # VIP = the car, its app and the cable RE: one project
+    merged = collections.Counter()
+    for p in tok['top_projects']:
+        if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
+    shares = merged.most_common()
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
@@ -83,7 +86,7 @@ def token_card():
             return lbl + ' <small>so far</small>' if ym == this_month else lbl
         mbars = ''.join(f'<div>{mlabel(m["month"])}</div><div class="b"><i style="width:{100*m["tokens"]/mmx:.1f}%"></i></div><div class="n">{m["tokens"]/1e9:.2f} B</div>' for m in months)
         month_html = f'<div class="eyebrow" style="margin-top:26px">By month</div><div class="bars">{mbars}</div>'
-    return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["ledger"]}<h3>Built with Claude Code</h3></div>
+    return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["ledger"]}<h3>Built with AI assistance</h3></div>
 <p>Claude Code has been part of the work behind these projects. Usage recorded in its transcripts since {first}, deduplicated:</p>
 <div class="tiles"><div class="tile"><div class="k">Tokens</div><div class="v">{tot/1e9:.2f}<small>billion</small></div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project</div><div class="bars">{bars}</div>
