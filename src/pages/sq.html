@@ -52,10 +52,50 @@ nav: /projects/
 <p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
 
 <h2>The app</h2>
-<p>The other half of the work: a phone-first app that turns logged drives into understanding, not gauges. A data layer, a rules engine and a vehicle brain that learns each car's own normal. It opens on 35 real drives; no live link yet.</p>
+<p>The other half of the work: a phone-first app that turns logged drives into understanding, not gauges. A data layer, a rules engine and a vehicle brain that learns each car's own normal. It opens on 35 real drives; <a href="https://sq-sq-dev.vercel.app">try the demo</a>.</p>
+
+<h2>Timeline</h2>
+<dl class="spec timeline">
+<dt>Jun 27 2026</dt><dd><strong>Platform app founded.</strong> The app repo opens with a vision, a roadmap and a decision log. The goal is vehicle intelligence, not another OBD reader.</dd>
+<dt>Jul 3 2026</dt><dd><strong>Rules engine and data contract.</strong> Raw signals and the conclusions drawn from them become separate layers. A health card a non-expert can read lands the same day.</dd>
+<dt>Jul 4 2026</dt><dd><strong>Database and auth.</strong> The app gets a real database and sign-in.</dd>
+<dt>Jul 13 2026</dt><dd><strong>Garage repo and live stream.</strong> The research bench starts, and the logger streams live data that recovers when the link drops.</dd>
+<dt>Jul 15 2026</dt><dd><strong>Diagnostic dongle decoded.</strong> A Bluetooth sniff cracks a commercial dongle's obfuscated protocol: fault codes and live data at no cost.</dd>
+<dt>Jul 19 2026</dt><dd><strong>Pi in the car, raw CAN.</strong> The deep channels come straight off the bus, so logging no longer depends on the tuning cable.</dd>
+<dt>Jul 23 2026</dt><dd><strong>One normalizer.</strong> Every log is checked and renamed before it reaches the corpus. Nothing bypasses it.</dd>
+<dt>Jul 29 2026</dt><dd><strong>Pi uploads, and the MIN rule.</strong> The laptop leaves the data path. The same day a false "zero knock retard" is traced to reading MAX on a channel that only goes negative.</dd>
+<dt>Aug 31 2026</dt><dd><strong>3× data-rate collapse fixed.</strong> Stray bus frames were starving multi-frame requests. Settling them first brought the row rate back.</dd>
+<dt>Sep 10 2026</dt><dd><strong>Phone companion and history.</strong> A drive companion with sync that survives dead zones, and the car's recorded history on the dashboard.</dd>
+<dt>Oct 1 2026</dt><dd><strong>Weekly report goes live.</strong> A plain-language report goes out every Sunday.</dd>
+<dt>Oct 30 2026</dt><dd><strong>Outside review sets a gate.</strong> A read-only review led to a quality gate: a raw data tier, provenance on every drive, flags on suspect channels.</dd>
+<dt>Now</dt><dd><strong>Parked at a verified gate.</strong> Car modifications and their dates are in the build log tab.</dd>
+</dl>
+
+<h2>Problems I hit</h2>
+<ul>
+<li><strong>Populated is not correct.</strong> Three confident claims rested on a dead fuel-trim channel, a boost setpoint read as measured boost, and a rail-pressure column mistaken for boost. 14 channels now carry suspect flags.</li>
+<li><strong>Clocks with no label.</strong> Logger time was local and unlabelled, so drives landed in the wrong week. Every drive now records its clock, offset, decoder and channel-map version.</li>
+<li><strong>No raw bytes kept.</strong> A decoder fix could not be re-applied to old drives. Now a raw sidecar is kept per drive with a rebuild-from-raw tool.</li>
+<li><strong>A silent cable.</strong> No vendor app, and the serial link stayed silent at every baud rate. It turned out to need a handshake and an open command, then read engine-computer RAM, not OBD. About 5 Hz is the ceiling; poll faster and it returns nothing.</li>
+<li><strong>A test that stopped answering.</strong> The planned coil swap for cylinder 3 lost its decision rule once cylinders 4 and 6 caught up to it. It is re-planned around light-load counts outside shift windows.</li>
+<li><strong>Remote access went dark.</strong> The Pi wedged while parked: the port answered, the shell never did. The next deploy waits on it.</li>
+</ul>
+<p class="muted">Plus the boot storms and the signed-channel bug above.</p>
+
+<h2>In the pipeline</h2>
+<dl class="spec">
+<dt>built, blocked on Pi access</dt><dd><strong>Pi recorder deploy</strong>: raw-byte recorder and new channel map, restarting only when the car is quiet.</dd>
+<dt>designed</dt><dd><strong>Low-voltage cutoff</strong>: a hardware current sensor that cuts the logger before the battery suffers.</dd>
+<dt>planned</dt><dd><strong>Cylinder 3 diagnosis</strong>: per-cylinder read, smoke test, then the coil swap under the new rule.</dd>
+<dt>next gate</dt><dd><strong>Live feed into the app</strong>: the logger streaming straight to the app instead of batch uploads.</dd>
+<dt>built on a simulator, waits on live data</dt><dd><strong>Readiness card</strong>: "ready to drive hard" from oil versus coolant warm-up, and heat soak at shutdown.</dd>
+<dt>open issues</dt><dd><strong>App queue</strong>: live cylinder-3 tile, "compared with your usual" rows, a logger self-test, per-cylinder rules.</dd>
+<dt>built, not live</dt><dd><strong>YouTube channel</strong>: upload pipeline, voice and three ready video specs.</dd>
+</dl>
 
 <h2>Tools built for it</h2>
 <div class="grid">
+<div class="card"><div class="head">{{glyph:node}}<h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">private repos</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
 <a class="card" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head">{{glyph:cross}}<h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
 <a class="card" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
 </div>
@@ -68,8 +108,5 @@ nav: /projects/
 <li>Trust the physical part in your hand, not the listing photo.</li>
 <li>Never delete an assertion to make a model render.</li>
 </ul>
-
-<h2>Next</h2>
-<p>A measured low-voltage cutoff for the Pi. Proving which counter index is which physical cylinder before anyone touches a coil. Then the coil swap as a designed experiment with a before and after, not a hunch.</p>
 </main>
 
