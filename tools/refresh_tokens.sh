@@ -7,8 +7,9 @@ python3 tools/tokens.py >/dev/null
 python3 tools/gpt_tokens.py
 python3 tools/gpt_history.py >/dev/null
 python3 tools/github_activity.py || true
+python3 tools/workout_activity.py || true
 python3 tools/build.py >/dev/null
 if [[ -f "$HOME/.config/ahk02x-site/autopush" && "$(git branch --show-current)" == main ]]; then
-  git add data/tokens.json data/gpt_tokens.json data/gpt_history.json index.html projects/index.html _site 2>/dev/null || true
+  git add data/tokens.json data/gpt_tokens.json data/gpt_history.json data/workout.json index.html projects/index.html _site 2>/dev/null || true
   git diff --cached --quiet || { git commit -qm "Token counts $(date '+%Y-%m-%d %H:00')" && git push -q origin main; }
 fi
