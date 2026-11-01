@@ -58,7 +58,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav></header>
+<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 {body}
 <footer class="site-footer"><span>Site and writing by Amir Hossein Khademi</span><span>AHK02X / Toronto</span></footer>
 </div>
@@ -205,7 +205,7 @@ def bare(title, desc, path, body, extra_head=''):
     full = chrome(title, desc, path, '', path, extra_head)
     head = full.split('<body>')[0].replace('<link rel="stylesheet" href="/style.css">', '<link rel="stylesheet" href="/assets/home.css">')
     head = re.sub(r'<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https://fonts[^\n]*\n', '', head)
-    head = head.replace('<script src="/assets/theme-init.js"></script>\n', '').replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
+    head = head.replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
     return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
 pages = []
 for e in entries:

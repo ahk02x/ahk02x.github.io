@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SQ5 platform · Amir Khademi</title>
+<title>VIP · Vehicle Intelligence Platform · Amir Khademi</title>
 <meta name="description" content="Amir Khademi&#x27;s 2025 Audi SQ5: what&#x27;s on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.">
 <link rel="canonical" href="https://ahk02x.dev/sq/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/site.js" defer></script>
 <meta name="theme-color" content="#d4d5d1">
-<meta property="og:title" content="SQ5 platform · Amir Khademi">
+<meta property="og:title" content="VIP · Vehicle Intelligence Platform · Amir Khademi">
 <meta property="og:description" content="Amir Khademi&#x27;s 2025 Audi SQ5: what&#x27;s on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/sq/">
@@ -19,16 +19,16 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","address":{"@type":"PostalAddress","addressLocality":"Toronto","addressRegion":"ON","addressCountry":"CA"},"knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"SQ5 platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","address":{"@type":"PostalAddress","addressLocality":"Toronto","addressRegion":"ON","addressCountry":"CA"},"knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"VIP · Vehicle Intelligence Platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav></header>
+<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page">
-<section class="hero"><div class="eyebrow">SQ5 · 2025 · 3.0 litre turbo V6</div><h1>SQ5 platform</h1>
-<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby.</p>
+<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>VIP</h1>
+<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of VIP: not more data, more understanding.</p>
 <div class="readouts">
 <a class="readout crit" href="/sq/health.html" data-health-date="2026-10-27"><div class="k">This week</div><div class="v" data-health-label>Needs attention</div><div class="s">Week of Oct 20 to Oct 27 · <u>open the health card</u></div></a>
 <div class="readout"><div class="k">Logged</div><div class="v">243<small>drives</small></div><div class="s">just under 600,000 samples, integrity clean</div></div>
@@ -74,8 +74,16 @@
 <h2>The weekly health card</h2>
 <p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
 
-<h2>The app</h2>
-<p>The other half of the work: a phone-first app that turns logged drives into understanding, not gauges. A data layer, a rules engine and a vehicle brain that learns each car's own normal. It opens on 35 real drives; <a href="https://sq-sq-dev.vercel.app">try the demo</a>.</p>
+<h2>The idea</h2>
+<p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, VIP understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
+<dl class="spec">
+<dt>Data layer</dt><dd>Collects and normalizes. Makes no decisions.</dd>
+<dt>Rules engine</dt><dd>Turns data into facts. Never decides what the owner sees.</dd>
+<dt>Vehicle brain</dt><dd>Combines state, history, baselines and rules into understanding. Every car has its own normal, and the brain learns it.</dd>
+<dt>Interface</dt><dd>Shows only what the brain prepared. No parsing, no thresholds, no severity logic in the screens.</dd>
+</dl>
+<p>History is a living medical record for the car, not a log. Further out: a <strong>Vehicle Passport</strong>, so a used-car buyer can see how a car actually lived. AI comes last, reasoning from years of structured knowledge rather than guessing. Architecture came before screens on purpose: features are temporary, architecture is permanent.</p>
+<p>The app is phone-first and opens on 35 real drives. <a href="https://sq-sq-dev.vercel.app">Try the demo</a>.</p>
 
 <h2>Timeline</h2>
 <dl class="spec timeline">
