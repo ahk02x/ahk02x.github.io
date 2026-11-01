@@ -44,3 +44,7 @@
 .act-h b{font:700 10px Arial,Helvetica,sans-serif;letter-spacing:.11em;text-transform:uppercase;color:#efefeb}
 .act-h span{font:9px monospace;color:#8d8d89}
 .hm{gap:2px}
+.hm-k{display:flex;justify-content:flex-end;align-items:center;gap:3px;margin-top:4px;font:9px monospace;color:#8d8d89}
+.hm-k i{display:block;width:8px;height:8px;border-radius:2px;background:#262624}
+.hm-k i:first-of-type{margin-left:3px}.hm-k i:last-of-type{margin-right:3px}
+.hm-k .l1{background:#0d2c4f}.hm-k .l2{background:#114a86}.hm-k .l3{background:#1769c4}.hm-k .l4{background:#2f8fff}.hm-k .l5{background:#8ccaff}

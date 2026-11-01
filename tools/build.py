@@ -127,7 +127,10 @@ def grid_html(days, today):
         v = days.get(d.isoformat(), 0); lvl = 0 if not v else 1 + sum(v > x for x in q)
         cells.append(f'<i class="l{lvl}" style="grid-column:{col};grid-row:{(d.weekday() + 1) % 7 + 1}" title="{d.isoformat()}: {v:,}"></i>')
         d += dt.timedelta(days=1)
-    return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>'
+    def sh(n): return f"{n/1e9:.1f}B" if n >= 1e9 else f"{n/1e6:.0f}M" if n >= 1e6 else f"{n/1e3:.0f}K" if n >= 1e3 else f"{n}"
+    tips = ['none'] + [f"up to {sh(q[0])}"] + [f"{sh(a)}–{sh(b)}" for a, b in zip(q, q[1:])] + [f"over {sh(q[-1])}"]
+    key = '<div class="hm-k">Less' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in enumerate(tips)) + 'More</div>'
+    return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>' + key
 def gh_grid():
     import datetime as dt
     g = json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}
