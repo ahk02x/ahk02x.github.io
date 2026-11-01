@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Assemble the site: src/pages/*.html (front matter + body) -> root. Shared chrome, data-driven readouts, sitemap."""
-import os, re, json, glob, html, datetime, shutil
+import os, re, json, glob, html, datetime, shutil, collections
 from public_data import public_tokens
 ROOT = os.path.join(os.path.dirname(__file__), '..'); os.chdir(ROOT)
 tok = public_tokens(json.load(open('data/tokens.json'))) if os.path.exists('data/tokens.json') else {}
@@ -15,6 +15,7 @@ try:
     datetime.date.fromisoformat(hc.get('generated', ''))
 except (TypeError, ValueError):
     word, cls = 'No dated snapshot', 'unknown'
+SECTIONS = [('/about.html', 'About'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/sq/', 'Car'), ('/writing/', 'Writing'), ('mailto:amir@ahk02x.com', 'Contact')]
 NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/sq/', 'SQ5 garage'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
 MARK = '<svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>'
 GLYPHS = {
@@ -29,7 +30,8 @@ GLYPHS = {
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
     if 'Amir Khademi' not in title and title != 'Not found': title = f'{title} · Amir Khademi'  # every indexed page carries the author's name
-    nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == nav_key else '') + f'><span class="nav-index" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(NAV))
+    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and path.startswith(h)), '')
+    nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == sec else '') + f'><span class="nav-no" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(SECTIONS, 1))
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -39,12 +41,10 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <meta name="description" content="{html.escape(desc)}">
 <link rel="canonical" href="https://ahk02x.dev{path}">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <script src="/assets/theme-init.js"></script>
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/site.js" defer></script>
-<meta name="theme-color" content="#f2f0e9">
+<meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:type" content="website">
@@ -56,9 +56,12 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 {extra_head}</head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="top"><div class="wrap"><a class="brand" href="/" aria-label="ahk02x — home">{MARK}<span class="word">ahk02x<span> / field notes</span></span></a><nav class="main" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" aria-label="Switch to dark theme" hidden><span class="theme-icon" aria-hidden="true">◐</span><span data-theme-label>Dark</span></button></div></header>
+<div class="site-shell">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav></header>
 {body}
-<footer><div class="wrap"><div class="footer-heading"><span class="eyebrow">Have a question or a good problem?</span><a class="footer-contact" href="mailto:amir@ahk02x.com">Let's talk.<span aria-hidden="true">↗</span></a></div><div class="footer-meta"><span class="word">{MARK} ahk02x / Amir Khademi</span><span>Site and writing by Amir Hossein Khademi · Toronto, Canada · Text beats calls.</span><a href="https://github.com/ahk02x">GitHub ↗</a><a href="mailto:amir@ahk02x.com">Email ↗</a><a href="#main">Back to top ↑</a></div></div></footer>
+<footer class="site-footer"><span>Site and writing by Amir Hossein Khademi</span><span>AHK02X / Toronto</span></footer>
+</div>
 </body>
 </html>'''
 def token_card():
@@ -89,10 +92,44 @@ def token_card():
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # hand-entered ChatGPT estimate (2023 on), see file
 _ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
+def activity():
+    import datetime as dt
+    days = collections.Counter()
+    for d in (tok or {}).get('by_day', []): days[d['day']] += d['tokens']
+    for d, v in gtok.get('by_day', {}).items(): days[d] += v
+    if not days: return '', ''
+    today = dt.date.fromisoformat(max(max(days), gtok.get('updated', '0000')[:10]))
+    on = sorted(dt.date.fromisoformat(d) for d, v in days.items() if v)
+    best = run = 0; prev = None
+    for d in on:
+        run = run + 1 if prev and (d - prev).days == 1 else 1; best = max(best, run); prev = d
+    cur = 0; d = today
+    while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
+    if not cur and days.get((today - dt.timedelta(days=1)).isoformat()):
+        d = today - dt.timedelta(days=1)
+        while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
+    def short(n): return f"{n/1e9:.2f}B" if n >= 1e9 else f"{n/1e6:.1f}M" if n >= 1e6 else f"{n:,}"
+    lt = (tok or {}).get('longest_task_min', 0)
+    stats = [(short(_ct + _gt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
+             (f"{lt//60}h {lt%60:02d}m" if lt else '—', 'Longest task'), (f"{best} days", 'Longest streak'), (f"{cur} days", 'Current streak')]
+    strip = ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in stats)
+    nz = sorted(v for v in days.values() if v); q = [nz[int(len(nz) * f)] for f in (.25, .5, .75, .9)] if nz else [1] * 4
+    start = today - dt.timedelta(days=7 * 52 + (today.weekday() + 1) % 7)
+    cells = []; months = []; d = start; col = 0
+    while d <= today:
+        if d.weekday() == 6 or d == start:
+            if d.day <= 7: months.append(f'<span style="grid-column:{col + 1}">{d.strftime("%b")}</span>')
+            col += 1
+        v = days.get(d.isoformat(), 0); lvl = 0 if not v else 1 + sum(v > x for x in q)
+        cells.append(f'<i class="l{lvl}" style="grid-column:{col};grid-row:{(d.weekday() + 1) % 7 + 1}" title="{d.isoformat()}: {v:,} tokens"></i>')
+        d += dt.timedelta(days=1)
+    grid = f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>'
+    return strip, grid
 subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{_gt:,}" if _gt else '—',
         '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
         '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
         '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
+        '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1],
         '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
