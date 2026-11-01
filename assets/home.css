@@ -1,0 +1,27 @@
+/* Drawer home: black stage, light streaks behind, sections as tabbed index cards. Single dark look by choice. */
+:root{--black:#000;--line:#6b6b66;--paper:#ecebe6;--ink:#111;--dim:#8a8a85;--white:#f2f2ef;--sans:"Archivo","Helvetica Neue",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--black);color:var(--white);font-family:var(--sans);overflow:hidden}
+.streaks{position:fixed;inset:0;width:100%;height:100%}
+.stage{position:relative;height:100%;min-height:620px;display:grid;grid-template-rows:auto 1fr auto;justify-items:center;padding-block:max(2.4rem,env(safe-area-inset-top)) .8rem;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow:hidden}
+.name{text-align:center}
+.name small{display:block;font:500 .72rem var(--mono);letter-spacing:.6em;margin-right:-.6em;color:var(--dim);margin-bottom:.7rem;text-transform:uppercase}
+h1{font:500 clamp(2.2rem,6vw,3.8rem)/1 var(--sans);letter-spacing:-.02em;margin:0}
+.drawer{position:relative;align-self:end;width:min(560px,100%);height:450px;--n:6}
+.card{position:absolute;left:50%;height:170px;width:calc(80% + var(--i) * 3.4%);bottom:calc(-44px + (var(--n) - 1 - var(--i)) * 30px);z-index:calc(var(--i) + 1);background:var(--black);border:1px solid var(--line);transform:translateX(-50%);transition:transform .55s cubic-bezier(.2,.8,.2,1),background .3s,color .3s,border-color .3s}
+.card .tab{position:absolute;top:-18px;left:var(--x);height:18px;padding:0 12px;font:600 .6rem/17px var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--black);color:var(--white);border:1px solid var(--line);border-bottom:0;cursor:pointer;transition:inherit}
+.card .tab:hover{color:var(--paper);border-color:var(--paper)}
+.card .tab:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+.card .body{padding:1.2rem 1.4rem;font:400 .82rem/1.55 var(--mono);visibility:hidden;opacity:0;transition:opacity .3s}
+.card .body p{margin:0}
+.card .body em{display:block;font-style:normal;color:var(--dim);font-size:.68rem;letter-spacing:.06em;margin-bottom:.6rem;text-transform:uppercase}
+.card .body a{display:inline-block;margin-top:.8rem;color:inherit;font-weight:600;text-decoration:none;border-bottom:1px solid currentColor}
+.card.up{background:var(--paper);color:var(--ink);border-color:var(--paper);transform:translate(-50%,calc(-1 * (var(--i) * 30px + 180px)))}
+.card.up .tab{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.card.up .body{visibility:visible;opacity:1}
+.base{position:absolute;left:0;right:0;bottom:0;height:96px;background:var(--black);border:1px solid var(--line);border-bottom:0;display:grid;place-items:center;font:600 .66rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--dim);z-index:50}
+.colophon{font:400 .62rem var(--mono);color:var(--dim);letter-spacing:.04em;padding-top:.6rem;text-align:center}
+.skip-link{position:absolute;left:-999px}
+@media (max-height:760px){.name{transform:scale(.85)}}
+@media (prefers-reduced-motion:reduce){.card,.card .body{transition:none}}

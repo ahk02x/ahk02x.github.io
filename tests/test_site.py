@@ -84,15 +84,15 @@ class SiteChecks(unittest.TestCase):
         page = self.health(data)
         for text in ('at or above 130 °C threshold', 'at or above 110 °C threshold', 'at or beyond −6° threshold'):
             self.assertIn(text, page)
-    def test_missing_health_file_and_unknown_status_on_home(self):
+    def test_missing_health_file_and_unknown_status_on_garage(self):
         (self.site/'sq/health.json').unlink()
         self.run_script('build.py')
-        page = (self.site/'index.html').read_text()
+        page = (self.site/'sq/index.html').read_text()
         self.assertIn('No dated snapshot', page)
         self.assertNotIn('>Healthy<', page)
         (self.site/'sq/health.json').write_text(json.dumps({'status':'BAD', 'generated':'2026-10-27'}))
         self.run_script('build.py')
-        self.assertIn('>No data<', (self.site/'index.html').read_text())
+        self.assertIn('>No data<', (self.site/'sq/index.html').read_text())
     def test_public_export_filters_private_names_without_changing_totals(self):
         path = self.site/'data/tokens.json'; data=json.loads(path.read_text())
         totals = data['total_tokens']; kinds = data['by_kind'].copy()
@@ -120,7 +120,7 @@ class SiteChecks(unittest.TestCase):
             self.assertNotIn('{{', text)
             self.assertEqual(page.main_count,1,str(path)); self.assertEqual(page.h1_count,1,str(path))
             self.assertIn('main',page.ids)
-        self.assertEqual(len(pages),14)
+        self.assertEqual(len(pages),15)
         for path,page in pages.items():
             for ref in page.refs:
                 u=urlsplit(ref)

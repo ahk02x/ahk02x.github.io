@@ -15,7 +15,7 @@ try:
     datetime.date.fromisoformat(hc.get('generated', ''))
 except (TypeError, ValueError):
     word, cls = 'No dated snapshot', 'unknown'
-NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/sq/', 'SQ5 garage'), ('/writing/', 'Writing'), ('/about.html', 'About')]
+NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/sq/', 'SQ5 garage'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
 MARK = '<svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>'
 GLYPHS = {
  'cross': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>',
@@ -145,6 +145,13 @@ def jsonld(meta, body):
                       'isPartOf': {'@id': WEBSITE_ID}, 'about': {'@id': PERSON_ID}})
     data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     return '<script type="application/ld+json">' + data + '</script>\n'
+def bare(title, desc, path, body, extra_head=''):
+    """Full-screen pages (the drawer home): same head and metadata, own stylesheet, no shared header."""
+    full = chrome(title, desc, path, '', path, extra_head)
+    head = full.split('<body>')[0].replace('<link rel="stylesheet" href="/style.css">', '<link rel="stylesheet" href="/assets/home.css">')
+    head = head.replace('family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500', 'family=Archivo:wght@400;500&family=IBM+Plex+Mono:wght@400;600')
+    head = head.replace('<script src="/assets/theme-init.js"></script>\n', '').replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#000000')
+    return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
 pages = []
 for e in entries:
     meta, body = e['meta'], e['body']
@@ -154,7 +161,10 @@ for e in entries:
     body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')
     if meta['path'].startswith('/writing/') and '<time datetime=' in body and 'class="byline"' not in body:
         body = body.replace('</h1>', '</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>', 1)
-    out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
+    if meta.get('layout') == 'bare':
+        out = bare(meta['title'], meta.get('description', ''), meta['path'], body, jsonld(meta, body))
+    else:
+        out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
     os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(out); pages.append(meta['path'])
