@@ -129,7 +129,7 @@ def grid_html(days, today):
         d += dt.timedelta(days=1)
     def sh(n): return f"{n/1e9:.1f}B" if n >= 1e9 else f"{n/1e6:.0f}M" if n >= 1e6 else f"{n/1e3:.0f}K" if n >= 1e3 else f"{n}"
     tips = ['none'] + [f"up to {sh(q[0])}"] + [f"{sh(a)}–{sh(b)}" for a, b in zip(q, q[1:])] + [f"over {sh(q[-1])}"]
-    key = '<div class="hm-k">Less' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in enumerate(tips)) + 'More</div>'
+    key = '<div class="hm-k">More' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in reversed(list(enumerate(tips)))) + 'Less</div>'
     return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>' + key
 def gh_grid():
     import datetime as dt
