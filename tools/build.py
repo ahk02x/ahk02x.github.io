@@ -86,7 +86,14 @@ def token_card():
 <div class="eyebrow" style="margin-top:26px">By project</div><div class="bars">{bars}</div>
 {month_html}
 <p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
-subs = {'{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
+gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
+ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # hand-entered ChatGPT estimate (2023 on), see file
+_ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
+subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{_gt:,}" if _gt else '—',
+        '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
+        '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
+        '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
+        '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
 for g, svg in GLYPHS.items(): subs['{{glyph:' + g + '}}'] = svg
@@ -149,8 +156,8 @@ def bare(title, desc, path, body, extra_head=''):
     """Full-screen pages (the drawer home): same head and metadata, own stylesheet, no shared header."""
     full = chrome(title, desc, path, '', path, extra_head)
     head = full.split('<body>')[0].replace('<link rel="stylesheet" href="/style.css">', '<link rel="stylesheet" href="/assets/home.css">')
-    head = head.replace('family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500', 'family=Archivo:wght@400;500&family=IBM+Plex+Mono:wght@400;600')
-    head = head.replace('<script src="/assets/theme-init.js"></script>\n', '').replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#000000')
+    head = re.sub(r'<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https://fonts[^\n]*\n', '', head)
+    head = head.replace('<script src="/assets/theme-init.js"></script>\n', '').replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
     return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
 pages = []
 for e in entries:
@@ -186,7 +193,7 @@ for entry in os.scandir(public_root):
         shutil.rmtree(entry.path)
     else:
         os.unlink(entry.path)
-public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'sq/health.json']
+public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
 public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
