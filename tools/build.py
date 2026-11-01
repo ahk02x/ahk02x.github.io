@@ -90,13 +90,14 @@ def token_card():
 {month_html}
 <p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
-ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # hand-entered ChatGPT estimate (2023 on), see file
+ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
 _ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
 def activity():
     import datetime as dt
     days = collections.Counter()
     for d in (tok or {}).get('by_day', []): days[d['day']] += d['tokens']
     for d, v in gtok.get('by_day', {}).items(): days[d] += v
+    for d, v in ghist.get('by_day', {}).items(): days[d] += v
     if not days: return '', ''
     today = dt.date.fromisoformat(max(max(days), gtok.get('updated', '0000')[:10]))
     on = sorted(dt.date.fromisoformat(d) for d, v in days.items() if v)
