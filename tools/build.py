@@ -113,6 +113,9 @@ def activity():
     stats = [(short(_ct + _gt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
              (f"{lt//60}h {lt%60:02d}m" if lt else '—', 'Longest task'), (f"{best} days", 'Longest streak'), (f"{cur} days", 'Current streak')]
     strip = ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in stats)
+    return strip, grid_html(days, today)
+def grid_html(days, today):
+    import datetime as dt
     nz = sorted(v for v in days.values() if v); q = [nz[int(len(nz) * f)] for f in (.25, .5, .75, .9)] if nz else [1] * 4
     start = today - dt.timedelta(days=7 * 52 + (today.weekday() + 1) % 7)
     cells = []; months = []; d = start; col = 0
@@ -121,15 +124,19 @@ def activity():
             if d.day <= 7: months.append(f'<span style="grid-column:{col + 1}">{d.strftime("%b")}</span>')
             col += 1
         v = days.get(d.isoformat(), 0); lvl = 0 if not v else 1 + sum(v > x for x in q)
-        cells.append(f'<i class="l{lvl}" style="grid-column:{col};grid-row:{(d.weekday() + 1) % 7 + 1}" title="{d.isoformat()}: {v:,} tokens"></i>')
+        cells.append(f'<i class="l{lvl}" style="grid-column:{col};grid-row:{(d.weekday() + 1) % 7 + 1}" title="{d.isoformat()}: {v:,}"></i>')
         d += dt.timedelta(days=1)
-    grid = f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>'
-    return strip, grid
+    return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>'
+def gh_grid():
+    import datetime as dt
+    g = json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}
+    if not g: return ''
+    return grid_html(collections.Counter(g['by_day']), dt.date.fromisoformat(max(max(g['by_day']), gtok.get('updated', '0000')[:10])))
 subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{_gt:,}" if _gt else '—',
         '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
         '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
         '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
-        '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1],
+        '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1], '{{gh_grid}}': gh_grid(), '{{gh_total}}': str((json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}).get('total', '—')),
         '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
@@ -230,7 +237,7 @@ for entry in os.scandir(public_root):
         shutil.rmtree(entry.path)
     else:
         os.unlink(entry.path)
-public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'sq/health.json']
+public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
 public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
