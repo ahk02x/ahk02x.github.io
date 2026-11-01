@@ -70,7 +70,7 @@ win = d.get('window', ['', '']); gen = (d.get('generated') or '')[:10]
 body = f'''title: SQ5 weekly health
 description: A one-page, plain-language weekly health card for Amir Khademi's Audi SQ5, generated from the car's own data logger.
 path: /sq/health.html
-nav: /sq/
+nav: /projects/
 ---
 <main class="wrap" data-health-date="{html.escape(gen)}">
 <section class="hero"><div class="eyebrow">SQ5 · week of {html.escape(win[0])} to {html.escape(win[1])} · generated {html.escape(gen)}</div><h1>Weekly health</h1>

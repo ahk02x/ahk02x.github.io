@@ -15,8 +15,8 @@ try:
     datetime.date.fromisoformat(hc.get('generated', ''))
 except (TypeError, ValueError):
     word, cls = 'No dated snapshot', 'unknown'
-SECTIONS = [('/about.html', 'About'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/sq/', 'Car'), ('/writing/', 'Writing'), ('mailto:amir@ahk02x.com', 'Contact')]
-NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/sq/', 'SQ5 garage'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
+SECTIONS = [('/about.html', 'About'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('mailto:amir@ahk02x.com', 'Contact')]
+NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
 MARK = '<svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>'
 GLYPHS = {
  'cross': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>',
@@ -211,6 +211,11 @@ pages = []
 for e in entries:
     meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
+    if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
+        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/build-log.html', 'Build log')]
+        strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
+            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
+        body = body.replace('</section>', '</section>' + strip, 1)
     if 'id="main"' not in body:
         body = body.replace('<main ', '<main id="main" ', 1)
     body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')

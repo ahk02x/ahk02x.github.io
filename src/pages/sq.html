@@ -1,9 +1,10 @@
-title: The SQ5 garage
+title: SQ5 platform
 description: Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.
 path: /sq/
+nav: /projects/
 ---
 <main class="wrap">
-<section class="hero"><div class="eyebrow">SQ5 · 2025 · 3.0 litre turbo V6</div><h1>The SQ5 garage</h1>
+<section class="hero"><div class="eyebrow">SQ5 · 2025 · 3.0 litre turbo V6</div><h1>SQ5 platform</h1>
 <p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby.</p>
 <div class="readouts">
 <a class="readout {{sq_cls}}" href="/sq/health.html" data-health-date="{{sq_generated}}"><div class="k">This week</div><div class="v" data-health-label>{{sq_word}}</div><div class="s">Week of {{sq_window}} · <u>open the health card</u></div></a>
@@ -22,7 +23,6 @@ path: /sq/
 <dt>Inside</dt><dd>Q7 steering wheel retrofit, carbon paddle shifter knob, dynamic hub caps, engine cover studs.</dd>
 <dt>Wanted</dt><dd>Cat-back exhaust, charge pipe, front strut brace, sway bar bundle, two-piece rotors, a carbon hood.</dd>
 </dl>
-<p class="muted">When each of these went on, and what the numbers did: <a href="/sq/build-log.html">the build log</a>.</p>
 
 <h2>How the data gets from the car to this page</h2>
 <figure class="diagram-figure"><svg class="diagram" viewBox="0 0 900 150" role="img" aria-label="Data path: car ECU to diagnostic cable to Raspberry Pi to home server to Sunday job to health card">
@@ -50,6 +50,15 @@ path: /sq/
 
 <h2>The weekly health card</h2>
 <p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
+
+<h2>The app</h2>
+<p>The other half of the work: a phone-first app that turns logged drives into understanding, not gauges. A data layer, a rules engine and a vehicle brain that learns each car's own normal. It opens on 35 real drives; no live link yet.</p>
+
+<h2>Tools built for it</h2>
+<div class="grid">
+<a class="card" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head">{{glyph:cross}}<h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
+<a class="card" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
+</div>
 
 <h2>Rules I keep</h2>
 <ul>
