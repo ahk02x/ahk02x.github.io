@@ -60,7 +60,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 {body}
-<footer class="site-footer"><span>Site and writing by Amir Hossein Khademi</span><span>AHK02X / Toronto</span></footer>
+<footer class="site-footer"><span>AHK02X / Toronto</span></footer>
 </div>
 </body>
 </html>'''

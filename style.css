@@ -40,7 +40,7 @@ img, svg { max-width: 100%; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { border-color: var(--black); }
 .site-nav a[aria-current="page"]::before { display: block; }
 .site-nav .nav-no { margin-right: 8px; font: 10px var(--mono); font-weight: 400; letter-spacing: 0; }
-.site-footer { display: flex; justify-content: space-between; gap: 16px; align-items: center; min-height: 58px; font: 700 10px/1.4 Arial, Helvetica, sans-serif; letter-spacing: .09em; text-transform: uppercase; }
+.site-footer { display: flex; justify-content: flex-end; gap: 16px; align-items: center; min-height: 58px; font: 700 10px/1.4 Arial, Helvetica, sans-serif; letter-spacing: .09em; text-transform: uppercase; }
 .site-footer span:last-child { font: 10px/1.4 var(--mono); letter-spacing: 0; text-transform: none; }
 
 /* Inner pages are the off-white card, with a black feature panel at the top. */
