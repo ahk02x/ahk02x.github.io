@@ -35,7 +35,7 @@ note: 6
 
 <h2>What it keeps showing</h2>
 <p>About 1% of a day's bytes stay home. Almost nothing in the internal panel is two of my boxes talking; it is traffic to the firewall, hence the separate tag. The standing anomaly was one container at 11 to 15 GB a day, the top LAN talker: it was re-downloading three public data files of about 250 MB each every 15 minutes and throwing them away. Bursts like that are irregular, so a short window reads as "stopped"; trust the day series.</p>
-<p>The dashboard lists its own blind spots: two devices with no sampler talking over the switch (the TV, the PC, the phones), a second segment in front of the firewall, and UDP between hosts, because the kernel keeps no per-socket byte counter for UDP. Totals are scoped to the calendar day in Toronto time, so a DST day comes out as 23 or 25 hours.</p>
+<p>The dashboard lists its own blind spots: two devices with no sampler talking over the switch (the TV, the PC, the phones), a second segment in front of the firewall, and UDP between hosts, because the kernel keeps no per-socket byte counter for UDP. Totals are scoped to the calendar day in local time, so a DST day comes out as 23 or 25 hours.</p>
 <p>A home network is a small place with an inconvenient shape. The box with the best view of what leaves has no view of what stays, and the summary it hands you double-counts. Two facts, two vantage points, and a chart that admits when it was not looking.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>

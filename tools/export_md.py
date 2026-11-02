@@ -48,5 +48,5 @@ canonical_url: {url}
 
 ---
 
-*Originally published at [ahk02x.dev]({url}). I'm Amir Khademi, a Site Reliability Engineer in Toronto; more field notes at [ahk02x.dev/writing](https://ahk02x.dev/writing/).*
+*Originally published at [ahk02x.dev]({url}). I'm Amir Khademi, a Site Reliability Engineer; more field notes at [ahk02x.dev/writing](https://ahk02x.dev/writing/).*
 ''')

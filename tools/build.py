@@ -60,7 +60,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 {body}
-<footer class="site-footer"><span>AHK02X / Toronto</span></footer>
+<footer class="site-footer"><span>AHK02X</span></footer>
 </div>
 </body>
 </html>'''
@@ -178,9 +178,8 @@ PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
           'givenName': 'Amir Hossein', 'familyName': 'Khademi',
           'url': SITE + '/', 'mainEntityOfPage': SITE + '/about.html',
           'jobTitle': 'Site Reliability Engineer',
-          'description': 'Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
+          'description': 'Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
-          'address': {'@type': 'PostalAddress', 'addressLocality': 'Toronto', 'addressRegion': 'ON', 'addressCountry': 'CA'},
           'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
           'sameAs': ['https://github.com/ahk02x']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
