@@ -47,8 +47,15 @@ fatal() { say "FATAL $*"; print -r -- "$(date '+%Y-%m-%d %H:%M:%S') $*" >| $FAIL
 
 # Never run from inside the tree this script resets: the reset would replace this file mid-run and
 # the shell would carry on executing whatever bytes landed at the same offset.
-[[ ${0:A} == $WT/* ]] \
-  && fatal "refusing to run from inside the publish worktree (${0:A}) - use the pinned runner: site-publish"
+if [[ ${0:A} == $WT/* ]]; then
+  fatal "refusing to run from inside the publish worktree (${0:A}) - use the pinned runner: site-publish"
+fi
+
+# SITE_PUBLISH_WT exists for testing only. Anywhere but the canonical worktree needs a second,
+# deliberate opt-in, because what follows resets and cleans whatever it is pointed at.
+if [[ ${WT:A} != ${HOME}/.local/share/ahk02x-site-publish && -z $SITE_PUBLISH_WT_OK ]]; then
+  fatal "SITE_PUBLISH_WT=$WT is not the publish worktree; set SITE_PUBLISH_WT_OK=1 if that is really meant"
+fi
 
 # One run at a time: the scheduled run and a hand-run share one worktree, and a second run
 # resetting it mid-build would stage a mix of the two.
