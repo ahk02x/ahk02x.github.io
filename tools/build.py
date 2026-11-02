@@ -225,7 +225,7 @@ for e in entries:
     meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
     if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
-        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/build-log.html', 'Build log')]
+        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
         strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
             f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
         body = body.replace('</section>', '</section>' + strip, 1)
@@ -261,7 +261,7 @@ for entry in os.scandir(public_root):
         os.unlink(entry.path)
 public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'data/sq_trends.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
-public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):

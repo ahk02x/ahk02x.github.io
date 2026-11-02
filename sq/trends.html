@@ -28,8 +28,12 @@
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page">
 <section class="hero"><div class="eyebrow">SQ5 · from the car's own logger · weekly</div><h1>Trends</h1>
-<p class="lede">The baseline the car has set for itself, then four things worth watching week to week. Each point is one week of driving; a gap is a week the car sat.</p></section><nav class="sq-tabs" aria-label="SQ5 sections"><a href="/sq/">Overview</a><a href="/sq/health.html">Weekly health</a><a href="/sq/trends.html" aria-current="page">Trends</a><a href="/sq/build-log.html">Build log</a></nav>
+<img class="tr-car" src="/assets/sq-car.jpg" alt="The SQ5, front three-quarter view" width="240" height="240">
+<p class="lede">The baseline the car has set for itself, then four things worth watching week to week. Each point is one week of driving; a gap is a week the car sat.</p></section><nav class="sq-tabs" aria-label="SQ5 sections"><a href="/sq/">Overview</a><a href="/sq/health.html">Weekly health</a><a href="/sq/trends.html" aria-current="page">Trends</a><a href="/sq/gallery.html">Gallery</a><a href="/sq/build-log.html">Build log</a></nav>
 <style>
+.inner-page > .hero:has(.tr-car){position:relative}
+.tr-car{position:absolute;right:56px;bottom:44px;width:150px;height:150px;border-radius:50%;object-fit:cover;border:2px solid #e5484d;box-shadow:0 0 0 6px rgba(229,72,77,.15)}
+@media (max-width:760px){.tr-car{position:static;display:block;width:96px;height:96px;margin:4px 0 14px}}
 .tr{--mis:#e5484d;--knk:#3b82f6;--oil:#e8572a;--bst:#1f9e6e;--rpm:#8b7cf6;--prev:var(--line);--good:#1f9e6e;--bad:#e5484d}
 .tr h2{font:12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px}
 .tr .tr-base{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
