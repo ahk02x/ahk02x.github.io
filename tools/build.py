@@ -181,7 +181,6 @@ PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
           'description': 'Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
           'address': {'@type': 'PostalAddress', 'addressLocality': 'Toronto', 'addressRegion': 'ON', 'addressCountry': 'CA'},
-          'alumniOf': {'@type': 'CollegeOrUniversity', 'name': 'York University', 'department': 'Lassonde School of Engineering'},
           'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
           'sameAs': ['https://github.com/ahk02x']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
