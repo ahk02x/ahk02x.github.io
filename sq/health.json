@@ -8,6 +8,11 @@
  "findings": [
   {
    "sev": "WATCH",
+   "text": "the Pi rebooted 49 times across 1 overnight park(s) \u2014 that is what drains the battery",
+   "action": "unplug the OBD dongle when the car sits overnight"
+  },
+  {
+   "sev": "WATCH",
    "text": "69% of your boost was on cold oil",
    "action": "oil takes ~35 min to warm up \u2014 go easy until then"
   },
