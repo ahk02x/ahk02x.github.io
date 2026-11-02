@@ -9,7 +9,7 @@
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
 <link rel="stylesheet" href="/style.css?v=e610d3065b">
-<script src="/assets/site.js?v=9827935157" defer></script>
+<script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Infra — the hardware I run · Amir Khademi">
 <meta property="og:description" content="The hardware Amir Khademi runs at home and in his car: an OPNsense firewall on an old Dell, a Ryzen Proxmox host, a mini PC, a ZFS pool, a wall display, and a Raspberry Pi logger in an Audi SQ5.">
@@ -28,7 +28,7 @@
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html" aria-current="page"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page narrow">
 <section class="hero"><div class="eyebrow">Infra</div><h1>The hardware I run</h1>
-<p class="lede">Most of it is second-hand or rescued. All of it is mine to break.</p></section>
+<p class="lede">Humble beginnings. Most of it is second-hand or rescued, and all of it is mine to break. The goal: my own datacenter, run from my room.</p></section>
 <h2>Network</h2>
 <ul>
 <li><strong>blackwall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house. It runs on a Corsair RM650x after the original power supply died.</li>
@@ -36,9 +36,8 @@
 </ul>
 <h2>Servers</h2>
 <ul>
-<li><strong>jarvis</strong>: Ryzen 5 5600GE, 32 GB DDR4, 1 TB NVMe on ZFS, RTX 2070 SUPER. Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. About 111 W at idle.</li>
+<li><strong>jarvis</strong>: Ryzen 5 5600GE, 32 GB DDR4, RTX 2070 SUPER, and the house's storage: a 1 TB NVMe for the system and three 4 TB IronWolf drives in RAIDZ1, about 6.9 TB usable, all on ZFS. Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. About 111 W at idle.</li>
 <li><strong>sentry</strong>: an Intel N5105 mini PC (8 GB) that runs the room: the wall display, the Stream Deck and the lights.</li>
-<li><strong>Storage</strong>: three 4 TB IronWolf drives in RAIDZ1, about 6.9 TB usable.</li>
 </ul>
 <h2>Desk and wall</h2>
 <ul>
@@ -49,12 +48,14 @@
 </ul>
 <h2>Car</h2>
 <ul>
-<li><strong>Audi SQ5</strong>: a Raspberry Pi 4 in a 3D-printed case and a CANable 2.0 Pro on the diagnostic bus. It logs every drive and sends it home to the home server. <a href="/sq/">Inside VIP</a>.</li>
+<li><strong>Audi SQ5</strong>: a Raspberry Pi 4 in a 3D-printed case and a CANable 2.0 Pro on the diagnostic bus. It logs every drive to its own storage, and when the car is parked at home it joins the WiFi and sends the drives over to jarvis. <a href="/sq/">Inside VIP</a>.</li>
 </ul>
 <h2>Around the house</h2>
 <ul>
 <li>An LG C2 OLED, Google Home speakers and Govee lights, all driven through Home Assistant.</li>
 </ul>
+<h2>Where it's going</h2>
+<p>A datacenter in my room. NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards to build and run my own models, Ubiquiti gear end to end, and proper NAS storage. It starts with what's above.</p>
 </main>
 <footer class="site-footer"><span>AHK02X / Toronto</span></footer>
 </div>

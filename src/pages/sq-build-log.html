@@ -5,19 +5,39 @@ nav: /projects/
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">SQ5 · build log</div><h1>The SQ5 build log</h1>
-<p class="lede">The overview says what is on the car. This is the order it went on, with the numbers each change moved where I have them. Where I kept no date, I say so.</p></section>
+<p class="lede">The overview says what is on the car. This is the order it went on, with the numbers each change moved where I have them. Part dates come from my order receipts and card statements, so a part's date is when I ordered it unless I say it went on.</p></section>
 
-<h2>Earlier</h2>
-<p>No dates kept for these.</p>
+<h2>How it started</h2>
+<p>The thermostat went. After that I wanted to see the next problem coming, not find out about it after.</p>
+<p>So on June 27, 2026 I started on the couch, on my phone: a GitHub repo, a page on what this had to become, a roadmap and a decision log, all typed into GitHub's web editor. It had three jobs. See everything coming. Catch problems early. And build an engine database clean enough to train on. Everything below is that, one step at a time.</p>
+
+<h2>January 2026</h2>
 <ul>
-<li><strong>Air in, air cooled.</strong> 034 S34 carbon intake with the aluminium turbo inlet; IE FDS intercooler.</li>
-<li><strong>Chassis.</strong> 034 Dynamic+ lowering springs, 034 billet mount inserts and the Street Density transmission mount, CTS flush spacers (15 mm front, 20 mm rear). Alignment after.</li>
-<li><strong>A gearbox-computer unlock.</strong> The logger saw nothing: the request frames came back byte-identical, and shift firmness lives at 100 to 300 ms, under what five reads a second can resolve.</li>
-<li><strong>The logger.</strong> Reverse-engineered the diagnostic cable and wrote my own reader: one request every 0.18 s, about five a second.</li>
+<li><strong>Air in.</strong> 034 S34 carbon intake with the aluminium turbo inlet, ordered January 13.</li>
+<li><strong>Chassis.</strong> 034 billet mount inserts (rear differential, rear subframe, transmission) and the Street Density transmission mount, January 26; 034 Dynamic+ lowering springs, January 28.</li>
+</ul>
+
+<h2>February 2026</h2>
+<ul>
+<li><strong>Stance.</strong> CTS flush spacers, 15 mm front and 20 mm rear, picked up February 20, and the car aligned the same day.</li>
+</ul>
+
+<h2>By May 2026</h2>
+<ul>
+<li><strong>High-flow cats.</strong> I have no receipt for these. A dealer visit on May 13 recorded them as already fitted.</li>
+</ul>
+
+<h2>June 2026</h2>
+<ul>
+<li><strong>Tune ordered,</strong> June 10: Jackal Stage 2 for the engine and gearbox computers, with the flash cable that later became the logger's way into the car.</li>
+<li><strong>Air cooled.</strong> IE FDS intercooler, ordered June 12.</li>
+<li><strong>A gearbox-computer unlock,</strong> ordered June 15 and done July 13. The logger saw nothing: the request frames came back byte-identical, and shift firmness lives at 100 to 300 ms, under what five reads a second can resolve.</li>
+<li><strong>The project starts,</strong> June 27. See above.</li>
 </ul>
 
 <h2>July 2026</h2>
 <ul>
+<li><strong>The logger.</strong> Reverse-engineered the diagnostic cable and wrote my own reader: one request every 0.18 s, about five a second. The first drive was logged July 4.</li>
 <li><strong>Stage 2 engine and gearbox tune.</strong> These drives are the baseline. Measured charge pressure peaks at about 23 to 24 psi between 4,500 and 5,500 rpm and tapers to about 21 by 6,000; wastegate duty sits at 87 to 95% at full throttle up top. That curve has not moved through October. The extra torque plus brake-boosting put a lock-up clutch code, P1812, in the gearbox. I stopped brake-boosting.</li>
 </ul>
 

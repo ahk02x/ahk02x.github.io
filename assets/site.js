@@ -36,5 +36,13 @@
       const notice = element.querySelector('[data-stale-notice]');
       if (notice) notice.hidden = false;
     }
+    // Weekly cadence: the next card is due seven days after this one; past a day over, say it is late.
+    const line = element.querySelector('[data-health-updated]');
+    if (line && Number.isFinite(date)) {
+      const day = ms => new Date(ms).toLocaleDateString('en', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+      const next = date + 7 * 86400000, late = Date.now() > next + 86400000;
+      line.innerHTML = `<span>Last updated ${day(date)}</span><span class="hc-next">${late ? `Next update was due ${day(next)} · late` : `Next update ${day(next)}`}</span>`;
+      line.classList.toggle('late', late);
+    }
   });
 })();

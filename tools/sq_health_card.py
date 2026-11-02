@@ -26,19 +26,19 @@ WORD = {'OK': 'Healthy', 'WATCH': 'Keep an eye on it', 'FLAG': 'Needs attention'
 def n(x, nd=0):
     try: return f"{float(x):,.{nd}f}"
     except Exception: return '—'
-def tile(k, v, unit, t): return f'<div class="tile"><div class="k">{html.escape(k)}</div><div class="v">{html.escape(v)}<small>{html.escape(unit)}</small></div><div class="t">{html.escape(t)}</div></div>'
+def tile(k, v, unit, t, lvl=''): return f'<div class="tile{" hc-" + lvl if lvl else ""}"><div class="k">{html.escape(k)}</div><div class="v">{html.escape(v)}<small>{html.escape(unit)}</small></div><div class="t">{html.escape(t)}</div></div>'
 tiles = []; rows = []
-om = w.get('oil_max'); tiles.append(tile('Oil, hottest', n(om), '°C', 'no reading available' if om is None else ('fine, worry starts at 130' if om < 130 else 'at or above 130 °C threshold')))
-am = w.get('atf_max'); tiles.append(tile('Transmission fluid, hottest', n(am), '°C', 'no reading available' if am is None else ('fine, worry starts at 110' if am < 110 else 'at or above 110 °C threshold')))
+om = w.get('oil_max'); tiles.append(tile('Oil, hottest', n(om), '°C', 'no reading available' if om is None else ('fine, worry starts at 130' if om < 130 else 'at or above 130 °C threshold'), '' if om is None else ('ok' if om < 130 else 'crit')))
+am = w.get('atf_max'); tiles.append(tile('Transmission fluid, hottest', n(am), '°C', 'no reading available' if am is None else ('fine, worry starts at 110' if am < 110 else 'at or above 110 °C threshold'), '' if am is None else ('ok' if am < 110 else 'crit')))
 a6, a6p = mf.get('all6'), mfp.get('all6')
 if a6 is not None:
     r = (a6 / a6p) if a6p else None
     verdict = 'no comparable prior rate' if a6p is None or a6p <= 0 else ('about the same as last week' if 0.8 <= r <= 1.25 else ('up on last week' if r > 1.25 else 'down on last week'))
-    tiles.append(tile('Misfires per 10,000 firings', n(a6, 1), f'last week {n(a6p,1)}', verdict))
+    tiles.append(tile('Misfires per 10,000 firings', n(a6, 1), f'last week {n(a6p,1)}', verdict, '' if r is None else ('warn' if r > 1.25 else 'ok')))
 cb, b = w.get('cold_boost_s'), w.get('boost_s')
 if cb is not None and b:
-    pct = 100 * cb / b; tiles.append(tile('Boost on cold oil', f'{pct:.0f}', '%', 'fine, under 25%' if pct <= 25 else 'above 25%; go easier until the oil is warm'))
-kn = w.get('knock_min'); tiles.append(tile('Deepest knock correction', n(kn, 1), '°', 'no reading available' if kn is None else ('fine, worry at −6 and beyond' if kn > -6 else 'at or beyond −6° threshold')))
+    pct = 100 * cb / b; tiles.append(tile('Boost on cold oil', f'{pct:.0f}', '%', 'fine, under 25%' if pct <= 25 else 'above 25%; go easier until the oil is warm', 'ok' if pct <= 25 else 'warn'))
+kn = w.get('knock_min'); tiles.append(tile('Deepest knock correction', n(kn, 1), '°', 'no reading available' if kn is None else ('fine, worry at −6 and beyond' if kn > -6 else 'at or beyond −6° threshold'), '' if kn is None else ('ok' if kn > -6 else 'crit')))
 tiles.append(tile('Driving', n(w.get('trips')), 'trips', f"{n(w.get('km'))} km · {n(w.get('engine_h'),1)} engine hours · {n(w.get('cold_starts'))} cold starts"))
 # per-cylinder chart: ratio to sibling median, 1.0 reference, one direct label on the max bar
 ratio = mf.get('ratio') or []; chart = ''
@@ -66,15 +66,34 @@ else:
     chart = '<p class="snapshot-notice">No per-cylinder readings available for this report.</p>'
 findings = d.get('findings', [])
 f_html = ''.join(f'<li><span class="chip {CLS.get(f.get("sev",""),"")}">{html.escape(f.get("sev",""))}</span><div>{html.escape(f.get("text",""))}' + (f'<em><b>do</b>{html.escape(f["action"])}</em>' if f.get('action') else '') + '</div></li>' for f in findings) or ('<li><span class="chip ok">OK</span><div>Nothing unusual this week.</div></li>' if status == 'OK' else '<li><span class="chip">No data</span><div>No finding details available. An incomplete report is not a healthy verdict.</div></li>')
+HC_STYLE = '''<style>
+.hc{--hc-ok:#1f9e6e;--hc-warn:#d98a1c;--hc-crit:#e5484d}
+.hc .verdict{border-left:6px solid var(--hc-v,transparent)}
+.hc .verdict.ok{--hc-v:var(--hc-ok)}.hc .verdict.warn{--hc-v:var(--hc-warn)}.hc .verdict.crit{--hc-v:var(--hc-crit)}
+.hc .verdict .word{color:var(--hc-v,inherit)}
+.hc .verdict.ok,.hc .verdict.warn{color:#efefeb}
+.hc .verdict li em{color:inherit;opacity:.78}
+.hc .verdict .chip{padding:3px 7px;border-radius:4px;text-decoration:none;font-weight:700}
+.hc .verdict .chip.ok{color:var(--hc-ok);background:color-mix(in srgb,var(--hc-ok) 16%,transparent)}
+.hc .verdict .chip.warn{color:var(--hc-warn);background:color-mix(in srgb,var(--hc-warn) 16%,transparent)}
+.hc .verdict .chip.crit{color:var(--hc-crit);background:color-mix(in srgb,var(--hc-crit) 16%,transparent)}
+.hc .tile.hc-ok{box-shadow:inset 0 3px var(--hc-ok)}.hc .tile.hc-warn{box-shadow:inset 0 3px var(--hc-warn)}.hc .tile.hc-crit{box-shadow:inset 0 3px var(--hc-crit)}
+.hc .tile.hc-warn .t{color:var(--hc-warn)}.hc .tile.hc-crit .t{color:var(--hc-crit)}
+.hc .hc-updated{display:flex;flex-wrap:wrap;gap:6px 18px;margin:22px 0 0;font:12px var(--mono);color:var(--fg-2)}
+.hc .hc-updated span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--hc-ok)}
+.hc .hc-updated.late .hc-next{color:var(--hc-crit)}.hc .hc-updated.late .hc-next::before{background:var(--hc-crit)}
+</style>
+'''
 win = d.get('window', ['', '']); gen = (d.get('generated') or '')[:10]
 body = f'''title: SQ5 weekly health
 description: A one-page, plain-language weekly health card for Amir Khademi's Audi SQ5, generated from the car's own data logger.
 path: /sq/health.html
 nav: /projects/
 ---
-<main class="wrap" data-health-date="{html.escape(gen)}">
+<main class="wrap hc" data-health-date="{html.escape(gen)}">
 <section class="hero"><div class="eyebrow">SQ5 · week of {html.escape(win[0])} to {html.escape(win[1])} · generated {html.escape(gen)}</div><h1>Weekly health</h1>
 <p class="lede">What the car's own logger says about the last seven days, in the words I'd want to read on a Sunday evening. Verdict first, then what to do, then the evidence with its threshold.</p></section>
+{HC_STYLE}<p class="hc-updated" data-health-updated></p>
 <p class="snapshot-notice" data-stale-notice hidden><strong>Historical snapshot.</strong> This report is more than two weeks old or has no valid date. Its verdict describes the recorded week, not the car today.</p>
 <div class="verdict {CLS.get(status,'unknown')}"><div class="word">{WORD.get(status, status)}</div><div class="muted" style="align-self:center">{len(findings)} finding{'s' if len(findings)!=1 else ''} this week</div><ul>{f_html}</ul></div>
 <h2>The week in numbers, each with its line</h2>

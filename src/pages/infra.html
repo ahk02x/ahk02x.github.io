@@ -4,7 +4,7 @@ path: /infra.html
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">Infra</div><h1>The hardware I run</h1>
-<p class="lede">Most of it is second-hand or rescued. All of it is mine to break.</p></section>
+<p class="lede">Humble beginnings. Most of it is second-hand or rescued, and all of it is mine to break. The goal: my own datacenter, run from my room.</p></section>
 <h2>Network</h2>
 <ul>
 <li><strong>blackwall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house. It runs on a Corsair RM650x after the original power supply died.</li>
@@ -12,9 +12,8 @@ path: /infra.html
 </ul>
 <h2>Servers</h2>
 <ul>
-<li><strong>jarvis</strong>: Ryzen 5 5600GE, 32 GB DDR4, 1 TB NVMe on ZFS, RTX 2070 SUPER. Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. About 111 W at idle.</li>
+<li><strong>jarvis</strong>: Ryzen 5 5600GE, 32 GB DDR4, RTX 2070 SUPER, and the house's storage: a 1 TB NVMe for the system and three 4 TB IronWolf drives in RAIDZ1, about 6.9 TB usable, all on ZFS. Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. About 111 W at idle.</li>
 <li><strong>sentry</strong>: an Intel N5105 mini PC (8 GB) that runs the room: the wall display, the Stream Deck and the lights.</li>
-<li><strong>Storage</strong>: three 4 TB IronWolf drives in RAIDZ1, about 6.9 TB usable.</li>
 </ul>
 <h2>Desk and wall</h2>
 <ul>
@@ -25,10 +24,12 @@ path: /infra.html
 </ul>
 <h2>Car</h2>
 <ul>
-<li><strong>Audi SQ5</strong>: a Raspberry Pi 4 in a 3D-printed case and a CANable 2.0 Pro on the diagnostic bus. It logs every drive and sends it home to the home server. <a href="/sq/">Inside VIP</a>.</li>
+<li><strong>Audi SQ5</strong>: a Raspberry Pi 4 in a 3D-printed case and a CANable 2.0 Pro on the diagnostic bus. It logs every drive to its own storage, and when the car is parked at home it joins the WiFi and sends the drives over to jarvis. <a href="/sq/">Inside VIP</a>.</li>
 </ul>
 <h2>Around the house</h2>
 <ul>
 <li>An LG C2 OLED, Google Home speakers and Govee lights, all driven through Home Assistant.</li>
 </ul>
+<h2>Where it's going</h2>
+<p>A datacenter in my room. NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards to build and run my own models, Ubiquiti gear end to end, and proper NAS storage. It starts with what's above.</p>
 </main>
