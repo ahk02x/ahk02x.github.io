@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SQ5 trends · Amir Khademi</title>
+<meta name="description" content="Week-by-week trends from Amir Khademi&#x27;s Audi SQ5 data logger: misfire rate, knock, oil temperature and boost, each against the weeks before.">
+<link rel="canonical" href="https://ahk02x.dev/sq/trends.html">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<script src="/assets/theme-init.js?v=f2452f3a34"></script>
+<link rel="stylesheet" href="/style.css?v=e610d3065b">
+<script src="/assets/site.js?v=be9b4d6f6f" defer></script>
+<meta name="theme-color" content="#d4d5d1">
+<meta property="og:title" content="SQ5 trends · Amir Khademi">
+<meta property="og:description" content="Week-by-week trends from Amir Khademi&#x27;s Audi SQ5 data logger: misfire rate, knock, oil temperature and boost, each against the weeks before.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/sq/trends.html">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/trends.html","url":"https://ahk02x.dev/sq/trends.html","name":"SQ5 trends","description":"Week-by-week trends from Amir Khademi's Audi SQ5 data logger: misfire rate, knock, oil temperature and boost, each against the weeks before.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site-shell">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
+<main id="main" class="wrap inner-page">
+<section class="hero"><div class="eyebrow">SQ5 · from the car's own logger · weekly</div><h1>Trends</h1>
+<img class="tr-car" src="/assets/sq-car.jpg" alt="The SQ5, front three-quarter view" width="240" height="240">
+<p class="lede">The baseline the car has set for itself, then four things worth watching week to week. Each point is one week of driving; a gap is a week the car sat.</p></section><nav class="sq-tabs" aria-label="SQ5 sections"><a href="/sq/">Overview</a><a href="/sq/health.html">Weekly health</a><a href="/sq/trends.html" aria-current="page">Trends</a><a href="/sq/gallery.html">Gallery</a><a href="/sq/build-log.html">Build log</a></nav>
+<style>
+.inner-page > .hero:has(.tr-car){position:relative}
+.tr-car{position:absolute;right:56px;bottom:44px;width:150px;height:150px;border-radius:50%;object-fit:cover;border:2px solid #e5484d;box-shadow:0 0 0 6px rgba(229,72,77,.15)}
+@media (max-width:760px){.tr-car{position:static;display:block;width:96px;height:96px;margin:4px 0 14px}}
+.tr{--mis:#e5484d;--knk:#3b82f6;--oil:#e8572a;--bst:#1f9e6e;--rpm:#8b7cf6;--prev:var(--line);--good:#1f9e6e;--bad:#e5484d}
+.tr h2{font:12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px}
+.tr .tr-base{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.tr .tr-card{min-width:0;padding:16px 18px;border:1px solid var(--soft-line);background:var(--card);border-radius:10px}
+.tr .tr-k{font:10px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tr .tr-v{margin-top:8px;font-size:clamp(28px,3vw,38px);font-weight:700;letter-spacing:-.04em;line-height:1.05}
+.tr .tr-v small{margin-left:4px;font:12px var(--mono);letter-spacing:0;color:var(--muted)}
+.tr .tr-t{margin-top:4px;font-size:13px;color:var(--fg-2)}
+.tr .tr-spark{display:block;width:100%;height:34px;margin-top:10px}
+.tr .tr-bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 14px;border:1px solid var(--soft-line);border-radius:10px;background:var(--card);font-size:13px}
+.tr .tr-seg{display:flex;gap:2px;padding:2px;border-radius:8px;background:var(--bg-2)}
+.tr .tr-seg button{font:12px var(--mono);padding:5px 11px;border:0;border-radius:6px;background:none;color:var(--fg-2);cursor:pointer}
+.tr .tr-seg button[aria-pressed=true]{background:var(--bg-3);color:var(--fg)}
+.tr .tr-bar label{margin-left:auto;display:flex;gap:8px;align-items:center;cursor:pointer}
+.tr .tr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+.tr .tr-head{display:flex;align-items:center;gap:10px}
+.tr .tr-head b{font-size:15px}
+.tr .tr-head .tr-u{margin-left:auto;font:11px var(--mono);color:var(--muted)}
+.tr .tr-delta{font:11px var(--mono);padding:1px 7px;border-radius:999px;border:1px solid currentColor}
+.tr .tr-delta.tr-good{color:var(--good)}.tr .tr-delta.tr-bad{color:var(--bad)}.tr .tr-delta.tr-flat{color:var(--muted)}
+.tr .tr-chart{display:block;width:100%;height:auto;margin-top:8px}
+.tr .tr-chart text{font:10px var(--mono);fill:var(--muted)}
+.tr .tr-legend{display:flex;gap:16px;margin-top:6px;font-size:12px;color:var(--fg-2)}
+.tr .tr-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tr .tr-note{margin-top:8px;font-size:12px;color:var(--muted)}
+.tr .tr-updated{margin:22px 0 0;font:12px var(--mono);color:var(--fg-2)}
+.tr .tr-updated i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--good)}
+.tr .tr-updated.tr-stale i{background:var(--bad)}
+@media (max-width:760px){.tr .tr-base{grid-template-columns:repeat(2,minmax(0,1fr))}.tr .tr-grid{grid-template-columns:1fr}.tr .tr-bar label{margin-left:0}}
+</style>
+<div class="tr" id="trends">
+<p class="tr-updated" id="updated"></p>
+<h2>Baseline · the car's normal</h2>
+<div class="tr-base" id="base"></div>
+<h2>Trends across weeks</h2>
+<div class="tr-bar"><span class="tr-k">Window</span>
+<div class="tr-seg" id="win"><button data-w="8" aria-pressed="true">8 wk</button><button data-w="12">12 wk</button><button data-w="0">All</button></div>
+<span id="span" class="tr-t" style="margin:0"></span>
+<label><input type="checkbox" id="cmp" checked> Compare to the weeks before</label></div>
+<div class="tr-grid" id="charts"></div>
+<p class="tr-note" id="asof"></p>
+<noscript><p>The charts need JavaScript. The weekly health card works without it.</p></noscript>
+</div>
+<script src="/assets/sq-trends.js?v=0fc0871506" defer></script>
+</main>
+<footer class="site-footer"><span>AHK02X</span></footer>
+</div>
+</body>
+</html>

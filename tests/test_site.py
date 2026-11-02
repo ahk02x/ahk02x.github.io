@@ -120,7 +120,7 @@ class SiteChecks(unittest.TestCase):
             self.assertNotIn('{{', text)
             self.assertEqual(page.main_count,1,str(path)); self.assertEqual(page.h1_count,1,str(path))
             self.assertIn('main',page.ids)
-        self.assertEqual(len(pages),15)
+        self.assertEqual(len(pages),17)
         for path,page in pages.items():
             for ref in page.refs:
                 u=urlsplit(ref)

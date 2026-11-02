@@ -1,0 +1,54 @@
+title: SQ5 build gallery
+description: Photos and renders from building the SQ5's data logger: the first live readout, the 3D-printed case from v1 to the honeycomb lid, the wiring, and the install.
+path: /sq/gallery.html
+nav: /projects/
+---
+<main class="wrap">
+<section class="hero"><div class="eyebrow">SQ5 · how the logger got built · in date order</div><h1>Gallery</h1>
+<p class="lede">From the first live readout on a laptop to a printed box by the passenger seat. Renders are the case as modelled; photos are the real thing. Tap any picture for the full size.</p></section>
+<style>
+.gl h2{font:12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px}
+.gl .gl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gl figure{margin:0;min-width:0;padding:10px;border:1px solid var(--soft-line);background:var(--card);border-radius:10px}
+.gl .gl-pics{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
+.gl .gl-pics a,.gl .gl-pics video{display:block;aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:var(--bg-2)}
+.gl .gl-pics img,.gl .gl-pics video{width:100%;height:100%;object-fit:cover;display:block}
+.gl .gl-render img{object-fit:contain;background:#fffde6}
+.gl figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--fg-2)}
+.gl figcaption time{display:block;margin-bottom:3px;font:11px var(--mono);letter-spacing:.04em;color:var(--muted)}
+@media (max-width:860px){.gl .gl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.gl .gl-grid{grid-template-columns:1fr}}
+</style>
+<div class="gl">
+<h2>July 2026</h2>
+<div class="gl-grid">
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-10-car.jpg"><img src="/assets/sq-gallery/2026-07-10-car-t.jpg" alt="Grey Audi SQ5 with the hood open in a parking lot at dusk" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-10">Jul 10</time>The car, a week into logging.</figcaption></figure>
+<figure><div class="gl-pics"><video src="/assets/sq-gallery/2026-07-12-first-live.mp4" poster="/assets/sq-gallery/2026-07-12-first-live-t.jpg" muted loop playsinline autoplay preload="none" aria-label="Laptop showing a live engine dashboard"></video></div>
+<figcaption><time datetime="2026-07-12">Jul 12</time>First live readout: the Jackal cable streaming engine data to a dashboard on the laptop.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-13-phone-dash.jpg"><img src="/assets/sq-gallery/2026-07-13-phone-dash-t.jpg" alt="Phone screen showing the SQ Logger recording a drive" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-13">Jul 13</time>The phone dashboard, recording a drive.</figcaption></figure>
+<figure><div class="gl-pics gl-render"><a href="/assets/sq-gallery/2026-07-18-render-v1.jpg"><img src="/assets/sq-gallery/2026-07-18-render-v1-t.jpg" alt="Render of the first case with a Raspberry Pi inside" loading="lazy"></a><a href="/assets/sq-gallery/2026-07-18-render-v1-exploded.jpg"><img src="/assets/sq-gallery/2026-07-18-render-v1-exploded-t.jpg" alt="Exploded render of the first case: base, tray and fan lid" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-18">Jul 18 · render</time>Case v1, modelled in OpenSCAD: a tray for the Pi and a fan lid.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-19-console-bench.jpg"><img src="/assets/sq-gallery/2026-07-19-console-bench-t.jpg" alt="Diagnostic cable, Raspberry Pi and laptop wired together on the car's centre console" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-19">Jul 19</time>Bench session in the console: diagnostic cable, Pi and laptop, all on the gear selector.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-20-case-v1-printed.jpg"><img src="/assets/sq-gallery/2026-07-20-case-v1-printed-t.jpg" alt="Two grey 3D-printed case halves, one holding a Raspberry Pi" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-20">Jul 20</time>Case v1, printed. The measurements were off, so it went back to the model.</figcaption></figure>
+</div>
+<h2>August 2026</h2>
+<div class="gl-grid">
+<figure><div class="gl-pics gl-render"><a href="/assets/sq-gallery/2026-08-04-render-v2-hex.jpg"><img src="/assets/sq-gallery/2026-08-04-render-v2-hex-t.jpg" alt="Render of the second case base with hexagon vents" loading="lazy"></a><a href="/assets/sq-gallery/2026-08-04-render-v2.jpg"><img src="/assets/sq-gallery/2026-08-04-render-v2-t.jpg" alt="Render of the assembled second case with the Pi inside" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-04">Aug 4 · render</time>Case v2: re-measured, hex vents, and checks in the model that refuse to build a part that collides.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-04-rtc-wiring.jpg"><img src="/assets/sq-gallery/2026-08-04-rtc-wiring-t.jpg" alt="Hand holding a small clock module wired to the Pi" loading="lazy"></a><a href="/assets/sq-gallery/2026-08-04-rtc-module.jpg"><img src="/assets/sq-gallery/2026-08-04-rtc-module-t.jpg" alt="Close-up of the DS3231 clock module with its power light on" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-04">Aug 4</time>Adding a real-time clock (DS3231), so the logs keep the right time with no network.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-06-case-v2-pi.jpg"><img src="/assets/sq-gallery/2026-08-06-case-v2-pi-t.jpg" alt="Raspberry Pi seated in the black printed case base" loading="lazy"></a><a href="/assets/sq-gallery/2026-08-06-case-v2-cabled.jpg"><img src="/assets/sq-gallery/2026-08-06-case-v2-cabled-t.jpg" alt="The Pi in its case with power and data cables connected" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-06">Aug 6</time>v2 printed, Pi seated and cabled.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-06-lid-sq.jpg"><img src="/assets/sq-gallery/2026-08-06-lid-sq-t.jpg" alt="Black case with a honeycomb lid and a red SQ logo" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-06">Aug 6</time>The honeycomb lid with the red SQ inlay.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-28-installed.jpg"><img src="/assets/sq-gallery/2026-08-28-installed-t.jpg" alt="The logger box mounted beside the red passenger seat" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-28">Aug 28</time>Installed by the passenger seat.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-31-in-car-session.jpg"><img src="/assets/sq-gallery/2026-08-31-in-car-session-t.jpg" alt="Laptop and the SQ logger box on the passenger seat" loading="lazy"></a></div>
+<figcaption><time datetime="2026-08-31">Aug 31</time>Working on the logger from the passenger seat.</figcaption></figure>
+</div>
+</div>
+</main>

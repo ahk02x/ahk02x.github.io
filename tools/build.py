@@ -60,14 +60,14 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 {body}
-<footer class="site-footer"><span>AHK02X / Toronto</span></footer>
+<footer class="site-footer"><span>AHK02X</span></footer>
 </div>
 </body>
 </html>'''
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'VIP', 'Sq': 'VIP', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'Crucix': 'Crucix', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'VIP'}  # VIP = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'VIP', 'Sq': 'VIP', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'VIP', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # VIP = the car, its app and the cable RE: one project
     merged = collections.Counter()
     for p in tok['top_projects']:
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
@@ -178,10 +178,9 @@ PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
           'givenName': 'Amir Hossein', 'familyName': 'Khademi',
           'url': SITE + '/', 'mainEntityOfPage': SITE + '/about.html',
           'jobTitle': 'Site Reliability Engineer',
-          'description': 'Site Reliability Engineer in Toronto, Canada. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
+          'description': 'Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
-          'address': {'@type': 'PostalAddress', 'addressLocality': 'Toronto', 'addressRegion': 'ON', 'addressCountry': 'CA'},
-          'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
+          'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
           'sameAs': ['https://github.com/ahk02x']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
            'alternateName': 'Amir Khademi — field notes', 'inLanguage': 'en',
@@ -224,7 +223,7 @@ for e in entries:
     meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
     if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
-        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/build-log.html', 'Build log')]
+        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
         strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
             f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
         body = body.replace('</section>', '</section>' + strip, 1)
@@ -258,9 +257,9 @@ for entry in os.scandir(public_root):
         shutil.rmtree(entry.path)
     else:
         os.unlink(entry.path)
-public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'sq/health.json']
+public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'data/sq_trends.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
-public_files += [p for p in glob.glob('assets/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):
