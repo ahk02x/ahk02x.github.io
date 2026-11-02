@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>VIP · Vehicle Intelligence Platform · Amir Khademi</title>
+<title>SQ · Vehicle Intelligence Platform · Amir Khademi</title>
 <meta name="description" content="Amir Khademi&#x27;s 2025 Audi SQ5: what&#x27;s on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.">
 <link rel="canonical" href="https://ahk02x.dev/sq/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=3580d3991f">
+<link rel="stylesheet" href="/style.css?v=d8b8a8250d">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
-<meta property="og:title" content="VIP · Vehicle Intelligence Platform · Amir Khademi">
+<meta property="og:title" content="SQ · Vehicle Intelligence Platform · Amir Khademi">
 <meta property="og:description" content="Amir Khademi&#x27;s 2025 Audi SQ5: what&#x27;s on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/sq/">
@@ -19,7 +19,7 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"VIP · Vehicle Intelligence Platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"SQ · Vehicle Intelligence Platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -27,10 +27,9 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page">
-<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>VIP</h1>
-<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of VIP: not more data, more understanding.</p>
+<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>SQ</h1>
+<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of SQ: a vehicle intelligence platform. The car’s data goes in, a brain works out what it means, and what comes back is a sentence a person can act on. Not more data, more understanding.</p>
 <div class="readouts">
-<a class="readout warn" href="/sq/health.html" data-health-date="2026-11-02"><div class="k">This week</div><div class="v" data-health-label>Keep an eye on it</div><div class="s">Week of Oct 26 to Nov 02 · <u>open the health card</u></div></a>
 <div class="readout"><div class="k">Logged</div><div class="v">243<small>drives</small></div><div class="s">just under 600,000 samples, integrity clean</div></div>
 <div class="readout"><div class="k">Channels</div><div class="v">53<small>× 5 Hz</small></div><div class="s">engine-computer RAM, not generic OBD</div></div>
 <div class="readout"><div class="k">Plugs, September</div><div class="v">−38%<small>misfires</small></div><div class="s">the change that mattered most</div></div>
@@ -48,7 +47,7 @@
 <dt>Chassis</dt><dd>034 Dynamic+ lowering springs. 034 billet inserts in the rear differential, rear subframe and transmission mounts, plus the Street Density transmission mount. CTS flush spacers on the factory wheels. A proper alignment afterwards.</dd>
 <dt>Ignition</dt><dd>Fresh NGK Laser Iridium plugs in September. See below for why that line is on this list.</dd>
 <dt>Inside</dt><dd>Q7 steering wheel retrofit, carbon paddle shifter knob, dynamic hub caps, engine cover studs.</dd>
-<dt>Wanted</dt><dd>Cat-back exhaust, charge pipe, front strut brace, sway bar bundle, two-piece rotors, a carbon hood.</dd>
+<dt>Wanted</dt><dd>Cat-back exhaust, charge pipe, front strut brace, sway bar bundle, two-piece rotors, a carbon hood. All essential: MOOO POWEAAAAAA.</dd>
 </dl>
 
 <h2>How the data gets from the car to this page</h2>
@@ -79,7 +78,7 @@
 <p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
 
 <h2>The idea</h2>
-<p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, VIP understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
+<p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, SQ understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
 <dl class="spec">
 <dt>Data layer</dt><dd>Collects and normalizes. Makes no decisions.</dd>
 <dt>Rules engine</dt><dd>Turns data into facts. Never decides what the owner sees.</dd>
@@ -130,8 +129,8 @@
 
 <h2>Tools built for it</h2>
 <div class="grid">
-<div class="card"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"><path d="M66,20 V108"/><path d="M22,108 L66,20"/><path d="M33,86 H66"/><path d="M66,68 L106,28"/><path d="M66,68 L106,108"/></g></svg><h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">private repos</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
-<a class="card" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
+<div class="card st-live"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"><path d="M66,20 V108"/><path d="M22,108 L66,20"/><path d="M33,86 H66"/><path d="M66,68 L106,28"/><path d="M66,68 L106,108"/></g></svg><h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">live</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
+<a class="card st-built" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg><h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">built</span><span class="more">GitHub →</span></div></a>
 <a class="card st-written" href="/writing/partswatch.html"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/><circle cx="44" cy="44" r="7"/></g></svg><h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
 </div>
 

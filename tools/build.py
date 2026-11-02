@@ -67,7 +67,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'VIP', 'Sq': 'VIP', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'VIP', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # VIP = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
     merged = collections.Counter()
     for p in tok['top_projects']:
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
