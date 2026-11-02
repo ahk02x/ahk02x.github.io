@@ -42,7 +42,6 @@ for f in files:
     for t in stamps:
         if t - prev > GAP: start = t
         longest = max(longest, t - start); prev = t
-    projs.discard('ahk02x-site')
     for p in projs: per_proj[p] += sess_tok / len(projs)
 total = sum(tot.values())
 out = {'total_tokens': total, 'by_kind': dict(tot), 'assistant_messages': msgs, 'sessions': sess_count,
