@@ -75,23 +75,11 @@ def token_card():
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
-    months = [m for m in (tok.get('by_month') or []) if m.get('tokens')]
-    month_html = ''
-    if months:
-        mmx = max(m['tokens'] for m in months)
-        this_month = (tok.get('last') or '')[:7]
-        def mlabel(ym):
-            try: lbl = datetime.date(int(ym[:4]), int(ym[5:7]), 1).strftime('%b %Y')
-            except ValueError: return ym
-            return lbl + ' <small>so far</small>' if ym == this_month else lbl
-        mbars = ''.join(f'<div>{mlabel(m["month"])}</div><div class="b"><i style="width:{100*m["tokens"]/mmx:.1f}%"></i></div><div class="n">{m["tokens"]/1e9:.2f} B</div>' for m in months)
-        month_html = f'<div class="eyebrow" style="margin-top:26px">By month</div><div class="bars">{mbars}</div>'
     return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["ledger"]}<h3>Built with AI assistance</h3></div>
-<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. Usage recorded in Claude Code's transcripts since {first}, deduplicated:</p>
-<div class="tiles"><div class="tile"><div class="k">Tokens</div><div class="v">{tot/1e9:.2f}<small>billion</small></div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
-<div class="eyebrow" style="margin-top:26px">By project</div><div class="bars">{bars}</div>
-{month_html}
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated:</p>
+<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
+<div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
 _ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
@@ -134,6 +122,23 @@ def grid_html(days, today):
     tips = ['none'] + [f"up to {sh(q[0])}"] + [f"{sh(a)}–{sh(b)}" for a, b in zip(q, q[1:])] + [f"over {sh(q[-1])}"]
     key = '<div class="hm-k">More' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in reversed(list(enumerate(tips)))) + 'Less</div>'
     return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>' + key
+SQ_REPOS = ('sq-garage', 'Sq', 'jackal-protocol-re')  # the car, its app and the cable RE: one project
+def sq_month_bars():
+    """Monthly AI-session spend on the SQ repos — the build month, then the taper."""
+    by_proj = (tok or {}).get('by_month_project') or {}
+    months = collections.Counter()
+    for repo in SQ_REPOS:
+        for m in by_proj.get(repo, []): months[m['month']] += m['tokens']
+    months = {m: v for m, v in months.items() if v}
+    if not months: return ''
+    mx = max(months.values()); this_month = (tok.get('last') or '')[:7]
+    rows = ''
+    for ym in sorted(months):
+        try: lbl = datetime.date(int(ym[:4]), int(ym[5:7]), 1).strftime('%b %Y')
+        except ValueError: lbl = ym
+        if ym == this_month: lbl += ' <small>so far</small>'
+        rows += f'<div>{lbl}</div><div class="b"><i style="width:{100*months[ym]/mx:.1f}%"></i></div><div class="n">{months[ym]/1e9:.2f} B</div>'
+    return f'<div class="bars">{rows}</div>'
 def gh_grid():
     import datetime as dt
     g = json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}
@@ -143,6 +148,7 @@ subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{
         '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
         '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
         '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
+        '{{sq_months}}': sq_month_bars(),
         '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1], '{{gh_grid}}': gh_grid(), '{{gh_total}}': str((json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}).get('total', '—')),
         '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
