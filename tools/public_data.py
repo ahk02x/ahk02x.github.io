@@ -1,7 +1,7 @@
 """The only project identifiers allowed in the public token export."""
 import re
 PUBLIC_PROJECTS = frozenset({
-    'sq-garage', 'Sq', 'iot', 'flowtrace', 'phosphor', 'Crucix', 'alertboard',
+    'sq-garage', 'Sq', 'iot', 'flowtrace', 'phosphor', 'alertboard',
     'macwatch', 'netdash', 'partswatch', 'fleet-patch', 'lanwatch', 'inbox',
     'jackal-protocol-re',
 })
