@@ -1,5 +1,5 @@
 title: Projects
-description: Amir Khademi's projects: a logged and tuned Audi SQ5, an alert board that holds an AI agent accountable, a wall display, a parts price watcher, a patch cycle, and the token bill for all of it.
+description: Amir Khademi's projects: a logged and tuned Audi SQ5, an alert board that holds an AI agent accountable, a wall display, a parts price watcher, a patch cycle, a local-model lab that refuses its own hypothesis, and the token bill for all of it.
 path: /projects/
 ---
 <main class="wrap">
@@ -16,6 +16,7 @@ path: /projects/
 <div class="card"><div class="head">{{glyph:tap}}<h3>flowtrace</h3></div><p>Walks every conversation in a packet capture through the DNS, TCP, TLS and application stages and shows where it stalled. Silence and refusal are different failures, and where the silence starts names the guilty layer.</p><div class="foot"><span class="chip live">built</span></div></div>
 <div class="card"><div class="head">{{glyph:ledger}}<h3>macwatch</h3></div><p>An hourly snapshot of what malware would touch on the Mac, diffed against the last, plus a five-minute check for commands wedged on a prompt. Born after an install sat on a password box for ten hours. A log is not an alert; the wall is.</p><div class="foot"><span class="chip live">running</span></div></div>
 <div class="card"><div class="head">{{glyph:wall}}<h3>netdash</h3></div><p>A live dashboard for the home firewall: throughput, per-device rates, who is talking to what, what got blocked, and CPU temperature read straight from the box. It runs on the firewall itself.</p><div class="foot"><span class="chip live">running</span></div></div>
+<div class="card"><div class="head">{{glyph:node}}<h3>Crucix — local-model lab</h3></div><p>A side project for learning where a small open model running on my own GPU genuinely helps and where it only looks like it does. A 7B model reads a news sweep and takes a position on dated market questions; a no-drift model prices the same questions, and both are scored on the same outcomes, on paper only. 99 days, 7,538 model calls, roughly 11 GPU-hours. <strong>No edge so far</strong> — all of the apparent gain traces to a single instrument the news feed could only ever read one way, so the gate stays shut and that finding stands. Five hypotheses killed before any of them cost anything; a lab that can refuse its own idea is the entire point.</p><div class="foot"><span class="chip live">running</span></div></div>
 <div class="card"><div class="head">{{glyph:tag}}<h3>Inbox hub</h3></div><p>WhatsApp and Telegram land in one chat, each message sorted into a tier from urgent to mute, with a line saying why it reached me and buttons to re-tier the sender. Voice notes are transcribed locally. Pairing is the last step.</p><div class="foot"><span class="chip live">built</span></div></div>
 </div>
 {{token_card}}
