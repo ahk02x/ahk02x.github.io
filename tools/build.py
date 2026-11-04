@@ -204,9 +204,13 @@ def when(d):
     except ValueError: return ''
 def post_item(e):
     mt = e['meta']; blurb = mt.get('summary') or mt.get('description', '')
-    return (f'<div class="item"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
-            f'<time datetime="{e["date"]}">{when(e["date"])}</time><p class="d">{html.escape(blurb)}</p></div>')
-subs['{{writing_list}}'] = ''.join(post_item(e) for e in posts)
+    # The list dates each note by when the PROJECT was built (front matter `built: YYYY-MM`), not when
+    # the write-up was published; `status` tints it with the projects-list colour. No `built` = publish date.
+    built, st = mt.get('built', ''), mt.get('status', 'written')
+    label = ('Written ' if st == 'written' else 'Built ') + when(built + '-01') if built else when(e['date'])
+    return (f'<div class="item st-{st}"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
+            f'<time class="chip" datetime="{built or e["date"]}">{label}</time><p class="d">{html.escape(blurb)}</p></div>')
+subs['{{writing_list}}'] = ''.join(post_item(e) for e in sorted(posts, key=lambda e: (e['meta'].get('built') or e['date'][:7], e['date']), reverse=True))
 def when_long(d):
     try: return datetime.date.fromisoformat(d).strftime('%B %Y')
     except ValueError: return ''
