@@ -209,7 +209,7 @@ def post_item(e):
     built, st = mt.get('built', ''), mt.get('status', 'written')
     label = ('Written ' if st == 'written' else 'Built ') + when(built + '-01') if built else when(e['date'])
     return (f'<div class="item st-{st}"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
-            f'<time class="chip" datetime="{built or e["date"]}">{label}</time><p class="d">{html.escape(blurb)}</p></div>')
+            f'<time datetime="{built or e["date"]}" class="chip">{label}</time><p class="d">{html.escape(blurb)}</p></div>')
 subs['{{writing_list}}'] = ''.join(post_item(e) for e in sorted(posts, key=lambda e: (e['meta'].get('built') or e['date'][:7], e['date']), reverse=True))
 def when_long(d):
     try: return datetime.date.fromisoformat(d).strftime('%B %Y')
