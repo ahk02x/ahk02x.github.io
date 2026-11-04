@@ -9,10 +9,10 @@ note: 2
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>The wall stays red until I say so</h1>
-<p class="lede">There is a Dell U2719D turned on its side on my wall, driven by the monitoring box, on 24/7. It is the alarm surface for my home fleet. When something breaks it goes red, and it stays red until a person clears it on purpose.</p></section>
+<p class="lede">There is a Dell U2719D turned on its side on my wall, driven by the monitoring box, on 24/7. It is the alarm surface for my home fleet. When something breaks it goes red. It stays red until I clear it, on purpose.</p></section>
 
-<p>Every other alert channel I have is something I choose to check. A phone notification, a toast on the TV, a key on a Stream Deck: each one waits for me to look. A wall does not. You walk past it from the hallway and the state of the fleet is in your eye whether you asked or not.</p>
-<p>The display is called PHOSPHOR: one HTML5 canvas page in a Chromium kiosk, drawn like an 80s-movie control panel, thirteen panels in phosphor green. The reference look is eye candy; here every panel means something. A 17-button service matrix is one button per fleet check. The link panel is real throughput on a log scale with a 1 kb/s floor, because on a linear scale a home connection is a flat line. There are no fake numbers on the glass.</p>
+<p>Every other alert channel I have is something I choose to check. A phone notification, a toast on the TV, a key on a Stream Deck: each one waits for me to look. A wall doesn't wait. I walk past it from the hallway and the state of the fleet is in my face whether I asked or not.</p>
+<p>The display is called PHOSPHOR: one HTML5 canvas page in a Chromium kiosk, drawn like an 80s-movie control panel, thirteen panels in phosphor green. The movie version is eye candy. Here every panel means something. A 17-button service matrix is one button per fleet check. The link panel is real throughput on a log scale with a 1 kb/s floor, because on a linear scale a home connection is a flat line. There are no fake numbers on the glass.</p>
 
 <h2>Two decisions I don't re-litigate</h2>
 <ul>
@@ -23,8 +23,8 @@ note: 2
 
 <h2>Never lie when the feed dies</h2>
 <blockquote>A wall display that lies when its feed dies is worse than one that goes dark.</blockquote>
-<p>After 30 seconds without a successful read, every panel that asserts a fact degrades on purpose: the service buttons drop to dark outlines under an amber <code>NO LINK · STATE UNKNOWN</code>, the lamps go out, the channel strip flatlines, the log prints <code>LAST VALUES · NOT TRUSTED</code>. Ambience is still allowed; the waveform keeps drifting so the thing does not read as a broken TV. Synthetic motion is fine. Synthetic motion presented as a measurement is not.</p>
-<p>The version of "dead" that took longest to see was the one where the transport is fine: HTTP returns 200, the JSON is well formed, and the data stopped moving hours ago. Freeze the process that writes the fleet status file and the matrix would happily light 17 green buttons under a cheerful <code>FEED OK 0s</code>. The fix was to make every data source return its own source timestamp beside its payload, with a per-source maximum age (180 seconds for the fleet file). The current time is forbidden as that timestamp: it is the time you ran, not the age of the data.</p>
+<p>After 30 seconds without a successful read, every panel that asserts a fact degrades on purpose: the service buttons drop to dark outlines under an amber <code>NO LINK · STATE UNKNOWN</code>, the lamps go out, the channel strip flatlines, the log prints <code>LAST VALUES · NOT TRUSTED</code>. Ambience is still allowed. The waveform keeps drifting so the thing doesn't look like a broken TV. Synthetic motion is fine. Synthetic motion presented as a measurement is not.</p>
+<p>The version of "dead" that took longest to see was the one where the transport is fine: HTTP returns 200, the JSON is well formed, and the data stopped moving hours ago. Freeze the process that writes the fleet status file and the matrix would happily light 17 green buttons under a very cheerful <code>FEED OK 0s</code>. The fix was to make every data source return its own source timestamp beside its payload, with a per-source maximum age (180 seconds for the fleet file). The current time is banned as that timestamp. That's when you ran, not how old the data is.</p>
 <p>One lie the wall cannot catch is its own death. The box it runs on hard-locked twice in August and the wall was dark for three hours. A self-hosted alarm surface cannot report that, and a clean run since is not evidence it won't recur. Something else has to watch the watcher.</p>
 
 <h2>Don't render for an empty room</h2>
@@ -38,8 +38,8 @@ note: 2
 </ul>
 
 <h2>Pages are a contract</h2>
-<p>The wall is n-way now; <code>phosphor view</code> puts any registered page on the glass. Adding a page means four new files and no edits to shared code, written down as a contract so that Claude Code agents can build a page without touching the shell. The shell paints the status band, the no-link banner and the alert overlay after the page draws, so a page cannot cover or omit them.</p>
-<p>The screen draws about 20 W, roughly 175 kWh a year, on a box that is on anyway. Open items: a flash on a sound event, night dimming, and a macOS screensaver hosting the same page. What this taught me: the useful property of a display is not what it shows when everything works. It is what it refuses to pretend when something doesn't.</p>
+<p>The wall is n-way now. <code>phosphor view</code> puts any registered page on the glass. Adding a page means four new files and no edits to shared code, written down as a contract so that Claude Code agents can build a page without touching the shell. The shell paints the status band, the no-link banner and the alert overlay after the page draws, so a page cannot cover or omit them.</p>
+<p>The screen draws about 20 W, roughly 175 kWh a year, on a box that is on anyway. Open items: a flash on a sound event, night dimming, and a macOS screensaver hosting the same page. What it taught me: a display isn't useful because of what it shows when everything works. It's useful because of what it refuses to pretend when something doesn't.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>

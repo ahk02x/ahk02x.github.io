@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url><loc>https://ahk02x.dev/about.html</loc></url>
+<url><loc>https://ahk02x.dev/writing/ahkira-next.html</loc></url>
+<url><loc>https://ahk02x.dev/writing/ahkira.html</loc></url>
 <url><loc>https://ahk02x.dev/writing/claude-code-on-call.html</loc></url>
 <url><loc>https://ahk02x.dev/writing/everything-i-ever-kept.html</loc></url>
 <url><loc>https://ahk02x.dev/writing/fleet-patch.html</loc></url>

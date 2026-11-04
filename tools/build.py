@@ -197,7 +197,7 @@ for src in sorted(glob.glob('src/pages/*.html')):
     meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M))
     m = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})"', body)
     entries.append({'meta': meta, 'body': body.strip(), 'date': m.group(1) if m else ''})
-posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') and e['meta']['path'] != '/writing/'],
+posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') and e['meta']['path'] != '/writing/' and e['meta'].get('note')],
                key=lambda e: (e['date'], int(e['meta'].get('note', '0') or 0)), reverse=True)
 def when(d):
     try: return datetime.date.fromisoformat(d).strftime('%b %Y')
@@ -272,6 +272,11 @@ for e in entries:
     if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
         tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
         strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
+            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
+        body = body.replace('</section>', '</section>' + strip, 1)
+    if meta['path'] in ('/writing/ahkira.html', '/writing/ahkira-next.html'):  # write-up + coming-soon tabs
+        tabs = [('/writing/ahkira.html', 'The write-up'), ('/writing/ahkira-next.html', 'Coming soon')]
+        strip = '<nav class="sq-tabs" aria-label="ahkira sections">' + ''.join(
             f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
         body = body.replace('</section>', '</section>' + strip, 1)
     if 'id="main"' not in body:
