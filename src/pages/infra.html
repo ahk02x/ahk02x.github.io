@@ -37,21 +37,21 @@ path: /infra.html
 <li><strong>What it counts</strong>: traffic inside the house and traffic leaving it are kept as two different facts, because a house full of IoT devices should have to explain itself. <a href="/writing/lanwatch.html">How that works</a>.</li>
 </ul>
 </div>
-<figure class="ir-p"><a href="/assets/infra/shelf.jpg"><img src="/assets/infra/shelf-t.jpg" alt="An Aruba Instant On switch on a white shelf with blue, white and black patch cables plugged in, a router sitting on top of it with its antennas up" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The switch and the access point on their shelf. Every run in the house lands here.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/shelf.jpg"><img src="/assets/infra/shelf-t.jpg" alt="An Aruba Instant On switch on a white shelf with blue, white and black patch cables plugged in, a router sitting on top of it with its antennas up" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The switch and the access point on their shelf. Every run in the house lands here, and the bracket under the switch that routes the cables neatly underneath it is one I designed and 3D-printed myself.</figcaption></figure></div>
 
 <div class="ir alt"><div class="ir-t">
 <h2>The firewall is a 2011 office PC</h2>
-<p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in. That is the entire repair history of the machine that runs the network.</p>
+<p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in, pulled from one of the gaming PCs I had from before. That is the entire repair history of the machine that runs the network.</p>
 <p>Rescuing hardware is the point rather than a constraint. Everything it does &mdash; DNS, DHCP, flow accounting &mdash; is software I can read, on a box nobody else wanted.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>blackwall with the side off. The replacement power supply is the newest part in it.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>blackwall with the side off, before the swap: that is still the original Dell supply. The black Corsair that replaced it came out of one of my old gaming PCs.</figcaption></figure></div>
 
 <div class="ir"><div class="ir-t">
 <h2>Servers</h2>
 <p><strong>jarvis</strong> is the one that matters: Ryzen 5 5600GE, 32 GB DDR4, an RTX 2070 SUPER, a 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1 &mdash; about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</p>
 <p>It runs Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. The graphics card is there for the model and the transcription, not for games. About 111 W at idle, which is the number I actually watch, because it never turns off.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was built.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was brought to life from leftover parts.</figcaption></figure></div>
 
 <div class="ir alt"><div class="ir-t">
 <h2>The box that runs the room</h2>
