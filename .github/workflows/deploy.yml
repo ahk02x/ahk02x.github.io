@@ -1,0 +1,42 @@
+name: Deploy site
+# Publishes ONLY the allowlisted _site/ build. The repo root (HANDOFF.md, tools/, publish.sh,
+# data/gpt_history.json, docs/) is never served. Pages source must be "GitHub Actions".
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 -m unittest discover -s tests
+      - run: python3 tools/build.py
+      - name: Refuse to publish private files
+        run: |
+          for f in HANDOFF.md README.md publish.sh dns.sh tools docs src tests data/gpt_history.json .github; do
+            if [ -e "_site/$f" ]; then echo "private path in _site: $f"; exit 1; fi
+          done
+          test -f _site/CNAME && test -f _site/index.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
