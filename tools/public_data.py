@@ -1,4 +1,5 @@
 """The only project identifiers allowed in the public token export."""
+import hashlib
 import collections
 import re
 PUBLIC_PROJECTS = frozenset({
@@ -9,7 +10,9 @@ PUBLIC_PROJECTS = frozenset({
 
 # Dirs renamed on disk: old transcripts still name the old dir, so fold its
 # tokens into the current name rather than dropping them from the public total.
-RENAMED = {'jackal-protocol-re': 'obd-cable-protocol-re'}
+# Keyed by sha256(old name)[:16] so this public file never spells the old name out.
+RENAMED = {'c6d0c2d3960ad246': 'obd-cable-protocol-re'}
+_renamed = lambda n: RENAMED.get(hashlib.sha256((n or '').encode()).hexdigest()[:16], n)
 
 def public_tokens(data):
     """Preserve totals, allowlist project names; dates go no finer than a day, never a time."""
@@ -21,7 +24,7 @@ def public_tokens(data):
         result[key] = str(data[key])[:7] if data.get(key) else None
     merged = collections.Counter()
     for p in data.get('top_projects', []):
-        name = RENAMED.get(p.get('project'), p.get('project'))
+        name = _renamed(p.get('project'))
         if name in PUBLIC_PROJECTS:
             merged[name] += p['tokens']
     result['top_projects'] = [

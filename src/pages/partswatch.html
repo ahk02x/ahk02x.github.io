@@ -1,4 +1,6 @@
 title: The part matters, not the store
+built: 2026-10
+status: run
 description: How Amir Khademi watches classifieds every fifteen minutes and fifty-two store prices every hour for a short list of Audi SQ5 parts, and gets one message when something actually moves.
 path: /writing/partswatch.html
 nav: /writing/
@@ -7,9 +9,9 @@ note: 5
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>The part matters, not the store</h1>
-<p class="lede">The SQ5's wanted list has eight entries, counting the rotors as two kits. Ten Canadian retailers sell some subset of them, and used ones turn up on Kijiji and Facebook Marketplace. I wanted to know the moment one got cheaper or appeared second-hand. So I wrote a watcher.</p></section>
+<p class="lede">The SQ5's wanted list has eight entries, counting the rotors as two kits. Ten Canadian retailers sell some subset of them, and used ones turn up on Kijiji and Facebook Marketplace. I wanted to know the second one got cheaper or showed up used. So I wrote a watcher.</p></section>
 
-<p>I don't care which store has the charge pipe. I care about the charge pipe. The question is: for this part, what is the lowest price in the country today, and did it just change? Once the question is per part, the design follows.</p>
+<p>I don't care which store has the charge pipe. I care about the charge pipe. The question is: for this part, what is the lowest price in the country today, and did it just change? Once the question is per part, the design pretty much writes itself.</p>
 <blockquote>A retailer's sale is a fact about the retailer. A price drop is a fact about the part.</blockquote>
 
 <h2>Three loops, one messenger</h2>
@@ -21,7 +23,7 @@ note: 5
 </ol>
 
 <h2>Reading a price</h2>
-<p>A Shopify product page with <code>.js</code> appended returns the variants with prices in cents and an availability flag. BigCommerce and custom stores put the price in a <code>product:price:amount</code> meta tag. Kijiji's RSS is dead, but its search pages carry the results as JSON in a <code>__NEXT_DATA__</code> block. Marketplace, logged out, gives title, price, city and photo; no description. One distributor hides prices behind a login, so it isn't watched; a hole in the table beats a guess.</p>
+<p>A Shopify product page with <code>.js</code> appended returns the variants with prices in cents and an availability flag. BigCommerce and custom stores put the price in a <code>product:price:amount</code> meta tag. Kijiji's RSS is dead, but its search pages carry the results as JSON in a <code>__NEXT_DATA__</code> block. Marketplace, logged out, gives title, price, city and photo; no description. One distributor hides prices behind a login, so it isn't watched. A hole in the table beats a guess.</p>
 
 <h2>What counts as a drop</h2>
 <p>A naive diff against the last reading goes wrong three ways.</p>
@@ -33,18 +35,18 @@ note: 5
 <p>A per-part floor, the lowest Canadian price yet, is separate: beating it by two percent is its own event, as is a store coming back into stock.</p>
 
 <h2>Matching an ad</h2>
-<p>Classifieds are where the time went, because "SQ5" in a title is a weak signal. Grep for the model and you get whole cars, tire sizes with no wheels, the previous generation, and body parts from the three model years before the facelift, which don't fit. A 2019 SQ5 is a car; a 2021 SQ5 carbon hood is a part; price (eight thousand dollars and up is a car) and wording tell them apart. The matcher reads the title and any description snippet and sorts ads into four tiers:</p>
+<p>Classifieds are where the time actually went, because "SQ5" in a title means almost nothing. Grep for the model and you get whole cars, tire sizes with no wheels, the previous generation, and body parts from the three model years before the facelift, which don't fit. A 2019 SQ5 is a car; a 2021 SQ5 carbon hood is a part; price (eight thousand dollars and up is a car) and wording tell them apart. The matcher reads the title and any description snippet and sorts ads into four tiers:</p>
 <ul>
 <li><strong>Wanted.</strong> One of the eight parts, in a version that fits. "034 sway bar bushings" is not the sway bar bundle; the rear rotor pattern runs before the front so an ad that doesn't say which end can't land on the front kit.</li>
 <li><strong>Mod.</strong> Fits the car and names an aftermarket brand or a mod word. Parts already on the car are muted; "OEM stock exhaust" is a spare, not a mod; 2.0T parts don't bolt onto the 3.0T.</li>
 <li><strong>Maybe.</strong> A brand part for this engine, model not stated. Sent with "check it fits".</li>
 <li><strong>Plain part.</strong> OEM bits, wheels, part-outs. One list at seven in the evening, two provinces.</li>
 </ul>
-<p>The matcher has thirty regression cases; the rest of the script has none. About the right ratio.</p>
+<p>The matcher has thirty regression cases. The rest of the script has none. Honestly, about the right ratio.</p>
 
 <h2>One message</h2>
 <p>Every listing id is remembered for 120 days, so an ad is scored once; one already fourteen days old when first seen is recorded silently, because "popped up" means new. A used wanted part goes out as a photo message with the cheapest new price beside it. Store events are collected per part, not per store: one message per part, every store's current price underneath. A failed send puts the id back in the queue for the next run.</p>
-<p>It also knows when it is blind: no good read from a source for six hours is one message, and recovery is another. A silent watcher and a broken one look identical from the phone, and the whole point was never having to wonder.</p>
+<p>It also knows when it is blind: no good read from a source for six hours is one message, and recovery is another. A silent watcher and a broken one look exactly the same from my phone, and the whole point was never having to wonder.</p>
 
 <h2>What it taught me</h2>
 <ul>

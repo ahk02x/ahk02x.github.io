@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/writing/fleet-patch.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=d8b8a8250d">
+<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="The timer firing is not evidence · Amir Khademi">
@@ -30,12 +30,12 @@
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>The timer firing is not evidence</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>
 <p class="lede">Every other Sunday at 04:30, one script on the hypervisor patches the home fleet: the containers, the Home Assistant VM, the monitoring box, the host itself and, last, the firewall. It gets no credit for running, only for a check after the reboot finding that everything came back.</p></section>
 
-<p>It started in October, after a security fix on one container, done by hand. Patching one machine makes you ask when the rest were last patched, and there was no routine; there was me, remembering. So I asked Claude Code for a fortnightly cycle covering the Proxmox host and whatever else needed one.</p>
+<p>It started in October, after a security fix on one container, done by hand. Patching one machine makes you ask when the rest were last patched. There was no routine. There was me, remembering. So I asked Claude Code for a fortnightly cycle covering the Proxmox host and whatever else needed one.</p>
 
 <h2>What "graded on evidence" means</h2>
 <p>A dashboard I keep lists every scheduled job on the fleet and grades each against its own evidence, and its rules each came from a wrong answer. No last-run record grades unknown, not ok, after the host's cron directory rendered healthy with nothing behind it. A fresh state file is not success, after one watcher rewrote its own on a failed run and looked green through a whole outage.</p>
 <blockquote>A schedule proves scheduled, never ran.</blockquote>
-<p>Here the timer ticking is the schedule. The evidence is a success stamp, one file holding one timestamp, written only when the verify step finds nothing wrong. The dashboard grades on that stamp, so a cycle that fired and broke something goes stale after about 17 days, like one that never fired. The timer itself fires every Sunday, and the cycle runs only when the last good one is at least 13 days old; a failed cycle writes no stamp, so it retries next Sunday on its own. "It ran" and "it worked" are different claims; only the second earns a green.</p>
+<p>Here the timer ticking is the schedule. The evidence is a success stamp, one file holding one timestamp, written only when the verify step finds nothing wrong. The dashboard grades on that stamp, so a cycle that fired and broke something goes stale after about 17 days, like one that never fired. The timer itself fires every Sunday, and the cycle runs only when the last good one is at least 13 days old. A failed cycle writes no stamp, so it retries next Sunday on its own. "It ran" and "it worked" are different claims. Only the second one earns a green.</p>
 
 <h2>The order, and why</h2>
 <ol>
@@ -55,17 +55,17 @@
 
 <h2>Traps from doing it by hand</h2>
 <ul>
-<li><strong>Headers.</strong> The NVIDIA driver on the host is a <code>.run</code> install registered with DKMS, and only the running kernel's headers were ever installed. A new kernel arrives, DKMS has nothing to build against, and the two containers that use the GPU boot without one. The fix is the default-headers meta-package plus a DKMS autoinstall for the new kernel; the script will not reboot unless <code>modinfo</code> finds the module. A stale kernel for two more weeks beats two GPU-less containers at five in the morning.</li>
-<li><strong>Cosmetic failures.</strong> The Debian trixie systemd upgrade inside unprivileged containers without nesting leaves three mount units failed, in three containers. Services run; <code>/tmp</code> is on disk. Both real fixes, enabling nesting or masking the units, were refused by Claude Code's permission classifier, one as weakening security and one as touching a shared resource; they are my call and still open. The script flags only units that were not already failed at preflight, because a report that cries the same wolf every fortnight teaches you to stop reading it.</li>
+<li><strong>Headers.</strong> The NVIDIA driver on the host is a <code>.run</code> install registered with DKMS, and only the running kernel's headers were ever installed. A new kernel arrives, DKMS has nothing to build against, and the two containers that use the GPU boot without one. The fix is the default-headers meta-package plus a DKMS autoinstall for the new kernel; the script will not reboot unless <code>modinfo</code> finds the module. A stale kernel for two more weeks beats two GPU-less containers at five in the morning. Every time.</li>
+<li><strong>Cosmetic failures.</strong> The Debian trixie systemd upgrade inside unprivileged containers without nesting leaves three mount units failed, in three containers. Services run; <code>/tmp</code> is on disk. Both real fixes, enabling nesting or masking the units, were refused by Claude Code's permission classifier, one as weakening security and one as touching a shared resource. Both are my call, and both are still open. The script flags only units that were not already failed at preflight, because a report that cries the same wolf every fortnight teaches you to stop reading it.</li>
 </ul>
 
 <h2>What it does not touch</h2>
-<p>Three machines are left out on purpose, and every report says so at the bottom. The Mac, because macOS and Homebrew want a password and a major version bump could break a local media pipeline. A Raspberry Pi that rides in the car, rarely on the network and liable to lose power mid-write. A Windows machine, which has Windows Update. A machine you are reminded is unpatched is a decision; one you forgot is a hole.</p>
+<p>Three machines are left out on purpose, and every report says so at the bottom. The Mac, because macOS and Homebrew want a password and a major version bump could break a local media pipeline. A Raspberry Pi that rides in the car, rarely on the network and liable to lose power mid-write. A Windows machine, which has Windows Update. A machine you're reminded is unpatched is a decision. One you forgot is a hole.</p>
 
 <h2>Who installs it</h2>
-<p>Claude Code wrote the cycle and verified the dry run. It would not install it: the install script puts a root-level key on the firewall and the monitoring box and arms unattended hypervisor reboots, and the permission classifier refused that, correctly. The agent writes the thing that reboots the fleet; the human runs the one command that arms it, the same line <a href="/writing/claude-code-on-call.html">the on-call setup</a> drew. Once the key is in, the first unattended cycle falls in November.</p>
+<p>Claude Code wrote the cycle and verified the dry run. It wouldn't install it, though. The install script puts a root-level key on the firewall and the monitoring box and arms unattended hypervisor reboots, and the permission classifier refused that, correctly. The agent writes the thing that reboots the fleet; the human runs the one command that arms it, the same line <a href="/writing/claude-code-on-call.html">the on-call setup</a> drew. Once the key is in, the first unattended cycle falls in November.</p>
 
-<p>The whole thing is one Python script, three systemd units, two forced-command stubs and an install script. What I wanted was for the only green on the dashboard to come from a check run after the reboot, on the machines that came back, against what was there before.</p>
+<p>The whole thing is one Python script, three systemd units, two forced-command stubs and an install script. All I wanted was one rule: the only green on the dashboard comes from a check run after the reboot, on the machines that actually came back, against what was there before.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>

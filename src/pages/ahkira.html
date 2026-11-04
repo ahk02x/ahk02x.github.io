@@ -1,0 +1,52 @@
+title: The GPU stayed home
+description: How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.
+path: /writing/ahkira.html
+nav: /writing/
+summary: I had a card that could run the model fast. I still didn't let the internet near it. What ahkira runs on instead, and how I tried to break it.
+note: 8
+built: 2026-11
+status: built
+---
+<main class="wrap narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-03">3 November 2026</time></div><h1>The GPU stayed home</h1>
+<p class="lede">I wanted a chat box on this site that answers questions about my work. I had the hardware to run it myself. The hard part was deciding not to.</p></section>
+
+<p>ahkira is the little helper that will live on this site. Before any code got written it got three rules: it can't put my home network at risk, it can't go rogue and start sharing things it shouldn't, and when a recruiter shows up it has to work. Order mattered too. Plumbing and guard rails first. The mascot and the name last.</p>
+
+<h2>The first plan: run it on my own card</h2>
+<p>The obvious move was my gaming PC. RTX 3080, 12 GB, and I had just benchmarked it. A 30-billion-parameter mixture-of-experts model did about 43 tokens a second with only half of it on the card. A 14B model did about 72. Plenty for a chat. So the plan was simple: model on my PC, a tunnel from the website to it, no hosting bill.</p>
+
+<h2>Why I didn't</h2>
+<p>Speed was never the problem. The tunnel was.</p>
+<ul>
+<li><strong>It opens the house.</strong> A public endpoint that ends at my PC is a live path from the internet onto my home network. That same machine holds my personal files and has remote access on.</li>
+<li><strong>It ties the site to my home.</strong> Anything that links a public page to where I live is a real risk, not a theory.</li>
+<li><strong>It isn't always on.</strong> That PC sleeps, reboots and plays games. A recruiter would hit a dead box.</li>
+<li><strong>Abuse lands on my power bill.</strong> Every bad actor would be burning my GPU, with nothing in front to slow them down.</li>
+</ul>
+<p>My other GPU box was worse. It runs the house's voice assistant and sits next to the backups. So instead of promising to be careful, I made the home risk zero by design: nothing in my house is reachable from this site. At all.</p>
+
+<h2>What runs instead</h2>
+<p>Your question goes to a small server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
+<ul>
+<li><strong>The page works without the model.</strong> Eleven questions have answers I wrote and checked myself, and they work with JavaScript off. Only a question you type goes to the server. If the server is down, ahkira is napping. That's a designed state, not an error.</li>
+<li><strong>Nothing private to leak.</strong> The model only ever sees the public pages of this site, after a filter strips anything sensitive. No fine-tuning, no private notes, nothing personal in its context. This is the rule that actually keeps me safe.</li>
+<li><strong>Guards in front.</strong> A bot check, per-visitor and daily limits, short questions, short answers, a hidden tripwire for anyone fishing for its instructions, a reply checker, and an off switch.</li>
+<li><strong>Chats are saved.</strong> Emails and phone numbers get blanked before anything is stored, and saved chats never go back into what it reads.</li>
+</ul>
+
+<h2>Trying to break it</h2>
+<p>This is where the 3080 earned its spot after all. It became the lab. Same server code, run locally against the same family of model, fake secrets planted as bait, and scripted attacks thrown at it: jailbreaks, prompt extraction, leak attempts, plain abuse.</p>
+<p>Then two frontier AI models took turns playing attacker, two rounds each. Every trick that worked got fixed and became a permanent test. The suite is now 81 attack cases with zero failures, plus 70 unit tests.</p>
+<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: it rephrased its way past 56 of 62 variations. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
+
+<h2>Small things that bit me</h2>
+<ul>
+<li>The hosted model "thinks" by default. It burned its whole answer budget reasoning and came back empty until I turned that off.</li>
+<li>It copied an example sentence out of its own persona word for word and tripped the echo guard. Persona instructions don't include copyable sentences anymore.</li>
+<li>The bot check fails in a headless browser, so the end-to-end tests run in a visible one.</li>
+</ul>
+
+<h2>Where it stands</h2>
+<p>ahkira is running privately on the real setup. Every refusal path has been checked and every live test turn has passed. Public launch is next. Everything after that is on the <a href="/writing/ahkira-next.html">Coming soon</a> tab.</p>
+</main>
