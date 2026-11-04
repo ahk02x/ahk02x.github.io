@@ -107,12 +107,13 @@ def token_card():
 <ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
 <p class="result">The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from.</p>
 <p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
-<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
+<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt+_lt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPU, mostly the Crucix lab, read from the model server&rsquo;s log. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
-_ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
+ltok = json.load(open('data/local_tokens.json')) if os.path.exists('data/local_tokens.json') else {}  # local open models (Crucix et al.), measured from the ollama journal
+_ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _lt = ltok.get('total_tokens', 0); _mx = max(_ct, _gt, 1)
 def activity():
     import datetime as dt
     days = collections.Counter()
@@ -132,7 +133,7 @@ def activity():
         while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
     def short(n): return f"{n/1e9:.2f}B" if n >= 1e9 else f"{n/1e6:.1f}M" if n >= 1e6 else f"{n:,}"
     lt = (tok or {}).get('longest_task_min', 0)
-    stats = [(short(_ct + _gt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
+    stats = [(short(_ct + _gt + _lt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
              (f"{lt//60}h {lt%60:02d}m" if lt else '—', 'Longest task'), (f"{best} days", 'Longest streak'), (f"{cur} days", 'Current streak')]
     strip = ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in stats)
     return strip, grid_html(days, today)
