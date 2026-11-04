@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://ahk02x.dev/about.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/ahkira-next.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/ahkira.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/claude-code-on-call.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/everything-i-ever-kept.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/fleet-patch.html</loc></url>
+<url><loc>https://ahk02x.dev/about</loc></url>
+<url><loc>https://ahk02x.dev/writing/ahkira-next</loc></url>
+<url><loc>https://ahk02x.dev/writing/ahkira</loc></url>
+<url><loc>https://ahk02x.dev/writing/claude-code-on-call</loc></url>
+<url><loc>https://ahk02x.dev/writing/everything-i-ever-kept</loc></url>
+<url><loc>https://ahk02x.dev/writing/fleet-patch</loc></url>
 <url><loc>https://ahk02x.dev/</loc></url>
-<url><loc>https://ahk02x.dev/infra.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/lanwatch.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/memory-as-infrastructure.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/partswatch.html</loc></url>
-<url><loc>https://ahk02x.dev/writing/phosphor-wall.html</loc></url>
+<url><loc>https://ahk02x.dev/infra</loc></url>
+<url><loc>https://ahk02x.dev/writing/lanwatch</loc></url>
+<url><loc>https://ahk02x.dev/writing/memory-as-infrastructure</loc></url>
+<url><loc>https://ahk02x.dev/writing/partswatch</loc></url>
+<url><loc>https://ahk02x.dev/writing/phosphor-wall</loc></url>
 <url><loc>https://ahk02x.dev/projects/</loc></url>
-<url><loc>https://ahk02x.dev/sq/build-log.html</loc></url>
-<url><loc>https://ahk02x.dev/sq/gallery.html</loc></url>
-<url><loc>https://ahk02x.dev/sq/health.html</loc></url>
-<url><loc>https://ahk02x.dev/sq/trends.html</loc></url>
+<url><loc>https://ahk02x.dev/sq/build-log</loc></url>
+<url><loc>https://ahk02x.dev/sq/gallery</loc></url>
+<url><loc>https://ahk02x.dev/sq/health</loc></url>
+<url><loc>https://ahk02x.dev/sq/trends</loc></url>
 <url><loc>https://ahk02x.dev/sq/</loc></url>
 <url><loc>https://ahk02x.dev/writing/</loc></url>
 </urlset>

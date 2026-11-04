@@ -92,7 +92,7 @@ class SiteChecks(unittest.TestCase):
         self.assertNotIn('{{sq_', page)
         for word in ('No dated snapshot', '>Healthy<', '>No data<'):
             self.assertNotIn(word, page)
-        self.assertIn('/sq/health.html', page)
+        self.assertIn('/sq/health', page)
     def test_public_export_filters_private_names_without_changing_totals(self):
         path = self.site/'data/tokens.json'; data=json.loads(path.read_text())
         totals = data['total_tokens']; kinds = data['by_kind'].copy()
@@ -127,6 +127,7 @@ class SiteChecks(unittest.TestCase):
                 if u.scheme or u.netloc: continue
                 dest=public/u.path.lstrip('/') if u.path.startswith('/') else path.parent/u.path if u.path else path
                 if dest.is_dir():dest=dest/'index.html'
+                if not dest.exists() and dest.with_name(dest.name+'.html').exists():dest=dest.with_name(dest.name+'.html')  # clean URL, as Pages serves it
                 self.assertTrue(dest.exists(),f'{path}: {ref}')
                 if u.fragment and dest in pages:self.assertIn(unquote(u.fragment),pages[dest].ids)
         for excluded in ('tools','src','tests','publish.sh','HANDOFF.md','.git','docs','qa.html'):
