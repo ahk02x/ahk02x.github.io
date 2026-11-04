@@ -80,7 +80,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'obd-cable-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
     merged = collections.Counter()
     for p in tok['top_projects']:
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
@@ -135,7 +135,7 @@ def grid_html(days, today):
     tips = ['none'] + [f"up to {sh(q[0])}"] + [f"{sh(a)}–{sh(b)}" for a, b in zip(q, q[1:])] + [f"over {sh(q[-1])}"]
     key = '<div class="hm-k">More' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in reversed(list(enumerate(tips)))) + 'Less</div>'
     return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>' + key
-SQ_REPOS = ('sq-garage', 'Sq', 'jackal-protocol-re')  # the car, its app and the cable RE: one project
+SQ_REPOS = ('sq-garage', 'Sq', 'obd-cable-protocol-re')  # the car, its app and the cable RE: one project
 def sq_month_bars():
     """Monthly AI-session spend on the SQ repos — the build month, then the taper."""
     by_proj = (tok or {}).get('by_month_project') or {}
