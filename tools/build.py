@@ -18,14 +18,27 @@ except (TypeError, ValueError):
 SECTIONS = [('/about.html', 'About'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('mailto:amir@ahk02x.com', 'Contact')]
 NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
 MARK = '<svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>'
+def glyph_svg(body, sw=10):  # one line-icon language: 128 box, round caps, currentColor so the row's status tints it
+    return f'<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round">{body}</g></svg>'
+def dot(cx, cy, r): return f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="currentColor" stroke-width="2"/>'
+# One glyph per project, drawn from what the project does. The Crossing mark stays the owner's alone (MARK), never a row icon.
 GLYPHS = {
- 'cross': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>',
- 'tap': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><path d="M20,30 H108"/><path d="M20,54 H108"/><path d="M64,54 V98"/></g></svg>',
- 'node': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="square" stroke-linejoin="miter"><path d="M66,20 V108"/><path d="M22,108 L66,20"/><path d="M33,86 H66"/><path d="M66,68 L106,28"/><path d="M66,68 L106,108"/></g></svg>',
- 'wall': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><rect x="34" y="16" width="60" height="96" rx="6"/><path d="M48,40 H80"/><path d="M48,58 H80"/><path d="M48,76 H66"/></g></svg>',
- 'ledger': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M24,36 H104"/><path d="M24,64 H104"/><path d="M24,92 H72"/><path d="M84,92 l8,8 l16,-18"/></g></svg>',
- 'patch': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M64,20 A44,44 0 1 1 20,64"/><path d="M64,20 L48,30 L64,42"/><path d="M44,66 l12,12 l28,-30"/></g></svg>',
- 'tag': '<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/><circle cx="44" cy="44" r="7"/></g></svg>',
+ 'alert': glyph_svg('<path d="M26,92 C34,84 38,72 38,56 C38,40 49,28 64,28 C79,28 90,40 90,56 C90,72 94,84 102,92 Z"/><path d="M64,28 V18"/><path d="M52,104 C54,112 74,112 76,104"/><path d="M52,60 l9,9 l17,-19"/>'),
+ 'phosphor': glyph_svg('<rect x="30" y="10" width="68" height="108" rx="8"/><rect x="43" y="23" width="42" height="30" rx="2" fill="currentColor" stroke-width="3"/><path d="M44,76 H84"/><path d="M44,96 H68"/>'),
+ 'memory': glyph_svg('<path d="M40,38 V90"/><path d="M40,76 C40,56 88,70 88,52"/><circle cx="40" cy="26" r="12"/><circle cx="40" cy="102" r="12"/><circle cx="88" cy="40" r="12"/>'),
+ 'patch': glyph_svg('<g transform="rotate(-45 64 64)"><rect x="8" y="40" width="112" height="48" rx="24"/><path d="M46,40 V88"/><path d="M82,40 V88"/><circle cx="64" cy="54" r="4" fill="currentColor" stroke-width="3"/><circle cx="64" cy="74" r="4" fill="currentColor" stroke-width="3"/></g>'),
+ 'lan': glyph_svg('<path d="M8,62 L44,28 L80,62"/><path d="M18,54 V104 H70 V54"/><path d="M50,82 H118"/><path d="M102,66 L118,82 L102,98"/>'),
+ 'iot': glyph_svg('<rect x="34" y="34" width="60" height="60" rx="8"/><path d="M52,14 V34 M76,14 V34 M52,94 V114 M76,94 V114 M14,52 H34 M14,76 H34 M94,52 H114 M94,76 H114"/>' + dot(64, 64, 8)),
+ 'coach': glyph_svg('<g transform="rotate(-40 64 64)"><path d="M36,64 H92"/><g fill="currentColor" stroke-width="6"><rect x="22" y="34" width="14" height="60" rx="4"/><rect x="92" y="34" width="14" height="60" rx="4"/><rect x="8" y="48" width="14" height="32" rx="3"/><rect x="106" y="48" width="14" height="32" rx="3"/></g></g>'),
+ 'flow': glyph_svg('<path d="M22,38 H106"/><path d="M22,90 H58"/>' + ''.join(dot(x, 38, 12) for x in (22, 64, 106)) + dot(22, 90, 12) + '<circle cx="106" cy="90" r="11" stroke-width="8"/>', 9),
+ 'mac': glyph_svg('<path d="M52,52 H76 V76 H52 Z"/><path d="M52,52 V38 A12,12 0 1 0 40,52 Z"/><path d="M76,52 V38 A12,12 0 1 1 88,52 Z"/><path d="M52,76 V90 A12,12 0 1 1 40,76 Z"/><path d="M76,76 V90 A12,12 0 1 0 88,76 Z"/>'),
+ 'net': glyph_svg('<rect x="14" y="26" width="100" height="76" rx="6"/><path d="M14,51 H114 M14,76 H114"/><path d="M64,26 V51 M38,51 V76 M90,51 V76 M64,76 V102"/>', 9),
+ 'crucix': glyph_svg('<path d="M52,16 V48 L20,100 A8,8 0 0 0 27,112 H101 A8,8 0 0 0 108,100 L76,48 V16"/><path d="M42,16 H86"/><path d="M34,86 H94"/>' + dot(60, 98, 4) + dot(78, 96, 3)),
+ 'inbox': glyph_svg('<path d="M18,70 L32,22 H96 L110,70 V98 A8,8 0 0 1 102,106 H26 A8,8 0 0 1 18,98 Z"/><path d="M18,70 H46 L52,86 H76 L82,70 H110"/>'),
+ 'code': glyph_svg('<path d="M42,34 L14,64 L42,94"/><path d="M86,34 L114,64 L86,94"/><path d="M72,24 L56,104"/>'),
+ 'plug': glyph_svg('<g transform="rotate(40 64 64)"><rect x="38" y="40" width="52" height="40" rx="8"/><path d="M52,40 V20 M76,40 V20"/><path d="M64,80 V112"/></g>'),
+ 'tokens': glyph_svg('<path d="M30,106 V82"/><path d="M64,106 V56"/><path d="M98,106 V26"/>', 17),
+ 'tag': glyph_svg('<path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/>' + dot(44, 44, 7)),
  'sq': '<span class="sq-brand"><img class="glyph sq sq-dark" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"><img class="glyph sq sq-light" src="/assets/sq-mark-light.svg" alt="" width="34" height="34"></span>',
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
@@ -67,7 +80,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'VIP', 'Sq': 'VIP', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'VIP', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # VIP = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'jackal-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
     merged = collections.Counter()
     for p in tok['top_projects']:
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
@@ -75,23 +88,11 @@ def token_card():
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
-    months = [m for m in (tok.get('by_month') or []) if m.get('tokens')]
-    month_html = ''
-    if months:
-        mmx = max(m['tokens'] for m in months)
-        this_month = (tok.get('last') or '')[:7]
-        def mlabel(ym):
-            try: lbl = datetime.date(int(ym[:4]), int(ym[5:7]), 1).strftime('%b %Y')
-            except ValueError: return ym
-            return lbl + ' <small>so far</small>' if ym == this_month else lbl
-        mbars = ''.join(f'<div>{mlabel(m["month"])}</div><div class="b"><i style="width:{100*m["tokens"]/mmx:.1f}%"></i></div><div class="n">{m["tokens"]/1e9:.2f} B</div>' for m in months)
-        month_html = f'<div class="eyebrow" style="margin-top:26px">By month</div><div class="bars">{mbars}</div>'
-    return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["ledger"]}<h3>Built with AI assistance</h3></div>
-<p>Claude Code has been part of the work behind these projects. Usage recorded in its transcripts since {first}, deduplicated:</p>
-<div class="tiles"><div class="tile"><div class="k">Tokens</div><div class="v">{tot/1e9:.2f}<small>billion</small></div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
-<div class="eyebrow" style="margin-top:26px">By project</div><div class="bars">{bars}</div>
-{month_html}
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+    return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["tokens"]}<h3>Built with AI assistance</h3></div>
+<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated:</p>
+<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
+<div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
 _ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
@@ -134,6 +135,23 @@ def grid_html(days, today):
     tips = ['none'] + [f"up to {sh(q[0])}"] + [f"{sh(a)}–{sh(b)}" for a, b in zip(q, q[1:])] + [f"over {sh(q[-1])}"]
     key = '<div class="hm-k">More' + ''.join(f'<i class="l{i}" title="{t} / day"></i>' for i, t in reversed(list(enumerate(tips)))) + 'Less</div>'
     return f'<div class="hm" style="--cols:{col}">' + ''.join(cells) + f'</div><div class="hm-m" style="--cols:{col}">' + ''.join(months) + '</div>' + key
+SQ_REPOS = ('sq-garage', 'Sq', 'jackal-protocol-re')  # the car, its app and the cable RE: one project
+def sq_month_bars():
+    """Monthly AI-session spend on the SQ repos — the build month, then the taper."""
+    by_proj = (tok or {}).get('by_month_project') or {}
+    months = collections.Counter()
+    for repo in SQ_REPOS:
+        for m in by_proj.get(repo, []): months[m['month']] += m['tokens']
+    months = {m: v for m, v in months.items() if v}
+    if not months: return ''
+    mx = max(months.values()); this_month = (tok.get('last') or '')[:7]
+    rows = ''
+    for ym in sorted(months):
+        try: lbl = datetime.date(int(ym[:4]), int(ym[5:7]), 1).strftime('%b %Y')
+        except ValueError: lbl = ym
+        if ym == this_month: lbl += ' <small>so far</small>'
+        rows += f'<div>{lbl}</div><div class="b"><i style="width:{100*months[ym]/mx:.1f}%"></i></div><div class="n">{months[ym]/1e9:.2f} B</div>'
+    return f'<div class="bars">{rows}</div>'
 def gh_grid():
     import datetime as dt
     g = json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}
@@ -143,6 +161,7 @@ subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{
         '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
         '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
         '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
+        '{{sq_months}}': sq_month_bars(),
         '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1], '{{gh_grid}}': gh_grid(), '{{gh_total}}': str((json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}).get('total', '—')),
         '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
@@ -259,7 +278,7 @@ for entry in os.scandir(public_root):
         os.unlink(entry.path)
 public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'data/sq_trends.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
-public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') + glob.glob('assets/infra/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):

@@ -84,15 +84,15 @@ class SiteChecks(unittest.TestCase):
         page = self.health(data)
         for text in ('at or above 130 °C threshold', 'at or above 110 °C threshold', 'at or beyond −6° threshold'):
             self.assertIn(text, page)
-    def test_missing_health_file_and_unknown_status_on_garage(self):
+    def test_missing_health_file_leaves_the_garage_page_clean(self):
+        # The weekly verdict lives on the health card only; the garage page links to it.
         (self.site/'sq/health.json').unlink()
         self.run_script('build.py')
         page = (self.site/'sq/index.html').read_text()
-        self.assertIn('No dated snapshot', page)
-        self.assertNotIn('>Healthy<', page)
-        (self.site/'sq/health.json').write_text(json.dumps({'status':'BAD', 'generated':'2026-10-27'}))
-        self.run_script('build.py')
-        self.assertIn('>No data<', (self.site/'sq/index.html').read_text())
+        self.assertNotIn('{{sq_', page)
+        for word in ('No dated snapshot', '>Healthy<', '>No data<'):
+            self.assertNotIn(word, page)
+        self.assertIn('/sq/health.html', page)
     def test_public_export_filters_private_names_without_changing_totals(self):
         path = self.site/'data/tokens.json'; data=json.loads(path.read_text())
         totals = data['total_tokens']; kinds = data['by_kind'].copy()

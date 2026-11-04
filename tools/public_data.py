@@ -26,6 +26,11 @@ def public_tokens(data):
         {'day': str(d['day'])[:10], 'tokens': int(d['tokens'])}
         for d in data.get('by_day', []) if d.get('day') and re.match(r'^\d{4}-\d{2}-\d{2}', str(d['day']))
     ]
+    result['by_month_project'] = {
+        p: [{'month': str(m['month'])[:7], 'tokens': int(m['tokens'])}
+            for m in months if m.get('month') and re.match(r'^\d{4}-\d{2}', str(m['month']))]
+        for p, months in (data.get('by_month_project') or {}).items() if p in PUBLIC_PROJECTS
+    }
     if isinstance(data.get('longest_task_min'), int):
         result['longest_task_min'] = data['longest_task_min']
     return result

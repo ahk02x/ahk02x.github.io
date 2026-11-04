@@ -1,13 +1,12 @@
-title: VIP · Vehicle Intelligence Platform
+title: SQ · Vehicle Intelligence Platform
 description: Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.
 path: /sq/
 nav: /projects/
 ---
 <main class="wrap">
-<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>VIP</h1>
-<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of VIP: not more data, more understanding.</p>
+<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>SQ</h1>
+<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of SQ: a vehicle intelligence platform. The car’s data goes in, a brain works out what it means, and what comes back is a sentence a person can act on. Not more data, more understanding.</p>
 <div class="readouts">
-<a class="readout {{sq_cls}}" href="/sq/health.html" data-health-date="{{sq_generated}}"><div class="k">This week</div><div class="v" data-health-label>{{sq_word}}</div><div class="s">Week of {{sq_window}} · <u>open the health card</u></div></a>
 <div class="readout"><div class="k">Logged</div><div class="v">243<small>drives</small></div><div class="s">just under 600,000 samples, integrity clean</div></div>
 <div class="readout"><div class="k">Channels</div><div class="v">53<small>× 5 Hz</small></div><div class="s">engine-computer RAM, not generic OBD</div></div>
 <div class="readout"><div class="k">Plugs, September</div><div class="v">−38%<small>misfires</small></div><div class="s">the change that mattered most</div></div>
@@ -25,7 +24,7 @@ nav: /projects/
 <dt>Chassis</dt><dd>034 Dynamic+ lowering springs. 034 billet inserts in the rear differential, rear subframe and transmission mounts, plus the Street Density transmission mount. CTS flush spacers on the factory wheels. A proper alignment afterwards.</dd>
 <dt>Ignition</dt><dd>Fresh NGK Laser Iridium plugs in September. See below for why that line is on this list.</dd>
 <dt>Inside</dt><dd>Q7 steering wheel retrofit, carbon paddle shifter knob, dynamic hub caps, engine cover studs.</dd>
-<dt>Wanted</dt><dd>Cat-back exhaust, charge pipe, front strut brace, sway bar bundle, two-piece rotors, a carbon hood.</dd>
+<dt>Wanted</dt><dd>Cat-back exhaust, charge pipe, front strut brace, sway bar bundle, two-piece rotors, a carbon hood. All essential: MOOO POWEAAAAAA.</dd>
 </dl>
 
 <h2>How the data gets from the car to this page</h2>
@@ -56,7 +55,7 @@ nav: /projects/
 <p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
 
 <h2>The idea</h2>
-<p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, VIP understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
+<p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, SQ understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
 <dl class="spec">
 <dt>Data layer</dt><dd>Collects and normalizes. Makes no decisions.</dd>
 <dt>Rules engine</dt><dd>Turns data into facts. Never decides what the owner sees.</dd>
@@ -107,9 +106,9 @@ nav: /projects/
 
 <h2>Tools built for it</h2>
 <div class="grid">
-<div class="card"><div class="head">{{glyph:node}}<h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">private repos</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
-<a class="card" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head">{{glyph:cross}}<h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">public repo</span><span class="more">GitHub →</span></div></a>
-<a class="card" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
+<div class="card st-live"><div class="head">{{glyph:code}}<h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">live</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
+<a class="card st-built" href="https://github.com/ahk02x/jackal-protocol-re"><div class="head">{{glyph:plug}}<h3>jackal-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">built</span><span class="more">GitHub →</span></div></a>
+<a class="card st-written" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
 </div>
 
 <h2>Rules I keep</h2>
@@ -120,5 +119,10 @@ nav: /projects/
 <li>Trust the physical part in your hand, not the listing photo.</li>
 <li>Never delete an assertion to make a model render.</li>
 </ul>
+
+<h2>The work, month by month</h2>
+<p>All of it — the app, the research bench, the cable — gets built in AI-assisted sessions, and those sessions are counted. The shape is the project growing up: July is the platform going up, and most of that month went into the app repo alone. Every month since is smaller, because the foundation stopped moving and the work became reading the car's data, fixing decoders and chasing one cylinder.</p>
+{{sq_months}}
+<p class="muted" style="margin-top:12px;font-size:.86rem">Tokens spent in sessions that touched the app, the garage bench or the cable work, counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. A session's tokens are split evenly across the project folders it touched, so this measures attention, not lines written.</p>
 </main>
 
