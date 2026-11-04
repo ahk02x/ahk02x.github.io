@@ -256,6 +256,10 @@ def bare(title, desc, path, body, extra_head=''):
     head = re.sub(r'<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https://fonts[^\n]*\n', '', head)
     head = head.replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
     return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
+def pretty(text):
+    """Clean URLs: GitHub Pages serves /x.html at /x, so every internal link, canonical, sitemap and feed
+    entry drops the .html (the files keep their names, so old .html links still resolve)."""
+    return re.sub(r'((?:https://ahk02x\.dev)?/(?!404)[A-Za-z0-9/_-]+)\.html(?=["#?<\s])', r'\1', text)
 def bust(page):
     """Content-hash every local CSS/JS link, so new HTML never pairs with a stylesheet an edge or browser cached earlier."""
     import hashlib
@@ -290,14 +294,14 @@ for e in entries:
         out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
-    os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(bust(out)); pages.append(meta['path'])
+    os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(pretty(bust(out))); pages.append(meta['path'])
 def rfc822(d):
     try: return datetime.datetime.fromisoformat(d).replace(tzinfo=datetime.timezone.utc).strftime('%a, %d %b %Y 00:00:00 +0000')
     except ValueError: return ''
 feed_items = ''.join(f'<item><title>{html.escape(e["meta"]["title"])}</title><link>https://ahk02x.dev{e["meta"]["path"]}</link><guid isPermaLink="true">https://ahk02x.dev{e["meta"]["path"]}</guid>'
                      + (f'<pubDate>{rfc822(e["date"])}</pubDate>' if e['date'] else '') + f'<description>{html.escape(e["meta"].get("description", ""))}</description></item>\n' for e in posts)
-open('feed.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ahk02x — field notes</title><link>https://ahk02x.dev/</link><atom:link href="https://ahk02x.dev/feed.xml" rel="self" type="application/rss+xml"/><description>Engineering write-ups by Amir Khademi: car telemetry, home infrastructure, and tools that have to earn your trust.</description><language>en</language>\n' + feed_items + '</channel></rss>\n')
-open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>https://ahk02x.dev{p}</loc></url>\n' for p in pages if not p.startswith('/404')) + '</urlset>\n')
+open('feed.xml', 'w').write(pretty('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ahk02x — field notes</title><link>https://ahk02x.dev/</link><atom:link href="https://ahk02x.dev/feed.xml" rel="self" type="application/rss+xml"/><description>Engineering write-ups by Amir Khademi: car telemetry, home infrastructure, and tools that have to earn your trust.</description><language>en</language>\n' + feed_items + '</channel></rss>\n'))
+open('sitemap.xml', 'w').write(pretty('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>https://ahk02x.dev{p}</loc></url>\n' for p in pages if not p.startswith('/404')) + '</urlset>\n'))
 print('built', len(pages), 'pages:', ' '.join(pages))
 
 
