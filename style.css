@@ -108,6 +108,9 @@ blockquote { margin: 44px 0; padding: 14px 0 14px 24px; border-left: 4px solid v
 .card.st-built { --st: var(--st-built); --st-i: var(--st-built-i); }
 .card.st-written { --st: var(--st-written); --st-i: var(--st-written-i); }
 .card .glyph, .card .chip { color: var(--st, currentColor); }
+.items .st-live { --st: var(--st-live); } .items .st-run { --st: var(--st-run); }
+.items .st-built { --st: var(--st-built); } .items .st-written { --st: var(--st-written); }
+.items time.chip { color: var(--st, currentColor); align-self: start; }
 .chip.warn::before { background: none; border: 1px solid currentColor; }
 .chip.crit { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .chip.soon::before { background: none; border: 1px solid currentColor; }
