@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/infra.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=d8b8a8250d">
+<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Infra — the hardware I run · Amir Khademi">
@@ -26,7 +26,7 @@
 <div class="site-shell">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html" aria-current="page"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
-<main id="main" class="wrap inner-page narrow">
+<main id="main" class="wrap inner-page narrow wide-body">
 <section class="hero"><div class="eyebrow">Infra</div><h1>The hardware I run</h1>
 <p class="lede">Humble beginnings. Most of it is second-hand or rescued, and all of it is mine to break. The goal: my own datacenter, run from my room.</p>
 <div class="readouts">
@@ -46,6 +46,16 @@
 .ir-p img{width:100%;height:100%;object-fit:cover;display:block}
 .ir-p figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--fg-2)}
 .ir-p figcaption time{display:block;margin-bottom:3px;font:11px var(--mono);letter-spacing:.04em;color:var(--muted)}
+.ir{--c:var(--st-built)}
+.c-fw{--c:var(--st-live)}.c-srv{--c:var(--st-built)}.c-room{--c:var(--st-run)}.c-net{--c:var(--st-written)}.c-desk{--c:var(--st-live)}
+.ir .ir-t>h2{border-left:6px solid var(--c);padding-left:14px}
+.ir .ir-t strong{color:var(--c)}
+.ir-p{border-top:4px solid var(--c)}
+.ir-p figcaption time{color:var(--c)}
+.readout:nth-child(1) .v{color:#ff6f61}.readout:nth-child(2) .v{color:#86b4ff}.readout:nth-child(3) .v{color:#4fd394}
+.ig{margin:40px 0 0;padding:22px 24px;border-radius:10px;border:1px solid var(--soft-line);border-left:6px solid var(--st-run);background:linear-gradient(135deg,color-mix(in srgb,var(--st-run) 14%,transparent),color-mix(in srgb,var(--st-built) 14%,transparent))}
+.ig h2{margin-top:0}
+.ig strong{color:var(--st-run)}
 @media (max-width:720px){
   .ir,.ir.alt{grid-template-columns:1fr}
   .ir.alt .ir-t,.ir.alt .ir-p{grid-column:1;grid-row:auto}
@@ -53,7 +63,7 @@
 }
 </style>
 
-<div class="ir"><div class="ir-t">
+<div class="ir c-net"><div class="ir-t">
 <h2>Network</h2>
 <ul>
 <li><strong>blackwall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house, and it is the only thing standing between the house and the internet.</li>
@@ -61,30 +71,31 @@
 <li><strong>What it counts</strong>: traffic inside the house and traffic leaving it are kept as two different facts, because a house full of IoT devices should have to explain itself. <a href="/writing/lanwatch.html">How that works</a>.</li>
 </ul>
 </div>
-<figure class="ir-p"><a href="/assets/infra/shelf.jpg"><img src="/assets/infra/shelf-t.jpg" alt="An Aruba Instant On switch on a white shelf with blue, white and black patch cables plugged in, a router sitting on top of it with its antennas up" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The switch and the access point on their shelf. Every run in the house lands here.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/shelf.jpg"><img src="/assets/infra/shelf-t.jpg" alt="An Aruba Instant On switch on a white shelf with blue, white and black patch cables plugged in, a router sitting on top of it with its antennas up" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The switch and the access point on their shelf. Every run in the house lands here, and the bracket under the switch that routes the cables neatly underneath it is one I designed and 3D-printed myself.</figcaption></figure></div>
 
-<div class="ir alt"><div class="ir-t">
+<div class="ir alt c-fw"><div class="ir-t">
 <h2>The firewall is a 2011 office PC</h2>
-<p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in. That is the entire repair history of the machine that runs the network.</p>
+<p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in, pulled from one of the gaming PCs I had from before. That is the entire repair history of the machine that runs the network.</p>
 <p>Rescuing hardware is the point rather than a constraint. Everything it does &mdash; DNS, DHCP, flow accounting &mdash; is software I can read, on a box nobody else wanted.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>blackwall with the side off. The replacement power supply is the newest part in it.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>blackwall with the side off, before the swap: that is still the original Dell supply. The black Corsair that replaced it came out of one of my old gaming PCs.</figcaption></figure></div>
 
-<div class="ir"><div class="ir-t">
+<div class="ir c-srv"><div class="ir-t">
 <h2>Servers</h2>
 <p><strong>jarvis</strong> is the one that matters: Ryzen 5 5600GE, 32 GB DDR4, an RTX 2070 SUPER, a 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1 &mdash; about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</p>
 <p>It runs Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. The graphics card is there for the model and the transcription, not for games. About 111 W at idle, which is the number I actually watch, because it never turns off.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was built.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was brought to life from leftover parts.</figcaption></figure></div>
 
-<div class="ir alt"><div class="ir-t">
+<div class="ir alt c-room"><div class="ir-t">
 <h2>The box that runs the room</h2>
-<p><strong>sentry</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck and the lights. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.</p>
-<p>It sits on a stand I printed, on top of blackwall. That stack is the most honest picture of this setup I have &mdash; a palm-sized mini PC balanced on a fifteen-year-old office tower, and between them they run the place.</p>
+<p><strong>sentry</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck, the lights, and the camera that watches the door. When I walk in, it recognises me and the light strip comes on. When someone who is not me walks in, all hell breaks loose. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.</p>
+<p>Then its fan died. A sensible person would have bought a new fan. I designed a whole stand instead, with a fan built into the base that blows air up into the RAM and the CPU, printed it, and set the mini PC on top like a trophy. It works. It is also completely over-engineered, and I would do it again.</p>
+<p>The stand sits on top of blackwall. That stack is the most honest picture of this setup I have &mdash; a palm-sized mini PC balanced on a fifteen-year-old office tower, and between them they run the place.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/sentry.jpg"><img src="/assets/infra/sentry-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>sentry on a printed stand, on top of blackwall.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/sentry.jpg"><img src="/assets/infra/sentry-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>sentry on its over-engineered printed stand, fan in the base, on top of blackwall. A new fan would have been cheaper.</figcaption></figure></div>
 
-<div class="ir"><div class="ir-t">
+<div class="ir c-desk"><div class="ir-t">
 <h2>Desk and wall</h2>
 <ul>
 <li><strong>PHOSPHOR</strong>: a Dell U2719D hung in portrait. It shows the health of everything and latches alarms until I clear them. <a href="/writing/phosphor-wall.html">How it works</a>.</li>
@@ -96,18 +107,10 @@
 </div>
 <figure class="ir-p"><a href="/assets/infra/buildday.jpg"><img src="/assets/infra/buildday-t.jpg" alt="A bedroom floor during a PC build: a monitor showing a BIOS screen, an RGB-lit tower on the desk, a second open PC on the floor, a keyboard and cables everywhere" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>Build day. The BIOS flash is on the screen; the floor is the workbench.</figcaption></figure></div>
 
-<h2>Car</h2>
-<ul>
-<li><strong>Audi SQ5</strong>: a Raspberry Pi 4 in a 3D-printed case and a CANable 2.0 Pro on the diagnostic bus. It logs every drive to its own storage, and when the car is parked at home it joins the WiFi and sends the drives over to jarvis. <a href="/sq/">Inside SQ</a>.</li>
-</ul>
-
-<h2>Around the house</h2>
-<ul>
-<li>An LG C2 OLED, Google Home speakers and Govee lights, all driven through Home Assistant &mdash; my own code talking to the devices, with no vendor cloud in the path.</li>
-</ul>
-
-<h2>Where it's going</h2>
-<p>A datacenter in my room. NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards to build and run my own models, Ubiquiti gear end to end, and proper NAS storage. It starts with what's above.</p>
+<section class="ig"><h2>Where it's going</h2>
+<p><strong>Hybrid AI.</strong> The heavy, private work runs on hardware I own, in my room, so my data stays mine. The cloud handles what it is genuinely better at, and nothing goes up there that does not need to.</p>
+<p>The plan is a datacenter in my room: NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards to build and run my own models, Ubiquiti gear end to end, and proper NAS storage. The long game is my own LLM running on it. It already has a name, <strong>ahkira</strong>. It starts with what's above.</p>
+</section>
 </main>
 <footer class="site-footer"><span>AHK02X</span></footer>
 </div>

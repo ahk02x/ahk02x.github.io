@@ -1,29 +1,31 @@
 title: Everything I ever kept
-description: Amir Khademi ran a file-system survey across his own archive — 127,206 files going back to 1998 — and wrote down what the data said: two years that turned out to be software rather than him, three years he kept nothing, why he logs his own car, and why the systems have to be his.
+built: 2026-11
+status: written
+description: Amir Khademi ran a file-system survey across his own archive — 127,206 files — and wrote down what the data said: two years that turned out to be software rather than him, three years he kept nothing, why he logs his own car, and why the systems have to be his.
 path: /writing/everything-i-ever-kept.html
 nav: /writing/
-summary: A survey of my own archive: 127,206 files back to 1998, two years that turned out to be software and not me, three years I kept nothing, and why I log everything I own.
+summary: A survey of my own archive: 127,206 files, two years that turned out to be software and not me, three years I kept nothing, and why I log everything I own.
 note: 7
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-02">2 November 2026</time></div><h1>Everything I ever kept</h1>
-<p class="lede">I pointed a survey at my own archive the way I'd point one at a production filesystem: every file, its size, its date, no sampling. 127,206 files. The oldest is stamped 1998. I expected a mess, and the mess is real, but what came back was a reasonably exact biography — including several parts I would have told you wrong from memory.</p></section>
+<p class="lede">I pointed a survey at my own archive the way I'd point one at a production filesystem: every file, its size, its date, no sampling. 127,206 files. I expected a mess, and the mess is real, but what came back was a pretty exact biography. Including several parts I would have told you wrong from memory.</p></section>
 
 <p>It lives on one box in the house as three folders, and each folder is really a machine I stopped using. One is a drive full of media, photos and books. One is a work drive. One is the rescue I took off a desktop in July before wiping it. Nothing has ever been deleted from any of them: the recycle folder on that share has been empty since the day it was created in April 2024.</p>
 
 <h2>The data lied to me first</h2>
 
-<p>My two loudest early years were 2015, with 9,499 files, and 2017, with 22,294. I remember 2017 as a year I spent inside a distributed database, so the number felt like confirmation. It isn't. The 2015 cluster is an extracted source tree for a database engine whose release was cut in 2015, and the 2017 cluster is a 17,257-file bug-report artifact set. Extracted archives keep upstream's timestamps. Both spikes are software dating itself, not me doing anything.</p>
+<p>My two loudest early years were 2015, with 9,499 files, and 2017, with 22,294. I remember 2017 as a year I spent inside a distributed database, so the number felt like confirmation. It isn't. The 2015 cluster is an extracted source tree for a database engine whose release was cut in 2015, and the 2017 cluster is a 17,257-file bug-report artifact set. Extracted archives keep upstream's timestamps. Both spikes are software dating itself. Not me doing anything.</p>
 
-<p>That is the first useful thing the archive taught me, and it's the same lesson my day job teaches every week: a number without its provenance is a story, not a fact. I have seen engineers plan a quarter around a graph nobody had asked where the values came from. The fix is boring — go and look at the thing — and it is the only fix there is.</p>
+<p>That is the first useful thing the archive taught me, and it's the same lesson my day job teaches every week: a number without its provenance is a story, not a fact. I have seen engineers plan a quarter around a graph nobody had asked where the values came from. The fix is boring: go look at the thing. It's also the only fix there is.</p>
 
 <h2>What the survey actually found</h2>
 
-<p>Once you set the software-dated folders aside, the shape is clear. A folder of programming books, added to steadily from 2008 to 2016, which is the whole story of how I learned this before anyone paid me to do it. Photos from 2013 to 2016. Then 2021: 25,084 files and 719 GB, and the twelve largest files on the drive are eleven screen captures of the same game from one autumn, the biggest a single 76.6 GB file. I never compressed them. I don't compress anything.</p>
+<p>Once you set the software-dated folders aside, the shape is clear. A folder of programming books, added to steadily from 2008 to 2016, which is the whole story of how I learned this before anyone paid me to do it. Photos from 2013 to 2016. Then 2021: 25,084 files and 719 GB, and eleven of the twelve largest files on the drive are screen captures of the same game from one autumn, the biggest a single 76.6 GB file. I never compressed them. I don't compress anything. I'm aware.</p>
 
-<p>2022 is my biggest year by count — 41,243 files — and almost all of it is work: one Java web application at 9,123 files, with the database engine shipped as both source and binaries, and four separate copies of the same application server at different versions. Anyone who has had a deployment saved by the previous version will recognise that folder immediately.</p>
+<p>2022 is my biggest year by count, 41,243 files, and almost all of it is work: one Java web application at 9,123 files, with the database engine shipped as both source and binaries, and four separate copies of the same application server at different versions. Anyone who has had a deployment saved by the previous version will recognise that folder immediately.</p>
 
-<p>And then it stops. 2023, 2024 and 2025 come to 151 files between them, every single one of which sits <em>inside</em> the July rescue — caught by a backup tool, not filed by me. Three years in which I deliberately kept nothing. What survives from 2023 is a handful of game replays, an installer, and six wallpapers of a car I don't own.</p>
+<p>And then it stops. 2023, 2024 and 2025 come to 151 files between them, and every single one sits <em>inside</em> the July rescue. Caught by a backup tool, not filed by me. Three years in which I deliberately kept nothing. What survives from 2023 is a handful of game replays, an installer, and six wallpapers of a car I don't own.</p>
 
 <p>The most recent folder I created on purpose contains 145 files and 20 MB of exported conversations with the AI tools I work with every day.</p>
 
@@ -31,21 +33,21 @@ note: 7
 
 <p>Because a file is a better witness than I am. My memory of 2017 was wrong in a way that flattered me, and it took thirty seconds of <code>find</code> to prove it. Timestamps don't get sentimental, don't round up, and don't quietly revise the story to make the last decade look more deliberate than it was.</p>
 
-<p>That is also, exactly, why I log machines. Here is one from this week. I had just finished a job that copies the backups off my hypervisor onto that same box every four hours. It ran four times, reported success four times, and the monitor stayed green. Then I read the numbers instead of the status: the same 63.89 GB moved on consecutive runs, and 69 files deleted on every single run. The copy step was sending everything, the retention step was deleting anything older than thirty days, and nobody had taught the two steps to agree — so every four hours it shipped the same 64 GB across the network and then threw it away. Roughly 383 GB a day of writes, achieving nothing, behind a green light.</p>
+<p>That is also, exactly, why I log machines. Here is one from this week. I had just finished a job that copies the backups off my hypervisor onto that same box every four hours. It ran four times, reported success four times, and the monitor stayed green. Then I read the numbers instead of the status: the same 63.89 GB moved on consecutive runs, and 69 files deleted on every single run. The copy step was sending everything, the retention step was deleting anything older than thirty days, and nobody had taught the two steps to agree. So every four hours it shipped the same 64 GB across the network and then threw it away. Roughly 383 GB a day of writes, achieving nothing, behind a green light.</p>
 
-<p>No alert could have caught that, because nothing failed. Every gate I'd written asked <em>may I proceed</em> — is this the right network, the right gateway, the right host key, the right share, is there room. Not one asked <em>did that accomplish anything</em>. A check that ran is not a check that passed, and work that completed is not work that mattered. Identical consecutive totals are never real work; that is now a check.</p>
+<p>My existing alerts missed it, because nothing failed. Every gate I'd written asked <em>may I proceed</em>: is this the right network, the right gateway, the right host key, the right share, is there room. Not one asked <em>did that accomplish anything</em>. A check that ran is not a check that passed, and work that completed is not work that mattered. Identical consecutive totals are never real work; that is now a check.</p>
 
 <h2>Why I log the car</h2>
 
 <p>A car is the most complicated machine most of us own outright, and it tells you almost nothing. There is a light on the dashboard that means <em>something</em>. If you want more than that you either pay someone with the tool, or you build the tool.</p>
 
-<p>So I log it myself, and the point was never the dashboard — it's that after enough weeks you stop asking "is this normal" and start knowing, because you have your own baseline for your own car instead of a forum's opinion about someone else's. The write-up of that work is in <a href="/sq/">VIP</a>: what it measures, what it got wrong, and what it refuses to claim.</p>
+<p>So I log it myself, and the point was never the dashboard. It's that after enough weeks you stop asking "is this normal" and start knowing, because you have your own baseline for your own car instead of a forum's opinion about someone else's. The write-up of that work is in <a href="/sq/">SQ</a>: what it measures, what it got wrong, and what it refuses to claim.</p>
 
 <h2>Why it has to be mine</h2>
 
 <p>I've kept other people's systems alive for seven years. I'm good at it, and I like it. But the logs are theirs, the dashboards are theirs, and the understanding I build in there leaves with the badge. You cannot own a thing you can't inspect, and you cannot inspect a thing somebody else is storing for you on terms they can change.</p>
 
-<p>So the servers are mine, the network is mine, the car's data is mine, the agents run in cages I wrote, and the archive — all 127,206 files of it, including the three years where I was clearly not coping with filing — stays on a box I can put my hand on. Not because every file matters. Because the ability to go and check is the whole difference between believing something about your own life and knowing it.</p>
+<p>So the servers are mine, the network is mine, the car's data is mine, the agents run in cages I wrote, and the archive, all 127,206 files of it, including the three years where I was clearly not coping with filing, stays on a box I can put my hand on. Not because every file matters. Because the ability to go and check is the whole difference between believing something about your own life and knowing it.</p>
 
-<p class="muted">Method, so you can discount it properly: one pass with <code>find</code> and <code>stat</code> over the whole archive, grouped by modification year and by path. Modification times are the weakest evidence in the pile — exports, copies and extracted archives all rewrite them — which is why the two spikes above are software and not biography. Counts are exact; sizes are rounded.</p>
+<p class="muted">Method, so you can discount it properly: one pass with <code>find</code> and <code>stat</code> over the whole archive, grouped by modification year and by path. Modification times are the weakest evidence in the pile, since exports, copies and extracted archives all rewrite them. That's why the two spikes above are software and not biography. Counts are exact; sizes are rounded.</p>
 </main>

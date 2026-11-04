@@ -89,13 +89,31 @@ def token_card():
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
     return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["tokens"]}<h3>Built with AI assistance</h3></div>
-<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated:</p>
-<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
+<style>
+#built .lead{{font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.45;font-weight:600;max-width:46rem;margin:6px 0 18px;padding-left:16px;border-left:5px solid var(--st-built)}}
+#built .lead em{{font-style:normal;color:var(--st-built)}}
+#built .roles{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px;padding:0;list-style:none}}
+#built .roles li{{padding:14px 16px;border:1px solid var(--soft-line);border-top:4px solid var(--c);border-radius:8px;line-height:1.45}}
+#built .roles b{{display:block;font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:4px}}
+#built .result{{max-width:46rem;margin:0 0 6px}}
+#built .src{{font-size:.86rem;color:var(--muted);margin:0 0 4px}}
+#built .tile:nth-child(1){{--c:var(--st-built)}}#built .tile:nth-child(2){{--c:var(--st-run)}}#built .tile:nth-child(3){{--c:var(--st-written)}}#built .tile:nth-child(4){{--c:var(--st-live)}}
+#built .tile{{border-top:4px solid var(--c)}}#built .tile .v{{color:var(--c)}}
+#built .bars>div:nth-child(12n+2) i{{background:var(--st-built)}}#built .bars>div:nth-child(12n+5) i{{background:var(--st-run)}}#built .bars>div:nth-child(12n+8) i{{background:var(--st-written)}}#built .bars>div:nth-child(12n+11) i{{background:var(--st-live)}}
+#built .bars .b{{border-color:var(--soft-line)}}
+@media (max-width:720px){{#built .roles{{grid-template-columns:1fr}}}}
+</style>
+<p class="lead">I had the ideas long before I had the time to learn every field they needed. Working with an AI agent <em>took that ceiling off.</em></p>
+<ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
+<p class="result">The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from.</p>
+<p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
+<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt+_lt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPU, mostly the Crucix lab, read from the model server&rsquo;s log. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
-_ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _mx = max(_ct, _gt, 1)
+ltok = json.load(open('data/local_tokens.json')) if os.path.exists('data/local_tokens.json') else {}  # local open models (Crucix et al.), measured from the ollama journal
+_ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _lt = ltok.get('total_tokens', 0); _mx = max(_ct, _gt, 1)
 def activity():
     import datetime as dt
     days = collections.Counter()
@@ -115,7 +133,7 @@ def activity():
         while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
     def short(n): return f"{n/1e9:.2f}B" if n >= 1e9 else f"{n/1e6:.1f}M" if n >= 1e6 else f"{n:,}"
     lt = (tok or {}).get('longest_task_min', 0)
-    stats = [(short(_ct + _gt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
+    stats = [(short(_ct + _gt + _lt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
              (f"{lt//60}h {lt%60:02d}m" if lt else '—', 'Longest task'), (f"{best} days", 'Longest streak'), (f"{cur} days", 'Current streak')]
     strip = ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in stats)
     return strip, grid_html(days, today)
@@ -179,16 +197,20 @@ for src in sorted(glob.glob('src/pages/*.html')):
     meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M))
     m = re.search(r'<time datetime="(\d{4}-\d{2}-\d{2})"', body)
     entries.append({'meta': meta, 'body': body.strip(), 'date': m.group(1) if m else ''})
-posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') and e['meta']['path'] != '/writing/'],
+posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') and e['meta']['path'] != '/writing/' and e['meta'].get('note')],
                key=lambda e: (e['date'], int(e['meta'].get('note', '0') or 0)), reverse=True)
 def when(d):
     try: return datetime.date.fromisoformat(d).strftime('%b %Y')
     except ValueError: return ''
 def post_item(e):
     mt = e['meta']; blurb = mt.get('summary') or mt.get('description', '')
-    return (f'<div class="item"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
-            f'<time datetime="{e["date"]}">{when(e["date"])}</time><p class="d">{html.escape(blurb)}</p></div>')
-subs['{{writing_list}}'] = ''.join(post_item(e) for e in posts)
+    # The list dates each note by when the PROJECT was built (front matter `built: YYYY-MM`), not when
+    # the write-up was published; `status` tints it with the projects-list colour. No `built` = publish date.
+    built, st = mt.get('built', ''), mt.get('status', 'written')
+    label = ('Written ' if st == 'written' else 'Built ') + when(built + '-01') if built else when(e['date'])
+    return (f'<div class="item st-{st}"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
+            f'<time datetime="{built or e["date"]}" class="chip">{label}</time><p class="d">{html.escape(blurb)}</p></div>')
+subs['{{writing_list}}'] = ''.join(post_item(e) for e in sorted(posts, key=lambda e: (e['meta'].get('built') or e['date'][:7], e['date']), reverse=True))
 def when_long(d):
     try: return datetime.date.fromisoformat(d).strftime('%B %Y')
     except ValueError: return ''
@@ -250,6 +272,11 @@ for e in entries:
     if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
         tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
         strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
+            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
+        body = body.replace('</section>', '</section>' + strip, 1)
+    if meta['path'] in ('/writing/ahkira.html', '/writing/ahkira-next.html'):  # write-up + coming-soon tabs
+        tabs = [('/writing/ahkira.html', 'The write-up'), ('/writing/ahkira-next.html', 'Coming soon')]
+        strip = '<nav class="sq-tabs" aria-label="ahkira sections">' + ''.join(
             f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
         body = body.replace('</section>', '</section>' + strip, 1)
     if 'id="main"' not in body:

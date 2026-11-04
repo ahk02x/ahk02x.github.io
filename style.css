@@ -56,6 +56,8 @@ img, svg { max-width: 100%; }
 .inner-page.narrow { max-width: 1080px; }
 .inner-page > :not(.hero) { max-width: 100%; }
 .inner-page.narrow > :not(.hero) { max-width: 760px; }
+/* Infra pairs every section with a photo, so its body runs the full width of the hero, not a reading column. */
+.inner-page.narrow.wide-body > :not(.hero) { max-width: 100%; }
 .inner-page > .hero { position: relative; overflow: hidden; min-height: 270px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 32px clamp(24px, 4vw, 54px) 38px; margin: 0 0 46px; background: var(--black); color: var(--card); }
 .hero::before { content: 'AHK / 02X'; position: absolute; top: 21px; right: 25px; font: 10px/1.3 var(--mono); letter-spacing: .08em; color: #b1b1ac; }
 .eyebrow { display: block; margin-bottom: 20px; font: 700 11px/1.45 Arial, Helvetica, sans-serif; letter-spacing: .11em; text-transform: uppercase; }
@@ -108,6 +110,9 @@ blockquote { margin: 44px 0; padding: 14px 0 14px 24px; border-left: 4px solid v
 .card.st-built { --st: var(--st-built); --st-i: var(--st-built-i); }
 .card.st-written { --st: var(--st-written); --st-i: var(--st-written-i); }
 .card .glyph, .card .chip { color: var(--st, currentColor); }
+.items .st-live { --st: var(--st-live); } .items .st-run { --st: var(--st-run); }
+.items .st-built { --st: var(--st-built); } .items .st-written { --st: var(--st-written); }
+.items time.chip { color: var(--st, currentColor); align-self: start; }
 .chip.warn::before { background: none; border: 1px solid currentColor; }
 .chip.crit { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
 .chip.soon::before { background: none; border: 1px solid currentColor; }

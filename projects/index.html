@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/projects/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=d8b8a8250d">
+<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Projects · Amir Khademi">
@@ -44,10 +44,27 @@
 <div class="card st-built"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"><path d="M18,70 L32,22 H96 L110,70 V98 A8,8 0 0 1 102,106 H26 A8,8 0 0 1 18,98 Z"/><path d="M18,70 H46 L52,86 H76 L82,70 H110"/></g></svg><h3>Inbox hub</h3></div><p>WhatsApp and Telegram land in one chat, each message sorted into a tier from urgent to mute, with a line saying why it reached me and buttons to re-tier the sender. Voice notes are transcribed locally. Pairing is the last step.</p><div class="foot"><span class="chip live">built</span></div></div>
 </div>
 <section id="built" class="card" style="margin-top:28px"><div class="head"><svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"><path d="M30,106 V82"/><path d="M64,106 V56"/><path d="M98,106 V26"/></g></svg><h3>Built with AI assistance</h3></div>
-<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. The same count the home page shows: Claude Code transcripts on this Mac since 2026-07, plus GPT, deduplicated:</p>
-<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">11.42<small>billion</small></div><div class="t">Claude 9.20 B · GPT 2.22 B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">2,475</div></div><div class="tile"><div class="k">Replies</div><div class="v">59,559</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">8.83<small>billion</small></div><div class="t">fresh input 323 M · output 49 M</div></div></div>
+<style>
+#built .lead{font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.45;font-weight:600;max-width:46rem;margin:6px 0 18px;padding-left:16px;border-left:5px solid var(--st-built)}
+#built .lead em{font-style:normal;color:var(--st-built)}
+#built .roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px;padding:0;list-style:none}
+#built .roles li{padding:14px 16px;border:1px solid var(--soft-line);border-top:4px solid var(--c);border-radius:8px;line-height:1.45}
+#built .roles b{display:block;font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:4px}
+#built .result{max-width:46rem;margin:0 0 6px}
+#built .src{font-size:.86rem;color:var(--muted);margin:0 0 4px}
+#built .tile:nth-child(1){--c:var(--st-built)}#built .tile:nth-child(2){--c:var(--st-run)}#built .tile:nth-child(3){--c:var(--st-written)}#built .tile:nth-child(4){--c:var(--st-live)}
+#built .tile{border-top:4px solid var(--c)}#built .tile .v{color:var(--c)}
+#built .bars>div:nth-child(12n+2) i{background:var(--st-built)}#built .bars>div:nth-child(12n+5) i{background:var(--st-run)}#built .bars>div:nth-child(12n+8) i{background:var(--st-written)}#built .bars>div:nth-child(12n+11) i{background:var(--st-live)}
+#built .bars .b{border-color:var(--soft-line)}
+@media (max-width:720px){#built .roles{grid-template-columns:1fr}}
+</style>
+<p class="lead">I had the ideas long before I had the time to learn every field they needed. Working with an AI agent <em>took that ceiling off.</em></p>
+<ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
+<p class="result">The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from.</p>
+<p class="src">The same count the home page shows: Claude Code transcripts on this Mac since 2026-07, plus GPT, deduplicated.</p>
+<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">11.43<small>billion</small></div><div class="t">Claude 9.20 B · GPT 2.22 B · others 11.4 M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">2,475</div></div><div class="tile"><div class="k">Replies</div><div class="v">59,559</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">8.83<small>billion</small></div><div class="t">fresh input 323 M · output 49 M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars"><div>SQ</div><div class="b"><i style="width:91.3%"></i></div><div class="n">2.92 B</div><div>IoT</div><div class="b"><i style="width:26.1%"></i></div><div class="n">0.83 B</div><div>flowtrace</div><div class="b"><i style="width:15.5%"></i></div><div class="n">0.50 B</div><div>Alert board</div><div class="b"><i style="width:13.0%"></i></div><div class="n">0.41 B</div><div>PHOSPHOR wall</div><div class="b"><i style="width:10.7%"></i></div><div class="n">0.34 B</div><div>Coach Claude</div><div class="b"><i style="width:9.3%"></i></div><div class="n">0.30 B</div><div>macwatch</div><div class="b"><i style="width:5.6%"></i></div><div class="n">0.18 B</div><div>netdash</div><div class="b"><i style="width:5.3%"></i></div><div class="n">0.17 B</div><div>Inbox hub</div><div class="b"><i style="width:4.6%"></i></div><div class="n">0.15 B</div><div>ahk02x.dev</div><div class="b"><i style="width:3.6%"></i></div><div class="n">0.11 B</div><div>lanwatch</div><div class="b"><i style="width:2.2%"></i></div><div class="n">0.07 B</div><div>partswatch</div><div class="b"><i style="width:0.7%"></i></div><div class="n">0.02 B</div><div>fleet-patch</div><div class="b"><i style="width:0.1%"></i></div><div class="n">0.00 B</div><div>Private projects</div><div class="b"><i style="width:100.0%"></i></div><div class="n">3.20 B</div></div>
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPU, mostly the Crucix lab, read from the model server&rsquo;s log. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>
 </main>
 <footer class="site-footer"><span>AHK02X</span></footer>
 </div>
