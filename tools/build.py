@@ -89,7 +89,24 @@ def token_card():
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
     return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["tokens"]}<h3>Built with AI assistance</h3></div>
-<p>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off: I set the direction and the standard, the agent does the legwork, and I read, test and own what ships. The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from. The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated:</p>
+<style>
+#built .lead{{font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.45;font-weight:600;max-width:46rem;margin:6px 0 18px;padding-left:16px;border-left:5px solid var(--st-built)}}
+#built .lead em{{font-style:normal;color:var(--st-built)}}
+#built .roles{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px;padding:0;list-style:none}}
+#built .roles li{{padding:14px 16px;border:1px solid var(--soft-line);border-top:4px solid var(--c);border-radius:8px;line-height:1.45}}
+#built .roles b{{display:block;font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:4px}}
+#built .result{{max-width:46rem;margin:0 0 6px}}
+#built .src{{font-size:.86rem;color:var(--muted);margin:0 0 4px}}
+#built .tile:nth-child(1){{--c:var(--st-built)}}#built .tile:nth-child(2){{--c:var(--st-run)}}#built .tile:nth-child(3){{--c:var(--st-written)}}#built .tile:nth-child(4){{--c:var(--st-live)}}
+#built .tile{{border-top:4px solid var(--c)}}#built .tile .v{{color:var(--c)}}
+#built .bars>div:nth-child(12n+2) i{{background:var(--st-built)}}#built .bars>div:nth-child(12n+5) i{{background:var(--st-run)}}#built .bars>div:nth-child(12n+8) i{{background:var(--st-written)}}#built .bars>div:nth-child(12n+11) i{{background:var(--st-live)}}
+#built .bars .b{{border-color:var(--soft-line)}}
+@media (max-width:720px){{#built .roles{{grid-template-columns:1fr}}}}
+</style>
+<p class="lead">I had the ideas long before I had the time to learn every field they needed. Working with an AI agent <em>took that ceiling off.</em></p>
+<ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
+<p class="result">The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from.</p>
+<p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
 <div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
 <p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
