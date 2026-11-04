@@ -200,7 +200,7 @@ PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
           'description': 'Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
           'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
-          'sameAs': ['https://github.com/ahk02x']}
+          'sameAs': ['https://github.com/ahk02x', 'https://www.linkedin.com/in/amirh-khademi/']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
            'alternateName': 'Amir Khademi — field notes', 'inLanguage': 'en',
            'author': {'@id': PERSON_ID}, 'publisher': {'@id': PERSON_ID}}
