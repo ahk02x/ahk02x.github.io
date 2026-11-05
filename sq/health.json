@@ -1,29 +1,29 @@
 {
  "status": "WATCH",
  "window": [
-  "Oct 28",
-  "Nov 04"
+  "Oct 29",
+  "Nov 05"
  ],
- "generated": "2026-11-04",
+ "generated": "2026-11-05",
  "findings": [
   {
    "sev": "WATCH",
-   "text": "misfires at 1.26\u00d7 the last month's rate",
+   "text": "misfires at 1.25\u00d7 the last month's rate",
    "action": "if next Sunday is still high: OBDeleven smoothness read, then the cylinder-3 coil"
   },
   {
    "sev": "WATCH",
-   "text": "the Pi rebooted 92 times across 2 overnight park(s) \u2014 that is what drains the battery",
+   "text": "the Pi rebooted 135 times across 3 overnight park(s) \u2014 that is what drains the battery",
    "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
    "sev": "WATCH",
-   "text": "56% of your boost was on cold oil",
-   "action": "oil takes ~26 min to warm up \u2014 go easy until then"
+   "text": "57% of your boost was on cold oil",
+   "action": "oil takes ~16 min to warm up \u2014 go easy until then"
   },
   {
    "sev": "OK",
-   "text": "10 of 16 trips never got the oil warm",
+   "text": "8 of 13 trips never got the oil warm",
    "action": "give it one 20+ min drive a week so the oil burns off the fuel and water from short hops"
   },
   {

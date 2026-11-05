@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-04 00:00",
- "total_tokens": 107575473,
+ "updated": "2026-11-05 00:00",
+ "total_tokens": 126278380,
  "by_kind": {
-  "input_tokens": 106810093,
-  "cached_input_tokens": 103791104,
-  "output_tokens": 765380,
-  "reasoning_output_tokens": 278858,
-  "total_tokens": 107575473
+  "input_tokens": 125378956,
+  "cached_input_tokens": 121566464,
+  "output_tokens": 899424,
+  "reasoning_output_tokens": 322013,
+  "total_tokens": 126278380
  },
- "sessions": 48,
+ "sessions": 57,
  "first": "2026-06-30",
- "last": "2026-11-03",
+ "last": "2026-11-04",
  "by_day": {
   "2026-06-30": 31907,
   "2026-07-10": 30981,
@@ -19,6 +19,7 @@
   "2026-10-31": 29871794,
   "2026-11-01": 49699336,
   "2026-11-02": 2261067,
-  "2026-11-03": 20166170
+  "2026-11-03": 9288505,
+  "2026-11-04": 29580572
  }
 }
