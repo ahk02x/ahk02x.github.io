@@ -28,42 +28,54 @@
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html" aria-current="page"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page narrow">
 <section class="hero"><div class="eyebrow">About</div><h1>Hi, I'm Amir.</h1>
-<p class="lede">I keep production systems running for a living. Then I go home and take apart things that were working fine.</p></section>
+<p class="lede">Engineer. Relentless tinkerer.</p></section>
 
-<p>For seven years I've looked after the parts of a system nobody notices until they break: payments moving between banks, phones joining a mobile network, a login page that dies when a certificate expires. I like the work. None of it is mine, though, so at home I build things that are. I run my own servers and my own network, I write my own tools, and I keep finding new ways to measure my car.</p>
+<p>My whole career has been keeping other people's production alive: payment rails between banks, mobile provisioning for millions of phones, identity platforms where a bad certificate means nobody logs in. The networks, the certificates, the deployments and the 2 a.m. root cause. I'm good at it. But everything I fix, migrate or build there belongs to someone else.</p>
+
+<p>So at home I build things that are mine, end to end. My own servers, my own network, my own data, my own tools. If I own it, I understand it, and if I understand it, nobody can take it from me.</p>
 
 <h2>How it started</h2>
-<p>In July 2025 I asked a chatbot if it had ever seen Iron Man. Next thing I knew, I was trying to build my own Jarvis in a Windows terminal. Version 0.1 answered almost everything with one line: &ldquo;I heard you, but I'm still learning. Let's build me smarter.&rdquo; I typed &ldquo;today was a breakthrough&rdquo; into it. It didn't understand that either.</p>
-<p>I wanted it because the assistant I'd been talking to belonged to a company that could change it or switch it off whenever it liked. I wanted one that ran on my own machine, kept its own memory, and taught me things while I built it. I still want that.</p>
-<p>A year later jarvis is a real computer in my office, put together from leftover parts, and it keeps the master copy of every drive my car logs. The next step is my own language model on hardware I own. It already has a name, <a href="/writing/ahkira.html">ahkira</a> (subject to change).</p>
+<p>July 2025, a Windows terminal, and a bot I called Jarvis. Version 0.1 answered nearly everything with the same line: &ldquo;I heard you, but I'm still learning. Let's build me smarter.&rdquo; I wanted it anyway, because the assistant I was talking to belonged to a company that could change it or take it away whenever it wanted. Mine would run on my machine, keep its own memory, and teach me as I built it. Today jarvis is a real server in my office, built from leftover parts, and that idea is the goal at the bottom of this page.</p>
 
-<h2>Things I've built</h2>
+<h2>Some stories</h2>
 <ul>
-<li><strong>A logger for my car.</strong> The tuning cable only talks to a Windows app, so I sniffed the wire, worked out the framing and the checksum byte by byte, and wrote my own read-only logger. Hundreds of drives later it showed me that about half my misfires land in the second and a half after an upshift. No shop had told me that. <a href="/sq/">SQ &rarr;</a></li>
-<li><strong>A part that didn't exist.</strong> The OEM washer filter didn't fit, so I described the part I needed to an AI instead of learning CAD: a lip to lock the stock filter in, and notches that had to stay square however many times I had to say so. The third print doesn't leak. <a href="/sq/">SQ &rarr;</a></li>
-<li><strong>An alarm I can't ignore.</strong> A portrait monitor on my wall goes red when something at home breaks, and it stays red until I clear it myself. The AI I code with gets the same alerts and has to answer each one in writing before it touches what I asked for. <a href="/writing/phosphor-wall.html">The wall &rarr;</a> &middot; <a href="/writing/claude-code-on-call.html">The pager &rarr;</a></li>
-<li><strong>A price watcher.</strong> Eight car parts across fifty-two store pages. I wanted one message when a part got cheaper, so I built the thing that sends it. <a href="/writing/partswatch.html">partswatch &rarr;</a></li>
-<li><strong>A read of everything I ever kept.</strong> 127,206 files. Two of those years turned out to be software, not me. <a href="/writing/everything-i-ever-kept.html">What it said &rarr;</a></li>
+<li><strong>I taught myself my car's diagnostic cable.</strong> The tuning cable only talks to a Windows app, so I sniffed the wire, worked out the framing and the checksum byte by byte, and wrote my own read-only logger. Hundreds of drives later it told me something no shop had: about half my misfires land in the second and a half after an upshift. <a href="/sq/">SQ &rarr;</a></li>
+<li><strong>The OEM filter didn't fit, so I designed one that does.</strong> I described the part to an AI instead of a CAD program: a lip that locks the stock filter in, notches that had to stay square no matter how many times I had to say so. Three printed versions later, it doesn't leak. <a href="/sq/">SQ &rarr;</a></li>
+<li><strong>I gave an AI a pager.</strong> My home fleet raises alerts, and the coding agent I work with is not allowed to ignore them. Before it touches my request it has to answer the board, in writing, with a verdict. <a href="/writing/claude-code-on-call.html">How &rarr;</a></li>
+<li><strong>My wall stays red until I say so.</strong> A portrait monitor on the wall is the alarm. Nothing turns it green except me, and when its own feed dies it says so instead of pretending. <a href="/writing/phosphor-wall.html">The wall &rarr;</a></li>
+<li><strong>Eight car parts, fifty-two store pages.</strong> I wanted a price drop to be a fact about the part, not the store, and I wanted one message, not fifty. So I built the watcher. <a href="/writing/partswatch.html">partswatch &rarr;</a></li>
+<li><strong>I read everything I ever kept.</strong> 127,206 files. Two of those years turned out to be software, not me. <a href="/writing/everything-i-ever-kept.html">What it said &rarr;</a></li>
 </ul>
 
-<h2>The day job</h2>
-<p>An honours degree in software engineering, then seven years across three industries.</p>
+<h2>Where I've worked</h2>
+<p>An honours degree in software engineering, where my first team lead role was a Java app that teaches children Braille, then seven years moving down the stack and up in responsibility.</p>
 <dl class="spec">
-<dt>Cloud &amp; software</dt><dd>Started as a systems administrator on a large cloud platform, automating VMware with PowerShell and Python and hardening 100+ servers to a healthcare compliance standard. Later, upgrades and migrations of an enterprise order-management platform. On the side I was president of the intern community: 600 interns, 40 events, and a budget we never went over.</dd>
-<dt>Telecom</dt><dd>Kept mobile provisioning running for millions of LTE and 5G subscribers. Wrote the outage playbooks and the patch procedures, and held the platform at a 98% success rate.</dd>
-<dt>Financial institutions</dt><dd>The part I'm proudest of. I owned the hub service that sat between every bank and credit union on the platform. I onboarded each partner from dev to production, ran the major release migrations, rotated certificates without dropping traffic, and worked the hard tickets: mTLS, SAML and OIDC federation, HSM signing, and VPN tunnels that drop for no reason until you find the reason. I also ran the endpoint side: Intune, Autopilot and an organization-wide Windows 11 migration.</dd>
+<dt>Cloud &amp; software</dt><dd>Started as a systems administrator on a large cloud platform: hundreds of customers on Linux and Windows, VMware automated with PowerShell and Python (it cut the team's manual work by about a third), scripted hardening of 100+ servers to a healthcare compliance standard, and network changes on Cisco switches and ASA firewalls. Later, upgrades and migrations of an enterprise order-management platform. Alongside the day job I was president of the intern community: 600 interns across offices in two provinces, 40 social and career events, 20 site leads reporting in each week, and a budget we never went over.</dd>
+<dt>Telecom</dt><dd>Kept mobile provisioning flowing for millions of LTE and 5G subscribers. Wrote the outage playbooks the team recovered with, held the platform portfolio at a 98% success rate, wrote the patch procedures for on-prem and cloud systems and walked them through change review, worked product defects through with outside vendors, and built a tool that took repetitive cleanup off the frontline network operations team.</dd>
+<dt>Financial institutions</dt><dd>The part I'm proudest of. I worked with every bank and credit union on the platform, owning the hub service that sat in the middle of them. For each partner I wrote the configuration, raised the change, and carried it through every gate: dev, UAT, production. I ran major release migrations, wrote the automation and scripts that made all of it repeatable, rotated certificates without dropping traffic, and worked the hard tickets: mTLS, SAML and OIDC federation, HSM signing, and site-to-site VPNs that drop for no reason until you find the reason. Nomad, Consul, Vault, Ansible, AWS and Bitbucket pipelines, across two data centres, in a regulated environment where a mistake is somebody's payment. I also ran the endpoint side: Microsoft 365, Azure AD single sign-on, Intune and Autopilot, testing and rollout for an organization-wide Windows 11 migration, and vulnerability remediation held at 90% within SLA.</dd>
 </dl>
 <p class="muted">Most-used tools: Linux, Ansible, Nomad, Consul, Vault, Docker, Helm, Splunk, Elastic, TLS and PKI, Keycloak, F5, FortiGate, IPsec, AWS, Azure, CyberArk, Python, Bash, PowerShell. Self-taught Kubernetes and Terraform on AWS. Three years as a scrum master.</p>
 
-<h2>Right now</h2>
+<h2>How I work</h2>
 <ul>
-<li>Getting SQ from saved logs to a live feed from the car.</li>
-<li>Auditing my own network like it belongs to a client. It did not enjoy the audit.</li>
-<li>Archiving every AI conversation I've ever had, so that history is mine too.</li>
+<li><strong>Take it apart first.</strong> Read the wire, open the device, prove it with a tiny script, then build around it.</li>
+<li><strong>Evidence over vibes.</strong> A check that ran is not a check that passed. Unknown never means healthy.</li>
+<li><strong>Plain words.</strong> If the alert or the report needs a glossary, it failed.</li>
+<li><strong>AI as a tool I hold to account.</strong> I build with Claude and GPT every day, inside guardrails I wrote: an alert board the agent has to answer, a memory it has to keep honest, a cage it can't leave. The grid on the home page is that work, counted.</li>
 </ul>
 
-<h2>Away from the desk</h2>
-<p>Cars first. The SQ5 is half daily driver, half test bench, Stage 2 and asking for more. I do my own work on it, with mixed results: I fitted lowering springs and left the stock bump stops in, and I once snapped the clock spring in the steering wheel. Then 3D printing, in the office I've turned into a shop and call the lab: car parts, a wall-mounted perch for the bird, whatever needs building. The rest is the gym, soccer and pickleball.</p>
+<h2>Messing with right now</h2>
+<ul>
+<li>Taking SQ from a parked, verified gate to a live feed from the car.</li>
+<li>Auditing and hardening my own network like it's a client's. It did not enjoy the audit.</li>
+<li>Archiving every AI conversation I've ever had, so the history is mine too.</li>
+</ul>
+
+<h2>The goal</h2>
+<p>Hybrid cloud, hybrid AI. The heavy, private work runs on hardware I own at home, so my data stays mine. The cloud handles what it is genuinely better at. The long game is my own LLM running in that setup. It already has a name, ahkira (subject to change).</p>
+
+<h2>Off the keyboard</h2>
+<p>Cars first: an Audi SQ5 that is half daily driver, half test bench, Stage 2 and asking for more. Then 3D printing, in the office I've turned into a shop and call the lab: car parts, a wall-mounted perch for the bird, whatever needs building. The rest of the time: the gym, soccer and pickleball.</p>
 
 <p class="muted">Full name Amir Hossein Khademi, also written Amir-Hossein Khademi. Code at <a href="https://github.com/ahk02x">github.com/ahk02x</a>. Also on <a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a>. Email is best: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
