@@ -75,7 +75,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 {body}
-<footer class="site-footer"><span>AHK02X</span></footer>
+<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
 </div>
 </body>
 </html>'''
