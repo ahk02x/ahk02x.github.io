@@ -258,8 +258,14 @@
           body: JSON.stringify({ messages: turns, turnstile: pass, chat, turn: sent }),
         });
         const body = await res.json().catch(() => ({}));
-        state = body.state || (res.status === 429 ? 'limited' : 'broken');
-        reply = typeof body.reply === 'string' && body.reply ? body.reply : REPLY[state] || REPLY.broken;
+        if (res.status === 403) {
+          // A 403 is only ever the bot check (or the origin) failing, never the question, so say that, not the stock refusal.
+          // 'check' also puts the question back in the box so the visitor can send it again.
+          state = 'check'; reply = REPLY.check;
+        } else {
+          state = body.state || (res.status === 429 ? 'limited' : 'broken');
+          reply = typeof body.reply === 'string' && body.reply ? body.reply : REPLY[state] || REPLY.broken;
+        }
       } catch { if (state === 'check') reply = REPLY.check; /* otherwise stays "broken" */ }
       finally { clearTimeout(cut); }
       // ok = a happy face while it answers; napping = asleep, and it stays asleep; anything else = calm, never the red moon

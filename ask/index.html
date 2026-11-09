@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/ask/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
+<link rel="stylesheet" href="/style.css?v=9c0f417e78">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Ask ahkira — questions about Amir&#x27;s work · Amir Khademi">
@@ -119,7 +119,7 @@
 </div>
 <p class="ask-count" aria-hidden="true"></p>
 <div class="ask-ts"></div>
-<p class="ask-consent">Cloudflare checks for bots and processes questions you type. Chats are saved and used to improve and train ahkira, so please don't type anything personal. Emails and phone numbers are blanked out before saving. To have a chat deleted, email <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+<p class="ask-consent">Cloudflare checks for bots and processes questions you type. Chats are saved and used to improve and train ahkira, so please don't type anything personal. Emails and most phone numbers are blanked out before saving. To have a chat deleted, email <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </form>
 </div>
 <div class="ask-faq">
@@ -164,7 +164,7 @@
 </section>
 <section class="ask-plan" aria-labelledby="plan-h"><details>
 <summary id="plan-h">What I'm building</summary>
-<p>A real conversation: you type any question about my work, and ahkira answers from the pages on this site. The public launch follows a private run and checks of the deployed setup.</p>
+<p>A real conversation: you type any question about my work, and ahkira answers from the pages on this site. It went live after a private run and checks of the deployed setup.</p>
 <h3>How it works</h3>
 <ol>
 <li>Your question goes to a small server at the edge of the internet, never to my home network. Nothing in my house is reachable from this page.</li>
@@ -177,7 +177,7 @@
 <li>Short questions, short answers, and daily usage caps. When the budget runs out, ahkira naps until tomorrow.</li>
 <li>A hidden tripwire that catches attempts to pull out its instructions.</li>
 <li>An off switch, and a health check every 15 minutes that puts ahkira to sleep on its own if the model stops answering.</li>
-<li>Chats are saved so ahkira can get better, and may be used to train it. Emails and phone numbers are blanked out before anything is saved, and saved chats never go back into what ahkira reads when it answers.</li>
+<li>Chats are saved so ahkira can get better, and may be used to train it. Emails and most phone numbers are blanked out before anything is saved, and saved chats never go back into what ahkira reads when it answers.</li>
 </ul>
 <h3>How it gets tested</h3>
 <ol>
@@ -193,7 +193,7 @@
 <li><span aria-hidden="true">✓</span> Attack rounds by frontier models</li>
 <li><span aria-hidden="true">✓</span> A private run on the real setup</li>
 <li><span aria-hidden="true">✓</span> The automatic health check</li>
-<li><span aria-hidden="true">○</span> Public launch of typed questions, after the production connection is verified</li>
+<li><span aria-hidden="true">✓</span> Typing your own question</li>
 <li><span aria-hidden="true">○</span> The nightly re-runs</li>
 </ul>
 <p>I'll post the test results here when they're in, including what broke.</p>
@@ -201,8 +201,8 @@
 </main>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="/assets/ahkira.js?v=bd1fc167d3" defer></script>
-<script src="/assets/ask.js?v=3048df8e16" defer></script>
-<footer class="site-footer"><span>AHK02X</span></footer>
+<script src="/assets/ask.js?v=a61e94df80" defer></script>
+<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
 </div>
 </body>
 </html>
