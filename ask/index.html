@@ -103,25 +103,8 @@
 @keyframes akBreathe{50%{transform:scale(1.025,1.04)}}
 @keyframes akZz{0%,100%{opacity:.35;transform:translateY(2px)}50%{opacity:1;transform:translateY(-3px)}}
 @media (prefers-reduced-motion:reduce){.ask *{animation:none!important}}
-/* ahkira's sun-and-moon colours, scoped to its own page. */
-.ahkira-page{--ak-gold:#f0a93b;--ak-moon:#a9bedf;--ak-ink:#14162e;--card:#f6f3eb;--bg:#fffdf7;--bg-2:#e8edf5;--fg:#20243b;--fg-2:#414b64;--muted:#53617b;--line:#7f8ca5;--soft-line:#cbd3df;--black:#20243b;background:var(--card);color:var(--fg)}
-html .site-shell .ahkira-page.inner-page>.hero{background:var(--ak-ink);color:#f4f2ec;border-top:3px solid var(--ak-gold)}
-.ahkira-page .hero h1 span{color:var(--ak-gold)}
-.ahkira-page .hero .eyebrow,.ahkira-page .hero::before{color:var(--ak-moon)}
-.ahkira-page .hero .lede{color:#e1e9f6}
-.ahkira-page .ask-training{border-color:#7f98c9;color:#d9e3f3;background:#222940}
-.ahkira-page .ask-training strong{color:var(--ak-gold)}
-.ahkira-page .ask-chat{background:var(--bg);border-color:var(--soft-line)}
-.ahkira-page .ask-bot{border:1px solid var(--soft-line)}
-.ahkira-page .ask-you{background:var(--card);border-color:var(--line)}
-.ahkira-page .ask-dots i{background:var(--muted)}
-.ahkira-page .ask-chips button:hover,.ahkira-page .ask-chips button:focus-visible{background:var(--bg-2);border-color:var(--fg)}
-.ahkira-page .ask-row button{background:var(--ak-gold);color:var(--ak-ink);font-weight:700}
-.ahkira-page .ask-row button:hover:not(:disabled){background:#ffc568}
-.ahkira-page .ask-row textarea:focus-visible,.ahkira-page button:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
-.ahkira-page .ask-row textarea::placeholder{color:var(--muted);opacity:1}
-:root[data-theme="dark"] .ahkira-page{--card:#181c31;--bg:#14182b;--bg-2:#252d47;--fg:#f4f2ec;--fg-2:#d0dbed;--muted:#a9bedf;--line:#7f98c9;--soft-line:#46516b;--black:#f4f2ec}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .ahkira-page{--card:#181c31;--bg:#14182b;--bg-2:#252d47;--fg:#f4f2ec;--fg-2:#d0dbed;--muted:#a9bedf;--line:#7f98c9;--soft-line:#46516b;--black:#f4f2ec}}
+.ahkira-page .hero h1 span{color:#f0a93b}
+.ahkira-page .hero .ask-training{color:#d1d1cc}
 </style>
 <section id="ask" class="ask" aria-label="Chat with ahkira" data-api="/api/ask" data-sitekey="0x4AAAAAAFyZbSmSB1Xly3IH">
 <div class="ask-chat">
