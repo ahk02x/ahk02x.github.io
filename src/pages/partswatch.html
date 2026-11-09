@@ -9,13 +9,13 @@ note: 5
 ---
 <main class="wrap narrow">
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>The part matters, not the store</h1>
-<p class="lede">The SQ5's wanted list has eight entries, counting the rotors as two kits. Ten Canadian retailers sell some subset of them, and used ones turn up on Kijiji and Facebook Marketplace. I wanted to know the second one got cheaper or showed up used. So I wrote a watcher.</p></section>
+<p class="lede">The SQ5's wanted list has eight entries, counting the rotors as two kits. Ten Canadian retailers sell some subset of them, and used ones turn up on Kijiji and Facebook Marketplace. I wanted to know the moment one got cheaper or showed up used. So I wrote a watcher.</p></section>
 
 <p>I don't care which store has the charge pipe. I care about the charge pipe. The question is: for this part, what is the lowest price in the country today, and did it just change? Once the question is per part, the design pretty much writes itself.</p>
 <blockquote>A retailer's sale is a fact about the retailer. A price drop is a fact about the part.</blockquote>
 
 <h2>Three loops, one messenger</h2>
-<p>One stdlib Python script on the home server, run by a systemd timer every fifteen minutes with up to two minutes of jitter so requests never land on the same second. Everything ends in one Telegram channel.</p>
+<p>One Python script, standard library only, on the home server, run by a systemd timer every fifteen minutes with up to two minutes of jitter so requests never land on the same second. Everything ends in one Telegram channel.</p>
 <ol>
 <li><strong>Classifieds, every run.</strong> Seven Kijiji searches across Canada and six Marketplace queries in each of two cities, logged out, with a two-to-six-second pause between fetches.</li>
 <li><strong>Store prices, hourly.</strong> Fifty-two product pages: fifty Canadian listings across the ten retailers, plus two US reference prices from the manufacturer, converted at the Bank of Canada rate and never allowed to win "cheapest", because a US sticker doesn't include shipping or brokerage.</li>
@@ -37,10 +37,10 @@ note: 5
 <h2>Matching an ad</h2>
 <p>Classifieds are where the time actually went, because "SQ5" in a title means almost nothing. Grep for the model and you get whole cars, tire sizes with no wheels, the previous generation, and body parts from the three model years before the facelift, which don't fit. A 2019 SQ5 is a car; a 2021 SQ5 carbon hood is a part; price (eight thousand dollars and up is a car) and wording tell them apart. The matcher reads the title and any description snippet and sorts ads into four tiers:</p>
 <ul>
-<li><strong>Wanted.</strong> One of the eight parts, in a version that fits. "034 sway bar bushings" is not the sway bar bundle; the rear rotor pattern runs before the front so an ad that doesn't say which end can't land on the front kit.</li>
+<li><strong>Wanted.</strong> One of the eight parts, in a version that fits. "034 sway bar bushings" is not the sway bar bundle; the rear rotor pattern is checked before the front one, so an ad that doesn't say which end can't land on the front kit.</li>
 <li><strong>Mod.</strong> Fits the car and names an aftermarket brand or a mod word. Parts already on the car are muted; "OEM stock exhaust" is a spare, not a mod; 2.0T parts don't bolt onto the 3.0T.</li>
 <li><strong>Maybe.</strong> A brand part for this engine, model not stated. Sent with "check it fits".</li>
-<li><strong>Plain part.</strong> OEM bits, wheels, part-outs. One list at seven in the evening, two provinces.</li>
+<li><strong>Plain part.</strong> OEM bits, wheels, part-outs. These go out as one list at seven in the evening, for two provinces.</li>
 </ul>
 <p>The matcher has thirty regression cases. The rest of the script has none. Honestly, about the right ratio.</p>
 

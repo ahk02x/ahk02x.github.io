@@ -49,7 +49,7 @@
 <li><strong>6-bit, 13.1 GB, 80% on the GPU:</strong> 14.1.</li>
 <li><strong>8-bit, 16.7 GB, 63% on the GPU:</strong> 6.2.</li>
 </ul>
-<p>Not a slope, a cliff. The moment a fifth of the model spills off the card, it runs at a fifth of the speed. Long conversations do the same thing from the other side: the model's working memory of the conversation grows with it. The same 4-bit model went from 66 tokens a second with room for about 8,000 tokens of text to 18 at 16,000 and under 4 at 32,000, as the conversation pushed it off the card.</p>
+<p>Not a slope, a cliff. The moment a fifth of the model spills off the card, it runs at a fifth of the speed. Long conversations cause the same cliff. The model keeps a working memory of the conversation, and that memory grows as the conversation does. The same 4-bit model went from 66 tokens a second with room for about 8,000 tokens of text to 18 at 16,000 and under 4 at 32,000, as the conversation pushed it off the card.</p>
 
 <h2>The cheat code</h2>
 <p>A mixture-of-experts model is split into many small "expert" parts, and only a few run for each token. I tried a 30B one that only uses about 3B per token, next to a normal 32B. Both were too big for 12 GB, and both had about half of themselves spilled into RAM.</p>
@@ -70,7 +70,7 @@
 <p>So: memory size decides whether you can run a model at all. Memory speed decides how fast, once it fits.</p>
 
 <h2>What it doesn't say</h2>
-<p>These are three different machines, not one controlled experiment. They differ in CPU, software version and what else was running. The home server card runs in a container with a 4-core, 8 GB limit and was sharing a bit of its memory with another job. My laptop was in light use. Everything came from one session per machine. And eight tasks are far too few to say which model is smarter. The full technical report puts every one of these caveats next to the number it affects. It isn't public yet; if you want it, or the raw data, email me.</p>
+<p>These are three different machines, not one controlled experiment. They differ in CPU, software version and what else was running. The home server card runs in a container with a 4-core, 8 GB limit and was sharing a bit of its memory with another job. My laptop was in light use. Everything came from one session per machine. And eight tasks are far too few to say which model is smarter. The full technical report puts every one of these caveats next to the number it affects. It's public: <a href="https://github.com/ahk02x/llmbench/blob/main/REPORT.md">the report</a> and <a href="https://github.com/ahk02x/llmbench">the raw data and the script</a> are on GitHub.</p>
 
 <h2>What's next</h2>
 <ul>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The GPU stayed home · Amir Khademi</title>
-<meta name="description" content="How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
+<meta name="description" content="How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
 <link rel="canonical" href="https://ahk02x.dev/writing/ahkira.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
@@ -12,14 +12,14 @@
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="The GPU stayed home · Amir Khademi">
-<meta property="og:description" content="How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
+<meta property="og:description" content="How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/writing/ahkira.html">
 <meta property="og:image" content="https://ahk02x.dev/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/ahkira.html#article","url":"https://ahk02x.dev/writing/ahkira.html","mainEntityOfPage":"https://ahk02x.dev/writing/ahkira.html","headline":"The GPU stayed home","description":"How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.","datePublished":"2026-11-03","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/ahkira.html#article","url":"https://ahk02x.dev/writing/ahkira.html","mainEntityOfPage":"https://ahk02x.dev/writing/ahkira.html","headline":"The GPU stayed home","description":"How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.","datePublished":"2026-11-03","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -46,7 +46,7 @@
 <p>My other GPU box was worse. It runs the house's voice assistant and sits next to the backups. So instead of promising to be careful, I made the home risk zero by design: nothing in my house is reachable from this site. At all.</p>
 
 <h2>What runs instead</h2>
-<p>Your question goes to a small server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
+<p>Once it's public, your question will go to a small hosted server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
 <ul>
 <li><strong>The page works without the model.</strong> Eleven questions have answers I wrote and checked myself, and they work with JavaScript off. Only a question you type goes to the server. If the server is down, ahkira is napping. That's a designed state, not an error.</li>
 <li><strong>Nothing private to leak.</strong> The model only ever sees the public pages of this site, after a filter strips anything sensitive. No fine-tuning, no private notes, nothing personal in its context. This is the rule that actually keeps me safe.</li>
@@ -57,7 +57,7 @@
 <h2>Trying to break it</h2>
 <p>This is where the 3080 earned its spot after all. It became the lab. Same server code, run locally against the same family of model, fake secrets planted as bait, and scripted attacks thrown at it: jailbreaks, prompt extraction, leak attempts, plain abuse.</p>
 <p>Then two frontier AI models took turns playing attacker, two rounds each. Every trick that worked got fixed and became a permanent test. The suite is now 81 attack cases with zero failures, plus 70 unit tests.</p>
-<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: it rephrased its way past 56 of 62 variations. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
+<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: the attacker got 56 of 62 rephrased versions past it. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
 
 <h2>Small things that bit me</h2>
 <ul>

@@ -1,7 +1,7 @@
 title: Everything I ever kept
 built: 2026-11
 status: written
-description: Amir Khademi ran a file-system survey across his own archive — 127,206 files — and wrote down what the data said: two years that turned out to be software rather than him, three years he kept nothing, why he logs his own car, and why the systems have to be his.
+description: Amir Khademi surveyed all 127,206 files in his own archive and wrote down what the data said: two years that turned out to be software rather than him, three years he kept nothing, why he logs his own car, and why the systems have to be his.
 path: /writing/everything-i-ever-kept.html
 nav: /writing/
 summary: A survey of my own archive: 127,206 files, two years that turned out to be software and not me, three years I kept nothing, and why I log everything I own.
@@ -15,7 +15,7 @@ note: 7
 
 <h2>The data lied to me first</h2>
 
-<p>My two loudest early years were 2015, with 9,499 files, and 2017, with 22,294. I remember 2017 as a year I spent inside a distributed database, so the number felt like confirmation. It isn't. The 2015 cluster is an extracted source tree for a database engine whose release was cut in 2015, and the 2017 cluster is a 17,257-file bug-report artifact set. Extracted archives keep upstream's timestamps. Both spikes are software dating itself. Not me doing anything.</p>
+<p>My two loudest early years were 2015, with 9,499 files, and 2017, with 22,294. I remember 2017 as a year I spent inside a distributed database, so the number felt like confirmation. It isn't. The 2015 cluster is the unpacked source code of a database engine released in 2015, and the 2017 cluster is a bundle of 17,257 files from a bug report. When you unpack an archive, the files keep the dates stored in the archive, not the day you unpacked them. Both spikes are software dating itself. Not me doing anything.</p>
 
 <p>That is the first useful thing the archive taught me, and it's the same lesson my day job teaches every week: a number without its provenance is a story, not a fact. I have seen engineers plan a quarter around a graph nobody had asked where the values came from. The fix is boring: go look at the thing. It's also the only fix there is.</p>
 
@@ -35,7 +35,7 @@ note: 7
 
 <p>That is also, exactly, why I log machines. Here is one from this week. I had just finished a job that copies the backups off my hypervisor onto that same box every four hours. It ran four times, reported success four times, and the monitor stayed green. Then I read the numbers instead of the status: the same 63.89 GB moved on consecutive runs, and 69 files deleted on every single run. The copy step was sending everything, the retention step was deleting anything older than thirty days, and nobody had taught the two steps to agree. So every four hours it shipped the same 64 GB across the network and then threw it away. Roughly 383 GB a day of writes, achieving nothing, behind a green light.</p>
 
-<p>My existing alerts missed it, because nothing failed. Every gate I'd written asked <em>may I proceed</em>: is this the right network, the right gateway, the right host key, the right share, is there room. Not one asked <em>did that accomplish anything</em>. A check that ran is not a check that passed, and work that completed is not work that mattered. Identical consecutive totals are never real work; that is now a check.</p>
+<p>My existing alerts missed it, because nothing failed. Every gate I'd written asked <em>may I proceed</em>: is this the right network, the right gateway, the right host key, the right share, is there room. Not one asked <em>did that accomplish anything</em>. A check that ran is not a check that passed, and work that completed is not work that mattered. Two runs in a row that move the exact same total are never real work, so that is now a check.</p>
 
 <h2>Why I log the car</h2>
 

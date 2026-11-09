@@ -41,7 +41,8 @@ class LocalTokens(unittest.TestCase):
     def test_nothing_private_or_finer_than_a_day_is_written(self):
         text = json.dumps(self.run_with(STAGED))
         self.assertNotIn('04-52-39', text)        # snapshot stamp carries a time of day
-        self.assertNotIn('qwen', text.lower())    # never a model family name
+        self.assertEqual(set(json.loads(text)['sources']['chat']),   # allowlisted keys only: no model, host or snapshot field
+                         {'input_tokens', 'output_tokens', 'total_tokens', 'requests', 'note', 'updated'})
         self.assertNotIn('192.168', text)
 
     def test_missing_or_malformed_staged_file_keeps_committed_numbers(self):
