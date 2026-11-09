@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-09 00:00",
- "total_tokens": 523885206,
+ "updated": "2026-11-09 17:34",
+ "total_tokens": 653154642,
  "by_kind": {
-  "input_tokens": 521354017,
-  "cached_input_tokens": 509575936,
-  "output_tokens": 2531189,
-  "reasoning_output_tokens": 918019,
-  "total_tokens": 523885206
+  "input_tokens": 650237546,
+  "cached_input_tokens": 635615232,
+  "output_tokens": 2917096,
+  "reasoning_output_tokens": 1050751,
+  "total_tokens": 653154642
  },
- "sessions": 114,
+ "sessions": 129,
  "first": "2026-10-31",
- "last": "2026-11-08",
+ "last": "2026-11-09",
  "by_day": {
   "2026-10-31": 28751,
   "2026-11-01": 11402417,
@@ -20,6 +20,49 @@
   "2026-11-05": 24148037,
   "2026-11-06": 107199343,
   "2026-11-07": 35584760,
-  "2026-11-08": 315565406
- }
+  "2026-11-08": 191072536,
+  "2026-11-09": 253762306
+ },
+ "top_projects": [
+  {
+   "project": "Sq",
+   "tokens": 64467069
+  },
+  {
+   "project": "alertboard",
+   "tokens": 43103446
+  },
+  {
+   "project": "ahkira-bot",
+   "tokens": 27662223
+  },
+  {
+   "project": "sq-garage",
+   "tokens": 18814379
+  },
+  {
+   "project": "llmbench",
+   "tokens": 13058353
+  },
+  {
+   "project": "ahkira",
+   "tokens": 11245348
+  },
+  {
+   "project": "ahk02x-site",
+   "tokens": 9231465
+  },
+  {
+   "project": "iot",
+   "tokens": 3311515
+  },
+  {
+   "project": "phosphor",
+   "tokens": 274426
+  },
+  {
+   "project": "Crucix",
+   "tokens": 274426
+  }
+ ]
 }
