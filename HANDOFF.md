@@ -20,7 +20,7 @@ An engineering field journal: warm paper and carbon surfaces, orange accents, la
 - Carbon/orange Crossing mark; monospace wordmark.
 - SQ red is reserved for SQ signals and status, not general site chrome.
 - Large editorial typography and intentional whitespace; avoid a repeated grid of rounded dashboard cards.
-- Light and dark both designed. System fonts are fallbacks; Google Fonts are the only external asset requests.
+- Light and dark both designed. System fonts are fallbacks; Google Fonts are external asset requests. The /ask/ page also loads Cloudflare Turnstile from challenges.cloudflare.com for bot checks; its disclosure appears with the chat input.
 - Small-screen diagrams use readable step lists. Cylinder ratios have a visible table with exact values and thresholds.
 - Keep thresholds next to telemetry numbers and explain that weekly reports are snapshots, not a live feed.
 
