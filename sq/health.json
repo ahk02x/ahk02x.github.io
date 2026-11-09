@@ -1,19 +1,14 @@
 {
  "status": "WATCH",
  "window": [
-  "Nov 01",
-  "Nov 08"
+  "Nov 02",
+  "Nov 09"
  ],
- "generated": "2026-11-08",
+ "generated": "2026-11-09",
  "findings": [
   {
    "sev": "WATCH",
-   "text": "misfires at 1.28\u00d7 the last month's rate",
-   "action": "if next Sunday is still high: OBDeleven smoothness read, then the cylinder-3 coil"
-  },
-  {
-   "sev": "WATCH",
-   "text": "the Pi rebooted 142 times across 3 overnight park(s) \u2014 that is what drains the battery",
+   "text": "the Pi rebooted 140 times across 3 overnight park(s) \u2014 that is what drains the battery",
    "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
@@ -23,7 +18,7 @@
   },
   {
    "sev": "OK",
-   "text": "11 of 15 trips never got the oil warm",
+   "text": "9 of 13 trips never got the oil warm",
    "action": "give it one 20+ min drive a week so the oil burns off the fuel and water from short hops"
   },
   {
