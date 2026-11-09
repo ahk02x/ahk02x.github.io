@@ -1,8 +1,8 @@
 {
- "input_tokens": 8136897,
- "output_tokens": 3293842,
- "total_tokens": 11430739,
- "requests": 9559,
+ "input_tokens": 8147335,
+ "output_tokens": 3294065,
+ "total_tokens": 11441400,
+ "requests": 9563,
  "source": "Open models on my own GPUs, by source below; tokens are the model server's reported input + output.",
  "updated": "2026-11-09",
  "sources": {
@@ -12,13 +12,16 @@
    "total_tokens": 11400000,
    "requests": 9546,
    "note": "ollama journal on the GPU host, full retention from 2026-07-23, read 2026-11-02; Crucix is 7,538 of the 9,546 requests",
-   "updated": "2026-11-02"
+   "updated": "2026-11-02",
+   "by_project": {
+    "Crucix": 9002011
+   }
   },
   "chat": {
-   "input_tokens": 26897,
-   "output_tokens": 3842,
-   "total_tokens": 30739,
-   "requests": 13,
+   "input_tokens": 37335,
+   "output_tokens": 4065,
+   "total_tokens": 41400,
+   "requests": 17,
    "note": "private chat app on the 3080; the model server's reported counters, from the app's own usage ledger",
    "updated": "2026-11-09"
   }
