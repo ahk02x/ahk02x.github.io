@@ -13,7 +13,7 @@ note: 10
 
 <h2>What I found</h2>
 <p>A certificate can list extra names it's valid for, called Subject Alternative Names, or SANs. One kind of name is a URI. When Go's <code>crypto/x509</code> package reads a certificate, it turns every URI name into its own object in memory, and it keeps all of them. There's no limit on how many a certificate can have, and an empty one is allowed. An empty URI takes 2 bytes in the certificate. The object Go makes for it takes a lot more.</p>
-<p>So I made a certificate with 130,000 empty URIs. It's about 260 KB, which is close to the most Go accepts in one handshake (it caps the certificate message at 256 KiB). Reading it allocates about 24 MB and keeps about 20 MB. That's around 76 times the size of the certificate.</p>
+<p>So I made a certificate with 130,000 empty URIs. It's about 260 KB, which is close to the most one handshake can carry in Go: its TLS code caps a certificate message at 256 KiB. Reading it allocates about 24 MB and keeps about 20 MB. That's around 76 times the size of the certificate.</p>
 
 <div class="tablewrap"><table>
 <caption>One test certificate with 130,000 empty URI names (Go 1.27.3)</caption>

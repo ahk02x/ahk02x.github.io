@@ -11,6 +11,7 @@ Counts only: no text, model names, request times or hosts reach this repo, and d
 A missing or unreadable staged file keeps the committed numbers. Counters only ever grow, so a staged
 total lower than the committed one is refused as a sign the wrong ledger was read.
 """
+import datetime
 import json
 import os
 import sys
@@ -39,7 +40,7 @@ def read_chat(path=None):
         return None, f'no staged chat totals at {path} ({type(e).__name__})'
     try:
         i, o, r = int(s['input_tokens']), int(s['output_tokens']), int(s['requests'])
-        day = str(s['date'])[:10]
+        day = datetime.date.fromisoformat(str(s['date'])[:10]).isoformat()  # a real calendar day, never '2026-99-99'
     except (KeyError, TypeError, ValueError) as e:
         return None, f'staged chat totals malformed ({type(e).__name__})'
     if min(i, o, r) < 0 or len(day) != 10:
