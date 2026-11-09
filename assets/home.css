@@ -52,3 +52,9 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;--page:#0c0c0b;--card:#1a1a19;--black:#e8e8e3;--line:#6a6b67;--soft-line:#3a3b38;--quiet:#a3a49f;--accent:#e8e8e3;--fg:#e8e8e3;--fg-2:#b9bab5;--muted:#9c9d98;--bg:#1a1a19;--bg-2:#222320;--bg-3:#2e2f2c;--line-2:#6a6b67;--ok:#c9cac5;--warn:#a9aaa5;--crit:#e8e8e3}:root:not([data-theme="light"]) .identity{background:#050505;color:#efefeb}}
 :root[data-theme="dark"]{color-scheme:dark;--page:#0c0c0b;--card:#1a1a19;--black:#e8e8e3;--line:#6a6b67;--soft-line:#3a3b38;--quiet:#a3a49f;--accent:#e8e8e3;--fg:#e8e8e3;--fg-2:#b9bab5;--muted:#9c9d98;--bg:#1a1a19;--bg-2:#222320;--bg-3:#2e2f2c;--line-2:#6a6b67;--ok:#c9cac5;--warn:#a9aaa5;--crit:#e8e8e3}:root[data-theme="dark"] .identity{background:#050505;color:#efefeb}
 .theme-toggle{font:500 10px/1 var(--mono,monospace);letter-spacing:.08em;text-transform:uppercase;background:none;color:inherit;border:1px solid var(--line);border-radius:999px;padding:6px 10px;cursor:pointer;margin-left:10px}.theme-toggle:hover{border-color:currentColor}
+
+/* Quiet profile links, separate from the main directory. */
+.footer .social-links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 20px;margin-right:auto}
+.footer .social-links a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;font-size:12px;font-weight:400;letter-spacing:0;text-transform:none;text-underline-offset:5px}
+.footer .social-links a:hover,.footer .social-links a:focus-visible{text-decoration:underline}
+@media(max-width:360px){.footer{flex-wrap:wrap;gap:0 12px;padding:6px 0}.footer .social-links{gap:4px 12px}}
