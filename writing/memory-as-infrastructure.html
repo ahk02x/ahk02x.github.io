@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/writing/memory-as-infrastructure.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
+<link rel="stylesheet" href="/style.css?v=9c0f417e78">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Memory as infrastructure · Amir Khademi">
@@ -33,11 +33,11 @@
 <p>The memory is a directory of Markdown files. One file is one current fact about a machine, a project, or a way I want the agent to work. Each has front matter: a <code>name</code> that must equal the filename, a <code>description</code> that is the recall signal, and one of four types (user, feedback, project, reference). Missing front matter fails lint. Fussy for a pile of notes? Sure. Right up until the agent confidently acts on a fact that's been wrong for weeks.</p>
 
 <h2>The index is a list of triggers</h2>
-<p>One file, <code>MEMORY.md</code>, is loaded into every session; everything else costs nothing until opened. So the core index is a per-session tax, and it has a budget: the linter warns at 8 KB and refuses the commit at 12 KB. In August I cut it to about 8 KB. By October it was 19.8 KB again, because every new memory landed in it. Now the core holds only the rails, the staged work and the hubs, plus one line per domain pointing at an <code>index-&lt;domain&gt;.md</code> that is opened on demand. It is 7.8 KB, roughly 1.9k tokens per session; the six domain indexes total about 16 KB and are paid only when used.</p>
+<p>One file, <code>MEMORY.md</code>, is loaded into every session; everything else costs nothing until opened. So the core index is a per-session tax, and it has a budget: the linter warns at 8 KB and refuses the commit at 12 KB. In August I cut it to about 8 KB. By October it was 19.8 KB again, because every new memory landed in it. Now the core holds only the standing rules (I call them rails), work that is staged and waiting on me, and the hub files, plus one line per domain pointing at an <code>index-&lt;domain&gt;.md</code> that is opened on demand. It is 7.8 KB, roughly 1.9k tokens per session; the six domain indexes total about 16 KB and are paid only when used.</p>
 <p>The rule that matters more: an index line is a trigger, not a summary. A title and the condition under which the agent should open the file, in 120 characters or fewer. <code>Verify The Contract — read the real field/value/route first; unknown NEVER means healthy</code> tells the agent when to stop and look. A paraphrase of the contents invites it to act on the paraphrase instead of opening the file.</p>
 
 <h2>Rewrite, don't append</h2>
-<p>The natural way to update a note is a dated section under the old one. In August I measured that across 107 memories: 34 contained supersede-or-correction language, and the home server's build record had 17 dated headers and had reached 53 KB, about 13k tokens for a single recall. An append-log presents dead facts with the same confidence as live ones, recall surfaces the file and not a diff, and whichever line is read first wins. A memory that needs 300 lines read, plus a judgment call on which half is dead, is worse than no memory. Because it gets trusted.</p>
+<p>The natural way to update a note is a dated section under the old one. In August I measured that across 107 memories: 34 had wording that corrected or replaced an earlier line, and the home server's build record had 17 dated headers and had reached 53 KB, about 13k tokens for a single recall. A file that only grows shows dead facts with the same confidence as live ones. Recall brings back the whole file, not what changed, and whichever line gets read first wins. A memory that needs 300 lines read, plus a judgment call on which half is dead, is worse than no memory. Because it gets trusted.</p>
 <p>So a memory holds current truth only. When a fact changes, the wrong sentence is replaced and the old one deleted. The directory is a git repository with over 440 commits. That's where history lives. Dated headers are the smell: more than three fails lint, as does any file of 12 KB or more. Past about 8 KB a file is no longer one fact; cut dead state or split it.</p>
 
 <h2>A rule nobody runs is not a rule</h2>
@@ -58,11 +58,11 @@
 <p>A <code>brain recall</code> command searches all three at once. Each memory records the session it came from, so <code>brain show</code> opens a memory next to the conversation that produced it; 130 of 168 memories resolve that way. The standing rule: recall before asking me to repeat anything, and keep the fact in memory and the reasoning in the digest.</p>
 
 <h2>What it taught me</h2>
-<p>Most of the cost of an agent session is carrying context, not generating; when I measured mine, 85 percent of spend was context. An unindexed memory is one the agent will never recall. An over-long one costs more per recall than the whole core index. A stale one is trusted. Every control here is cheap, stdlib Python and a git hook, and each replaced a sentence that said "remember to". The sentences didn't work. The hooks do.</p>
+<p>Most of the cost of an agent session is carrying context, not generating new text; when I measured mine, 85 percent of spend was context. An unindexed memory is one the agent will never recall. An over-long one costs more per recall than the whole core index. A stale one is trusted. Every control here is cheap, stdlib Python and a git hook, and each replaced a sentence that said "remember to". The sentences didn't work. The hooks do.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
-<footer class="site-footer"><span>AHK02X</span></footer>
+<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
 </div>
 </body>
 </html>

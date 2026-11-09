@@ -59,3 +59,12 @@ json.dump(out, open(os.path.join(os.path.dirname(__file__), '..', 'data', 'token
 print(json.dumps({k: out[k] for k in ('total_tokens', 'sessions', 'assistant_messages', 'first', 'last')}))
 print('top:', [(d['project'], round(d['tokens'] / 1e9, 2)) for d in out['top_projects'][:12]])
 
+
+# The local open-model figure ("others") refreshes here rather than as its own publish.sh step:
+# publish.sh runs from a pinned copy that only changes by hand, while this file ships with a merge.
+# It can never break the Claude count above, which is already written.
+try:
+    import local_tokens
+    local_tokens.main()
+except Exception as e:
+    print(f'local_tokens: skipped ({type(e).__name__}: {e})', file=sys.stderr)

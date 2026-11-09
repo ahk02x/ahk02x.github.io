@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/sq/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=3dbdc577f1">
+<link rel="stylesheet" href="/style.css?v=9c0f417e78">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="SQ · Vehicle Intelligence Platform · Amir Khademi">
@@ -59,19 +59,19 @@
 <g text-anchor="middle"><text x="75" y="88">53 RAM variables</text><text x="255" y="88">protocol reverse-engineered</text><text x="435" y="88">logs every drive, 5 Hz</text><text x="615" y="88">master copy, one normalizer</text><text x="810" y="88">week vs week vs baseline</text></g>
 <g text-anchor="middle"><text x="435" y="130">away from home: keeps data, retries every 10 min</text><text x="810" y="130">→ one verdict, in words</text></g>
 </svg><ol class="mobile-flow"><li><div><strong>Engine computer</strong><small>53 RAM variables</small></div></li><li><div><strong>Diagnostic cable</strong><small>Reverse-engineered serial protocol</small></div></li><li><div><strong>Raspberry Pi</strong><small>Logs every drive, five times a second</small></div></li><li><div><strong>Home server</strong><small>Master copy, one normalizer</small></div></li><li><div><strong>Sunday job</strong><small>Week vs week vs baseline → health card</small></div></li></ol><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
-<p>The car came with a diagnostic cable whose Windows app I didn't want to depend on, so I reverse-engineered the cable. The protocol is request and response over a serial link: a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of 53 engine-computer variables. These are not generic OBD values. They are the ECU's own RAM: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda, voltage at the module. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/obd-cable-protocol-re">obd-cable-protocol-re</a>.</p>
-<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to jarvis, the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer so nothing reaches the database by a side door.</p>
-<p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material: 1.2 mm of clearance for a board edge that overhangs 1.2 mm is zero, and the hold-down legs snapped. The second is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
+<p>The car came with a diagnostic cable whose Windows app I didn't want to depend on, so I reverse-engineered the cable. The protocol is request and response over a serial link: a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of 53 engine-computer variables. These are not generic OBD values. They come straight from the engine computer's own memory: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda (how rich or lean the engine is running), voltage at the module. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/obd-cable-protocol-re">obd-cable-protocol-re</a>.</p>
+<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to jarvis, the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer, a step that checks and renames it, so nothing reaches the database by a side door.</p>
+<p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material. I left 1.2 mm of clearance for a board edge that sticks out 1.2 mm. That is zero clearance, and the hold-down legs snapped. The second is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
 
 <h2>What the data taught me</h2>
 <ul>
 <li><strong>Misfires are a rate, not a count.</strong> The counter never resets on its own, so only rates per 10,000 firings compared week to week mean anything. Day-to-day noise is about five times what a naive model predicts. Single days lie.</li>
-<li><strong>Cylinder 3 runs about twice its siblings, and the story changed.</strong> Before the new plugs the excess was the same at every load. The plugs cut the warm misfire rate across all six cylinders by about a third and made what was left depend on load. Same symptom, different shape, different suspect.</li>
+<li><strong>Cylinder 3 misfires about twice as often as the others, and the story changed.</strong> Before the new plugs the excess was the same at every load. The plugs cut the warm misfire rate across all six cylinders by about a third and made what was left depend on load. Same symptom, different shape, different suspect.</li>
 <li><strong>Nearly 40% of all misfire counts land in the second after an upshift,</strong> which is under 10% of driving time. That is not one cylinder's fault. It is shared, with cylinders 3, 4 and 6 about twice 1, 2 and 5 inside that window.</li>
 <li><strong>Cylinder 4 dislikes cold oil.</strong> With the coolant warm but the oil under 50 °C it misfires at nearly three times its warm-oil rate. Nothing else does that.</li>
 <li><strong>The battery problem was my logger.</strong> On long parks the Pi fell into boot storms, up to 128 reboots in a day, each one a drain. The fix is a hardware low-voltage cutoff, not more software.</li>
-<li><strong>High charging voltage is normal here.</strong> A 15.3 V median looked like a sick battery until I learned this platform recuperates on deceleration. Learn the car's normal before judging a number.</li>
-<li><strong>Bin by load before comparing windows,</strong> and assign a drive to a week by when it started, not row by row. Both bit me before I wrote them down.</li>
+<li><strong>High charging voltage is normal here.</strong> A 15.3 V median looked like a sick battery until I learned this car recovers energy when it slows down and charges harder while it does. Learn the car's normal before judging a number.</li>
+<li><strong>Group by engine load before comparing two stretches of time,</strong> and put a drive in the week it started, not row by row. Both bit me before I wrote them down.</li>
 </ul>
 
 <h2>The weekly health card</h2>
@@ -94,10 +94,9 @@
 <dt>Jul 3 2026</dt><dd><strong>Rules engine and data contract.</strong> Raw signals and the conclusions drawn from them become separate layers. A health card a non-expert can read lands the same day.</dd>
 <dt>Jul 4 2026</dt><dd><strong>Database and auth.</strong> The app gets a real database and sign-in.</dd>
 <dt>Jul 13 2026</dt><dd><strong>Garage repo and live stream.</strong> The research bench starts, and the logger streams live data that recovers when the link drops.</dd>
-<dt>Jul 15 2026</dt><dd><strong>Diagnostic dongle decoded.</strong> A Bluetooth sniff cracks a commercial dongle's obfuscated protocol: fault codes and live data at no cost.</dd>
-<dt>Jul 19 2026</dt><dd><strong>Pi in the car, raw CAN.</strong> The deep channels come straight off the bus, so logging no longer depends on the tuning cable.</dd>
+<dt>Jul 19 2026</dt><dd><strong>Pi in the car, raw CAN.</strong> The deep channels come straight off the car's internal network (the CAN bus), so logging no longer depends on the tuning cable.</dd>
 <dt>Jul 23 2026</dt><dd><strong>One normalizer.</strong> Every log is checked and renamed before it reaches the corpus. Nothing bypasses it.</dd>
-<dt>Jul 29 2026</dt><dd><strong>Pi uploads, and the MIN rule.</strong> The laptop leaves the data path. The same day a false "zero knock retard" is traced to reading MAX on a channel that only goes negative.</dd>
+<dt>Jul 29 2026</dt><dd><strong>Pi uploads, and the MIN rule.</strong> The laptop leaves the data path. The same day a false "zero knock retard" (the engine never pulling timing to stop knock) is traced to reading MAX on a channel that only goes negative.</dd>
 <dt>Aug 31 2026</dt><dd><strong>3× data-rate collapse fixed.</strong> Stray bus frames were starving multi-frame requests. Settling them first brought the row rate back.</dd>
 <dt>Sep 10 2026</dt><dd><strong>Phone companion and history.</strong> A drive companion with sync that survives dead zones, and the car's recorded history on the dashboard.</dd>
 <dt>Oct 1 2026</dt><dd><strong>Weekly report goes live.</strong> A plain-language report goes out every Sunday.</dd>
@@ -109,7 +108,7 @@
 <ul>
 <li><strong>Populated is not correct.</strong> Three confident claims rested on a dead fuel-trim channel, a boost setpoint read as measured boost, and a rail-pressure column mistaken for boost. 14 channels now carry suspect flags.</li>
 <li><strong>Clocks with no label.</strong> Logger time was local and unlabelled, so drives landed in the wrong week. Every drive now records its clock, offset, decoder and channel-map version.</li>
-<li><strong>No raw bytes kept.</strong> A decoder fix could not be re-applied to old drives. Now a raw sidecar is kept per drive with a rebuild-from-raw tool.</li>
+<li><strong>No raw bytes kept.</strong> A decoder fix could not be re-applied to old drives. Now every drive keeps a copy of its raw bytes next to it, and a tool can rebuild the drive from them.</li>
 <li><strong>A silent cable.</strong> No vendor app, and the serial link stayed silent at every baud rate. It turned out to need a handshake and an open command, then read engine-computer RAM, not OBD. About 5 Hz is the ceiling; poll faster and it returns nothing.</li>
 <li><strong>A test that stopped answering.</strong> The planned coil swap for cylinder 3 lost its decision rule once cylinders 4 and 6 caught up to it. It is re-planned around light-load counts outside shift windows.</li>
 <li><strong>Remote access went dark.</strong> The Pi wedged while parked: the port answered, the shell never did. The next deploy waits on it.</li>
@@ -144,11 +143,11 @@
 </ul>
 
 <h2>The work, month by month</h2>
-<p>All of it — the app, the research bench, the cable — gets built in AI-assisted sessions, and those sessions are counted. The shape is the project growing up: July is the platform going up, and most of that month went into the app repo alone. Every month since is smaller, because the foundation stopped moving and the work became reading the car's data, fixing decoders and chasing one cylinder.</p>
+<p>All of it gets built in AI-assisted sessions: the app, the research bench, the cable. Those sessions are counted. The shape is the project growing up: July is the platform going up, and most of that month went into the app repo alone. Every month since is smaller, because the foundation stopped moving and the work became reading the car's data, fixing decoders and chasing one cylinder.</p>
 <div class="bars"><div>Jul 2026</div><div class="b"><i style="width:100.0%"></i></div><div class="n">1.30 B</div><div>Aug 2026</div><div class="b"><i style="width:44.1%"></i></div><div class="n">0.57 B</div><div>Sep 2026</div><div class="b"><i style="width:43.1%"></i></div><div class="n">0.56 B</div><div>Oct 2026</div><div class="b"><i style="width:28.8%"></i></div><div class="n">0.38 B</div><div>Nov 2026 <small>so far</small></div><div class="b"><i style="width:23.6%"></i></div><div class="n">0.31 B</div></div>
 <p class="muted" style="margin-top:12px;font-size:.86rem">Tokens spent in sessions that touched the app, the garage bench or the cable work, counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. A session's tokens are split evenly across the project folders it touched, so this measures attention, not lines written.</p>
 </main>
-<footer class="site-footer"><span>AHK02X</span></footer>
+<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
 </div>
 </body>
 </html>

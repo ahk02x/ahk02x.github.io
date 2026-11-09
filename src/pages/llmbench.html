@@ -1,0 +1,67 @@
+title: It has to fit
+built: 2026-11
+status: built
+description: How Amir Khademi benchmarked open AI models on three machines he already owned, an RTX 3080, an RTX 2070 SUPER and an Apple M3 laptop, and found that whether a model fits in memory matters more than how fast the chip is.
+path: /writing/llmbench.html
+nav: /writing/
+summary: I ran the same open models on a gaming GPU, an older GPU and my laptop. The laptop beat a real GPU 11 to 1, and the reason is one word: fit.
+note: 9
+---
+<main class="wrap narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-05">5 November 2026</time></div><h1>It has to fit</h1>
+<p class="lede">I wanted to know what normal hardware can actually do with free, open AI models. Not a datacenter, not a spec sheet. The stuff already in my house. The answer turned out to be one word, and it isn't "speed".</p></section>
+
+<p>After I decided <a href="/writing/ahkira.html">the GPU stays home</a>, my gaming PC's RTX 3080 became the lab. A lab needs a ruler, so I built one: a small script that sends the same prompts to the same models on any machine and writes down everything. Then I ran it on the three machines I had. The 3080 with 12 GB of video memory, an older RTX 2070 SUPER with 8 GB in my home server, and my laptop, an Apple M3 with 16 GB.</p>
+
+<h2>How I measured</h2>
+<p>Same prompts every time, randomness turned off (temperature 0, fixed seed), and a cap of 200 tokens per answer. A token is a chunk of text, about three-quarters of a word. The headline number is tokens per second: how fast the model writes once it starts. Above about 10, it's writing faster than you can read.</p>
+<ul>
+<li><strong>Load time is kept separate.</strong> The first call loads the model from disk and is slow. It never gets mixed into the speed number.</li>
+<li><strong>Three runs, take the middle one.</strong> The spread between runs was tiny, under 3% on the first card.</li>
+<li><strong>Eight small tasks, graded by code.</strong> Pull fields out of a message, a couple of word problems, convert a date, find one fact hidden in a long block of text. Graded by a script, not by another AI. It's a sanity check, not an IQ test.</li>
+<li><strong>Record how much landed on the GPU.</strong> If a model doesn't fit in the GPU's memory, the rest quietly goes to normal RAM and the CPU runs that part. The runtime reports the split, so every row says what share was on the GPU. That one column ended up explaining almost everything.</li>
+</ul>
+<p>I also threw out a number. The prompt-reading speed in my first table came out at 70,000 to 180,000 tokens a second, which is nonsense. I was sending the same prompt again and again, and the runtime was clearly reusing work, so that column measured the cache, not the card. It's gone from the report. A number I can't back up doesn't get rounded into something nicer.</p>
+
+<h2>The cliff</h2>
+<p>Take one 14-billion-parameter model and store it at different precisions. Fewer bits per number makes it smaller. On the 3080:</p>
+<ul>
+<li><strong>4-bit, 9.5 GB, all on the GPU:</strong> 71.7 tokens a second.</li>
+<li><strong>6-bit, 13.1 GB, 80% on the GPU:</strong> 14.1.</li>
+<li><strong>8-bit, 16.7 GB, 63% on the GPU:</strong> 6.2.</li>
+</ul>
+<p>Not a slope, a cliff. The moment a fifth of the model spills off the card, it runs at a fifth of the speed. Long conversations cause the same cliff. The model keeps a working memory of the conversation, and that memory grows as the conversation does. The same 4-bit model went from 66 tokens a second with room for about 8,000 tokens of text to 18 at 16,000 and under 4 at 32,000, as the conversation pushed it off the card.</p>
+
+<h2>The cheat code</h2>
+<p>A mixture-of-experts model is split into many small "expert" parts, and only a few run for each token. I tried a 30B one that only uses about 3B per token, next to a normal 32B. Both were too big for 12 GB, and both had about half of themselves spilled into RAM.</p>
+<p>The normal 32B ran at 3.1 tokens a second. The mixture-of-experts one ran at 42.6. Same card, same spill, almost 14 times faster. If you have a small card, this is the kind of model to look at first. (The two models also differ in other ways, so I can't pin the whole gap on that one design choice. But it's the obvious suspect.)</p>
+
+<h2>My laptop beat a GPU</h2>
+<p>This is the one I didn't expect. The same 14B 4-bit model, on all three machines:</p>
+<div class="tablewrap"><table>
+<caption>Same 14B 4-bit model, tokens per second, and how much of it sat in GPU memory</caption>
+<thead><tr><th scope="col">Machine</th><th scope="col">Memory</th><th scope="col">On the GPU</th><th scope="col">Tokens/s</th></tr></thead>
+<tbody>
+<tr><th scope="row">RTX 3080</th><td>12 GB on the card</td><td>100%</td><td>71.7</td></tr>
+<tr><th scope="row">Apple M3 laptop</th><td>16 GB shared by CPU and GPU</td><td>100%</td><td>8.0</td></tr>
+<tr><th scope="row">RTX 2070 SUPER</th><td>8 GB on the card</td><td>64%</td><td>0.7</td></tr>
+</tbody></table></div>
+<p>The laptop ran it 11.4 times faster than a real graphics card. Not because the M3 is fast. Its memory is shared, so the whole 9.5 GB model fit in one place. On the 8 GB card a third of it spilled, and 0.7 tokens a second is one word every two seconds or so.</p>
+<p>Flip it around and the GPUs win easily. On 7B models that fit everywhere, the 2070 SUPER was 4 times faster than the laptop and the 3080 was 7.6 times faster. Once a model fits, memory speed seems to set the pace: the 3080's published memory bandwidth is about twice the 2070 SUPER's, and it ran the same 7B model 1.87 times faster.</p>
+<p>So: memory size decides whether you can run a model at all. Memory speed decides how fast, once it fits.</p>
+
+<h2>What it doesn't say</h2>
+<p>These are three different machines, not one controlled experiment. They differ in CPU, software version and what else was running. The home server card runs in a container with a 4-core, 8 GB limit and was sharing a bit of its memory with another job. My laptop was in light use. Everything came from one session per machine. And eight tasks are far too few to say which model is smarter. The full technical report puts every one of these caveats next to the number it affects. It's public: <a href="https://github.com/ahk02x/llmbench/blob/main/REPORT.md">the report</a> and <a href="https://github.com/ahk02x/llmbench">the raw data and the script</a> are on GitHub.</p>
+
+<h2>What's next</h2>
+<ul>
+<li><strong>Make it repeatable.</strong> Save every call's timing and the exact model file, use one runtime version everywhere, and rerun on different days.</li>
+<li><strong>Power.</strong> Run the 3080 at 250, 320 and 390 W and measure energy per token. My guess is it barely slows down at 250. (And no, this won't kill the card. Inference is way gentler than gaming.)</li>
+<li><strong>Squeeze the memory.</strong> Store the conversation memory at 8 bits instead of 16 and see how far that pushes the cliff.</li>
+<li><strong>Biggest model that's still usable.</strong> Pick a bar, say 10 tokens a second, and find the largest model each machine clears. That's the chart most people actually want.</li>
+<li><strong>Real work, not puzzles.</strong> Run my own kinds of tasks on these models and see what share could stay on a home card.</li>
+</ul>
+<p>The question underneath all of it: if 12 GB is the wall, what happens with a lot more memory? A machine with 128 GB of unified memory would answer that directly. For now, the rule is simple. Before you ask how fast, ask whether it fits.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>
