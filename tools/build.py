@@ -37,6 +37,7 @@ GLYPHS = {
  'inbox': glyph_svg('<path d="M18,70 L32,22 H96 L110,70 V98 A8,8 0 0 1 102,106 H26 A8,8 0 0 1 18,98 Z"/><path d="M18,70 H46 L52,86 H76 L82,70 H110"/>'),
  'code': glyph_svg('<path d="M42,34 L14,64 L42,94"/><path d="M86,34 L114,64 L86,94"/><path d="M72,24 L56,104"/>'),
  'plug': glyph_svg('<g transform="rotate(40 64 64)"><rect x="38" y="40" width="52" height="40" rx="8"/><path d="M52,40 V20 M76,40 V20"/><path d="M64,80 V112"/></g>'),
+ 'bench': glyph_svg('<rect x="10" y="34" width="108" height="56" rx="8"/><circle cx="42" cy="62" r="14"/><circle cx="86" cy="62" r="14"/><path d="M24,90 V106 M40,90 V106 M56,90 V106"/>'),
  'tokens': glyph_svg('<path d="M30,106 V82"/><path d="M64,106 V56"/><path d="M98,106 V26"/>', 17),
  'tag': glyph_svg('<path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/>' + dot(44, 44, 7)),
  'sq': '<span class="sq-brand"><img class="glyph sq sq-dark" src="/assets/sq-mark-dark.svg" alt="" width="34" height="34"><img class="glyph sq sq-light" src="/assets/sq-mark-light.svg" alt="" width="34" height="34"></span>',
