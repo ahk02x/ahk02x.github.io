@@ -51,6 +51,8 @@ class LocalTokens(unittest.TestCase):
         self.assertEqual(self.run_with('{not json'), first)
         self.assertEqual(self.run_with({**STAGED, 'input_tokens': 'lots'}), first)
         self.assertEqual(self.run_with({**STAGED, 'output_tokens': -5}), first)
+        self.assertEqual(self.run_with({**STAGED, 'date': '2026-99-99'}), first)
+        self.assertEqual(self.run_with({**STAGED, 'date': 'not-a-date'}), first)
 
     def test_counters_never_move_backwards(self):
         first = self.run_with(STAGED)
