@@ -49,6 +49,15 @@
 .about-page .about-career dd{margin:0;color:var(--fg-2);max-width:64ch}
 .about-page .about-small{font-size:13px;color:var(--muted);margin-top:22px}
 @media(max-width:720px){.about-page .about-intro{grid-template-columns:1fr;padding-top:10px}.about-page .about-intro h1{max-width:none}.about-page .about-photo img{aspect-ratio:5/4}.about-page .about-section{grid-template-columns:1fr;gap:22px;padding:30px 0}.about-page .about-section>h2{font-size:22px}.about-page .about-deck{max-width:28ch}}
+.about-page .about-jumps{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0 0 24px;font:12px/1.5 var(--mono)}
+.about-page .about-jumps a{display:inline-flex;align-items:center;min-height:36px}
+.about-page .about-section h2{scroll-margin-top:24px}
+.about-page .about-role{margin-top:32px;padding-top:28px;border-top:1px solid var(--soft-line)}
+.about-page .about-role-label{font:11px/1.5 var(--mono);color:var(--muted);margin-bottom:12px}
+.about-page .about-work-intro{font-size:21px;line-height:1.5;letter-spacing:-.02em}
+.about-page .about-toolbox{margin-top:32px;padding:24px;border:1px solid var(--soft-line)}
+.about-page .about-toolbox>h3{font-size:21px;margin-bottom:22px}
+.about-page .about-toolbox>a{font-size:14px;font-weight:700}
 </style>
 <section class="about-intro" aria-labelledby="about-title">
 <div>
@@ -62,6 +71,8 @@
 <figure class="about-photo"><img src="/assets/sq-gallery/2026-07-10-car.jpg" alt="My grey Audi SQ5 with its bonnet open beneath an evening sky" width="1200" height="1600" srcset="/assets/sq-gallery/2026-07-10-car-t.jpg 480w, /assets/sq-gallery/2026-07-10-car.jpg 1200w" sizes="(max-width:720px) 85vw, 420px"><figcaption>My daily driver. Also the reason SQ exists.</figcaption></figure>
 </section>
 
+<nav class="about-jumps" aria-label="On this page"><a href="#ownership-title">Why I build</a><a href="#stories-title">Some stories</a><a href="#work-title">Experience</a><a href="#outside-title">Off the clock</a></nav>
+
 <section class="about-section" aria-labelledby="ownership-title">
 <h2 id="ownership-title">Something<br>of my own.</h2>
 <div><p>At work, I help keep systems running that people depend on. At home, I want to build things I can keep, understand and change myself. That's why there's a lab in my office, why I save my project history, and why I keep coming back to local software.</p>
@@ -70,23 +81,44 @@
 </section>
 
 <section class="about-section" aria-labelledby="stories-title">
-<h2 id="stories-title">A few things<br>that explain me.</h2>
+<h2 id="stories-title">Some stories.</h2>
 <div>
-<article class="about-story"><h3>The car became a project.</h3><p>I love my SQ5 as a car. But once I started looking at its data, I wanted to understand what was happening between the dashboard lights. That curiosity grew into SQ: drive logs, a Raspberry Pi, printed enclosures, and a lot more questions. It's something I can test against my own daily life.</p><a href="/sq/">Inside the SQ garage &rarr;</a></article>
+<article class="about-story"><h3>I taught myself my car's diagnostic cable.</h3><p>The tuning cable only talked to a Windows app. I wanted to understand what my own car was doing, so I worked out the framing and checksum byte by byte and built a read-only logger. Hundreds of drives later, it showed a pattern I hadn't seen before: misfires clustered just after upshifts.</p><p>That became SQ. The car is still my daily driver; it just gives me a lot more to think about now.</p><a href="/sq/">Inside the SQ garage &rarr;</a></article>
 <article class="about-story"><h3>Sometimes it's just a part that won't fit.</h3><p>A washer-fluid adapter sent me through round after round of small changes: the lip, the neck, the filter tabs. The notches needed to stay square. It sounds tiny until you're holding the part and it still isn't right. I enjoy that connection between an idea on a screen and something I can actually use.</p></article>
 <article class="about-story"><h3>I want to see the evidence.</h3><p>A certificate parser led me from an unexpected memory cost to a report to the Go team, a public issue, and a small library called certguard. I like following a question far enough to make it reproducible. The write-up includes the measurements and the limits of what they show.</p><a href="/writing/go-x509.html">Read “Two bytes each” &rarr;</a></article>
+<article class="about-story"><h3>I gave an AI a pager.</h3><p>My home fleet had plenty of ways to alert me, but the coding agent started each session without that context. I built an alert board it had to answer, in writing, before moving on to my request. The hooks are currently off; the experiment taught me a lot about making an agent account for what it actually checked.</p><a href="/writing/claude-code-on-call.html">The pager experiment &rarr;</a></article>
+<article class="about-story"><h3>The wall stays red until I say so.</h3><p>I turned a portrait monitor into an alarm for the lab. An alert stays visible until I acknowledge it. If the data feed dies, the display says it doesn't know. I wanted something I couldn't dismiss by forgetting to open another dashboard.</p><a href="/writing/phosphor-wall.html">Meet the wall &rarr;</a></article>
+<article class="about-story"><h3>Eight parts. Fifty-two store pages.</h3><p>I wanted to know when a car part got cheaper, without checking every shop myself or getting fifty versions of the same notification. So I built a watcher that follows the part across stores and sends one useful message.</p><a href="/writing/partswatch.html">How partswatch works &rarr;</a></article>
+<article class="about-story"><h3>I read everything I ever kept.</h3><p>127,206 files. I went looking for the story in my own archive and found that two of those years were software activity, not me. Keeping the originals matters to me. So does being honest about what they can actually tell me.</p><a href="/writing/everything-i-ever-kept.html">What the archive said &rarr;</a></article>
 </div>
 </section>
 
 <section class="about-section" aria-labelledby="work-title">
-<h2 id="work-title">The work<br>behind the hobbies.</h2>
-<div><p>My background is in cloud infrastructure, telecom and financial systems. The common thread is figuring out why something failed, getting it running again, and making the next recovery less painful.</p>
+<h2 id="work-title">Where I've<br>worked.</h2>
+<div>
+<p class="about-work-intro">Seven years across cloud infrastructure, telecom and financial systems. More responsibility each time, and a little closer to the systems people depend on.</p>
+<p>I started with an honours degree in software engineering. My first team lead role was a Java app that taught children Braille. Since then, the work has grown from looking after servers to carrying changes through production and helping teams recover when things go wrong.</p>
+<article class="about-role"><div class="about-role-label">01 / Foundations</div><h3>Cloud &amp; software</h3>
+<p>I started as a systems administrator on a large cloud platform, supporting hundreds of customers across Linux and Windows. I automated VMware tasks with PowerShell and Python, hardened more than 100 servers to a healthcare compliance standard, and worked on Cisco switches and ASA firewalls.</p>
+<p><strong>The automation cut the team's manual work by about a third.</strong> It made me want to look for the next repetitive job worth fixing.</p>
+<p>Alongside the technical work, I was president of the intern community: 600 interns, 40 social and career events, and 20 site leads checking in each week. Keeping people connected and staying within budget was a different kind of systems problem.</p></article>
+<article class="about-role"><div class="about-role-label">02 / Scale</div><h3>Telecom</h3>
+<p>I helped keep mobile provisioning flowing for millions of LTE and 5G subscribers. I wrote outage playbooks, built patch procedures for on-premises and cloud systems, and carried those changes through review.</p>
+<p>The work also meant pursuing product defects with vendors and building a tool that took repetitive cleanup off the frontline network operations team. <strong>The platform portfolio maintained a 98% provisioning success rate.</strong></p></article>
+<article class="about-role"><div class="about-role-label">03 / Responsibility</div><h3>Financial institutions</h3>
+<p>This is the part I'm proudest of. I worked with the banks and credit unions on the platform, owning the hub service between them. For each partner, I wrote the configuration, raised the change, and carried it through development, testing and production.</p>
+<p>I ran major release migrations, wrote the automation that made them repeatable, and rotated certificates without dropping traffic. The hard tickets involved mTLS, SAML and OIDC federation, HSM signing, and site-to-site VPNs that only made sense once you found the cause.</p>
+<p>That work spanned two data centres, with Nomad, Consul, Vault, Ansible, AWS and Bitbucket pipelines. In a regulated environment, a mistake can affect somebody's payment. A recovery plan is part of the job.</p>
+<p>I also handled Microsoft 365, Azure AD single sign-on, Intune and Autopilot, plus testing and rollout for an organisation-wide Windows 11 migration. <strong>Vulnerability remediation stayed at 90% within SLA.</strong></p></article>
+<div class="about-toolbox"><h3>Tools I keep coming back to</h3>
 <dl class="about-career">
-<div><dt>Cloud infrastructure</dt><dd>Linux and Windows systems, virtualisation, automation and hardening. This is where I learned how much repeated manual work a useful script can remove.</dd></div>
-<div><dt>Telecom</dt><dd>Mobile provisioning, outage playbooks, patching and working through defects with vendors. Keeping the service moving while finding the cause.</dd></div>
-<div><dt>Financial systems</dt><dd>Partner integrations, release migrations, certificates and identity. Work that needs a clear change plan, a recovery path and someone to follow it through.</dd></div>
+<div><dt>Systems &amp; automation</dt><dd>Linux, Python, Bash, PowerShell, Ansible, Docker, Helm, Nomad, Consul and Vault.</dd></div>
+<div><dt>Visibility &amp; cloud</dt><dd>Splunk, Elastic, AWS and Azure.</dd></div>
+<div><dt>Identity &amp; networks</dt><dd>TLS and PKI, Keycloak, CyberArk, F5, FortiGate and IPsec.</dd></div>
 </dl>
-<p class="about-small">Linux, Python, Bash, PowerShell, Ansible, containers, observability and PKI are recurring tools in that work. <a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">More on LinkedIn &rarr;</a></p></div>
+<p class="about-small">I studied Kubernetes and Terraform on AWS through courses and self-directed work. I've also spent three years as a scrum master.</p>
+<a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">Career details on LinkedIn &rarr;</a></div>
+</div>
 </section>
 
 <section class="about-section" aria-labelledby="outside-title">
