@@ -1,0 +1,57 @@
+title: Two bytes each
+built: 2026-11
+status: built
+description: How Amir Khademi found a memory bug in Go's certificate parser, reported it to the Go security team, filed it publicly when they said it wasn't a security issue, and then built certguard, a small Go library that screens a client certificate before Go parses it.
+path: /writing/go-x509.html
+nav: /writing/
+summary: I found a bug in Go's certificate parser where a 260 KB certificate costs about 24 MB to read. I reported it, then built a small library that rejects that certificate for about 1.6 KB.
+note: 10
+---
+<main class="wrap narrow">
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-09">9 November 2026</time></div><h1>Two bytes each</h1>
+<p class="lede">I was working on a personal project and found a bug in how Go reads certificates. A certificate the size of a small photo could cost a server about 24 MB of memory to read, before the server even decides whether to trust it. I reported it, and then I built something to block it.</p></section>
+
+<h2>What I found</h2>
+<p>A certificate can list extra names it's valid for, called Subject Alternative Names, or SANs. One kind of name is a URI. When Go's <code>crypto/x509</code> package reads a certificate, it turns every URI name into its own object in memory, and it keeps all of them. There's no limit on how many a certificate can have, and an empty one is allowed. An empty URI takes 2 bytes in the certificate. The object Go makes for it takes a lot more.</p>
+<p>So I made a certificate with 130,000 empty URIs. It's about 260 KB, which is close to the most Go accepts in one handshake (it caps the certificate message at 256 KiB). Reading it allocates about 24 MB and keeps about 20 MB. That's around 76 times the size of the certificate.</p>
+
+<div class="tablewrap"><table>
+<caption>One test certificate with 130,000 empty URI names (Go 1.27.3)</caption>
+<thead><tr><th scope="col">What</th><th scope="col">Size</th></tr></thead>
+<tbody>
+<tr><th scope="row">The certificate itself</th><td>260,216 bytes</td></tr>
+<tr><th scope="row">Memory Go allocates to read it</th><td>about 24 MB</td></tr>
+<tr><th scope="row">Memory Go keeps after reading it</th><td>about 20 MB (76x)</td></tr>
+<tr><th scope="row">Per TLS handshake, server asking for client certificates</th><td>about 27 MB</td></tr>
+</tbody></table></div>
+
+<h2>Why it matters for servers</h2>
+<p>Some servers ask the client to show a certificate too. That's called mutual TLS (mTLS), and it's common between internal services and in payment systems. In Go, <code>crypto/tls</code> reads the client's certificate before your own check runs. So even a server that rejects the client has already paid for reading it. In my test that was about 27 MB per handshake.</p>
+
+<h2>Reporting it</h2>
+<p>I sent it to the Go security team first, privately. They said it's not a security issue and that I could file it in the open, so I did: <a href="https://github.com/golang/go/issues/82858">golang/go#82858</a>. It has the numbers above and the short program that produces them, standard library only. From what I read in RFC 5280, a URI name shouldn't be empty, so rejecting empty ones could be one fix. A limit on how many names a certificate can carry could be another. What Go does about it is the Go team's call.</p>
+
+<h2>Building the guard</h2>
+<p>Filing the bug fixes nothing for a server running today. So I wrote <strong>certguard</strong>, a small Go library that looks at a client certificate's raw bytes before Go's parser reads them, and says no if the certificate is too big or carries too many names. The defaults are 16 KB and 64 names. Real client certificates carry a handful.</p>
+<p>The check can't have the same problem, so certguard doesn't build anything per name. It walks the certificate's structure down to the list of names, reads each entry's type and length, counts it, and skips over the entry itself. With the default limits, my 260 KB test certificate is turned away on size before anything else. With the size limit lifted, so it has to count all 130,000 names, it still says no in 3 allocations. Either way it costs about 1.6 KB of memory, instead of 24 MB.</p>
+<ul>
+<li><strong>Bad input on purpose.</strong> Tests feed it garbage, structures that never say how long they are, a SAN extension marked critical, and long runs of empty names, and check that it doesn't crash or hang.</li>
+<li><strong>Fuzzed.</strong> Go's fuzzer mutates real and broken certificates and checks that certguard never counts fewer names than Go's own parser keeps. My last run: 10.4 million inputs in a minute, no failures.</li>
+<li><strong>My own bugs.</strong> Two real ones turned up while I was hardening it: a certificate with a broken tail after its first names could slip through, and a length check could overflow on 32-bit machines. Both are fixed.</li>
+</ul>
+
+<h2>Where it sits is the whole thing</h2>
+<p>Most of the time went into one question: where can a check like this run before Go reads the certificate?</p>
+<ul>
+<li><strong>In <code>VerifyPeerCertificate</code> or <code>VerifyConnection</code>: too late.</strong> By the time those callbacks run, Go has already read the certificate. You can still log it or reject the connection, but the memory is already spent.</li>
+<li><strong>In front of the TLS layer, TLS 1.2 only: works.</strong> In TLS 1.2 the client's certificate travels in the clear, so you can screen the raw bytes first (example code in the repo, not part of the library). TLS 1.3 encrypts it, so this only protects anything if the server is pinned to 1.2. Otherwise an attacker just picks 1.3 and walks past it.</li>
+<li><strong>Behind a proxy that handles TLS: works for the Go service.</strong> The proxy passes the raw certificate along, the Go service only trusts that value when it comes from the proxy, and it screens it before reading it. The proxy needs its own size limits, and if the proxy is written in Go, it has the same problem.</li>
+<li><strong>Don't ask for a certificate you don't need.</strong> If a server doesn't request client certificates, Go never reads one. That's the simplest fix.</li>
+</ul>
+<p>For TLS 1.3 servers that need client certificates, Go has no hook today that runs before the read, so certguard can't protect them. The README says so up front.</p>
+
+<h2>Where it stands</h2>
+<p>The issue is open on Go's tracker. certguard works and has tests. It's defensive only: it just says no. The code is in a private repo for now. If you'd like to see it, email me.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+</main>

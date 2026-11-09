@@ -37,6 +37,7 @@ GLYPHS = {
  'inbox': glyph_svg('<path d="M18,70 L32,22 H96 L110,70 V98 A8,8 0 0 1 102,106 H26 A8,8 0 0 1 18,98 Z"/><path d="M18,70 H46 L52,86 H76 L82,70 H110"/>'),
  'code': glyph_svg('<path d="M42,34 L14,64 L42,94"/><path d="M86,34 L114,64 L86,94"/><path d="M72,24 L56,104"/>'),
  'plug': glyph_svg('<g transform="rotate(40 64 64)"><rect x="38" y="40" width="52" height="40" rx="8"/><path d="M52,40 V20 M76,40 V20"/><path d="M64,80 V112"/></g>'),
+ 'cert': glyph_svg('<path d="M64,12 L104,26 V60 C104,88 86,106 64,116 C42,106 24,88 24,60 V26 Z"/><path d="M46,62 l12,12 l24,-26"/>'),
  'bench': glyph_svg('<rect x="10" y="34" width="108" height="56" rx="8"/><circle cx="42" cy="62" r="14"/><circle cx="86" cy="62" r="14"/><path d="M24,90 V106 M40,90 V106 M56,90 V106"/>'),
  'tokens': glyph_svg('<path d="M30,106 V82"/><path d="M64,106 V56"/><path d="M98,106 V26"/>', 17),
  'tag': glyph_svg('<path d="M22,22 H66 L106,62 L62,106 L22,66 Z"/>' + dot(44, 44, 7)),
@@ -106,7 +107,7 @@ def token_card():
 </style>
 <p class="lead">I had the ideas long before I had the time to learn every field they needed. Working with an AI agent <em>took that ceiling off.</em></p>
 <ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
-<p class="result">The projects on this page are the result &mdash; and so is the way of working behind them, which is the part I have learned the most from.</p>
+<p class="result">The projects on this page are the result, and so is the way of working behind them, which is the part I have learned the most from.</p>
 <p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
 <div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt+_lt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
 <div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>

@@ -33,13 +33,13 @@
 <p>It started in October, after a security fix on one container, done by hand. Patching one machine makes you ask when the rest were last patched. There was no routine. There was me, remembering. So I asked Claude Code for a fortnightly cycle covering the Proxmox host and whatever else needed one.</p>
 
 <h2>What "graded on evidence" means</h2>
-<p>A dashboard I keep lists every scheduled job on the fleet and grades each against its own evidence, and its rules each came from a wrong answer. No last-run record grades unknown, not ok, after the host's cron directory rendered healthy with nothing behind it. A fresh state file is not success, after one watcher rewrote its own on a failed run and looked green through a whole outage.</p>
-<blockquote>A schedule proves scheduled, never ran.</blockquote>
+<p>A dashboard I keep lists every scheduled job on the fleet and grades each one on its own evidence. Each of its rules came from a time it gave a wrong answer. A job with no record of its last run grades unknown, not ok, because the host's cron directory once showed healthy with nothing behind it. A freshly written state file doesn't count as success either, because one watcher rewrote its own file on a failed run and looked green through a whole outage.</p>
+<blockquote>A schedule proves something was scheduled, never that it ran.</blockquote>
 <p>Here the timer ticking is the schedule. The evidence is a success stamp, one file holding one timestamp, written only when the verify step finds nothing wrong. The dashboard grades on that stamp, so a cycle that fired and broke something goes stale after about 17 days, like one that never fired. The timer itself fires every Sunday, and the cycle runs only when the last good one is at least 13 days old. A failed cycle writes no stamp, so it retries next Sunday on its own. "It ran" and "it worked" are different claims. Only the second one earns a green.</p>
 
 <h2>The order, and why</h2>
 <ol>
-<li>Preflight. Pools ONLINE. If the 02:30 backup is still running, wait up to 90 minutes. Record every failed systemd unit so that later only new ones count.</li>
+<li>Preflight. Check the storage pools are ONLINE. If the 02:30 backup is still running, wait up to 90 minutes. Record every failed systemd unit so that later only new ones count.</li>
 <li>Snapshot. One recursive ZFS snapshot of host root, every container and the Home Assistant disk. The newest three are kept.</li>
 <li>Containers. A full upgrade inside each running container.</li>
 <li>Home Assistant. Core only from a .1 release, backup first; the .0 of the month is held and reported. Then the OS, and a VM reboot.</li>
