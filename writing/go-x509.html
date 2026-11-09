@@ -52,7 +52,7 @@
 
 <h2>Building the guard</h2>
 <p>Filing the bug fixes nothing for a server running today. So I wrote <strong>certguard</strong>, a small Go library that looks at a client certificate's raw bytes before Go's parser reads them, and says no if the certificate is too big or carries too many names. The defaults are 16 KB and 64 names. Real client certificates carry a handful.</p>
-<p>The check can't have the same problem, so certguard doesn't build anything per name. It walks the certificate's structure down to the list of names, reads each entry's type and length, counts it, and skips over the entry itself. With the default limits, my 260 KB test certificate is turned away on size before anything else. With the size limit lifted, so it has to count all 130,000 names, it still says no in 3 allocations. Either way it costs about 1.6 KB of memory, instead of 24 MB.</p>
+<p>The check can't have the same problem, so certguard doesn't build anything per name. It walks the certificate's structure down to the list of names, reads each entry's type and length, counts it, and skips over the entry itself. With the default limits, my 260 KB test certificate is turned away on size before anything else. With the size limit lifted, so it has to count all 130,000 names, it still says no in 3 allocations. Either way it uses about 100 bytes of memory, instead of 24 MB.</p>
 <ul>
 <li><strong>Bad input on purpose.</strong> Tests feed it garbage, structures that never say how long they are, a SAN extension marked critical, and long runs of empty names, and check that it doesn't crash or hang.</li>
 <li><strong>Fuzzed.</strong> Go's fuzzer mutates real and broken certificates and checks that certguard never counts fewer names than Go's own parser keeps. My last run: 10.4 million inputs in a minute, no failures.</li>
@@ -70,7 +70,7 @@
 <p>For TLS 1.3 servers that need client certificates, Go has no hook today that runs before the read, so certguard can't protect them. The README says so up front.</p>
 
 <h2>Where it stands</h2>
-<p>The issue is open on Go's tracker. certguard works and has tests. It's defensive only: it just says no. The code is in a private repo for now. If you'd like to see it, email me.</p>
+<p>The issue is open on Go's tracker. certguard works and has tests. It's defensive only: it just says no. The code and the README are on GitHub: <a href="https://github.com/ahk02x/certguard">github.com/ahk02x/certguard</a>.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
