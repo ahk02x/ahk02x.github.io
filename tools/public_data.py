@@ -6,13 +6,17 @@ PUBLIC_PROJECTS = frozenset({
     'sq-garage', 'Sq', 'iot', 'flowtrace', 'phosphor', 'alertboard',
     'macwatch', 'netdash', 'partswatch', 'fleet-patch', 'lanwatch', 'inbox',
     'obd-cable-protocol-re', 'workout', 'ahk02x-site',
+    # already public on the site (projects, infra, writing): safe to name
+    'Crucix', 'certguard', 'llmbench', 'ahkira', 'ahkira-bot', 'sentry', 'sq-logger', 'sq-audio',
 })
 
 # Dirs renamed on disk: old transcripts still name the old dir, so fold its
 # tokens into the current name rather than dropping them from the public total.
 # Keyed by sha256(old name)[:16] so this public file never spells the old name out.
 RENAMED = {'c6d0c2d3960ad246': 'obd-cable-protocol-re'}
-_renamed = lambda n: RENAMED.get(hashlib.sha256((n or '').encode()).hexdigest()[:16], n)
+def _renamed(n):
+    n = (n or '').rstrip('.')  # 'Projects/Sq.' at the end of a sentence is still Sq
+    return RENAMED.get(hashlib.sha256(n.encode()).hexdigest()[:16], n)
 
 def public_tokens(data):
     """Preserve totals, allowlist project names; dates go no finer than a day, never a time."""

@@ -82,10 +82,14 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'obd-cable-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'obd-cable-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev', 'Crucix': 'Crucix', 'certguard': 'certguard', 'llmbench': 'llmbench', 'ahkira': 'ahkira', 'ahkira-bot': 'ahkira', 'sentry': 'sentry', 'sq-logger': 'SQ', 'sq-audio': 'SQ'}  # SQ = the car, its app and the cable RE: one project
     merged = collections.Counter()
-    for p in tok['top_projects']:
+    # every tool, not just Claude Code: Claude + GPT (Codex) + open models on my own GPUs
+    for p in tok['top_projects'] + gtok.get('top_projects', []):
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']
+    for n, t in ltok.get('sources', {}).get('lab', {}).get('by_project', {}).items():
+        if n in pub: merged[pub[n]] += t
+    tot = _ct + _gt + _lt
     shares = merged.most_common()
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
@@ -110,8 +114,8 @@ def token_card():
 <p class="result">The projects on this page are the result, and so is the way of working behind them, which is the part I have learned the most from.</p>
 <p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
 <div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt+_lt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
-<div class="eyebrow" style="margin-top:26px">By project · Claude Code</div><div class="bars">{bars}</div>
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies, cache reads and the project split count the Claude Code side only; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPUs: mostly the Crucix lab, read from the model server&rsquo;s log, plus a private chat app on my 3080, counted from its own usage ledger. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+<div class="eyebrow" style="margin-top:26px">By project · every tool</div><div class="bars">{bars}</div>
+<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies and cache reads count the Claude Code side only; the project split counts Claude, GPT and my own GPUs, and ChatGPT web use, which has no project, sits in Private projects; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPUs: mostly the Crucix lab, read from the model server&rsquo;s log, plus a private chat app on my 3080, counted from its own usage ledger. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
 ltok = json.load(open('data/local_tokens.json')) if os.path.exists('data/local_tokens.json') else {}  # local open models: Crucix lab (fixed, from the ollama journal) + the 3080 chat app (tools/local_tokens.py)

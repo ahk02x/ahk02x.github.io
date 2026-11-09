@@ -19,7 +19,7 @@ for f in files:
     try:
         with open(f, 'rb') as fh:
             for line in fh:
-                for p in PROJ.findall(line): projs.add(p.decode())
+                for p in PROJ.findall(line): projs.add(p.decode().rstrip('.'))
                 if b'"usage"' not in line: continue
                 try: o = json.loads(line)
                 except Exception: continue
