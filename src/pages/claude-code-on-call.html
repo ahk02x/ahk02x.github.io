@@ -1,7 +1,7 @@
 title: I gave Claude Code a pager
 built: 2026-09
 status: run
-description: How Amir Khademi made an AI coding agent accountable for a home fleet's alerts: a board built by cron, four hook rungs, an acknowledgement ledger with verdict words, and a headless responder.
+description: How Amir Khademi made an AI coding agent answer for his home fleet's alerts: one board rebuilt by cron, four layers that made the alerts impossible to ignore, a written ledger of verdicts, and a responder for when nobody is typing.
 path: /writing/claude-code-on-call.html
 nav: /writing/
 note: 1
@@ -14,8 +14,8 @@ note: 1
 <blockquote>The fix wasn't making the agent smarter. It was making it unable to pretend it hadn't seen the alerts.</blockquote>
 
 <h2>One board, built by cron</h2>
-<p>Every five minutes a cron job assembles a single Markdown file from every alert source on the network: a status JSON from the monitoring box, the alert file on the home server, a health file one container writes, the local Mac watchdog log, a case-tracker's state, and the send spools of two Telegram relays. Each alert comes out as one line with the condition and the action, because a condition alone is half an alert. "Govee light offline" is a fact. "Govee light offline. DO: unplug it at the wall, wait 10 s, plug it back in" is something a person or an agent can act on at three in the morning.</p>
-<p>The board timestamps itself. If the timestamp is more than ten minutes old, the collector is dead and the list is declared not current, in the file's own header. Unknown never means healthy.</p>
+<p>Every five minutes a cron job assembles a single Markdown file from every alert source on the network: a status JSON from the monitoring box, the alert file on the home server, a health file one container writes, the local Mac watchdog log, a case-tracker's state, and the outgoing message queues of two Telegram relays. Each alert comes out as one line with the condition and the action, because a condition alone is half an alert. "Govee light offline" is a fact. "Govee light offline. DO: unplug it at the wall, wait 10 s, plug it back in" is something a person or an agent can act on at three in the morning.</p>
+<p>The board timestamps itself. If that timestamp is more than ten minutes old, the job that builds the board has died, and the file's own header says the list is not current. Unknown never means healthy.</p>
 
 <h2>Four rungs</h2>
 <figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 230" role="img" aria-label="Four rungs: brief at session start, nag on every prompt, gate before the turn can end, responder when no session exists">
@@ -29,10 +29,10 @@ note: 1
 <text x="360" y="203" text-anchor="middle">seen · working (silent)   ·   fixed · blocked · wontfix (page the human, action first)</text>
 </svg><ol class="mobile-flow"><li><div><strong>Brief · SessionStart</strong><small>The board is in context before the first message.</small></div></li><li><div><strong>Nag · UserPromptSubmit</strong><small>Untouched alerts ride along with every prompt.</small></div></li><li><div><strong>Gate · Stop</strong><small>Each alert needs an acknowledgement ledger line.</small></div></li><li><div><strong>Responder · launchd</strong><small>When no session exists: allowlist, lock, cooldown.</small></div></li></ol><figcaption>Each rung is louder than the last. None of them fixes anything; they make not-looking impossible.</figcaption></figure>
 <ul>
-<li><strong>Brief.</strong> A <code>SessionStart</code> hook prints the board into the session's context before the first message. The agent begins knowing what's open.</li>
+<li><strong>Brief.</strong> A <code>SessionStart</code> hook (a script Claude Code runs at a fixed point, here when a session opens) prints the board into the session's context before the first message. The agent begins knowing what's open.</li>
 <li><strong>Nag.</strong> A <code>UserPromptSubmit</code> hook appends anything untouched to every prompt. You cannot ask the agent about your car without it also being told that the mortgage alert is three days old.</li>
 <li><strong>Gate.</strong> A <code>Stop</code> hook refuses to let the turn end, once per alert per session, until each untouched alert has a line in the acknowledgement ledger. The agent has to write down what it did or why it didn't.</li>
-<li><strong>Responder.</strong> For the hours when no session exists at all, launchd runs a headless <code>claude -p</code> against the board on a cadence, with an allowlist of commands, a lock file, a six-hour cooldown per alert and a cap of six runs a day. It records its own verdicts the same way an interactive session does.</li>
+<li><strong>Responder.</strong> For the hours when no session exists at all, launchd, the Mac's scheduler, runs Claude Code with no window (<code>claude -p</code>) against the board on a schedule, with an allowlist of commands, a lock file, a six-hour cooldown per alert and a cap of six runs a day. It records its own verdicts the same way an interactive session does.</li>
 </ul>
 
 <h2>The ledger</h2>
@@ -43,7 +43,7 @@ note: 1
 <p>This is the one I argued with myself about the longest. It would be easy for the collector to auto-clear alerts that stop firing. It doesn't. Acknowledging is a decision, and the board shows state and prints the exact command for the decision instead of making it. A latched alarm on the wall stays lit until a human runs the clear command, even after the condition is gone. The nag, gate and responder rungs exist because for weeks the session skipped that decision every time, and a board that quietly tidied up would have hidden that.</p>
 
 <h2>Memory as infrastructure</h2>
-<p>The agent's persistent memory is a directory of small Markdown files, one fact per file, each with frontmatter naming what kind of fact it is. An index file is loaded into every session, and its lines are triggers, not summaries: a short hook that tells the agent which file to open before acting, not a paraphrase of the contents. A linter enforces that every memory is indexed and every index line points at a real file. Claims marked <code>verify:</code> are checked nightly against the machines they describe. The directory is a git repository, so a memory holds current truth and git keeps the history. Rewrite, don't append.</p>
+<p>The agent's persistent memory is a directory of small Markdown files, one fact per file, each with frontmatter naming what kind of fact it is. An index file is loaded into every session, and its lines are triggers, not summaries: a short line that tells the agent which file to open before acting, not a retelling of what's in it. A linter enforces that every memory is indexed and every index line points at a real file. Claims marked <code>verify:</code> are checked nightly against the machines they describe. The directory is a git repository, so a memory holds current truth and git keeps the history. Rewrite, don't append.</p>
 <p>Several of those memories are rails the agent wrote after getting something wrong: diagnose from numbers before asserting; test the refusal path and the second button press, because that is where the bugs live; read the real field name and the real route before building against it. They get loaded every session. It's the closest thing I have to an on-call runbook for an on-call engineer who isn't a person.</p>
 
 <h2>Alerts you can see across a room</h2>

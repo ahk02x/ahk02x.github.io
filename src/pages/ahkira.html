@@ -1,5 +1,5 @@
 title: The GPU stayed home
-description: How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.
+description: How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.
 path: /writing/ahkira.html
 nav: /writing/
 summary: I had a card that could run the model fast. I still didn't let the internet near it. What ahkira runs on instead, and how I tried to break it.
@@ -27,7 +27,7 @@ status: built
 <p>My other GPU box was worse. It runs the house's voice assistant and sits next to the backups. So instead of promising to be careful, I made the home risk zero by design: nothing in my house is reachable from this site. At all.</p>
 
 <h2>What runs instead</h2>
-<p>Your question goes to a small server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
+<p>Once it's public, your question will go to a small hosted server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
 <ul>
 <li><strong>The page works without the model.</strong> Eleven questions have answers I wrote and checked myself, and they work with JavaScript off. Only a question you type goes to the server. If the server is down, ahkira is napping. That's a designed state, not an error.</li>
 <li><strong>Nothing private to leak.</strong> The model only ever sees the public pages of this site, after a filter strips anything sensitive. No fine-tuning, no private notes, nothing personal in its context. This is the rule that actually keeps me safe.</li>
@@ -38,7 +38,7 @@ status: built
 <h2>Trying to break it</h2>
 <p>This is where the 3080 earned its spot after all. It became the lab. Same server code, run locally against the same family of model, fake secrets planted as bait, and scripted attacks thrown at it: jailbreaks, prompt extraction, leak attempts, plain abuse.</p>
 <p>Then two frontier AI models took turns playing attacker, two rounds each. Every trick that worked got fixed and became a permanent test. The suite is now 81 attack cases with zero failures, plus 70 unit tests.</p>
-<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: it rephrased its way past 56 of 62 variations. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
+<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: the attacker got 56 of 62 rephrased versions past it. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
 
 <h2>Small things that bit me</h2>
 <ul>
