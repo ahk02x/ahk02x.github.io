@@ -267,7 +267,7 @@ def bust(page):
         except OSError: return m.group(0)
         return f'{m.group(1)}{path}?v={v}"'
     return re.sub(r'((?:href|src)=")(/(?:style\.css|assets/[\w.-]+\.(?:css|js)))"', ver, page)
-pages = []
+pages = []; hidden = {e['meta']['path'] for e in entries if e['meta'].get('noindex')}  # noindex pages: built, never in the sitemap
 for e in entries:
     meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
@@ -289,7 +289,7 @@ for e in entries:
     if meta.get('layout') == 'bare':
         out = bare(meta['title'], meta.get('description', ''), meta['path'], body, jsonld(meta, body))
     else:
-        out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), jsonld(meta, body))
+        out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), ('<meta name="robots" content="noindex,nofollow">\n' if meta.get('noindex') else '') + jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
     os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(bust(out)); pages.append(meta['path'])
@@ -299,7 +299,7 @@ def rfc822(d):
 feed_items = ''.join(f'<item><title>{html.escape(e["meta"]["title"])}</title><link>https://ahk02x.dev{e["meta"]["path"]}</link><guid isPermaLink="true">https://ahk02x.dev{e["meta"]["path"]}</guid>'
                      + (f'<pubDate>{rfc822(e["date"])}</pubDate>' if e['date'] else '') + f'<description>{html.escape(e["meta"].get("description", ""))}</description></item>\n' for e in posts)
 open('feed.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ahk02x — field notes</title><link>https://ahk02x.dev/</link><atom:link href="https://ahk02x.dev/feed.xml" rel="self" type="application/rss+xml"/><description>Engineering write-ups by Amir Khademi: car telemetry, home infrastructure, and tools that have to earn your trust.</description><language>en</language>\n' + feed_items + '</channel></rss>\n')
-open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>https://ahk02x.dev{p}</loc></url>\n' for p in pages if not p.startswith('/404')) + '</urlset>\n')
+open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + ''.join(f'<url><loc>https://ahk02x.dev{p}</loc></url>\n' for p in pages if not p.startswith('/404') and p not in hidden) + '</urlset>\n')
 print('built', len(pages), 'pages:', ' '.join(pages))
 
 
