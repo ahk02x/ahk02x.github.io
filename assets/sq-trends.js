@@ -70,7 +70,7 @@
     return `<div class="tr-card"><div class="tr-head"><b>${c.title}</b>${badge}<span class="tr-u">${c.unit}</span></div>${svg}${legend}</div>`;
   }
 
-  // The jarvis feed rewrites the file every night, even when the car sat, so >2 days old means the feed stopped.
+  // The home-server feed rewrites the file every night, even when the car sat, so >2 days old means the feed stopped.
   function updated(iso) {
     const el = $('updated'), t = iso ? new Date(iso) : null;
     if (!t || isNaN(t)) { el.innerHTML = '<i></i>Last updated: unknown'; el.classList.add('tr-stale'); return; }

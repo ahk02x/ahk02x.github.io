@@ -42,7 +42,7 @@ path: /infra.html
 <div class="ir c-net"><div class="ir-t">
 <h2>Network</h2>
 <ul>
-<li><strong>blackwall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house, and it is the only thing standing between the house and the internet.</li>
+<li><strong>The firewall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house.</li>
 <li><strong>Switching</strong>: an Aruba Instant On 1930 managed switch, and a spare router working as a WiFi access point.</li>
 <li><strong>What it counts</strong>: traffic inside the house and traffic leaving it are kept as two different facts, because a house full of IoT devices should have to explain itself. <a href="/writing/lanwatch.html">How that works</a>.</li>
 </ul>
@@ -54,29 +54,29 @@ path: /infra.html
 <p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in, pulled from one of the gaming PCs I had from before. That is the entire repair history of the machine that runs the network.</p>
 <p>Rescuing hardware is the point, not a constraint. Everything it does, from DNS and DHCP to counting the traffic, is software I can read, on a box nobody else wanted.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>blackwall with the side off, before the swap: that is still the original Dell supply. The black Corsair that replaced it came out of one of my old gaming PCs.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/firewall.jpg"><img src="/assets/infra/firewall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>The firewall with the side off, before the swap: that is still the original Dell supply. The black Corsair that replaced it came out of one of my old gaming PCs.</figcaption></figure></div>
 
 <div class="ir c-srv"><div class="ir-t">
 <h2>Servers</h2>
-<p><strong>jarvis</strong> is the one that matters: Ryzen 5 5600GE, 32 GB DDR4, an RTX 2070 SUPER, a 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1: about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</p>
-<p>It runs Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car's data pipeline. The graphics card is there for the model and the transcription, not for games. About 111 W at idle, which is the number I actually watch, because it never turns off.</p>
+<p><strong>The home server</strong> is the one that matters: Ryzen 5 5600GE, 32 GB DDR4, an RTX 2070 SUPER, a 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1: about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</p>
+<p>It runs Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a file share and the car's data pipeline. The graphics card is there for the model and the transcription, not for games. About 111 W at idle, which is the number I actually watch, because it never turns off.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was brought to life from leftover parts.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/server.jpg"><img src="/assets/infra/server-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>The home server, open, on the day it was brought to life from leftover parts.</figcaption></figure></div>
 
 <div class="ir alt c-room"><div class="ir-t">
 <h2>The box that runs the room</h2>
-<p><strong>sentry</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck, the lights, and the camera that watches the door. When I walk in, it recognises me and the light strip comes on. When someone who is not me walks in, all hell breaks loose. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.</p>
+<p><strong>The camera box</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck, the lights and the room's camera. Keeping it off the home server means the room can be rebooted without touching anything the house depends on.</p>
 <p>Then its fan died. A sensible person would have bought a new fan. I designed a whole stand instead, with a fan built into the base that blows air up into the RAM and the CPU, printed it, and set the mini PC on top like a trophy. It works. It is also completely over-engineered, and I would do it again.</p>
-<p>The stand sits on top of blackwall. That stack is the most honest picture of this setup I have: a palm-sized mini PC balanced on a fifteen-year-old office tower, and between them they run the place.</p>
+<p>The stand sits on top of the firewall. That stack is the most honest picture of this setup I have: a palm-sized mini PC balanced on a fifteen-year-old office tower, and between them they run the place.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/sentry.jpg"><img src="/assets/infra/sentry-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>sentry on its over-engineered printed stand, fan in the base, on top of blackwall. A new fan would have been cheaper.</figcaption></figure></div>
+<figure class="ir-p"><a href="/assets/infra/camera-box.jpg"><img src="/assets/infra/camera-box-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The camera box on its over-engineered printed stand, fan in the base, on top of the firewall. A new fan would have been cheaper.</figcaption></figure></div>
 
 <div class="ir c-desk"><div class="ir-t">
 <h2>Desk and wall</h2>
 <ul>
 <li><strong>PHOSPHOR</strong>: a Dell U2719D hung in portrait. It shows the health of everything and latches alarms until I clear them. <a href="/writing/phosphor-wall.html">How it works</a>.</li>
 <li><strong>Stream Deck MK.2</strong>: fifteen keys for the room, the lights and the PC's power.</li>
-<li><strong>AMIR-PC</strong>: Ryzen 9 3900X, RTX 3080 12 GB, 32 GB, Windows 11.</li>
+<li><strong>My PC</strong>: Ryzen 9 3900X, RTX 3080 12 GB, 32 GB, Windows 11.</li>
 <li><strong>MacBook Pro 14</strong>: M3, 16 GB. Where everything gets written.</li>
 </ul>
 <p>None of it arrived as a set. The photo is a build day: a BIOS flash running on a monitor on the floor, two machines open at once, and every cable in the room in play.</p>

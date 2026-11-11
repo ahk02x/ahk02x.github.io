@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://ahk02x.dev/sq/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=9c0f417e78">
+<link rel="stylesheet" href="/style.css?v=57363d9474">
 <script src="/assets/site.js?v=be9b4d6f6f" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="SQ · Vehicle Intelligence Platform · Amir Khademi">
@@ -19,21 +19,39 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Site Reliability Engineer","description":"Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"SQ · Vehicle Intelligence Platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform & Security Engineer","description":"Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Security engineering","Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","PKI and TLS","Identity and access management","Secrets management","Network security","Vulnerability triage","Go","Python","HashiCorp Nomad, Consul and Vault","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/","url":"https://ahk02x.dev/sq/","name":"SQ · Vehicle Intelligence Platform","description":"Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
+<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/" aria-current="page"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
 <main id="main" class="wrap inner-page">
 <section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>SQ</h1>
 <p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of SQ: a vehicle intelligence platform. The car’s data goes in, a brain works out what it means, and what comes back is a sentence a person can act on. Not more data, more understanding.</p>
 <div class="readouts">
-<div class="readout"><div class="k">Logged</div><div class="v">243<small>drives</small></div><div class="s">just under 600,000 samples, integrity clean</div></div>
+<div class="readout"><div class="k">Logged</div><div class="v">364<small>drives</small></div><div class="s">824,705 samples at the gate, integrity clean</div></div>
 <div class="readout"><div class="k">Channels</div><div class="v">53<small>× 5 Hz</small></div><div class="s">engine-computer RAM, not generic OBD</div></div>
 <div class="readout"><div class="k">Plugs, September</div><div class="v">−38%<small>misfires</small></div><div class="s">the change that mattered most</div></div>
 </div></section><nav class="sq-tabs" aria-label="SQ5 sections"><a href="/sq/" aria-current="page">Overview</a><a href="/sq/health.html">Weekly health</a><a href="/sq/trends.html">Trends</a><a href="/sq/gallery.html">Gallery</a><a href="/sq/build-log.html">Build log</a></nav>
+
+<h2>Where it stands</h2>
+<p><strong>Parked on purpose, and the car is fine.</strong> On October 30 I took the project to a point where every piece was verified and stopped there. Not abandoned: parked, with a written list of what to do when I come back. Nothing is getting worse. The warm misfire rate has sat at about 8 to 9 per 10,000 firings for ten weeks straight; the weekly card would say "keep an eye on it" at 1.25 times the four-week baseline and flag it at 1.5 times, and it has done neither. Before the plugs it ran at 12.</p>
+<p>What changed at the gate, and since:</p>
+<ul>
+<li><strong>Raw bytes are kept now.</strong> The recorder writes every response from the engine computer as bytes, next to each drive's CSV, and a tool rebuilds the CSV from them with any channel map. A decoder fix can be re-run over old drives. This went live on the Pi on November 1, and the first drive after it rebuilt byte-identical: 1,451 rows, 55 columns, zero differences.</li>
+<li><strong>Every drive says where it came from.</strong> Clock type, UTC offset, decoder and channel-map version are stored with each drive. Older drives were back-filled from their own data.</li>
+<li><strong>Pi power, measured.</strong> A USB meter on the bench, a million samples over three hours: 2.6 W idle after trimming the boot config and switching off services the car never needed. Turning the Wi-Fi radio off while parked takes it to 2.35 W, about 9% less, and nothing else in software moved it more than 0.04 W. So the Pi is set to drop Wi-Fi once a drive is pushed home and to poll a sleeping car once a minute instead of every few seconds. That is on the Pi now, and still being proven on real drives before I call it done. A Pi 4 bottoms out near 2.3 W. Below that is a hardware cutoff, which is still the plan.</li>
+<li><strong>A live view on the phone.</strong> The Pi can serve a read-only live wire to the phone, and an in-car dashboard companion exists as a test build. Neither is in the car yet.</li>
+</ul>
+<p>What's open:</p>
+<ul>
+<li>Saving a drive in the app fails on a plain-http page, because the browser only offers the hashing it needs over https. The fix is drafted.</li>
+<li>The corpus dedupe rests on a 32-bit hash. A collision would silently skip a real drive. It hasn't happened, but it could.</li>
+<li>A drive's "captured at" means when the file was parsed, not when the car was driven.</li>
+<li>Drive history is blind to sessions: a 42% heat-soak cluster hides inside a 29% overall rate, and they should be two different numbers.</li>
+<li>Per-cylinder work: capture misfire and knock per cylinder end to end, then two rules on top. That still waits on one hot evening at the car with a proper per-cylinder read.</li>
+</ul>
 
 <h2>How it started</h2>
 <p>The thermostat went. After that I wanted to see the next problem coming, not find out about it after.</p>
@@ -60,7 +78,7 @@
 <g text-anchor="middle"><text x="435" y="130">away from home: keeps data, retries every 10 min</text><text x="810" y="130">→ one verdict, in words</text></g>
 </svg><ol class="mobile-flow"><li><div><strong>Engine computer</strong><small>53 RAM variables</small></div></li><li><div><strong>Diagnostic cable</strong><small>Reverse-engineered serial protocol</small></div></li><li><div><strong>Raspberry Pi</strong><small>Logs every drive, five times a second</small></div></li><li><div><strong>Home server</strong><small>Master copy, one normalizer</small></div></li><li><div><strong>Sunday job</strong><small>Week vs week vs baseline → health card</small></div></li></ol><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
 <p>The car came with a diagnostic cable whose Windows app I didn't want to depend on, so I reverse-engineered the cable. The protocol is request and response over a serial link: a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of 53 engine-computer variables. These are not generic OBD values. They come straight from the engine computer's own memory: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda (how rich or lean the engine is running), voltage at the module. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/obd-cable-protocol-re">obd-cable-protocol-re</a>.</p>
-<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to jarvis, the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer, a step that checks and renames it, so nothing reaches the database by a side door.</p>
+<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer, a step that checks and renames it, so nothing reaches the database by a side door.</p>
 <p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material. I left 1.2 mm of clearance for a board edge that sticks out 1.2 mm. That is zero clearance, and the hold-down legs snapped. The second is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
 
 <h2>What the data taught me</h2>
@@ -101,7 +119,8 @@
 <dt>Sep 10 2026</dt><dd><strong>Phone companion and history.</strong> A drive companion with sync that survives dead zones, and the car's recorded history on the dashboard.</dd>
 <dt>Oct 1 2026</dt><dd><strong>Weekly report goes live.</strong> A plain-language report goes out every Sunday.</dd>
 <dt>Oct 30 2026</dt><dd><strong>Outside review sets a gate.</strong> A read-only review led to a quality gate: a raw data tier, provenance on every drive, flags on suspect channels.</dd>
-<dt>Now</dt><dd><strong>Parked at a verified gate.</strong> Car modifications and their dates are in the build log tab.</dd>
+<dt>Nov 1 2026</dt><dd><strong>Raw tier live on the Pi.</strong> The first drive after the deploy rebuilt from its raw bytes with zero differences.</dd>
+<dt>Now</dt><dd><strong>Parked at a verified gate.</strong> Parked-quiet power changes on the Pi being proven on real drives; the phone live wire is a test build. Car modifications and their dates are in the build log tab.</dd>
 </dl>
 
 <h2>Problems I hit</h2>
@@ -111,16 +130,17 @@
 <li><strong>No raw bytes kept.</strong> A decoder fix could not be re-applied to old drives. Now every drive keeps a copy of its raw bytes next to it, and a tool can rebuild the drive from them.</li>
 <li><strong>A silent cable.</strong> No vendor app, and the serial link stayed silent at every baud rate. It turned out to need a handshake and an open command, then read engine-computer RAM, not OBD. About 5 Hz is the ceiling; poll faster and it returns nothing.</li>
 <li><strong>A test that stopped answering.</strong> The planned coil swap for cylinder 3 lost its decision rule once cylinders 4 and 6 caught up to it. It is re-planned around light-load counts outside shift windows.</li>
-<li><strong>Remote access went dark.</strong> The Pi wedged while parked: the port answered, the shell never did. The next deploy waits on it.</li>
+<li><strong>Remote access went dark.</strong> The Pi wedged while parked: the port answered, the shell never did. It came back, and the deploy that had been waiting on it went through; the real bug was in my deploy script, which shipped only the first file in its list.</li>
 </ul>
 <p class="muted">Plus the boot storms and the signed-channel bug above.</p>
 
 <h2>In the pipeline</h2>
 <dl class="spec">
-<dt>built, blocked on Pi access</dt><dd><strong>Pi recorder deploy</strong>: raw-byte recorder and new channel map, restarting only when the car is quiet.</dd>
+<dt>live</dt><dd><strong>Raw-byte recorder on the Pi</strong>: deployed, and the first drive after it rebuilt byte-identical. The recorder restarts only when the car is quiet.</dd>
+<dt>on the Pi, being proven</dt><dd><strong>Parked quiet</strong>: Wi-Fi off once the drive is pushed, slow polling to a sleeping car. About 9% off the Pi's idle draw on the bench; the real-drive numbers come next.</dd>
 <dt>designed</dt><dd><strong>Low-voltage cutoff</strong>: a hardware current sensor that cuts the logger before the battery suffers.</dd>
 <dt>planned</dt><dd><strong>Cylinder 3 diagnosis</strong>: per-cylinder read, smoke test, then the coil swap under the new rule.</dd>
-<dt>next gate</dt><dd><strong>Live feed into the app</strong>: the logger streaming straight to the app instead of batch uploads.</dd>
+<dt>next gate</dt><dd><strong>Live feed into the app</strong>: the logger streaming straight to the app instead of batch uploads. A read-only live wire from the Pi to the phone is built; an in-car dashboard companion is a test build.</dd>
 <dt>built on a simulator, waits on live data</dt><dd><strong>Readiness card</strong>: "ready to drive hard" from oil versus coolant warm-up, and heat soak at shutdown.</dd>
 <dt>open issues</dt><dd><strong>App queue</strong>: live cylinder-3 tile, "compared with your usual" rows, a logger self-test, per-cylinder rules.</dd>
 <dt>built, not live</dt><dd><strong>YouTube channel</strong>: upload pipeline, voice and three ready video specs.</dd>

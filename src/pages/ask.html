@@ -104,7 +104,7 @@ path: /ask/
 <p>Amir is an engineer and a relentless tinkerer. By day he keeps production systems running: the networks, the certificates, the deployments and the 2 a.m. root cause. The rest of the time he builds things he owns end to end, from his own servers to a platform built on his car.</p>
 <p><a href="/about.html">More about Amir</a></p></details>
 <details><summary>What does he do for work?</summary>
-<p>Seven years across platform engineering, application operations (AppOps) and security, most of it in regulated production where a mistake is somebody's payment. He carries every change from development through testing to production, runs the release migrations, rotates certificates without dropping traffic, and automates anything he catches himself doing twice.</p>
+<p>Platform engineering, application operations (AppOps) and security, most of it in regulated production where a mistake is somebody's payment. He carries every change from development through testing to production, runs the release migrations, rotates certificates without dropping traffic, and automates anything he catches himself doing twice.</p>
 <p><a href="/about.html">Where he's worked</a></p></details>
 <details><summary>What areas is he focused on?</summary>
 <p>Platform engineering: the shared platforms other teams ship on, built with Nomad, Consul, Vault, Ansible, Docker and Kubernetes, with pipelines that make every change repeatable. Application operations: keeping production applications healthy through releases, migrations, incidents and the root cause after. Security: TLS and PKI, identity and single sign-on (mTLS, SAML, OIDC), secrets and privileged access, hardening and vulnerability remediation. Lately also reliability engineering and running AI safely, which is what this chat box is.</p>
@@ -141,13 +141,13 @@ path: /ask/
 <section class="ask-plan" aria-labelledby="plan-h"><details>
 <summary id="plan-h">What I'm building</summary>
 <p>A real conversation: you type any question about my work, and ahkira answers from the pages on this site. It went live after a private run and checks of the deployed setup.</p>
-<h3>How it works</h3>
+<h2>How it works</h2>
 <ol>
 <li>Your question goes to a small server at the edge of the internet, never to my home network. Nothing in my house is reachable from this page.</li>
 <li>An open-source AI model answers using only the public pages on this site and the answers above. It has no tools, no memory between chats, and nothing private to give away.</li>
 <li>Every reply is checked before you see it. If anything looks wrong, you get a safe stock reply instead.</li>
 </ol>
-<h3>How it stays safe</h3>
+<h2>How it stays safe</h2>
 <ul>
 <li>A bot check and rate limits, to limit abuse and usage.</li>
 <li>Short questions, short answers, and daily usage caps. When the budget runs out, ahkira naps until tomorrow.</li>
@@ -155,14 +155,14 @@ path: /ask/
 <li>An off switch, and a health check every 15 minutes that puts ahkira to sleep on its own if the model stops answering.</li>
 <li>Chats are saved so ahkira can get better, and may be used to train it. Emails and most phone numbers are blanked out before anything is saved, and saved chats never go back into what ahkira reads when it answers.</li>
 </ul>
-<h3>How it gets tested</h3>
+<h2>How it gets tested</h2>
 <ol>
 <li>Hundreds of scripted attacks in a lab: jailbreaks, tricks to extract its instructions, attempts to make it leak private details (with fake secrets planted as bait), and off-topic or abusive requests.</li>
 <li>Three frontier AI models take turns as the attacker, trying to trick it. Every trick that works becomes a permanent test.</li>
 <li>A private run on the real setup, then a quiet launch.</li>
 <li>Planned for after launch: the attacks re-run every night, and a failure puts ahkira to sleep until I look.</li>
 </ol>
-<h3>Where it stands</h3>
+<h2>Where it stands</h2>
 <ul class="ask-status">
 <li><span aria-hidden="true">✓</span> The mascot and the vetted answers</li>
 <li><span aria-hidden="true">✓</span> The lab and the guard rails</li>

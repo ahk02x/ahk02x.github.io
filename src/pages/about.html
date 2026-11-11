@@ -1,5 +1,5 @@
-title: Amir Khademi (Amir Hossein Khademi), SRE — About
-description: Amir Khademi (Amir Hossein Khademi or Amir-Hossein Khademi), Site Reliability Engineer, car enthusiast and hands-on builder. Stories from my lab and SQ5.
+title: Amir Khademi (Amir Hossein Khademi), Platform & Security Engineer — About
+description: Amir Khademi (Amir Hossein Khademi or Amir-Hossein Khademi), platform and security engineer on payment systems, car enthusiast and hands-on builder. Stories from my lab and SQ5.
 path: /about.html
 ---
 <main class="wrap narrow wide-body about-page">
@@ -41,7 +41,7 @@ path: /about.html
 <h1 id="about-title">Hi, I'm Amir.</h1>
 <p class="about-deck">I like knowing how things work. Especially the things I use every day.</p>
 <p>That includes the car I drive, the servers in my office, and the tools I build when something keeps annoying me. A small question has a habit of turning into a project.</p>
-<p>I'm a site reliability engineer. Away from work, you'll usually find me somewhere between a terminal, the car and a 3D printer.</p>
+<p>I'm a platform and security engineer on a payments platform. Most of my hard tickets are certificates, logins and firewalls. Away from work, you'll usually find me somewhere between a terminal, the car and a 3D printer.</p>
 <div class="about-links"><a href="mailto:amir@ahk02x.com">Say hello &rarr;</a><a href="/projects/">See what I'm building &rarr;</a></div>
 </div>
 <figure class="about-photo"><img src="/assets/sq-gallery/2026-07-10-car.jpg" alt="My grey Audi SQ5 with its bonnet open beneath an evening sky" width="1200" height="1600" srcset="/assets/sq-gallery/2026-07-10-car-t.jpg 480w, /assets/sq-gallery/2026-07-10-car.jpg 1200w" sizes="(max-width:720px) 85vw, 420px"><figcaption>My daily driver. Also the reason SQ exists.</figcaption></figure>
@@ -72,27 +72,38 @@ path: /about.html
 <section class="about-section" aria-labelledby="work-title">
 <h2 id="work-title">Where I've<br>worked.</h2>
 <div>
-<p class="about-work-intro">Seven years across cloud infrastructure, telecom and financial systems. More responsibility each time, and a little closer to the systems people depend on.</p>
+<p class="about-work-intro">Cloud infrastructure, telecom, financial services and now payments. More responsibility each time, and a little closer to the systems people depend on.</p>
 <p>I started with an honours degree in software engineering. My first team lead role was a Java app that taught children Braille. Since then, the work has grown from looking after servers to carrying changes through production and helping teams recover when things go wrong.</p>
 <article class="about-role"><div class="about-role-label">01 / Foundations</div><h3>Cloud &amp; software</h3>
 <p>I started as a systems administrator on a large cloud platform, supporting hundreds of customers across Linux and Windows. I automated VMware tasks with PowerShell and Python, hardened more than 100 servers to a healthcare compliance standard, and worked on Cisco switches and ASA firewalls.</p>
 <p><strong>The automation cut the team's manual work by about a third.</strong> It made me want to look for the next repetitive job worth fixing.</p>
-<p>Alongside the technical work, I was president of the intern community: 600 interns, 40 social and career events, and 20 site leads checking in each week. Keeping people connected and staying within budget was a different kind of systems problem.</p></article>
+<p>Alongside the technical work, I was president of the intern community across two provinces: a few hundred interns, a calendar of social and career events, and site leads checking in each week. Keeping people connected and staying within budget was a different kind of systems problem.</p></article>
 <article class="about-role"><div class="about-role-label">02 / Scale</div><h3>Telecom</h3>
 <p>I helped keep mobile provisioning flowing for millions of LTE and 5G subscribers. I wrote outage playbooks, built patch procedures for on-premises and cloud systems, and carried those changes through review.</p>
-<p>The work also meant pursuing product defects with vendors and building a tool that took repetitive cleanup off the frontline network operations team. <strong>The platform portfolio maintained a 98% provisioning success rate.</strong></p></article>
-<article class="about-role"><div class="about-role-label">03 / Responsibility</div><h3>Financial institutions</h3>
-<p>This is the part I'm proudest of. I worked with the banks and credit unions on the platform, owning the hub service between them. For each partner, I wrote the configuration, raised the change, and carried it through development, testing and production.</p>
+<p>The work also meant pursuing product defects with vendors and building a tool that took repetitive cleanup off the frontline network operations team. <strong>The platform portfolio maintained a 98% provisioning success rate.</strong></p>
+<p>The team won the company's Team of the Year award for a world-first launch with a major software partner.</p></article>
+<article class="about-role"><div class="about-role-label">03 / Responsibility</div><h3>Financial services</h3>
+<p>This is the part I'm proudest of. I worked with the banks and credit unions on a financial services platform, owning the hub service between them. For each partner, I wrote the configuration, raised the change, and carried it through development, testing and production.</p>
 <p>I ran major release migrations, wrote the automation that made them repeatable, and rotated certificates without dropping traffic. The hard tickets involved mTLS, SAML and OIDC federation, HSM signing, and site-to-site VPNs that only made sense once you found the cause.</p>
+<p>In practice that meant Keycloak realms and clients built with Ansible, mTLS keystores and truststores redeployed without breaking a partner, and the yearly HSM key rotation, with the risk written up before the change went in. I was on call for all of it and wrote the postmortems.</p>
 <p>That work spanned two data centres, with Nomad, Consul, Vault, Ansible, AWS and Bitbucket pipelines. In a regulated environment, a mistake can affect somebody's payment. A recovery plan is part of the job.</p>
-<p>I also handled Microsoft 365, Azure AD single sign-on, Intune and Autopilot, plus testing and rollout for an organisation-wide Windows 11 migration. <strong>Vulnerability remediation stayed at 90% within SLA.</strong></p></article>
+<p>I also handled the staff side: Azure AD single sign-on, Intune and Autopilot, plus testing and rollout for an organisation-wide Windows 11 migration. <strong>Vulnerability remediation stayed at 90% within SLA.</strong></p></article>
+<article class="about-role"><div class="about-role-label">04 / Now</div><h3>Payments, platform &amp; security</h3>
+<p>Today I'm on the platform engineering team of a payments platform at a large tech company. Before that I was on its network and security team, and most of what follows comes from there.</p>
+<p>I handled vulnerability response for the network. When a vendor advisory landed, I worked out what was exposed, what closed it, and who needed to know. I triaged scanner findings on the network gear and worked security-operations escalations through to a cause. Audits and access reviews come around on a schedule, and I put the evidence together for them.</p>
+<p>When something failed, I wrote the root-cause analysis and pushed the redesign that came out of it. For an identity-platform migration I mapped the OIDC and SAML login flow end to end, since nobody had written it down, and wrote the validation plan for break-glass access and user migration.</p>
+<p>I wrote the network sections of client architecture documents and checked them against the device configs, and contributed to the business case for replacing part of the network stack. I built a small internal tool and took it through the company's app-approval process. I use AI agents to cross-check documents, under redaction rules so no secret leaves the box.</p>
+<p>I also screened and interviewed candidates for the team, and ran the knowledge transfer so after-hours support stopped depending on one person. Earlier at the same company I supported customer platforms on OpenShift and Kubernetes.</p></article>
 <div class="about-toolbox"><h3>Tools I keep coming back to</h3>
 <dl class="about-career">
-<div><dt>Systems &amp; automation</dt><dd>Linux, Python, Bash, PowerShell, Ansible, Docker, Helm, Nomad, Consul and Vault.</dd></div>
+<div><dt>Systems &amp; automation</dt><dd>Linux, Bash, PowerShell, Ansible, Docker and Helm. Python for most things, Go for <a href="/writing/go-x509.html">certguard</a>.</dd></div>
+<div><dt>Platform</dt><dd>Nomad, Consul and Vault, at work and in my own lab. OpenShift and Kubernetes on the support side. Traefik and Proxmox.</dd></div>
+<div><dt>Network</dt><dd>Cisco IOS and NX-OS, Firepower, F5 BIG-IP, FortiGate, route-based IPsec with failover, packet-capture planning.</dd></div>
+<div><dt>Identity &amp; PKI</dt><dd>TLS and X.509 with openssl, SAML, OIDC and OAuth2, Keycloak, CyberArk, mTLS keystores and truststores, HSM-held keys and PKCS#11 tooling, Vault PKI as my own CA in the lab.</dd></div>
+<div><dt>Security</dt><dd>Vulnerability triage against CVEs and vendor advisories, firewall rule-base review, access-review and audit evidence, incident RCAs, fuzzing in Go.</dd></div>
 <div><dt>Visibility &amp; cloud</dt><dd>Splunk, Elastic, AWS and Azure.</dd></div>
-<div><dt>Identity &amp; networks</dt><dd>TLS and PKI, Keycloak, CyberArk, F5, FortiGate and IPsec.</dd></div>
 </dl>
-<p class="about-small">I studied Kubernetes and Terraform on AWS through courses and self-directed work. I've also spent three years as a scrum master.</p>
+<p class="about-small">I studied Kubernetes and Terraform on AWS through courses and self-directed work. I've also worked as a scrum master.</p>
 </div>
 </div>
 </section>

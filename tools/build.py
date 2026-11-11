@@ -45,7 +45,9 @@ GLYPHS = {
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
     if 'Amir Khademi' not in title and title != 'Not found': title = f'{title} · Amir Khademi'  # every indexed page carries the author's name
-    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and path.startswith(h)), '')
+    # The current section: the page's own `nav:` front-matter key when it names a section (the SQ pages sit under
+    # Projects), otherwise the path prefix.
+    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and (nav_key == h or path.startswith(h))), '')
     nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == sec else '') + f'><span class="nav-no" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(SECTIONS, 1))
     return f'''<!doctype html>
 <html lang="en">
@@ -226,10 +228,10 @@ PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
           'alternateName': ['Amir Hossein Khademi', 'Amir-Hossein Khademi', 'Amirhossein Khademi'],
           'givenName': 'Amir Hossein', 'familyName': 'Khademi',
           'url': SITE + '/', 'mainEntityOfPage': SITE + '/about.html',
-          'jobTitle': 'Site Reliability Engineer',
-          'description': 'Site Reliability Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
+          'jobTitle': 'Platform & Security Engineer',
+          'description': 'Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
-          'knowsAbout': ['Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
+          'knowsAbout': ['Platform engineering', 'Security engineering', 'Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'PKI and TLS', 'Identity and access management', 'Secrets management', 'Network security', 'Vulnerability triage', 'Go', 'Python', 'HashiCorp Nomad, Consul and Vault', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
           'sameAs': ['https://github.com/ahk02x', 'https://www.linkedin.com/in/amirh-khademi/']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
            'alternateName': 'Amir Khademi — field notes', 'inLanguage': 'en',
