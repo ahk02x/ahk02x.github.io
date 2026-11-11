@@ -5,7 +5,7 @@ dates or times leave the LAN, just per-week peaks and rates (same rule as sq_hea
 Completed weeks only: the repo's history keeps every snapshot, so publishing the week in progress
 would let a diff of two days show which day he drove.
 
-  python3 tools/sq_trends.py --url http://<sq-dash>/api/drives   # what the jarvis feed runs, hourly
+  python3 tools/sq_trends.py --url http://<sq-dash>/api/drives   # what the nightly feed on the home server runs
   python3 tools/sq_trends.py --file drives.json                  # offline
 The LAN address stays out of this public repo; the feed passes it in.
 """
