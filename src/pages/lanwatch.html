@@ -11,14 +11,56 @@ note: 6
 <section class="hero"><div class="eyebrow">Writing · <time datetime="2026-10-27">27 October 2026</time></div><h1>Internal is not internet</h1>
 <p class="lede">A house full of smart devices should have to explain itself. "What left the house today" and "what talked to what inside it" are two different facts, and the obvious place to ask answers only one of them, and inflates the other.</p></section>
 
-<p>The network has a TV, phones, a smart speaker, a microcontroller board, a Windows PC and a rack of small Linux boxes. My first plan was the obvious one: read the firewall's flow aggregates, split rows by whether the far end was a private address, draw two lines. One measurement showed both halves of that plan were wrong.</p>
+<p>The network has a TV, phones, a smart speaker, a microcontroller board, a Windows PC, a rack of small Linux boxes, and an Asus router doing the WiFi. My first plan was the obvious one: read the firewall's flow aggregates, split rows by whether the far end was a private address, draw two lines. One measurement showed both halves of that plan were wrong.</p>
 
 <h2>The zero is the topology</h2>
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 310" role="img" aria-label="Two vantage points. Left: traffic leaving the house goes device, switch, firewall, internet, and the firewall records all of it. Right: traffic between two devices in the house goes device, switch, device, and never reaches the firewall, so only the devices themselves can report it.">
+<defs><marker id="lw-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<g class="lbl" text-anchor="middle"><text x="168" y="16">WHAT LEAVES THE HOUSE</text><text x="536" y="16">WHAT STAYS IN THE HOUSE</text></g>
+<path class="flow" d="M352,28 V300" stroke-dasharray="3 5" stroke-width="1"/>
+<g class="box"><rect x="98" y="32" width="140" height="38" rx="6"/><rect x="98" y="106" width="140" height="34" rx="6"/><rect x="98" y="176" width="140" height="44" rx="6"/></g>
+<g class="lbl" text-anchor="middle"><text x="168" y="55">a device</text><text x="168" y="127">switch + WiFi router</text><text x="168" y="196">the firewall</text></g>
+<text x="168" y="212" text-anchor="middle">every flow logged here</text>
+<g class="flow" marker-end="url(#lw-ar)"><path d="M168,70 V104"/><path d="M168,140 V174"/><path d="M168,224 V258"/></g>
+<circle cx="184" cy="240" r="5" fill="var(--accent)"/><text x="196" y="243">the firewall collector</text>
+<text x="168" y="282" text-anchor="middle" class="lbl">the internet</text>
+<g class="box"><rect x="384" y="32" width="130" height="38" rx="6"/><rect x="558" y="32" width="130" height="38" rx="6"/><rect x="384" y="106" width="304" height="34" rx="6"/></g>
+<g class="lbl" text-anchor="middle"><text x="449" y="55">device A</text><text x="623" y="55">device B</text><text x="536" y="127">switch + WiFi router</text></g>
+<g class="flow"><path d="M449,70 V98" marker-end="url(#lw-ar)"/><path d="M623,98 V72" marker-end="url(#lw-ar)"/><path d="M449,98 H623"/></g>
+<circle cx="372" cy="51" r="5" fill="var(--accent)"/><circle cx="700" cy="51" r="5" fill="var(--accent)"/>
+<text x="536" y="92" text-anchor="middle">host → switch → host</text>
+<path class="flow" d="M536,140 V176" stroke-dasharray="4 5" stroke-width="1.5"/>
+<g stroke="var(--accent)" stroke-width="2"><path d="M528,150 L544,166"/><path d="M544,150 L528,166"/></g>
+<rect x="446" y="176" width="180" height="44" rx="6" fill="none" stroke="var(--line)" stroke-dasharray="4 5"/>
+<g text-anchor="middle"><text x="536" y="196" class="lbl" fill="var(--quiet)">the firewall</text><text x="536" y="212" fill="var(--quiet)">no frame ever arrives</text></g>
+<text x="536" y="248" text-anchor="middle">only the two endpoints can report this</text>
+<circle cx="412" cy="276" r="5" fill="var(--accent)"/><text x="424" y="279">a sampler, running on the device itself</text>
+<text x="536" y="300" text-anchor="middle" fill="var(--quiet)">a device with no sampler is invisible to both</text>
+</svg><ol class="mobile-flow"><li><div><strong>Leaving the house</strong><small>Device → switch → firewall → internet. The firewall is on the path, so it records every byte.</small></div></li><li><div><strong>Staying in the house</strong><small>Device A → switch → device B. One switched subnet, so the frame never reaches the firewall's interface at all.</small></div></li><li><div><strong>Two vantage points</strong><small>The firewall owns the internet half. The endpoints own the machine-to-machine half. Neither can cover for the other.</small></div></li></ol><figcaption>The same network, drawn from the two places you can stand. Nothing on the right is being filtered out — it is never seen. The WiFi router is bridged onto the same subnet, so two WiFi devices talking to each other are hidden for exactly the same reason two wired ones are.</figcaption></figure>
 <p>Ten minutes of raw flow records in August, sorted by class: 329.66 MB to the internet, 0.62 MB to the firewall itself (DNS, ssh, syslog), 0.02 MB broadcast, and 0.00 MB machine to machine. Not because the house was quiet. That traffic is just structurally invisible from there. The LAN is one switched subnet. A frame from one box to another goes host, switch, host, and never arrives at the firewall's LAN interface. The firewall isn't filtering it out. It never sees it at all. Every "LAN to LAN" row in its own daily aggregate turned out to have the firewall as one endpoint.</p>
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 176" role="img" aria-label="Ten minutes of raw flow records by class: internet 329.66 megabytes, to the firewall itself 0.62 megabytes, broadcast 0.02 megabytes, machine to machine 0.00 megabytes">
+<g class="lbl"><text x="0" y="14">TEN MINUTES OF RAW FLOW RECORDS, BY CLASS</text></g>
+<g text-anchor="end"><text x="150" y="48">internet</text><text x="150" y="80">to the firewall itself</text><text x="150" y="112">broadcast</text><text x="150" y="144">machine ↔ machine</text></g>
+<g fill="var(--accent)"><rect x="162" y="36" width="440" height="16"/><rect x="162" y="68" width="3" height="16"/><rect x="162" y="100" width="1.5" height="16"/></g>
+<rect x="162" y="132" width="440" height="16" fill="none" stroke="var(--line)" stroke-dasharray="4 4"/>
+<g class="lbl"><text x="614" y="49">329.66 MB</text><text x="614" y="81">0.62 MB</text><text x="614" y="113">0.02 MB</text><text x="614" y="145">0.00 MB</text></g>
+<text x="172" y="145" fill="var(--quiet)">nothing was recorded here — and the house was not quiet</text>
+</svg><ol class="mobile-flow"><li><div><strong>Internet · 329.66 MB</strong><small>Everything crossing the firewall.</small></div></li><li><div><strong>To the firewall itself · 0.62 MB</strong><small>DNS, ssh, syslog.</small></div></li><li><div><strong>Broadcast · 0.02 MB</strong><small>Multicast, link-local, discovery.</small></div></li><li><div><strong>Machine ↔ machine · 0.00 MB</strong><small>Not a quiet house. A blind spot.</small></div></li></ol><figcaption>August 2026, one ten-minute window, classified from the raw flow log. The last row is the whole finding: a zero that is a property of the wiring, not of the hour.</figcaption></figure>
+<p>The WiFi is an Asus router bridged onto the same subnet, which is why the phones and the TV turn up with their own addresses rather than hiding behind one. It also means two WiFi devices talking to each other are hidden in exactly the way two wired ones are: the frame turns around at the access point and never travels any further.</p>
 <p>No NetFlow setting changes that. Only the endpoints, or a mirror port on the switch, can see it.</p>
 
 <h2>The aggregates double count</h2>
 <p>The internet half had its own problem. The firewall keeps per-interface SQLite aggregates, and one download is exported on both interfaces: the daily table showed 17513.3 MB out on the LAN side and 17513.3 MB in on the WAN side, the same bytes, with nothing in the schema saying so. Sum across interfaces and every number doubles. Fun. And the only aggregate that carries a destination address is the daily one, so it can tell internal from internet only at one row per day.</p>
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 720 180" role="img" aria-label="One download is exported twice: 17513.3 megabytes out on the LAN interface and the same 17513.3 megabytes in on the WAN interface. Summing across interfaces doubles every number.">
+<rect class="box" x="270" y="24" width="180" height="42" rx="6"/>
+<text x="360" y="50" text-anchor="middle" class="lbl">one download</text>
+<g class="flow"><path d="M270,45 H150 V84"/><path d="M450,45 H570 V84"/></g>
+<g class="box"><rect x="40" y="84" width="220" height="48" rx="6"/><rect x="460" y="84" width="220" height="48" rx="6"/></g>
+<g text-anchor="middle"><text x="150" y="104" class="lbl">LAN interface · out</text><text x="150" y="121">17513.3 MB</text><text x="570" y="104" class="lbl">WAN interface · in</text><text x="570" y="121">17513.3 MB</text></g>
+<text x="360" y="112" text-anchor="middle">same bytes</text>
+<text x="360" y="162" text-anchor="middle" class="lbl">summed across interfaces: 35026.6 MB</text>
+<text x="360" y="178" text-anchor="middle" fill="var(--quiet)">nothing in the schema says these two rows are one event</text>
+</svg><ol class="mobile-flow"><li><div><strong>LAN interface, out</strong><small>17513.3 MB</small></div></li><li><div><strong>WAN interface, in</strong><small>The same 17513.3 MB.</small></div></li><li><div><strong>Summed</strong><small>35026.6 MB, for one download. Nothing in the schema says they are one event.</small></div></li></ol><figcaption>Per-interface aggregates, read the obvious way. Every number doubles, and the only table carrying a destination address is the daily one.</figcaption></figure>
 <p>The raw flow log has neither problem. One hour of it held 16,695 IPv4 records, each conversation exactly once, with the LAN address intact, and the rotations hold about two days.</p>
 
 <h2>Two collectors, one owner per half</h2>
@@ -29,6 +71,10 @@ note: 6
 <li><strong>Priority.</strong> A conversation seen by both must resolve to one stored row or everything doubles again. Each row carries a small integer priority: the firewall wins on internet (it counts UDP and QUIC, which <code>ss</code> cannot), the endpoints win on machine-to-machine, and neither can outrank the other on its own turf.</li>
 </ul>
 <p>Directed broadcast bit me: Python's <code>ipaddress</code> module has no idea the network is a /24, so the broadcast address looks like an ordinary host and NetBIOS and discovery chatter buried the real pairs in the machine-to-machine panel. It's now special-cased on the last octet.</p>
+
+<h2>What it looks like</h2>
+<style>.shot{padding:12px}.shot a{display:block}.shot img{display:block;width:100%;height:auto;border-radius:6px}</style>
+<figure class="shot"><a href="/assets/lanwatch-dash.png"><img src="/assets/lanwatch-dash.png" alt="The lanwatch dashboard: a row of totals showing 835.4 MB moved, 815.4 MB of it internet and 16.1 MB machine to machine; a one-minute traffic chart; a by-device table; a machine-to-machine table tagging each row as peer to peer or firewall; a table of internet destinations; and a panel headed WHAT THIS CANNOT SEE listing its own blind spots." width="1500" height="2003" loading="lazy"></a><figcaption>One hour, on the dashboard. The two halves never share a number: internet on the left, machine-to-machine on the right, each from the collector that can actually see it. The panel at the bottom right is the one I most wanted to exist — the tool stating what it is blind to, next to the numbers it is sure of. Device names and addresses here are stand-ins.</figcaption></figure>
 
 <h2>An unobserved hour must not look quiet</h2>
 <p>The version before this one died exactly like that. Its feeder ran on my Mac, I closed the lid, and the chart kept rendering for 15 days like nothing happened. The internet half survives collector downtime for free: the firewall records around the clock and the collector catches up from the last point it read. The machine-to-machine half has no off-box recorder, and cumulative counters diffed across a sleep would dump the whole gap into one bucket.</p>
