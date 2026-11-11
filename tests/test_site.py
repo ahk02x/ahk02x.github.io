@@ -120,7 +120,7 @@ class SiteChecks(unittest.TestCase):
             self.assertNotIn('{{', text)
             self.assertEqual(page.main_count,1,str(path)); self.assertEqual(page.h1_count,1,str(path))
             self.assertIn('main',page.ids)
-        self.assertEqual(len(pages),24)
+        self.assertEqual(len(pages),23)
         hidden=(public/'photo-rights.html').read_text(); self.assertIn('content="noindex,nofollow"',hidden)
         self.assertNotIn('photo-rights',(public/'sitemap.xml').read_text())
         for path,page in pages.items():
