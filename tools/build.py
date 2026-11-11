@@ -24,7 +24,6 @@ def dot(cx, cy, r): return f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="currentCo
 # One glyph per project, drawn from what the project does. The Crossing mark stays the owner's alone (MARK), never a row icon.
 GLYPHS = {
  'alert': glyph_svg('<path d="M26,92 C34,84 38,72 38,56 C38,40 49,28 64,28 C79,28 90,40 90,56 C90,72 94,84 102,92 Z"/><path d="M64,28 V18"/><path d="M52,104 C54,112 74,112 76,104"/><path d="M52,60 l9,9 l17,-19"/>'),
- 'phosphor': glyph_svg('<rect x="30" y="10" width="68" height="108" rx="8"/><rect x="43" y="23" width="42" height="30" rx="2" fill="currentColor" stroke-width="3"/><path d="M44,76 H84"/><path d="M44,96 H68"/>'),
  'memory': glyph_svg('<path d="M40,38 V90"/><path d="M40,76 C40,56 88,70 88,52"/><circle cx="40" cy="26" r="12"/><circle cx="40" cy="102" r="12"/><circle cx="88" cy="40" r="12"/>'),
  'patch': glyph_svg('<g transform="rotate(-45 64 64)"><rect x="8" y="40" width="112" height="48" rx="24"/><path d="M46,40 V88"/><path d="M82,40 V88"/><circle cx="64" cy="54" r="4" fill="currentColor" stroke-width="3"/><circle cx="64" cy="74" r="4" fill="currentColor" stroke-width="3"/></g>'),
  'lan': glyph_svg('<path d="M8,62 L44,28 L80,62"/><path d="M18,54 V104 H70 V54"/><path d="M50,82 H118"/><path d="M102,66 L118,82 L102,98"/>'),
@@ -82,7 +81,7 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 def token_card():
     if not tok: return ''
     k = tok['by_kind']; tot = tok['total_tokens']
-    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'phosphor': 'PHOSPHOR wall', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'obd-cable-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
+    pub = {'sq-garage': 'SQ', 'Sq': 'SQ', 'iot': 'IoT', 'flowtrace': 'flowtrace', 'alertboard': 'Alert board', 'macwatch': 'macwatch', 'netdash': 'netdash', 'partswatch': 'partswatch', 'fleet-patch': 'fleet-patch', 'lanwatch': 'lanwatch', 'inbox': 'Inbox hub', 'obd-cable-protocol-re': 'SQ', 'workout': 'Coach Claude', 'ahk02x-site': 'ahk02x.dev'}  # SQ = the car, its app and the cable RE: one project
     merged = collections.Counter()
     for p in tok['top_projects']:
         if p['project'] in pub: merged[pub[p['project']]] += p['tokens']

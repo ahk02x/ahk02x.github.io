@@ -6,8 +6,7 @@ import html, re, sys
 SITE = 'https://ahk02x.dev'
 TAGS = {'claude-code-on-call': 'devops, ai, homelab, observability', 'fleet-patch': 'devops, linux, homelab, automation',
         'lanwatch': 'networking, homelab, monitoring, python', 'memory-as-infrastructure': 'ai, devops, productivity, tooling',
-        'partswatch': 'python, automation, cars, webdev', 'phosphor-wall': 'homelab, monitoring, raspberrypi, devops',
-        'sq-build-log': 'cars, hardware, raspberrypi, data'}
+        'partswatch': 'python, automation, cars, webdev',  'sq-build-log': 'cars, hardware, raspberrypi, data'}
 raw = open(sys.argv[1]).read(); fm, body = raw.split('\n---\n', 1)
 meta = dict(re.findall(r'^(\w+):\s*(.*)$', fm, re.M)); slug = meta['path'].rsplit('/', 1)[-1].replace('.html', '')
 b = body
