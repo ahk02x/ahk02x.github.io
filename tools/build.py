@@ -45,7 +45,9 @@ GLYPHS = {
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
     if 'Amir Khademi' not in title and title != 'Not found': title = f'{title} · Amir Khademi'  # every indexed page carries the author's name
-    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and path.startswith(h)), '')
+    # The current section: the page's own `nav:` front-matter key when it names a section (the SQ pages sit under
+    # Projects), otherwise the path prefix.
+    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and (nav_key == h or path.startswith(h))), '')
     nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == sec else '') + f'><span class="nav-no" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(SECTIONS, 1))
     return f'''<!doctype html>
 <html lang="en">
