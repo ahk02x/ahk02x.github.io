@@ -16,18 +16,18 @@ nav: /projects/
 <p><strong>Parked on purpose, and the car is fine.</strong> On October 30 I took the project to a point where every piece was verified and stopped there. Not abandoned: parked, with a written list of what to do when I come back. Nothing is getting worse. The warm misfire rate has sat at about 8 to 9 per 10,000 firings for ten weeks straight; the weekly card would say "keep an eye on it" at 1.25 times the four-week baseline and flag it at 1.5 times, and it has done neither. Before the plugs it ran at 12.</p>
 <p>What changed at the gate, and since:</p>
 <ul>
-<li><strong>Raw bytes are kept now.</strong> The recorder writes every response from the engine computer as bytes, next to each drive's CSV, and a tool rebuilds the CSV from them with any channel map. A decoder fix is a re-run over old drives, not surgery on them. This went live on the Pi on November 1, and the first drive after it rebuilt byte-identical: 1,451 rows, 55 columns, zero differences.</li>
+<li><strong>Raw bytes are kept now.</strong> The recorder writes every response from the engine computer as bytes, next to each drive's CSV, and a tool rebuilds the CSV from them with any channel map. A decoder fix can be re-run over old drives. This went live on the Pi on November 1, and the first drive after it rebuilt byte-identical: 1,451 rows, 55 columns, zero differences.</li>
 <li><strong>Every drive says where it came from.</strong> Clock type, UTC offset, decoder and channel-map version are stored with each drive. Older drives were back-filled from their own data.</li>
-<li><strong>Pi power, measured instead of modelled.</strong> A USB meter on the bench, a million samples over three hours: 2.6 W idle after trimming the boot config and switching off services the car never needed. Turning the Wi-Fi radio off while parked takes it to 2.35 W, about 9% less, and nothing else in software moved it more than 0.04 W. So the Pi is set to drop Wi-Fi once a drive is pushed home and to poll a sleeping car once a minute instead of every few seconds. That is on the Pi now, and still being proven on real drives before I call it done. A Pi 4 bottoms out near 2.3 W. Below that is a hardware cutoff, which is still the plan.</li>
-<li><strong>A live view on the phone.</strong> The Pi can serve a read-only live wire to the phone, and a CarPlay dashboard companion exists as a test build. Neither is in the car yet.</li>
+<li><strong>Pi power, measured.</strong> A USB meter on the bench, a million samples over three hours: 2.6 W idle after trimming the boot config and switching off services the car never needed. Turning the Wi-Fi radio off while parked takes it to 2.35 W, about 9% less, and nothing else in software moved it more than 0.04 W. So the Pi is set to drop Wi-Fi once a drive is pushed home and to poll a sleeping car once a minute instead of every few seconds. That is on the Pi now, and still being proven on real drives before I call it done. A Pi 4 bottoms out near 2.3 W. Below that is a hardware cutoff, which is still the plan.</li>
+<li><strong>A live view on the phone.</strong> The Pi can serve a read-only live wire to the phone, and an in-car dashboard companion exists as a test build. Neither is in the car yet.</li>
 </ul>
-<p>What's open, in plain words:</p>
+<p>What's open:</p>
 <ul>
 <li>Saving a drive in the app fails on a plain-http page, because the browser only offers the hashing it needs over https. The fix is drafted.</li>
-<li>The corpus dedupe rests on a 32-bit hash. A collision would silently skip a real drive. It has not happened; it could.</li>
+<li>The corpus dedupe rests on a 32-bit hash. A collision would silently skip a real drive. It hasn't happened, but it could.</li>
 <li>A drive's "captured at" means when the file was parsed, not when the car was driven.</li>
 <li>Drive history is blind to sessions: a 42% heat-soak cluster hides inside a 29% overall rate, and they should be two different numbers.</li>
-<li>Per-cylinder work: capture misfire and knock per cylinder end to end, then two rules on top. That still waits on one hot evening at the car with a proper per-cylinder read, which no amount of code replaces.</li>
+<li>Per-cylinder work: capture misfire and knock per cylinder end to end, then two rules on top. That still waits on one hot evening at the car with a proper per-cylinder read.</li>
 </ul>
 
 <h2>How it started</h2>
@@ -117,7 +117,7 @@ nav: /projects/
 <dt>on the Pi, being proven</dt><dd><strong>Parked quiet</strong>: Wi-Fi off once the drive is pushed, slow polling to a sleeping car. About 9% off the Pi's idle draw on the bench; the real-drive numbers come next.</dd>
 <dt>designed</dt><dd><strong>Low-voltage cutoff</strong>: a hardware current sensor that cuts the logger before the battery suffers.</dd>
 <dt>planned</dt><dd><strong>Cylinder 3 diagnosis</strong>: per-cylinder read, smoke test, then the coil swap under the new rule.</dd>
-<dt>next gate</dt><dd><strong>Live feed into the app</strong>: the logger streaming straight to the app instead of batch uploads. A read-only live wire from the Pi to the phone is built; a CarPlay dashboard companion is a test build.</dd>
+<dt>next gate</dt><dd><strong>Live feed into the app</strong>: the logger streaming straight to the app instead of batch uploads. A read-only live wire from the Pi to the phone is built; an in-car dashboard companion is a test build.</dd>
 <dt>built on a simulator, waits on live data</dt><dd><strong>Readiness card</strong>: "ready to drive hard" from oil versus coolant warm-up, and heat soak at shutdown.</dd>
 <dt>open issues</dt><dd><strong>App queue</strong>: live cylinder-3 tile, "compared with your usual" rows, a logger self-test, per-cylinder rules.</dd>
 <dt>built, not live</dt><dd><strong>YouTube channel</strong>: upload pipeline, voice and three ready video specs.</dd>
