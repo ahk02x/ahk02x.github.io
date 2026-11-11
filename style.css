@@ -97,7 +97,7 @@ blockquote { margin: 44px 0; padding: 14px 0 14px 24px; border-left: 4px solid v
 .grid > a.card:hover::before, .grid > a.card:hover p { color: var(--card); }
 .grid > a.card:hover .chip, .grid > a.card:hover .glyph { color: var(--st-i, var(--card)); }
 .card .head { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.card h3 { margin: 0; font-size: clamp(23px, 2.1vw, 32px); line-height: 1.05; }
+.card h3, .card h2 { margin: 0; font-size: clamp(23px, 2.1vw, 32px); line-height: 1.05; text-transform: none; }
 .card p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--fg-2); }
 .card .foot { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
 .card .more { font: 11px var(--mono); }
