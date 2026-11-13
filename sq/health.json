@@ -1,15 +1,15 @@
 {
  "status": "WATCH",
  "window": [
-  "Nov 05",
-  "Nov 12"
+  "Nov 06",
+  "Nov 13"
  ],
- "generated": "2026-11-12",
+ "generated": "2026-11-13",
  "findings": [
   {
    "sev": "WATCH",
-   "text": "63% of your boost was on cold oil",
-   "action": "oil takes ~16 min to warm up \u2014 go easy until then"
+   "text": "74% of your boost was on cold oil",
+   "action": "oil takes ~17 min to warm up \u2014 go easy until then"
   },
   {
    "sev": "OK",
