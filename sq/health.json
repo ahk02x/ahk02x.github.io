@@ -1,20 +1,20 @@
 {
  "status": "WATCH",
  "window": [
-  "Nov 06",
-  "Nov 13"
+  "Nov 07",
+  "Nov 14"
  ],
- "generated": "2026-11-13",
+ "generated": "2026-11-14",
  "findings": [
   {
    "sev": "WATCH",
-   "text": "74% of your boost was on cold oil",
-   "action": "oil takes ~17 min to warm up \u2014 go easy until then"
+   "text": "the Pi rebooted 33 times across 1 overnight park(s) \u2014 that is what drains the battery",
+   "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
-   "sev": "OK",
-   "text": "7 of 10 trips never got the oil warm",
-   "action": "give it one 20+ min drive a week so the oil burns off the fuel and water from short hops"
+   "sev": "WATCH",
+   "text": "66% of your boost was on cold oil",
+   "action": "oil takes ~21 min to warm up \u2014 go easy until then"
   },
   {
    "sev": "WATCH",
