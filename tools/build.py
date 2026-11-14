@@ -313,7 +313,7 @@ for entry in os.scandir(public_root):
         os.unlink(entry.path)
 public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'data/sq_trends.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
-public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') + glob.glob('assets/infra/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') + glob.glob('assets/infra/*') + glob.glob('assets/fleet-patch/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):

@@ -47,6 +47,35 @@ note: 4
 <p>Claude Code wrote the cycle and verified the dry run. It wouldn't install it, though. The install script puts a root-level key on the firewall and the monitoring box and arms unattended hypervisor reboots, and the permission classifier refused that, correctly. The agent writes the thing that reboots the fleet; the human runs the one command that arms it, the same line <a href="/writing/claude-code-on-call.html">the on-call setup</a> drew. Once the key is in, the first unattended cycle falls in November.</p>
 
 <p>The whole thing is one Python script, three systemd units, two forced-command stubs and an install script. All I wanted was one rule: the only green on the dashboard comes from a check run after the reboot, on the machines that actually came back, against what was there before.</p>
+
+<h2 id="rundown">The nightly rundown</h2>
+<p class="muted">Added November 2026.</p>
+<p>The patch cycle answers "did the fleet update". It doesn't answer "what is still open on each box, tonight". Two weeks is a long gap to not know. So in November I built a second job that only looks.</p>
+
+<h3>How it works</h3>
+<ol>
+<li>Collect. Every night at 04:00 a read-only collector reads every system, over ssh or a container exec: the package list, pending upgrades, failed units, the last patch, listening ports. The firewall is not Debian, so it gets <code>pkg audit</code> instead.</li>
+<li>Match. Installed packages are checked against the Debian security tracker. Each CVE lands in one of a few states: fix published, no fix yet, no advisory planned, end-of-life.</li>
+<li>Write. An agent writes a plain-English rundown for each system. A box with something rated high, a reboot owed or a failed unit gets a stronger model. A quiet one gets a free model.</li>
+<li>Summarize and send. One summary on top, then one email, sent through a locked-down mail Worker.</li>
+<li>Publish. The same run writes one small JSON feed, and the fleet dashboard draws a section from it.</li>
+</ol>
+<p>The agents run on my AI plan, and the plan has a usage window. If that window reaches 98%, the run checkpoints, mails what it has marked partial, and a second job finishes it at 05:00. And nothing here patches. No upgrade, no restart, no reboot. Patching stays with the cycle above.</p>
+
+<h3>What I get</h3>
+<p>One email, and one dashboard section. Both say which box needs what, most urgent first. The samples below come from the real renderers, fed made-up data: the hosts, packages and counts are invented.</p>
+<figure><a href="/assets/fleet-patch/rundown-email.webp"><img src="/assets/fleet-patch/rundown-email.webp" alt="Sample rundown email built from synthetic data. The subject reads degraded, 2 rated high, 2 not assessed. A yellow banner says one system was unreachable and not checked. A short do-first summary sits above a table of nine made-up systems with columns for rated high, installable here, open CVEs, last patch and upgrades; the two systems that could not be assessed show question marks instead of zeros. A plain-English write-up for each system follows." width="848" height="1716" loading="lazy" style="display:block;width:100%;height:auto"></a><figcaption>The email, with synthetic data. One box did not answer, so the whole run is marked degraded and its row is question marks, not zeros.</figcaption></figure>
+<figure><a href="/assets/fleet-patch/rundown-dashboard.webp"><img src="/assets/fleet-patch/rundown-dashboard.webp" alt="Sample dashboard Vulnerabilities section built from synthetic data, outlined in red and labelled degraded. Fleet totals come first: 2 high, 12 medium, 3 low, 120 unrated, 53 fix published, 50 installable now, 7 of 9 systems checked, 1 unreachable. Below is a list of changes needed, most urgent first, each tagged with a made-up host name, then one card per system with a severity bar, counts and its own to-do lines. One card reads CVEs not assessed and another reads unreachable, not checked." width="1100" height="1602" loading="lazy" style="display:block;width:100%;height:auto"></a><figcaption>The dashboard section, same synthetic run. Changes needed across the fleet first, then one card per system.</figcaption></figure>
+<p>Two columns matter most. "Fix published" means Debian has released a fix. "Installable here" means apt on that box offers it right now. They are different numbers. A box with stale package lists, a pin or a hold can sit beside a published fix and never see it, and that gap is the thing I want to be told about.</p>
+<p>The other rule is the one this whole article is about. Unknown is never shown as clean. A box that didn't answer gets question marks. If the feed is missing or more than 26 hours old, if the run is partial, if the email did not send, or if a system was missed, the section goes red and says which. A green there has to be earned by a finished, delivered run that read everything.</p>
+
+<h3>What I got wrong first</h3>
+<ul>
+<li><strong>The numbers looked inflated.</strong> The first version said "913 CVEs" next to a kernel upgrade. The upgrade fixes 645. The rest have no fix yet, and no amount of patching closes them. One number was doing two jobs, so I relabeled: what an upgrade fixes, and what stays open after it.</li>
+<li><strong>"0 high" is not a safety claim.</strong> Debian leaves most CVEs unrated. A box with zero rated high and a hundred unrated is not a safe box. It is an unrated one. The subject line now says so when the unrated outnumber the rated.</li>
+<li><strong>The review found three real bugs.</strong> I had a second model review the work independently. It caught a false read-only claim: one FreeBSD <code>pkg</code> flag could refresh the catalogue on the firewall, which is a write. It caught a blind spot where a newer installed kernel hid the running one, so a box that still needed its reboot looked patched. And it caught failed checks reading as zero. All three are fixed, each with a test. The suite went from 31 tests to 71.</li>
+</ul>
+<p>It can still miss things. It knows what the Debian tracker and <code>pkg audit</code> know, for the packages it can see. Anything installed by hand is outside that. What I can say is narrower: when it doesn't know, it says so.</p>
 <hr>
 <p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
 </main>
