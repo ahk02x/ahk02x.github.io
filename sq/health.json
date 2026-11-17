@@ -1,10 +1,10 @@
 {
  "status": "FLAG",
  "window": [
-  "Nov 09",
-  "Nov 16"
+  "Nov 10",
+  "Nov 17"
  ],
- "generated": "2026-11-16",
+ "generated": "2026-11-17",
  "findings": [
   {
    "sev": "FLAG",
@@ -13,7 +13,7 @@
   },
   {
    "sev": "WATCH",
-   "text": "the Pi rebooted 184 times across 4 overnight park(s) \u2014 that is what drains the battery",
+   "text": "the Pi rebooted 212 times across 4 overnight park(s) \u2014 that is what drains the battery",
    "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
@@ -23,7 +23,7 @@
   },
   {
    "sev": "OK",
-   "text": "12 of 21 trips never got the oil warm",
+   "text": "11 of 20 trips never got the oil warm",
    "action": "give it one 20+ min drive a week so the oil burns off the fuel and water from short hops"
   },
   {
