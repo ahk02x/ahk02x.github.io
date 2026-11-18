@@ -3,7 +3,7 @@ import hashlib
 import collections
 import re
 PUBLIC_PROJECTS = frozenset({
-    'sq-garage', 'Sq', 'iot', 'flowtrace', 'phosphor', 'alertboard',
+    'sq-garage', 'Sq', 'iot', 'flowtrace', 'alertboard',
     'macwatch', 'netdash', 'partswatch', 'fleet-patch', 'lanwatch', 'inbox',
     'obd-cable-protocol-re', 'workout', 'ahk02x-site',
 })
