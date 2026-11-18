@@ -29,5 +29,43 @@
   "2026-11-16": 20364256,
   "2026-11-17": 30933932,
   "2026-11-18": 4982535
- }
+ },
+ "top_projects": [
+  {
+   "project": "Sq",
+   "tokens": 64557652
+  },
+  {
+   "project": "alertboard",
+   "tokens": 43194029
+  },
+  {
+   "project": "ahkira-bot",
+   "tokens": 27981060
+  },
+  {
+   "project": "sq-garage",
+   "tokens": 20512498
+  },
+  {
+   "project": "llmbench",
+   "tokens": 13271341
+  },
+  {
+   "project": "ahkira",
+   "tokens": 12251381
+  },
+  {
+   "project": "ahk02x-site",
+   "tokens": 11168756
+  },
+  {
+   "project": "iot",
+   "tokens": 3524503
+  },
+  {
+   "project": "Crucix",
+   "tokens": 274426
+  }
+ ]
 }

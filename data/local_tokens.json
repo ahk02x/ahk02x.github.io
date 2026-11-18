@@ -12,7 +12,10 @@
    "total_tokens": 11400000,
    "requests": 9546,
    "note": "ollama journal on the GPU host, full retention from 2026-07-23, read 2026-11-02; Crucix is 7,538 of the 9,546 requests",
-   "updated": "2026-11-02"
+   "updated": "2026-11-02",
+   "by_project": {
+    "Crucix": 9002011
+   }
   },
   "chat": {
    "input_tokens": 37335,
