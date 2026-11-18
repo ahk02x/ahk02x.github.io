@@ -1,19 +1,19 @@
 {
  "status": "FLAG",
  "window": [
-  "Nov 10",
-  "Nov 17"
+  "Nov 11",
+  "Nov 18"
  ],
- "generated": "2026-11-17",
+ "generated": "2026-11-18",
  "findings": [
   {
    "sev": "FLAG",
-   "text": "weakest start dipped to 9.58 V \u2014 that is a weak battery (healthy is above 10)",
+   "text": "weakest start dipped to 9.38 V \u2014 that is a weak battery (healthy is above 10)",
    "action": "get the battery load-tested"
   },
   {
    "sev": "WATCH",
-   "text": "the Pi rebooted 212 times across 4 overnight park(s) \u2014 that is what drains the battery",
+   "text": "the Pi rebooted 218 times across 5 overnight park(s) \u2014 that is what drains the battery",
    "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
@@ -23,7 +23,7 @@
   },
   {
    "sev": "OK",
-   "text": "11 of 20 trips never got the oil warm",
+   "text": "13 of 22 trips never got the oil warm",
    "action": "give it one 20+ min drive a week so the oil burns off the fuel and water from short hops"
   },
   {
