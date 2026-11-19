@@ -1,14 +1,14 @@
 {
- "updated": "2026-11-18 13:20",
- "total_tokens": 733848091,
+ "updated": "2026-11-19 00:00",
+ "total_tokens": 741409555,
  "by_kind": {
-  "input_tokens": 730309786,
-  "cached_input_tokens": 709796352,
-  "output_tokens": 3538305,
-  "reasoning_output_tokens": 1353619,
-  "total_tokens": 733848091
+  "input_tokens": 737822806,
+  "cached_input_tokens": 716555520,
+  "output_tokens": 3586749,
+  "reasoning_output_tokens": 1375272,
+  "total_tokens": 741409555
  },
- "sessions": 244,
+ "sessions": 251,
  "first": "2026-10-31",
  "last": "2026-11-18",
  "by_day": {
@@ -28,12 +28,12 @@
   "2026-11-15": 529513,
   "2026-11-16": 20364256,
   "2026-11-17": 30933932,
-  "2026-11-18": 4982535
+  "2026-11-18": 12543999
  },
  "top_projects": [
   {
    "project": "Sq",
-   "tokens": 64557652
+   "tokens": 65715365
   },
   {
    "project": "alertboard",
@@ -48,16 +48,16 @@
    "tokens": 20512498
   },
   {
+   "project": "ahkira",
+   "tokens": 13474519
+  },
+  {
    "project": "llmbench",
    "tokens": 13271341
   },
   {
-   "project": "ahkira",
-   "tokens": 12251381
-  },
-  {
    "project": "ahk02x-site",
-   "tokens": 11168756
+   "tokens": 13176249
   },
   {
    "project": "iot",
