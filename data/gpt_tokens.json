@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-20 00:01",
- "total_tokens": 746179586,
+ "updated": "2026-11-24 00:00",
+ "total_tokens": 1434069513,
  "by_kind": {
-  "input_tokens": 742527141,
-  "cached_input_tokens": 721020928,
-  "output_tokens": 3652445,
-  "reasoning_output_tokens": 1397588,
-  "total_tokens": 746179586
+  "input_tokens": 1427687292,
+  "cached_input_tokens": 1393285888,
+  "output_tokens": 6382221,
+  "reasoning_output_tokens": 2914276,
+  "total_tokens": 1434069513
  },
- "sessions": 258,
+ "sessions": 374,
  "first": "2026-10-31",
- "last": "2026-11-19",
+ "last": "2026-11-24",
  "by_day": {
   "2026-10-31": 28751,
   "2026-11-01": 11402417,
@@ -29,16 +29,21 @@
   "2026-11-16": 20364256,
   "2026-11-17": 30933932,
   "2026-11-18": 12543999,
-  "2026-11-19": 4770031
+  "2026-11-19": 4770031,
+  "2026-11-20": 42605344,
+  "2026-11-21": 25938887,
+  "2026-11-22": 508964278,
+  "2026-11-23": 108986777,
+  "2026-11-24": 1394641
  },
  "top_projects": [
   {
    "project": "Sq",
-   "tokens": 65715365
+   "tokens": 80106728
   },
   {
    "project": "alertboard",
-   "tokens": 43194029
+   "tokens": 54108726
   },
   {
    "project": "ahkira-bot",
@@ -46,27 +51,47 @@
   },
   {
    "project": "sq-garage",
-   "tokens": 20512498
-  },
-  {
-   "project": "ahk02x-site",
-   "tokens": 14594543
+   "tokens": 23080922
   },
   {
    "project": "ahkira",
-   "tokens": 13677628
+   "tokens": 17007070
+  },
+  {
+   "project": "ahk02x-site",
+   "tokens": 15981890
   },
   {
    "project": "llmbench",
    "tokens": 13271341
   },
   {
+   "project": "fleet-patch",
+   "tokens": 11553797
+  },
+  {
    "project": "iot",
-   "tokens": 3524503
+   "tokens": 6250178
+  },
+  {
+   "project": "macwatch",
+   "tokens": 319313
   },
   {
    "project": "Crucix",
    "tokens": 274426
+  },
+  {
+   "project": "certguard",
+   "tokens": 181668
+  },
+  {
+   "project": "workout",
+   "tokens": 94841
+  },
+  {
+   "project": "partswatch",
+   "tokens": 94841
   }
  ]
 }
