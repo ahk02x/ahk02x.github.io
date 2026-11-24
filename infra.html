@@ -4,115 +4,190 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Infra — the hardware I run · Amir Khademi</title>
-<meta name="description" content="The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a wall display, and a Raspberry Pi logger in an Audi SQ5.">
+<meta name="description" content="The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a Mac mini for the jobs that need macOS, and a Raspberry Pi logger in an Audi SQ5.">
 <link rel="canonical" href="https://ahk02x.dev/infra.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=57363d9474">
-<script src="/assets/site.js?v=be9b4d6f6f" defer></script>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=01056ba9a2">
+<script src="/assets/site.js?v=223ff57988" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Infra — the hardware I run · Amir Khademi">
-<meta property="og:description" content="The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a wall display, and a Raspberry Pi logger in an Audi SQ5.">
+<meta property="og:description" content="The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a Mac mini for the jobs that need macOS, and a Raspberry Pi logger in an Audi SQ5.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/infra.html">
 <meta property="og:image" content="https://ahk02x.dev/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform & Security Engineer","description":"Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Security engineering","Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","PKI and TLS","Identity and access management","Secrets management","Network security","Vulnerability triage","Go","Python","HashiCorp Nomad, Consul and Vault","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/infra.html","url":"https://ahk02x.dev/infra.html","name":"Infra — the hardware I run","description":"The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a wall display, and a Raspberry Pi logger in an Audi SQ5.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","givenName":"Amir","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform Engineer","description":"Platform Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Site reliability engineering","Linux","Kubernetes","Observability","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/infra.html","url":"https://ahk02x.dev/infra.html","name":"Infra — the hardware I run","description":"The hardware Amir Khademi runs at home and in his car, in photos: an OPNsense firewall on a rescued 2011 office PC, a Ryzen Proxmox host with a ZFS pool, a mini PC that runs the room, a Mac mini for the jobs that need macOS, and a Raspberry Pi logger in an Audi SQ5.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html" aria-current="page"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
-<main id="main" class="wrap inner-page narrow wide-body">
-<section class="hero"><div class="eyebrow">Infra</div><h1>The hardware I run</h1>
-<p class="lede">Humble beginnings. Most of it is second-hand or rescued, and all of it is mine to break. The goal: my own datacenter, run from my room.</p>
+<header class="site-header"><a class="site-brand" href="/"><span>AHK / 02X</span> <span>Personal archive</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span> About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span> Projects</a><a href="/infra.html" aria-current="page"><span class="nav-no" aria-hidden="true">03</span> Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span> Writing</a><a href="/ask/"><span class="nav-no" aria-hidden="true">06</span> ahkira</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span> Contact <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></nav></header>
+<main id="main" class="wrap inner-page narrow wide-body infra-page">
+<section class="band hero two-up"><div><span class="eyebrow">03 / Infra</span><h1>The hardware I run.</h1></div></section>
+
+<style>
+/* The readouts sit flush under the hero's rule, as the first line of the page body. */
+.infra-page .hero{margin-bottom:0}
+.infra-page .infra-top{padding:0;border:0}
+.infra-top .readouts{margin:0;border-top:0}
+.infra-page .readout:nth-child(1) .v{color:var(--st-live)}
+.infra-page .readout:nth-child(2) .v{color:var(--st-built)}
+.infra-page .readout:nth-child(3) .v{color:var(--st-run)}
+.infra-page .readout:nth-child(4) .v{color:var(--st-written)}
+.infra-jumps{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:20px 0;border-bottom:1px solid var(--line-2);font:400 12px/1.4 var(--mono)}
+.infra-jumps span{padding:7px 8px 7px 0;color:var(--quiet);text-transform:uppercase}
+.infra-jumps a{border:1px solid var(--line-2);padding:6px 10px;text-decoration:none}
+.infra-jumps a:hover,.infra-jumps a:focus-visible{border-color:var(--line)}
+.infra-page .two-up>.infra-photo{flex:1 1 320px}
+/* the workbench keeps two photos in its one column, stacked */
+.infra-page .two-up>.infra-photos{flex:1 1 320px;display:flex;flex-direction:column;gap:16px}
+.infra-page .two-up>.band-head{flex:1 1 280px;align-self:flex-start;margin:0}
+.infra-page .two-up>.band-head+.infra-text{flex:2 1 420px}
+.infra-text{display:flex;flex-direction:column;gap:18px}
+.infra-text .band-head,.infra-text .spec{margin:0}
+.infra-sub{margin:8px 0 -6px;font:400 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--quiet)}
+.infra-text p{margin:0;max-width:60ch;font-size:16px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.infra-photo a{display:block}
+/* the network text runs long, so its shelf photo sits at the middle of it rather than the top */
+#network>.infra-photo{align-self:center}
+/* the workbench photos sit at the middle of its long hardware list */
+#desk>.infra-photos{align-self:center}
+.stack-list{margin-top:4px}
+.stack-list dd{max-width:72ch}
+
+.infra-photo figcaption time{display:block;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.infra-seq{flex:1 1 100%;margin:0;padding:24px 0 0;border-top:1px solid var(--line-3)}
+.infra-seq>p{margin:0 0 16px;font:400 12px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--quiet)}
+.infra-seq ol{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:0;padding:0;list-style:none;counter-reset:seq}
+.infra-seq li{counter-increment:seq}
+.infra-seq figure{margin:0;overflow:visible}
+.infra-seq img{aspect-ratio:4/5}
+.infra-seq figcaption::before{content:counter(seq,decimal-leading-zero) " ";color:var(--accent)}
+@media (max-width:760px){.infra-seq ol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.infra-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.infra-pair figure{margin:0;overflow:visible}
+.infra-pair img{aspect-ratio:4/3}
+.infra-pair figcaption{margin-top:8px}
+</style>
+
+<div class="band infra-top">
 <div class="readouts">
 <div class="readout"><div class="k">Oldest box</div><div class="v">2011<small>vintage</small></div><div class="s">and it is the firewall for the whole house</div></div>
 <div class="readout"><div class="k">Storage</div><div class="v">6.9<small>TB usable</small></div><div class="s">three drives on ZFS, one can die</div></div>
 <div class="readout"><div class="k">Idle draw</div><div class="v">111<small>watts</small></div><div class="s">the server that runs everything</div></div>
-</div></section>
-
-<style>
-.ir{display:grid;grid-template-columns:minmax(0,1fr) 262px;gap:30px;align-items:start;margin:40px 0}
-.ir.alt{grid-template-columns:262px minmax(0,1fr)}
-.ir.alt .ir-t{grid-column:2;grid-row:1}
-.ir.alt .ir-p{grid-column:1;grid-row:1}
-.ir .ir-t>h2{margin-top:0}
-.ir-p{margin:0;min-width:0;padding:10px;border:1px solid var(--soft-line);background:var(--card);border-radius:10px}
-.ir-p a{display:block;aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:var(--bg-2)}
-.ir-p img{width:100%;height:100%;object-fit:cover;display:block}
-.ir-p figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--fg-2)}
-.ir-p figcaption time{display:block;margin-bottom:3px;font:11px var(--mono);letter-spacing:.04em;color:var(--muted)}
-.ir{--c:var(--st-built)}
-.c-fw{--c:var(--st-live)}.c-srv{--c:var(--st-built)}.c-room{--c:var(--st-run)}.c-net{--c:var(--st-written)}.c-desk{--c:var(--st-live)}
-.ir .ir-t>h2{border-left:6px solid var(--c);padding-left:14px}
-.ir .ir-t strong{color:var(--c)}
-.ir-p{border-top:4px solid var(--c)}
-.ir-p figcaption time{color:var(--c)}
-.readout:nth-child(1) .v{color:#ff6f61}.readout:nth-child(2) .v{color:#86b4ff}.readout:nth-child(3) .v{color:#4fd394}
-.ig{margin:40px 0 0;padding:22px 24px;border-radius:10px;border:1px solid var(--soft-line);border-left:6px solid var(--st-run);background:linear-gradient(135deg,color-mix(in srgb,var(--st-run) 14%,transparent),color-mix(in srgb,var(--st-built) 14%,transparent))}
-.ig h2{margin-top:0}
-.ig strong{color:var(--st-run)}
-@media (max-width:720px){
-  .ir,.ir.alt{grid-template-columns:1fr}
-  .ir.alt .ir-t,.ir.alt .ir-p{grid-column:1;grid-row:auto}
-  .ir-p{max-width:320px}
-}
-</style>
-
-<div class="ir c-net"><div class="ir-t">
-<h2>Network</h2>
-<ul>
-<li><strong>blackwall</strong>: a Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. It does DNS, DHCP and traffic accounting for the house.</li>
-<li><strong>Switching</strong>: an Aruba Instant On 1930 managed switch, and a spare router working as a WiFi access point.</li>
-<li><strong>What it counts</strong>: traffic inside the house and traffic leaving it are kept as two different facts, because a house full of IoT devices should have to explain itself. <a href="/writing/lanwatch.html">How that works</a>.</li>
-</ul>
+<div class="readout"><div class="k">Total RAM</div><div class="v">148<small>GB</small></div><div class="s">across every machine in my lab and projects</div></div>
 </div>
-<figure class="ir-p"><a href="/assets/infra/shelf.jpg"><img src="/assets/infra/shelf-t.jpg" alt="An Aruba Instant On switch on a white shelf with blue, white and black patch cables plugged in, a router sitting on top of it with its antennas up" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>The switch and the access point on their shelf. Every run in the house lands here, and the bracket under the switch that routes the cables neatly underneath it is one I designed and 3D-printed myself.</figcaption></figure></div>
 
-<div class="ir alt c-fw"><div class="ir-t">
-<h2>The firewall is a 2011 office PC</h2>
-<p>It came out of an office, not a shop, and opened up it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The original Dell power supply died and took the whole house's internet with it, so a Corsair RM650x went in, pulled from one of the gaming PCs I had from before. That is the entire repair history of the machine that runs the network.</p>
-<p>Rescuing hardware is the point, not a constraint. Everything it does, from DNS and DHCP to counting the traffic, is software I can read, on a box nobody else wanted.</p>
+<nav class="infra-jumps" aria-label="On this page"><span>On this page</span><a href="#network">01 Network</a><a href="#firewall">02 Firewall</a><a href="#servers">03 Servers</a><a href="#sentry">04 sentry</a><a href="#desk">05 Workbench</a><a href="#stack">06 Stack</a>
+<a href="#next">07 Next</a></nav>
 </div>
-<figure class="ir-p"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a><figcaption><time>July 2026</time>The firewall with the side off, before the swap: that is still the original Dell supply. The black Corsair that replaced it came out of one of my old gaming PCs.</figcaption></figure></div>
 
-<div class="ir c-srv"><div class="ir-t">
-<h2>Servers</h2>
-<p><strong>jarvis</strong> is the one that matters: Ryzen 5 5600GE, 32 GB DDR4, an RTX 2070 SUPER, a 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1: about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</p>
-<p>It runs Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a file share and the car's data pipeline. The graphics card is there for the model and the transcription, not for games. About 111 W at idle, which is the number I actually watch, because it never turns off.</p>
+<section class="band two-up" id="network" aria-labelledby="network-h"><div class="infra-text">
+<div class="band-head"><div><span class="eyebrow">01 / Network</span><h2 id="network-h">Network</h2></div></div>
+<dl class="spec">
+<dt>Switching</dt><dd>An Aruba Instant On 1930 managed switch.</dd>
+<dt>WiFi</dt><dd>An ASUS ROG GT-AX6000 working as the access point, picked up on Facebook Marketplace for 200 bucks.</dd>
+<dt>What it counts</dt><dd>Traffic inside the house and traffic leaving it are kept as two different facts, because a house full of IoT devices should have to explain itself. <a href="/writing/lanwatch.html">How that works</a>.</dd>
+</dl>
+<p>The photo is the shelf where every cable run in the house lands. The switch sits in a stand I designed and 3D-printed as two complete halves, left and right, that fit together around it. It is in two pieces because my printer was not big enough to print it in one, so I did the most I could with the tools available to me. The open lattice sides keep air moving, the cables route neatly underneath, and the access point sits on top. These are the two halves as I modelled them.</p>
+<p>The fit and the size were right on the first try. I will admit it still needed some hand modification: the braces, and the joint where the two pieces connect, had clearance issues I missed, despite thinking I had caught everything. The right move would have been more virtual testing or a reprint, but I didn't want to waste the filament. After some cutting it got the job done, it works really well for the current setup, and it still looks amazing.</p>
+<div class="infra-pair">
+<figure><a href="/assets/infra/switch-stand-left.jpg"><img src="/assets/infra/switch-stand-left-t.jpg" alt="3D render of the left half of the switch stand: a box-shaped half with open diamond-lattice sides and stepped tabs along the top edges" width="700" height="525" loading="lazy"></a><figcaption>The left half.</figcaption></figure>
+<figure><a href="/assets/infra/switch-stand-right.jpg"><img src="/assets/infra/switch-stand-right-t.jpg" alt="3D render of the right half of the switch stand: open diamond-lattice sides, stepped tabs along the top, a row of cable-comb fingers on one end and a lip along the base" width="700" height="525" loading="lazy"></a><figcaption>The right half.</figcaption></figure>
 </div>
-<figure class="ir-p"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>jarvis, open, on the day it was brought to life from leftover parts.</figcaption></figure></div>
-
-<div class="ir alt c-room"><div class="ir-t">
-<h2>The box that runs the room</h2>
-<p><strong>sentry</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck, the lights and the room's camera. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.</p>
-<p>Then its fan died. A sensible person would have bought a new fan. I designed a whole stand instead, with a fan built into the base that blows air up into the RAM and the CPU, printed it, and set the mini PC on top like a trophy. It works. It is also completely over-engineered, and I would do it again.</p>
-<p>The stand sits on top of blackwall. That stack is the most honest picture of this setup I have: a palm-sized mini PC balanced on a fifteen-year-old office tower, and between them they run the place.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/sentry.jpg"><img src="/assets/infra/sentry-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a><figcaption><time>November 2026</time>sentry on its over-engineered printed stand, fan in the base, on top of the firewall. A new fan would have been cheaper.</figcaption></figure></div>
+<figure class="infra-photo"><a href="/assets/infra/shelf-switch.jpg"><img src="/assets/infra/shelf-switch-t.jpg" alt="A white shelf unit: a Logitech C920 hangs from a printed clamp on the upper shelf, and below it an Aruba Instant On switch sits in a black printed stand with blue, white and black patch cables plugged in and a router on top with its antennas spread" width="560" height="747" loading="lazy"></a></figure></section>
 
-<div class="ir c-desk"><div class="ir-t">
-<h2>Desk and wall</h2>
-<ul>
-<li><strong>PHOSPHOR</strong>: a Dell U2719D hung in portrait. It shows the health of everything and latches alarms until I clear them.</li>
-<li><strong>Stream Deck MK.2</strong>: fifteen keys for the room, the lights and the PC's power.</li>
-<li><strong>My PC</strong>: Ryzen 9 3900X, RTX 3080 12 GB, 32 GB, Windows 11.</li>
-<li><strong>MacBook Pro 14</strong>: M3, 16 GB. Where everything gets written.</li>
-</ul>
-<p>None of it arrived as a set. The photo is a build day: a BIOS flash running on a monitor on the floor, two machines open at once, and every cable in the room in play.</p>
+<section class="band two-up" id="firewall" aria-labelledby="firewall-h"><div class="infra-text">
+<div class="band-head"><div><span class="eyebrow">02 / Firewall</span><h2 id="firewall-h">The firewall is my dad's 2011 PC.</h2></div></div>
+<p><strong>blackwall</strong> is a Dell Vostro 460 turned into an OPNsense firewall. It was my dad's daily driver until I built him a new system, and then it sat in storage for three years. Opened up, it is as plain as it looks: one Sandy Bridge i5, 8 GB, no graphics card, nothing exotic. The photo is the first day I opened it up, with the original Dell power supply still in it.</p>
+<p>One philosophy I keep coming back to is doing more with less, and this box fit a firewall perfectly. All it needed was a network card: a dual-port Intel I350 gigabit NIC, bought new on Amazon for 60 bucks, so it has a port for the internet and a port for the house.</p>
+<p>The original supply later died and took the whole house's internet with it. I bought a Corsair RM650x for it on Facebook Marketplace, 65 bucks with all the cables and the original box. For airflow, a spare fan is zip-tied to the front, jank style. It is all about putting the spare parts I have to the best use I can. That is the entire repair history of the machine that runs the network.</p>
+<p>Rescuing hardware is the point, not a constraint. Everything it does, from DNS and DHCP to counting the traffic, is software I can read, on a box that was sitting in storage.</p>
 </div>
-<figure class="ir-p"><a href="/assets/infra/buildday.jpg"><img src="/assets/infra/buildday-t.jpg" alt="A bedroom floor during a PC build: a monitor showing a BIOS screen, an RGB-lit tower on the desk, a second open PC on the floor, a keyboard and cables everywhere" width="560" height="700" loading="lazy"></a><figcaption><time>August 2026</time>Build day. The BIOS flash is on the screen; the floor is the workbench.</figcaption></figure></div>
+<figure class="infra-photo"><a href="/assets/infra/blackwall.jpg"><img src="/assets/infra/blackwall-t.jpg" alt="A Dell desktop tower lying open on a floor, showing the motherboard, a single fan, the power supply and empty drive bays" width="560" height="700" loading="lazy"></a></figure></section>
 
-<section class="ig"><h2>Where it's going</h2>
-<p><strong>Hybrid AI.</strong> The heavy, private work runs on hardware I own, in my room, so my data stays mine. The cloud handles what it is genuinely better at, and nothing goes up there that does not need to.</p>
-<p>The plan is a datacenter in my room: NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards to build and run my own models, Ubiquiti gear end to end, and proper NAS storage. The long game is my own LLM running on it. It already has a name, <strong>ahkira</strong>. It starts with what's above.</p>
+<section class="band two-up" id="servers" aria-labelledby="servers-h"><div class="infra-text">
+<div class="band-head"><div><span class="eyebrow">03 / Servers</span><h2 id="servers-h">jarvis is the one that matters.</h2></div></div>
+<p>I had all the parts for a long time and never got around to putting them together. I finally did, and it became a home server I can back things up to and run jobs on. The photo is the day it came to life.</p>
+<p>The one part I did buy was the CPU. I had one already, but I picked up a Ryzen 5 5600GE on Facebook Marketplace for 140 bucks instead. It is a 35 W chip, and for a machine that is always on, running cool matters more than running fast.</p>
+<p>It runs Proxmox VE with Home Assistant and seventeen containers: a local language model, speech-to-text, Git hosting, a file share, the car's data pipeline, and a small HashiCorp lab where Nomad schedules the services.</p>
+<dl class="spec">
+<dt>CPU / RAM</dt><dd>Ryzen 5 5600GE (35 W), 64 GB DDR4: four 16 GB Crucial Ballistix sticks.</dd>
+<dt>GPU</dt><dd>An RTX 2070 SUPER. The graphics card is there for the model and the transcription, not for games.</dd>
+<dt>Storage</dt><dd>A 1 TB NVMe for the system, and three 4 TB IronWolf drives in RAIDZ1: about 6.9 TB usable, all on ZFS, so one drive can fail without taking the pool.</dd>
+<dt>Idle</dt><dd>About 111 W, which is the number I actually watch, because it never turns off.</dd>
+<dt>Upgrade</dt><dd>It went from 32 to 64 GB in November. The containers had been promised more memory than the box had, and the language model kept hitting its limit.</dd>
+</dl>
+</div>
+<figure class="infra-photo"><a href="/assets/infra/jarvis.jpg"><img src="/assets/infra/jarvis-t.jpg" alt="A black mid-tower PC with its glass side panel off, showing the graphics card, cooling fans and hard drive cages" width="560" height="700" loading="lazy"></a></figure></section>
+
+<section class="band two-up" id="sentry" aria-labelledby="sentry-h"><div class="infra-text">
+<div class="band-head"><div><span class="eyebrow">04 / sentry</span><h2 id="sentry-h">The box that runs the room.</h2></div></div>
+<p><strong>sentry</strong> is an Intel N5105 mini PC with 8 GB, and its job is the room rather than the network: the wall display, the Stream Deck and the lights. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.</p>
+<p>It used to be my dad's firewall, until it died and I took it. I took it apart, got it to boot without the fan and troubleshot it from there. The easy fix was a five-dollar fan from AliExpress, but where is the fun in that? So I started designing my own stand, with a fan in the base that blows air up into the RAM and the CPU. The moment it was finished it looked like a robot, so I called it sentry.</p>
+<p>In the photo the stand sits on top of blackwall. That stack is the most honest picture of this setup I have: a palm-sized mini PC balanced on a fifteen-year-old tower, and between them they run the place.</p>
+</div>
+<figure class="infra-photo"><a href="/assets/infra/sentry-stand.jpg"><img src="/assets/infra/sentry-stand-t.jpg" alt="A small black mini PC with a power button and open top, sitting on a black 3D-printed stand with slotted sides, on top of a desktop tower" width="560" height="700" loading="lazy"></a></figure>
+<div class="infra-seq"><p>How the stand got built</p>
+<ol>
+<li><figure><a href="/assets/infra/sentry-opened.jpg"><img src="/assets/infra/sentry-opened-t.jpg" alt="A hand holding the mini PC with its top panel removed, showing the heatsink and memory inside" width="560" height="700" loading="lazy"></a><figcaption>Opened up, to get at the fan that had stopped.</figcaption></figure></li>
+<li><figure><a href="/assets/infra/sentry-firstfix.jpg"><img src="/assets/infra/sentry-firstfix-t.jpg" alt="A small black mini PC sitting on top of a loose case fan on a desk shelf, cable trailing off to the right" width="560" height="700" loading="lazy"></a><figcaption>The first fix, and the idea: a big case fan feeding air straight up into it.</figcaption></figure></li>
+<li><figure><a href="/assets/infra/sentry-versions.jpg"><img src="/assets/infra/sentry-versions-t.jpg" alt="Two black 3D-printed stands side by side on a desk, with a separate printed bracket in front of them" width="560" height="700" loading="lazy"></a><figcaption>v1 on the left: two pieces, and the airflow was not good enough. v2 on the right: one piece that attaches to the PC.</figcaption></figure></li>
+<li><figure><a href="/assets/infra/sentry-fanbase.jpg"><img src="/assets/infra/sentry-fanbase-t.jpg" alt="Looking down into the printed stand at the fan mounted in its base, lit by a blue ring" width="560" height="700" loading="lazy"></a><figcaption>The replacement fan, seated in the base.</figcaption></figure></li>
+<li><figure><a href="/assets/infra/sentry-finished.jpg"><img src="/assets/infra/sentry-finished-t.jpg" alt="The finished printed stand with the mini PC sitting on top of it, a USB lead running from the PC to the fan" width="560" height="700" loading="lazy"></a><figcaption>Finished. The fan runs off the PC itself, on a PWM-to-USB lead.</figcaption></figure></li>
+</ol></div></section>
+
+<section class="band two-up" id="desk" aria-labelledby="desk-h"><div class="infra-text">
+<div class="band-head"><div><span class="eyebrow">05 / Workbench</span><h2 id="desk-h">Workbench.</h2></div></div>
+<p>This is where everything gets put together: firmware and BIOS updated, dust cleaned out, cables re-managed and thermal paste redone. The photo is one of those days, with a BIOS flash running on a monitor on the floor and two machines open at once.</p>
+<h3 class="infra-sub">Additional hardware</h3>
+<dl class="spec">
+<dt>Stream Deck MK.2</dt><dd>Fifteen keys for the room, the lights and the PC's power.</dd>
+<dt>My PC</dt><dd>Ryzen 9 3900X, RTX 3080 12 GB, 32 GB, Windows 11.</dd>
+<dt>faraday</dt><dd>A laptop with a 13th-gen Core i7, 16 GB and a 512 GB NVMe, where I run experiments isolated from the rest of the lab.</dd>
+<dt>edith</dt><dd>An M4 Mac mini with 16 GB and a 256 GB SSD. Some of my jobs only run on macOS, like the ones that send texts, so they live here instead of on my laptop. It stays home and never sleeps. The name goes with jarvis.</dd>
+<dt>Bambu Lab A1</dt><dd>My 3D printer, for prototyping and making the parts I need, like the stands on this page.</dd>
+<dt>PS5</dt><dd>My own mini arcade game. It was my vision and I drove it the whole way. AI wrote the C code, and it runs on the console's own GPU at 60 fps.</dd>
+<dt>Logitech C920</dt><dd>Mounted on an IKEA shelf with a 3D-printed U clamp, held in by a 3D-printed screw.</dd>
+<dt>Govee light strips</dt><dd>Two strips, driven by sentry over Bluetooth instead of the vendor's app or cloud.</dd>
+<dt>LG C2 65&Prime;</dt><dd>Doubles as a monitoring screen: when I am watching TV and something needs attention, the alert pops up on it.</dd>
+</dl>
+</div>
+<div class="infra-photos"><figure class="infra-photo"><a href="/assets/infra/buildday.jpg"><img src="/assets/infra/buildday-t.jpg" alt="A bedroom floor during a PC build: a monitor showing a BIOS screen, an RGB-lit tower on the desk, a second open PC on the floor, a keyboard and cables everywhere" width="560" height="700" loading="lazy"></a></figure>
+<figure class="infra-photo"><a href="/assets/infra/desk-mini.jpg"><img src="/assets/infra/desk-mini-t.jpg" alt="The desk at night: the Mac mini on a stand at the left with a signed baseball on top, a black tower with glass sides showing a liquid cooler, lit RAM and three lit front fans, a second tower behind tinted glass, and 3D prints along the front: a dragon skull, small test-print boats and a crystal cube" width="560" height="420" loading="lazy"></a></figure></div></section>
+
+<section class="band" id="stack" aria-labelledby="stack-h">
+<div class="band-head"><div><span class="eyebrow">06 / Stack</span><h2 id="stack-h">Almost all of it is open source.</h2></div></div>
+<div class="infra-text">
+<p>Not on principle alone. Open source is what lets a box be mine to read, change and keep running after the company behind it loses interest &mdash; which is the whole point of running it at home. Where something closed does the job better, it is named here too.</p>
+</div>
+<dl class="spec stack-list">
+<dt>Virtualisation</dt><dd>Proxmox VE on jarvis, with Debian containers for the services. ZFS for the pool, so a drive can fail without taking the data.</dd>
+<dt>Network</dt><dd>OPNsense on blackwall for DNS, DHCP, firewalling and traffic accounting. Tailscale joins my own machines to each other without opening a port to the internet.</dd>
+<dt>House</dt><dd>Home Assistant runs the lights, the TV and the rest, against my own code rather than each vendor&rsquo;s cloud.</dd>
+<dt>Code</dt><dd>Git, and GitHub for the public repositories. Every change to this site opens a pull request, and GitHub Actions runs the build and the tests on it before I merge.</dd>
+<dt>This site</dt><dd>Static HTML built by a Python script with no dependencies, served by GitHub Pages. The ask page runs on a Cloudflare Worker, with Cloudflare Turnstile as the bot check.</dd>
+<dt>Writing it</dt><dd>Python for nearly everything, SQLite where data needs to stay, OpenSCAD for anything that gets printed, and systemd and launchd to run jobs on a schedule.</dd>
+</dl>
 </section>
+
+<section class="band last two-up" id="next" aria-labelledby="next-h">
+<div class="band-head"><div><span class="eyebrow">07 / Next</span><h2 id="next-h">Where it's going.</h2></div></div>
+<div class="infra-text">
+<p>I love building and changing up hardware, so the next step is a rack, and everything migrates into it: a proper server chassis, PoE switches, enterprise or consumer, whatever it turns out to be, and a standalone NAS so the storage is resilient on its own. Then an offsite backup.</p>
+<p>The direction is hybrid. My personal data and the house's IoT automation stay local, on hardware I own. Heavy compute comes from subscriptions or frontier models when I need it. Alongside that I want my own local AI that I train myself, on a modest setup sized for my own workloads and projects, with room to grow. It already has a name, <strong>ahkira</strong>.</p>
+</div>
+</section>
+
+<a class="nextnav" href="/writing/"><span class="eyebrow">Next — 04</span><span>Writing &rarr;</span></a>
 </main>
-<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
+<footer class="site-footer"><div><span class="eyebrow">05 / Contact</span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com <span aria-hidden="true">↗</span></a><span>Amir Khademi · online as ahk02x</span></div><nav aria-label="Directory"><span class="eyebrow">Directory</span><a href="/about.html">01 About</a><a href="/projects/">02 Projects</a><a href="/infra.html">03 Infra</a><a href="/writing/">04 Writing</a><a href="/ask/">06 ahkira</a></nav><nav class="social-links" aria-label="Social profiles"><span class="eyebrow">Elsewhere</span><a href="https://x.com/ahk02x" rel="me">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ahk02x" rel="me">GitHub <span aria-hidden="true">↗</span></a></nav></footer>
 </div>
 </body>
 </html>

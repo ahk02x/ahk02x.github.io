@@ -4,35 +4,84 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Writing · Amir Khademi</title>
-<meta name="description" content="Essays and write-ups by Amir Khademi on platform and security engineering, home infrastructure and agent tooling.">
+<meta name="description" content="Essays and write-ups by Amir Khademi on platform engineering, home infrastructure and agent tooling.">
 <link rel="canonical" href="https://ahk02x.dev/writing/">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=57363d9474">
-<script src="/assets/site.js?v=be9b4d6f6f" defer></script>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=01056ba9a2">
+<script src="/assets/site.js?v=223ff57988" defer></script>
 <meta name="theme-color" content="#d4d5d1">
 <meta property="og:title" content="Writing · Amir Khademi">
-<meta property="og:description" content="Essays and write-ups by Amir Khademi on platform and security engineering, home infrastructure and agent tooling.">
+<meta property="og:description" content="Essays and write-ups by Amir Khademi on platform engineering, home infrastructure and agent tooling.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/writing/">
 <meta property="og:image" content="https://ahk02x.dev/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform & Security Engineer","description":"Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Security engineering","Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","PKI and TLS","Identity and access management","Secrets management","Network security","Vulnerability triage","Go","Python","HashiCorp Nomad, Consul and Vault","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/writing/","url":"https://ahk02x.dev/writing/","name":"Writing","description":"Essays and write-ups by Amir Khademi on platform and security engineering, home infrastructure and agent tooling.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","givenName":"Amir","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform Engineer","description":"Platform Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Site reliability engineering","Linux","Kubernetes","Observability","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/writing/","url":"https://ahk02x.dev/writing/","name":"Writing","description":"Essays and write-ups by Amir Khademi on platform engineering, home infrastructure and agent tooling.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/" aria-current="page"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
-<main id="main" class="wrap inner-page narrow">
-<section class="hero"><div class="eyebrow">Writing</div><h1>Write-ups</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p><p class="lede">Long-form, with the numbers that back each claim.</p></section>
-<div class="items">
-<div class="item st-built"><div class="t"><a href="/writing/go-x509.html">Two bytes each</a></div><time datetime="2026-11" class="chip">Built Nov 2026</time><p class="d">I found a bug in Go&#x27;s certificate parser where a 260 KB certificate costs about 24 MB to read. I reported it, then built a small library that rejects that certificate for about 100 bytes.</p></div><div class="item st-built"><div class="t"><a href="/writing/llmbench.html">It has to fit</a></div><time datetime="2026-11" class="chip">Built Nov 2026</time><p class="d">I ran the same open models on a gaming GPU, an older GPU and my laptop. The laptop beat a real GPU 11 to 1, and the reason is one word: fit.</p></div><div class="item st-built"><div class="t"><a href="/writing/ahkira.html">The GPU stayed home</a></div><time datetime="2026-11" class="chip">Built Nov 2026</time><p class="d">I had a card that could run the model fast. I still didn&#x27;t let the internet near it. What ahkira runs on instead, and how I tried to break it.</p></div><div class="item st-written"><div class="t"><a href="/writing/everything-i-ever-kept.html">Everything I ever kept</a></div><time datetime="2026-11" class="chip">Written Nov 2026</time><p class="d">A survey of my own archive: 127,206 files, two years that turned out to be software and not me, three years I kept nothing, and why I log everything I own.</p></div><div class="item st-run"><div class="t"><a href="/writing/partswatch.html">The part matters, not the store</a></div><time datetime="2026-10" class="chip">Built Oct 2026</time><p class="d">A watcher for eight car parts across fifty-two store pages and the classifieds, built so that a price drop is a fact about the part, not the store, and so that it sends one message.</p></div><div class="item st-built"><div class="t"><a href="/writing/fleet-patch.html">The timer firing is not evidence</a></div><time datetime="2026-10" class="chip">Built Oct 2026</time><p class="d">A fortnightly unattended patch cycle for a small Proxmox fleet that earns a green only for what actually updated and came back, never for the timer having fired.</p></div><div class="item st-run"><div class="t"><a href="/writing/claude-code-on-call.html">I gave Claude Code a pager</a></div><time datetime="2026-09" class="chip">Built Sep 2026</time><p class="d">How Amir Khademi made an AI coding agent answer for his home fleet&#x27;s alerts: one board rebuilt by cron, four layers that made the alerts impossible to ignore, a written ledger of verdicts, and a responder for when nobody is typing.</p></div><div class="item st-run"><div class="t"><a href="/writing/lanwatch.html">Internal is not internet</a></div><time datetime="2026-08" class="chip">Built Aug 2026</time><p class="d">Why the firewall cannot see what stays in the house, why its summary double-counts what leaves, and a chart that admits when it was not looking.</p></div><div class="item st-run"><div class="t"><a href="/writing/memory-as-infrastructure.html">Memory as infrastructure</a></div><time datetime="2026-08" class="chip">Built Aug 2026</time><p class="d">The notes an AI agent keeps, run like any other state: one fact per file, an index of triggers, a linter in the commit hook, and a nightly check against the machines.</p></div>
+<header class="site-header"><a class="site-brand" href="/"><span>AHK / 02X</span> <span>Personal archive</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span> About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span> Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span> Infra</a><a href="/writing/" aria-current="page"><span class="nav-no" aria-hidden="true">04</span> Writing</a><a href="/ask/"><span class="nav-no" aria-hidden="true">06</span> ahkira</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span> Contact <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></nav></header>
+<main id="main" class="wrap inner-page narrow wide-body writing-page">
+<section class="band hero two-up"><div><span class="eyebrow">04 / Writing</span><h1>Write-ups.</h1></div><p class="lede">Long-form, with the numbers that back each claim.</p></section>
+<style>
+/* wrap-reverse: once the columns no longer fit, the sidebar goes above the list, not after the last row */
+.writing-page .writing-index{flex-wrap:wrap-reverse;gap:24px 48px}
+.writing-page .writing-index>.writing-list{flex:3 1 480px}
+/* the cross axis is reversed too, so flex-end is the top of the row */
+.writing-page .writing-index>.writing-side{flex:1 1 220px;align-self:flex-end;display:flex;flex-direction:column;gap:24px}
+.writing-side .eyebrow{margin:0}
+.writing-side p{margin:0}
+/* The filter is three links and :target, no script: #built and #written are empty anchors ahead of the list. */
+.writing-filter{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.writing-filter>div{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
+.writing-filter a{padding:9px 14px;font:500 12px/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:transparent}
+.writing-filter a:focus-visible{outline-offset:-4px}
+.writing-filter a[href="#index"],
+#built:target~.writing-index .writing-filter a[href="#built"],
+#written:target~.writing-index .writing-filter a[href="#written"]{background:var(--ink);color:var(--reverse)}
+.wf:target~.writing-index .writing-filter a[href="#index"]{background:transparent;color:var(--ink)}
+#built:target~.writing-index .item.st-written,
+#written:target~.writing-index .item:not(.st-written){display:none}
+.writing-shown{font:400 11px/1.6 var(--mono);color:var(--quiet)}
+.writing-shown .w-built,.writing-shown .w-written,.wf:target~.writing-index .writing-shown .w-all{display:none}
+#built:target~.writing-index .writing-shown .w-built,
+#written:target~.writing-index .writing-shown .w-written{display:inline}
+.writing-legend{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--ink-3)}
+.writing-start{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none}
+.writing-start span:last-child{font-size:18px;font-weight:500;letter-spacing:-.01em}
+.writing-start:hover span:last-child{color:var(--accent-hi)}
+</style>
+<section class="band last" id="index" aria-labelledby="index-h">
+<span class="wf" id="built"></span><span class="wf" id="written"></span>
+<div class="band-head"><div><span class="eyebrow">Index</span><h2 id="index-h">Newest first.</h2></div></div>
+<div class="two-up writing-index">
+<div class="writing-list">
+<div class="rows items">
+<div class="item st-built"><div class="t"><a href="/writing/go-x509.html">The Go certificate bug</a></div><span class="chip kind">Built</span></div><div class="item st-built"><div class="t"><a href="/writing/llmbench.html">AI models on my own hardware</a></div><span class="chip kind">Built</span></div><div class="item st-built"><div class="t"><a href="/writing/ahkira.html">Why ahkira doesn&#x27;t run at home</a></div><span class="chip kind">Built</span></div><div class="item st-written"><div class="t"><span>Everything I ever kept</span></div><span class="chip kind">Write-up coming soon</span></div><div class="item st-run"><div class="t"><span>The part matters, not the store</span></div><span class="chip kind">Write-up coming soon</span></div><div class="item st-built"><div class="t"><span>The timer firing is not evidence</span></div><span class="chip kind">Write-up coming soon</span></div><div class="item st-run"><div class="t"><span>I gave Claude Code a pager</span></div><span class="chip kind">Write-up coming soon</span></div><div class="item st-run"><div class="t"><span>Internal is not internet</span></div><span class="chip kind">Write-up coming soon</span></div><div class="item st-run"><div class="t"><span>Memory as infrastructure</span></div><span class="chip kind">Write-up coming soon</span></div>
 </div>
+</div>
+<aside class="writing-side" aria-label="About this list">
+<nav class="writing-filter" aria-label="Show write-ups by kind"><span class="eyebrow">Filter</span>
+<div><a href="#index">All</a><a href="#built">Built</a><a href="#written">Written</a></div>
+<p class="writing-shown"><span class="w-all">Showing all 9.</span><span class="w-built">Showing built only.</span><span class="w-written">Showing written only.</span></p>
+</nav>
+<div class="writing-legend">
+<p><strong>Built</strong>: I made a thing; here's what it measured.</p>
+<p><strong>Written</strong>: an essay, no new code.</p>
+</div>
+<a class="writing-start" href="/writing/go-x509.html"><span class="eyebrow">Start here</span><span>The Go certificate bug &rarr;</span></a>
+</aside>
+</div>
+</section>
+<a class="nextnav" href="/ask/"><span class="eyebrow">Next &mdash; 06</span><span>ahkira &rarr;</span></a>
 </main>
-<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
+<footer class="site-footer"><div><span class="eyebrow">05 / Contact</span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com <span aria-hidden="true">↗</span></a><span>Amir Khademi · online as ahk02x</span></div><nav aria-label="Directory"><span class="eyebrow">Directory</span><a href="/about.html">01 About</a><a href="/projects/">02 Projects</a><a href="/infra.html">03 Infra</a><a href="/writing/">04 Writing</a><a href="/ask/">06 ahkira</a></nav><nav class="social-links" aria-label="Social profiles"><span class="eyebrow">Elsewhere</span><a href="https://x.com/ahk02x" rel="me">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ahk02x" rel="me">GitHub <span aria-hidden="true">↗</span></a></nav></footer>
 </div>
 </body>
 </html>

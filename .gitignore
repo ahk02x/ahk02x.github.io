@@ -2,3 +2,6 @@
 _site/
 __pycache__/
 *.pyc
+
+# Review screenshots from tools/shots.py: generated, never committed.
+docs/shots/

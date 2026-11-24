@@ -47,5 +47,5 @@ canonical_url: {url}
 
 ---
 
-*Originally published at [ahk02x.dev]({url}). I'm Amir Khademi, a platform and security engineer; more field notes at [ahk02x.dev/writing](https://ahk02x.dev/writing/).*
+*Originally published at [ahk02x.dev]({url}). I'm Amir Khademi, a Platform Engineer; more field notes at [ahk02x.dev/writing](https://ahk02x.dev/writing/).*
 ''')

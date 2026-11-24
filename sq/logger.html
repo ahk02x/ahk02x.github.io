@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The SQ5 car telemetry logger · Amir Khademi</title>
+<meta name="description" content="The Raspberry Pi logger box that rides in Amir Khademi&#x27;s Audi SQ5, taken apart in an exploded drawing: lid screws, honeycomb lid, clock module, Pi, CAN adapter, OBD-II pigtail and printed base, with the pinout.">
+<link rel="canonical" href="https://ahk02x.dev/sq/logger.html">
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<script src="/assets/theme-init.js?v=f2452f3a34"></script>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=01056ba9a2">
+<script src="/assets/site.js?v=223ff57988" defer></script>
+<meta name="theme-color" content="#d4d5d1">
+<meta property="og:title" content="The SQ5 car telemetry logger · Amir Khademi">
+<meta property="og:description" content="The Raspberry Pi logger box that rides in Amir Khademi&#x27;s Audi SQ5, taken apart in an exploded drawing: lid screws, honeycomb lid, clock module, Pi, CAN adapter, OBD-II pigtail and printed base, with the pinout.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ahk02x.dev/sq/logger.html">
+<meta property="og:image" content="https://ahk02x.dev/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","givenName":"Amir","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform Engineer","description":"Platform Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Site reliability engineering","Linux","Kubernetes","Observability","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"WebPage","@id":"https://ahk02x.dev/sq/logger.html","url":"https://ahk02x.dev/sq/logger.html","name":"The SQ5 car telemetry logger","description":"The Raspberry Pi logger box that rides in Amir Khademi's Audi SQ5, taken apart in an exploded drawing: lid screws, honeycomb lid, clock module, Pi, CAN adapter, OBD-II pigtail and printed base, with the pinout.","isPartOf":{"@id":"https://ahk02x.dev/#website"},"about":{"@id":"https://ahk02x.dev/#person"}}]}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="site-shell">
+<header class="site-header"><a class="site-brand" href="/"><span>AHK / 02X</span> <span>Personal archive</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span> About</a><a href="/projects/" aria-current="page"><span class="nav-no" aria-hidden="true">02</span> Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span> Infra</a><a href="/writing/"><span class="nav-no" aria-hidden="true">04</span> Writing</a><a href="/ask/"><span class="nav-no" aria-hidden="true">06</span> ahkira</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span> Contact <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></nav></header>
+<main id="main" class="wrap inner-page lg">
+<section class="hero"><div class="eyebrow">SQ5 · how the data is captured · the box in the footwell</div><h1>The car telemetry logger</h1>
+<p class="lede">A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. This box is the whole data path into the car: 58 engine-computer channels, about two and a half times a second, off the car's own 500 kbps bus. The reverse-engineered tuning cable on <a href="/sq/">the overview</a> is how the channel map was worked out, and it is not part of this box. Here it is taken apart, from the four lid screws down to the printed base.</p></section><nav class="sq-tabs" aria-label="SQ5 sections"><a href="/sq/">Overview</a><a href="/sq/logger.html" aria-current="page">Logger</a><a href="/sq/health.html">Weekly health</a><a href="/sq/trends.html">Trends</a><a href="/sq/gallery.html">Gallery</a><a href="/sq/build-log.html">Build log</a></nav>
+<style>
+/* The object: black PLA, the real board and wire colours, the red badge. These are the physical thing,
+   so they are the same in both themes and are not site tokens. Everything else on the page is. */
+.lg{
+  --pla-line:#6E7A87; --lg-edge:#1A2129; --shadow:rgba(12,16,20,.20); --badge:#E8433C;
+  --pla-top:#2C353E; --pla-lit:#1F272F; --pla-shade:#141A20;
+  --in-lit:#1A2129; --in-shade:#10151A; --floor:#161C23;
+  --pi-top:#3F8558; --pi-lit:#2F6C45; --pi-shade:#235336;
+  --blk-top:#222930; --blk-lit:#171C22; --blk-shade:#0F1317;
+  --yel-top:#F4CF3F; --yel-lit:#DDB32B; --yel-shade:#B8901C;
+  --met-top:#E4E9EE; --met-lit:#BCC5CF; --met-shade:#8F9AA7;
+  --chip-top:#333C46; --chip-lit:#1F272F; --chip-shade:#0C1014;
+  --grn-top:#59C27A; --grn-lit:#3FA661; --grn-shade:#2E864B;
+  --void:#05070A; --bore:#0B0F13; --pin:#C8A65A;
+  --w-g:#4E9A63; --w-br:#8B5E3C; --w-wh:#F4F3EC; --w-y:#D8B23A;
+}
+/* On the dark paper only the drawing's outlines and its ground shadow change, so black plastic still reads. */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .lg{--pla-line:#8792A0;--lg-edge:#B4BEC9;--shadow:rgba(0,0,0,.62)}}
+:root[data-theme="dark"] .lg{--pla-line:#8792A0;--lg-edge:#B4BEC9;--shadow:rgba(0,0,0,.62)}
+
+.lg .lg-first{padding-top:0}
+.lg .band > p{max-width:64ch;font-size:17px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.lg .band > p:last-child{margin-bottom:0}
+
+/* anatomy: without the script this is just the ledger, full width. The script adds .lg-live and the rig. */
+.lg-anat.lg-live{display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);grid-template-areas:"ledger rig";column-gap:48px;align-items:start}
+.lg-live .lg-ledger{grid-area:ledger}
+.lg-live .lg-rig{grid-area:rig;position:sticky;top:72px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.lg-ledger > li{cursor:default}
+.lg-ledger .n{flex:none;font:500 11px/2.4 var(--mono);letter-spacing:.06em;color:var(--quiet);transition:color .25s}
+.lg-ledger h3 span{margin-left:6px;font:500 11px/1.5 var(--mono);letter-spacing:.06em;color:var(--quiet);white-space:nowrap}
+.lg-ledger li.on .n{color:var(--accent)}
+.lg-live .lg-ledger > li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:4px 8px}
+.lg-live .lg-ledger p{grid-column:2}
+.lg-key{font-family:var(--mono);font-weight:500;color:var(--accent)}
+.lg .band p.lg-note{max-width:64ch;margin:24px 0 0;font:11px/1.6 var(--mono);color:var(--quiet)}
+.lg-nb{white-space:nowrap}
+
+/* rig */
+.lg-stage{position:relative;height:clamp(460px,calc(100svh - 210px),680px);touch-action:pan-y}
+.lg-fig{position:absolute;top:0;font:500 11px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--quiet);font-variant-numeric:tabular-nums;pointer-events:none}
+.lg-fig.l{left:0}.lg-fig.r{right:0}
+#rig{display:block;width:100%;height:100%}
+#rig .part{transition:opacity .3s}
+#rig .part path{stroke:var(--lg-edge);stroke-width:.7;stroke-linejoin:round;stroke-linecap:round}
+#rig .m-pla{--top:var(--pla-top);--lit:var(--pla-lit);--shade:var(--pla-shade)}
+#rig .m-in{--top:var(--floor);--lit:var(--in-lit);--shade:var(--in-shade)}
+#rig .m-pi{--top:var(--pi-top);--lit:var(--pi-lit);--shade:var(--pi-shade)}
+#rig .m-blk{--top:var(--blk-top);--lit:var(--blk-lit);--shade:var(--blk-shade)}
+#rig .m-yel{--top:var(--yel-top);--lit:var(--yel-lit);--shade:var(--yel-shade)}
+#rig .m-met{--top:var(--met-top);--lit:var(--met-lit);--shade:var(--met-shade)}
+#rig .m-chip{--top:var(--chip-top);--lit:var(--chip-lit);--shade:var(--chip-shade)}
+#rig .m-grn{--top:var(--grn-top);--lit:var(--grn-lit);--shade:var(--grn-shade)}
+#rig .m-red{--top:var(--badge)}
+#rig .m-scr{--top:#B4BDC7;--lit:#8E98A4;--shade:#687380}
+#rig .m-m2{--top:#8D97A3;--lit:#737E8B;--shade:#59636F}
+#rig .top{fill:var(--top)}
+#rig .side{fill:var(--lit)}
+#rig .eo{fill-rule:evenodd}
+#rig .floor{fill:var(--floor)}
+#rig .void{fill:var(--void)}
+#rig .part path.m-pla,#rig .part path.m-in,#rig .part path.m-blk,#rig .part path.m-chip,#rig .part path.floor,#rig .part path.void{stroke:var(--pla-line)}
+#rig .part path.m-pla.eo,#rig .part path.m-in.eo{stroke-width:.55}
+#rig .part path.m-red{stroke:#7E1D18}
+#rig .part path.ns,#rig .part path.glint,#rig .part path.halo,#rig .part path.led{stroke:none}
+#rig .part path.edge{fill:none}
+#rig .part path.halo{opacity:.3}
+#rig .part .pin{fill:var(--pin);stroke-width:.25}
+#rig .part .mark{fill:none;stroke-width:.6}
+#rig .part path.pinl{fill:none;stroke:var(--pin);stroke-width:calc(var(--mm,2) * .64px);stroke-linecap:butt}
+#rig .part .wire{fill:none;stroke-width:calc(var(--mm,2) * 1.7px);stroke-linecap:butt}
+#rig .part path.wc{stroke:var(--void);stroke-width:calc(var(--mm,2) * 1.7px + 1.4px)}
+#rig .part .w-g{stroke:var(--w-g)}#rig .part .w-br{stroke:var(--w-br)}#rig .part .w-y{stroke:var(--w-y)}
+#rig .part .w-wh{stroke:var(--w-wh);stroke-width:calc(var(--mm,2) * .5px);stroke-dasharray:calc(var(--mm,2) * 1.6px) calc(var(--mm,2) * 2px)}
+#rig .part path.thread{stroke:#55606C;stroke-width:.5}#rig .part path.seam{stroke:var(--pla-line)}#rig .part path.silk{stroke:#E9ECEF}
+#rig .part path.cab{fill:none;stroke:var(--chip-lit);stroke-width:calc(var(--mm,2) * 6px);stroke-linecap:round}
+#rig .part path.cabc{stroke:var(--pla-line);stroke-width:calc(var(--mm,2) * 6px + 1.5px)}
+#rig .part path.tie{fill:none;stroke:var(--chip-top);stroke-width:calc(var(--mm,2) * 7.6px);stroke-linecap:butt}
+#rig .part path.tiec{stroke:var(--pla-line);stroke-width:calc(var(--mm,2) * 7.6px + 1.5px)}
+#rig .part path.tail{fill:none;stroke:var(--pla-line);stroke-width:calc(var(--mm,2) * 1.1px);stroke-linecap:round}
+/* callouts and assembly axes are page chrome: ink, quiet, hairline, and rust for the one that is active */
+#rig .axis line{stroke:var(--quiet);stroke-width:.8;stroke-dasharray:2 5}
+#rig .lead{fill:none;stroke:var(--quiet);stroke-width:1;stroke-dasharray:1;transition:stroke .25s}
+#rig .dot{fill:var(--quiet);transition:fill .25s}
+#rig .lab text{font-family:var(--mono);font-size:11px;font-weight:400;fill:var(--ink);paint-order:stroke;stroke:var(--page);stroke-width:4px;stroke-linejoin:round;font-variant-numeric:tabular-nums}
+#rig .lab .l1{font-weight:600;letter-spacing:.06em}
+#rig.narrow .lab .l1{letter-spacing:.03em}
+#rig .lab .l2{fill:var(--quiet)}
+#rig .lab .num{fill:var(--quiet);transition:fill .25s}
+#rig .lab.on .num{fill:var(--accent)}
+#rig .leadg.on .lead{stroke:var(--ink)}
+#rig .leadg.on .dot{fill:var(--accent)}
+
+/* transport: a square outline button and a hairline track; the thumb is the one rust mark */
+.lg-transport{display:flex;align-items:flex-start;gap:14px;border-top:1px solid var(--line-3);padding-top:14px}
+.lg-play{flex:none;display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,color .2s}
+.lg-play:hover{background:var(--ink);color:var(--reverse)}
+.lg-play svg{width:14px;height:14px;fill:currentColor}
+.lg-track{position:relative;flex:1;min-width:0;height:76px}
+.lg #scrub{position:absolute;left:0;top:8px;width:100%;height:28px;margin:0;padding:0;border:0;background:transparent;-webkit-appearance:none;appearance:none;cursor:ew-resize;touch-action:none}
+#scrub::-webkit-slider-runnable-track{height:2px;background:linear-gradient(to right,var(--ink) var(--p,0%),var(--line-2) var(--p,0%))}
+#scrub::-moz-range-track{height:2px;background:var(--line-2)}
+#scrub::-moz-range-progress{height:2px;background:var(--ink)}
+#scrub::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:26px;margin-top:-12px;border:0;border-radius:0;background:linear-gradient(to right,transparent 4px,var(--accent) 4px,var(--accent) 8px,transparent 8px)}
+#scrub::-moz-range-thumb{width:4px;height:26px;border:0;border-radius:0;background:var(--accent)}
+.lg-ticks{position:absolute;inset:0;pointer-events:none;font:11px/1.5 var(--mono);letter-spacing:.06em;color:var(--quiet)}
+.lg-ticks i{position:absolute;top:17px;width:1px;height:10px;background:var(--line-2)}
+.lg-ticks b{position:absolute;top:36px;font-weight:400;letter-spacing:0;transform:translateX(-50%);transition:color .25s}
+.lg-ticks b.on{color:var(--accent);font-weight:600}
+.lg-ticks .end{position:absolute;top:56px;text-transform:uppercase}
+.lg-ticks .end.a{left:0}.lg-ticks .end.b{right:0}
+
+/* pinout */
+.lg-plug{max-width:460px}
+.lg-plug text{font-family:var(--mono);font-size:11px;fill:var(--quiet)}
+.lg-plug .tag{fill:var(--ink);font-weight:500;letter-spacing:.04em}
+.lg-plug .shell{fill:none;stroke:var(--ink);stroke-width:1.4;stroke-linejoin:round}
+.lg-plug .p{fill:none;stroke:var(--quiet);stroke-width:1}
+.lg-plug .ld{fill:none;stroke:var(--ink);stroke-width:1}
+.lg-pin{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums}
+.lg-pin th,.lg-pin td{white-space:nowrap}
+.lg-pin tr.open th,.lg-pin tr.open td{color:var(--quiet)}
+.lg-sw{display:inline-block;width:18px;height:6px;margin-right:8px;vertical-align:middle}
+.lg-sw.g{background:var(--w-g)}.lg-sw.y{background:var(--w-y)}
+.lg-sw.b{background:repeating-linear-gradient(90deg,var(--w-br) 0 5px,var(--w-wh) 5px 8px)}
+.lg-sw.x{background:transparent;border:1px dashed var(--quiet)}
+.lg-pinout > div > p{max-width:58ch;font-size:17px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+
+@media (max-width:940px){
+  .lg-anat.lg-live{grid-template-columns:minmax(0,1fr);grid-template-areas:"rig" "ledger";row-gap:28px}
+  .lg-live .lg-rig{position:static}
+  .lg-stage{height:560px}
+}
+@media (max-width:560px){
+  .lg-stage{height:520px}
+  .lg-pin{font-size:12px}
+  .lg-pin th,.lg-pin td{padding-right:10px}
+}
+@media (prefers-reduced-motion:reduce){
+  #rig .part,#rig .lead,#rig .dot,.lg-play,.lg-ledger .n,.lg-ticks b{transition:none}
+}
+</style>
+
+<section class="band lg-first">
+<div class="band-head"><div><span class="eyebrow">01 / Anatomy · seven layers</span><h2>It comes apart in seven moves.</h2></div></div>
+<div class="lg-anat">
+<div class="lg-rig" id="rigcol" hidden>
+<div class="lg-stage" id="stage">
+<span class="lg-fig l">Fig. 1 · Isometric</span>
+<span class="lg-fig r" id="readout">t 0.00 · yaw 45.0°</span>
+<svg id="rig" role="img" aria-label="Exploded isometric drawing of the SQ Pi Box, seen from the back: four steel lid screws, black honeycomb lid with a red SQ badge, clock module plugged onto the GPIO header, Raspberry Pi 4, CAN adapter, OBD-II pigtail leaving through the back wall, and the honeycomb-walled printed base"></svg>
+</div>
+<div class="lg-transport">
+<button class="lg-play" id="play" type="button" aria-label="Pause">
+<svg id="icPause" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12"/><rect x="8.5" y="1" width="3.5" height="12"/></svg>
+<svg id="icPlay" viewBox="0 0 14 14" aria-hidden="true" hidden><path d="M3 1l10 6-10 6z"/></svg>
+</button>
+<div class="lg-track">
+<div class="lg-ticks" id="ticks"><span class="end a">Assembled</span><span class="end b">Exploded</span></div>
+<input id="scrub" type="range" min="0" max="1000" step="1" value="0" aria-label="Scrub between assembled and exploded">
+</div>
+</div>
+</div>
+<ol class="rows lg-ledger" id="ledger">
+<li><span class="n">01</span><h3>Chassis screws <span>#6-32 × 6</span></h3><p>Four steel pan-heads, the only fasteners and the only loose metal in the box. Each one passes through the lid and takes 4.0 mm of thread in a printed corner boss.</p></li>
+<li><span class="n">02</span><h3>Honeycomb lid</h3><p>Black PLA, 4.0 mm thick. 102 whole 6 mm hexes, 3180 mm² of open area, so the box runs without a fan. The red S and Q are pressed in flush, 2.4 mm deep, and the Q's counter stays black lid.</p></li>
+<li><span class="n">03</span><h3>DS3231 RTC</h3><p>Keeps time while the car is off. A small black board that presses straight onto the end of the GPIO header, with a yellow coin cell under a spring clip. It runs on 3.3 V, never 5 V: at 5 V its pull-ups would put 5 V on the Pi's I2C bus.</p></li>
+<li><span class="n">04</span><h3>Raspberry Pi 4 <span>Rev 1.1</span></h3><p>Runs the capture and push services, held down by its own M2 × 4 screws, because the first case trusted printed legs and they snapped. 2.886 W at idle and 0.1145 W halted, a <span class="lg-key">96%</span> cut.</p></li>
+<li><span class="n">05</span><h3>CANable2 adapter</h3><p>USB to CAN on slcan firmware, listening on the 500 kbps bus. Draws 0.235 W. Its green screw terminal points at the back wall.</p></li>
+<li><span class="n">06</span><h3>OBD-II pigtail</h3><p>Three wires off the adapter's green terminal, through a zip-tie strain relief and out the back wall to the diagnostic port: <span class="lg-nb">CAN-H</span>, <span class="lg-nb">CAN-L</span> and ground. The +12 V pin stays unconnected.</p></li>
+<li><span class="n">07</span><h3>Printed base</h3><p>99.8 × 88.8 × 30.8 mm, 106.8 × 95.8 across the corner ears. Honeycomb on every wall under a solid rim band, one side left open for the Pi's ports, and four tapped corner posts that take the lid screws.</p></li>
+</ol>
+</div>
+<noscript><p class="lg-note">The exploded drawing is generated in the browser and needs JavaScript. The parts list above, the pinout and the totals do not.</p></noscript>
+<p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material. I left 1.2 mm of clearance for a board edge that sticks out 1.2 mm. That is zero clearance, and the hold-down legs snapped. This one is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
+<p class="lg-note">Photos of the real box, printed and installed, are in <a href="/sq/gallery.html">the gallery</a>. What the car itself has been doing is on <a href="/sq/">the overview</a>.</p>
+</section>
+
+<section class="band">
+<div class="band-head"><div><span class="eyebrow">02 / Pinout · OBD-II</span><h2>Three wires in, one pin left open.</h2></div></div>
+<div class="two-up lg-pinout">
+<figure><svg class="lg-plug" viewBox="0 0 360 176" role="img" aria-label="OBD-II connector face with pins 5, 6 and 14 wired and pin 16 left open">
+<path class="shell" d="M22 44H338L318 138H42Z"/>
+<g class="p">
+<rect x="45" y="62" width="18" height="12" rx="2"/><rect x="81" y="62" width="18" height="12" rx="2"/><rect x="117" y="62" width="18" height="12" rx="2"/><rect x="153" y="62" width="18" height="12" rx="2"/>
+<rect x="261" y="62" width="18" height="12" rx="2"/><rect x="297" y="62" width="18" height="12" rx="2"/>
+<rect x="45" y="110" width="18" height="12" rx="2"/><rect x="81" y="110" width="18" height="12" rx="2"/><rect x="117" y="110" width="18" height="12" rx="2"/><rect x="153" y="110" width="18" height="12" rx="2"/><rect x="189" y="110" width="18" height="12" rx="2"/>
+<rect x="261" y="110" width="18" height="12" rx="2"/>
+<rect x="297" y="110" width="18" height="12" rx="2" stroke-dasharray="3 2.5"/>
+</g>
+<line class="ld" x1="299" y1="120" x2="313" y2="112"/>
+<rect x="189" y="62" width="18" height="12" rx="2" style="fill:var(--w-y)"/>
+<rect x="225" y="62" width="18" height="12" rx="2" style="fill:var(--w-g)"/>
+<rect x="225" y="110" width="18" height="12" rx="2" style="fill:var(--w-br)"/>
+<rect x="225" y="114.5" width="18" height="3" style="fill:var(--w-wh)"/>
+<g text-anchor="middle">
+<text x="54" y="88">1</text><text x="90" y="88">2</text><text x="126" y="88">3</text><text x="162" y="88">4</text><text x="198" y="88">5</text><text x="234" y="88">6</text><text x="270" y="88">7</text><text x="306" y="88">8</text>
+<text x="54" y="104">9</text><text x="90" y="104">10</text><text x="126" y="104">11</text><text x="162" y="104">12</text><text x="198" y="104">13</text><text x="234" y="104">14</text><text x="270" y="104">15</text><text x="306" y="104">16</text>
+</g>
+<path class="ld" d="M198 62V20M234 62V20M234 122V164M306 122V164"/>
+<text class="tag" x="192" y="26" text-anchor="end">GND</text>
+<text class="tag" x="240" y="26">CAN-H</text>
+<text class="tag" x="228" y="164" text-anchor="end">CAN-L</text>
+<text class="tag" x="300" y="164" text-anchor="end">OPEN</text>
+</svg></figure>
+<div>
+<p>The pigtail takes CAN-H, CAN-L and ground from the diagnostic port. Pin 16 carries +12 V from the battery, and this pigtail leaves it unconnected on purpose: the adapter runs on USB power from the Pi.</p>
+<div class="tablewrap">
+<table class="lg-pin">
+<thead><tr><th scope="col">Pin</th><th scope="col">Signal</th><th scope="col">Wire</th><th scope="col">Lands on</th></tr></thead>
+<tbody>
+<tr><th scope="row">6</th><td>CAN-H</td><td><span class="lg-sw g"></span>green</td><td>terminal CAN-H</td></tr>
+<tr><th scope="row">14</th><td>CAN-L</td><td><span class="lg-sw b"></span>brown / white</td><td>terminal CAN-L</td></tr>
+<tr><th scope="row">5</th><td>GND</td><td><span class="lg-sw y"></span>yellow</td><td>terminal GND</td></tr>
+<tr class="open"><th scope="row">16</th><td>+12 V</td><td><span class="lg-sw x"></span>none</td><td>not connected</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+
+<section class="band last">
+<div class="band-head"><div><span class="eyebrow">03 / Totals</span><h2>What it has logged.</h2></div></div>
+<dl class="statrow">
+<div><dt>sessions logged</dt><dd>419</dd></div>
+<div><dt>samples captured</dt><dd>911,367</dd></div>
+<div><dt>hours of running</dt><dd>105.1</dd></div>
+<div><dt>never writes to the car</dt><dd>Read-only</dd></div>
+</dl>
+<p class="lg-note">Counted to 15 November 2026, from the same weekly snapshot the <a href="/sq/trends.html">trends tab</a> draws, so no two pages here can disagree. What the car did with each change is in <a href="/sq/build-log.html">the build log</a>.</p>
+</section>
+<script src="/assets/sq-logger.js?v=eb123f6114" defer></script>
+<a class="nextnav" href="/sq/health.html"><span class="eyebrow">Next &mdash; SQ</span><span>Weekly health &rarr;</span></a>
+</main>
+<footer class="site-footer"><div><span class="eyebrow">05 / Contact</span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com <span aria-hidden="true">↗</span></a><span>Amir Khademi · online as ahk02x</span></div><nav aria-label="Directory"><span class="eyebrow">Directory</span><a href="/about.html">01 About</a><a href="/projects/">02 Projects</a><a href="/infra.html">03 Infra</a><a href="/writing/">04 Writing</a><a href="/ask/">06 ahkira</a></nav><nav class="social-links" aria-label="Social profiles"><span class="eyebrow">Elsewhere</span><a href="https://x.com/ahk02x" rel="me">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ahk02x" rel="me">GitHub <span aria-hidden="true">↗</span></a></nav></footer>
+</div>
+</body>
+</html>

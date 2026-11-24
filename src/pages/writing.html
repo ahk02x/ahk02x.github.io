@@ -1,10 +1,58 @@
 title: Writing
-description: Essays and write-ups by Amir Khademi on platform and security engineering, home infrastructure and agent tooling.
+description: Essays and write-ups by Amir Khademi on platform engineering, home infrastructure and agent tooling.
 path: /writing/
 ---
-<main class="wrap narrow">
-<section class="hero"><div class="eyebrow">Writing</div><h1>Write-ups</h1><p class="lede">Long-form, with the numbers that back each claim.</p></section>
-<div class="items">
+<main class="wrap narrow wide-body writing-page">
+<section class="band hero two-up"><div><span class="eyebrow">04 / Writing</span><h1>Write-ups.</h1></div><p class="lede">Long-form, with the numbers that back each claim.</p></section>
+<style>
+/* wrap-reverse: once the columns no longer fit, the sidebar goes above the list, not after the last row */
+.writing-page .writing-index{flex-wrap:wrap-reverse;gap:24px 48px}
+.writing-page .writing-index>.writing-list{flex:3 1 480px}
+/* the cross axis is reversed too, so flex-end is the top of the row */
+.writing-page .writing-index>.writing-side{flex:1 1 220px;align-self:flex-end;display:flex;flex-direction:column;gap:24px}
+.writing-side .eyebrow{margin:0}
+.writing-side p{margin:0}
+/* The filter is three links and :target, no script: #built and #written are empty anchors ahead of the list. */
+.writing-filter{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.writing-filter>div{display:flex;flex-wrap:wrap;border:1px solid var(--line)}
+.writing-filter a{padding:9px 14px;font:500 12px/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--ink);background:transparent}
+.writing-filter a:focus-visible{outline-offset:-4px}
+.writing-filter a[href="#index"],
+#built:target~.writing-index .writing-filter a[href="#built"],
+#written:target~.writing-index .writing-filter a[href="#written"]{background:var(--ink);color:var(--reverse)}
+.wf:target~.writing-index .writing-filter a[href="#index"]{background:transparent;color:var(--ink)}
+#built:target~.writing-index .item.st-written,
+#written:target~.writing-index .item:not(.st-written){display:none}
+.writing-shown{font:400 11px/1.6 var(--mono);color:var(--quiet)}
+.writing-shown .w-built,.writing-shown .w-written,.wf:target~.writing-index .writing-shown .w-all{display:none}
+#built:target~.writing-index .writing-shown .w-built,
+#written:target~.writing-index .writing-shown .w-written{display:inline}
+.writing-legend{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;line-height:1.5;color:var(--ink-3)}
+.writing-start{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--line);text-decoration:none}
+.writing-start span:last-child{font-size:18px;font-weight:500;letter-spacing:-.01em}
+.writing-start:hover span:last-child{color:var(--accent-hi)}
+</style>
+<section class="band last" id="index" aria-labelledby="index-h">
+<span class="wf" id="built"></span><span class="wf" id="written"></span>
+<div class="band-head"><div><span class="eyebrow">Index</span><h2 id="index-h">Newest first.</h2></div></div>
+<div class="two-up writing-index">
+<div class="writing-list">
+<div class="rows items">
 {{writing_list}}
 </div>
+</div>
+<aside class="writing-side" aria-label="About this list">
+<nav class="writing-filter" aria-label="Show write-ups by kind"><span class="eyebrow">Filter</span>
+<div><a href="#index">All</a><a href="#built">Built</a><a href="#written">Written</a></div>
+<p class="writing-shown"><span class="w-all">Showing all {{writing_count}}.</span><span class="w-built">Showing built only.</span><span class="w-written">Showing written only.</span></p>
+</nav>
+<div class="writing-legend">
+<p><strong>Built</strong>: I made a thing; here's what it measured.</p>
+<p><strong>Written</strong>: an essay, no new code.</p>
+</div>
+<a class="writing-start" href="/writing/go-x509.html"><span class="eyebrow">Start here</span><span>The Go certificate bug &rarr;</span></a>
+</aside>
+</div>
+</section>
+<a class="nextnav" href="/ask/"><span class="eyebrow">Next &mdash; 06</span><span>ahkira &rarr;</span></a>
 </main>

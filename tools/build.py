@@ -15,8 +15,13 @@ try:
     datetime.date.fromisoformat(hc.get('generated', ''))
 except (TypeError, ValueError):
     word, cls = 'No dated snapshot', 'unknown'
-SECTIONS = [('/about.html', 'About'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('mailto:amir@ahk02x.com', 'Contact')]
+# The numbered directory. The header, the footer and the pages' own eyebrows all use these plate numbers;
+# 05 is Contact, a mailto that sits after the page links, so the nav reads 01 02 03 04 06 05.
+SECTIONS = [('01', '/about.html', 'About'), ('02', '/projects/', 'Projects'), ('03', '/infra.html', 'Infra'), ('04', '/writing/', 'Writing'), ('06', '/ask/', 'ahkira')]
+CONTACT = ('05', 'mailto:amir@ahk02x.com', 'Contact')
 NAV = [('/', 'Home'), ('/projects/', 'Projects'), ('/infra.html', 'Infra'), ('/writing/', 'Writing'), ('/about.html', 'About')]
+# The SQ tabs, in reading order: the strip at the top of every SQ page and the Next row at the bottom both use it.
+SQ_TABS = [('/sq/', 'Overview'), ('/sq/logger.html', 'Logger'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
 MARK = '<svg viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"><circle cx="64" cy="64" r="46"/><path d="M36,82 H54 C64,82 64,46 74,46 H92"/><path d="M36,46 H54 C64,46 64,82 74,82 H92"/></g></svg>'
 def glyph_svg(body, sw=10):  # one line-icon language: 128 box, round caps, currentColor so the row's status tints it
     return f'<svg class="glyph" viewBox="0 0 128 128" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round">{body}</g></svg>'
@@ -34,6 +39,9 @@ GLYPHS = {
  'net': glyph_svg('<rect x="14" y="26" width="100" height="76" rx="6"/><path d="M14,51 H114 M14,76 H114"/><path d="M64,26 V51 M38,51 V76 M90,51 V76 M64,76 V102"/>', 9),
  'crucix': glyph_svg('<path d="M52,16 V48 L20,100 A8,8 0 0 0 27,112 H101 A8,8 0 0 0 108,100 L76,48 V16"/><path d="M42,16 H86"/><path d="M34,86 H94"/>' + dot(60, 98, 4) + dot(78, 96, 3)),
  'inbox': glyph_svg('<path d="M18,70 L32,22 H96 L110,70 V98 A8,8 0 0 1 102,106 H26 A8,8 0 0 1 18,98 Z"/><path d="M18,70 H46 L52,86 H76 L82,70 H110"/>'),
+ 'helmet': glyph_svg('<path d="M18,88 C18,48 42,22 74,22 C98,22 112,40 112,64 V88 A6,6 0 0 1 106,94 H24 A6,6 0 0 1 18,88 Z"/><path d="M58,50 H112 V72 H64 A6,6 0 0 1 58,66 Z"/>' + dot(96, 61, 5)),
+ 'tiles': glyph_svg('<rect x="18" y="18" width="38" height="38" rx="4"/><rect x="72" y="18" width="38" height="38" rx="4"/><rect x="18" y="72" width="38" height="38" rx="4"/><rect x="72" y="72" width="38" height="38" rx="4" fill="currentColor"/>'),
+ 'chat': glyph_svg('<path d="M18,30 A8,8 0 0 1 26,22 H102 A8,8 0 0 1 110,30 V78 A8,8 0 0 1 102,86 H52 L30,106 V86 H26 A8,8 0 0 1 18,78 Z"/>' + dot(45, 54, 6) + dot(64, 54, 6) + dot(83, 54, 6)),
  'code': glyph_svg('<path d="M42,34 L14,64 L42,94"/><path d="M86,34 L114,64 L86,94"/><path d="M72,24 L56,104"/>'),
  'plug': glyph_svg('<g transform="rotate(40 64 64)"><rect x="38" y="40" width="52" height="40" rx="8"/><path d="M52,40 V20 M76,40 V20"/><path d="M64,80 V112"/></g>'),
  'cert': glyph_svg('<path d="M64,12 L104,26 V60 C104,88 86,106 64,116 C42,106 24,88 24,60 V26 Z"/><path d="M46,62 l12,12 l24,-26"/>'),
@@ -44,10 +52,11 @@ GLYPHS = {
 }
 def chrome(title, desc, path, body, nav_key, extra_head=''):
     if 'Amir Khademi' not in title and title != 'Not found': title = f'{title} · Amir Khademi'  # every indexed page carries the author's name
-    # The current section: the page's own `nav:` front-matter key when it names a section (the SQ pages sit under
-    # Projects), otherwise the path prefix.
-    sec = next((h for h, _ in SECTIONS if h != 'mailto:amir@ahk02x.com' and (nav_key == h or path.startswith(h))), '')
-    nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == sec else '') + f'><span class="nav-no" aria-hidden="true">{i:02}</span>{t}</a>' for i, (h, t) in enumerate(SECTIONS, 1))
+    # nav_key is the page's `nav:` front matter (the SQ pages file under Projects) or its own path.
+    sec = next((h for _, h, _ in SECTIONS if (nav_key or path).startswith(h)), '')
+    nav = ''.join(f'<a href="{h}"' + (' aria-current="page"' if h == sec else '') + f'><span class="nav-no" aria-hidden="true">{n}</span> {t}</a>' for n, h, t in SECTIONS)
+    nav += f'<a href="{CONTACT[1]}"><span class="nav-no" aria-hidden="true">{CONTACT[0]}</span> {CONTACT[2]} <span aria-hidden="true">↗</span></a>'
+    directory = ''.join(f'<a href="{h}">{n} {t}</a>' for n, h, t in SECTIONS)
     return f'''<!doctype html>
 <html lang="en">
 <head>
@@ -58,6 +67,8 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <link rel="canonical" href="https://ahk02x.dev{path}">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js"></script>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/style.css">
 <script src="/assets/site.js" defer></script>
 <meta name="theme-color" content="#d4d5d1">
@@ -73,10 +84,9 @@ def chrome(title, desc, path, body, nav_key, extra_head=''):
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation">{nav}</nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
+<header class="site-header"><a class="site-brand" href="/"><span>AHK / 02X</span> <span>Personal archive</span></a><nav class="site-nav" aria-label="Main navigation">{nav}<button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></nav></header>
 {body}
-<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
+<footer class="site-footer"><div><span class="eyebrow">{CONTACT[0]} / {CONTACT[2]}</span><a href="{CONTACT[1]}">amir@ahk02x.com <span aria-hidden="true">↗</span></a><span>Amir Khademi · online as ahk02x</span></div><nav aria-label="Directory"><span class="eyebrow">Directory</span>{directory}</nav><nav class="social-links" aria-label="Social profiles"><span class="eyebrow">Elsewhere</span><a href="https://x.com/ahk02x" rel="me">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ahk02x" rel="me">GitHub <span aria-hidden="true">↗</span></a></nav></footer>
 </div>
 </body>
 </html>'''
@@ -95,55 +105,50 @@ def token_card():
     rest = tot - sum(t for _, t in shares); shares.append(('Private projects', rest)); mx = max(t for _, t in shares)
     bars = ''.join(f'<div>{html.escape(n)}</div><div class="b"><i style="width:{100*t/mx:.1f}%"></i></div><div class="n">{t/1e9:.2f} B</div>' for n, t in shares)
     first = (tok.get('first') or '')[:7]
-    return f'''<section id="built" class="card" style="margin-top:28px"><div class="head">{GLYPHS["tokens"]}<h3>Built with AI assistance</h3></div>
+    # Theme: no card, no radius, no fills. A band with a hairline role list, a .statrow and the .bars idiom.
+    # Every number and every sentence below is the site's account of its own data: restyle, never reword.
+    return f'''<section id="tokens" class="band">
 <style>
-#built .lead{{font-size:clamp(1.15rem,2.2vw,1.45rem);line-height:1.45;font-weight:600;max-width:46rem;margin:6px 0 18px;padding-left:16px;border-left:5px solid var(--st-built)}}
-#built .lead em{{font-style:normal;color:var(--st-built)}}
-#built .roles{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 16px;padding:0;list-style:none}}
-#built .roles li{{padding:14px 16px;border:1px solid var(--soft-line);border-top:4px solid var(--c);border-radius:8px;line-height:1.45}}
-#built .roles b{{display:block;font:11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--c);margin-bottom:4px}}
-#built .result{{max-width:46rem;margin:0 0 6px}}
-#built .src{{font-size:.86rem;color:var(--muted);margin:0 0 4px}}
-#built .tile:nth-child(1){{--c:var(--st-built)}}#built .tile:nth-child(2){{--c:var(--st-run)}}#built .tile:nth-child(3){{--c:var(--st-written)}}#built .tile:nth-child(4){{--c:var(--st-live)}}
-#built .tile{{border-top:4px solid var(--c)}}#built .tile .v{{color:var(--c)}}
-#built .bars>div:nth-child(12n+2) i{{background:var(--st-built)}}#built .bars>div:nth-child(12n+5) i{{background:var(--st-run)}}#built .bars>div:nth-child(12n+8) i{{background:var(--st-written)}}#built .bars>div:nth-child(12n+11) i{{background:var(--st-live)}}
-#built .bars .b{{border-color:var(--soft-line)}}
-@media (max-width:720px){{#built .roles{{grid-template-columns:1fr}}}}
+#tokens{{display:flex;flex-direction:column;gap:24px}}
+#tokens>*,#tokens .spec,#tokens .bars{{margin:0}}
+#tokens>p,#tokens .two-up p{{max-width:64ch}}
+#tokens .two-up>div{{display:flex;flex-direction:column;gap:16px}}
+#tokens .statrow small{{display:block;color:var(--quiet)}}
 </style>
-<p class="lead">I had the ideas long before I had the time to learn every field they needed. Working with an AI agent <em>took that ceiling off.</em></p>
-<ul class="roles"><li style="--c:var(--st-built)"><b>I</b>set the direction and the standard.</li><li style="--c:var(--st-run)"><b>The agent</b>does the legwork.</li><li style="--c:var(--st-written)"><b>I</b>read, test and own what ships.</li></ul>
-<p class="result">The projects on this page are the result, and so is the way of working behind them, which is the part I have learned the most from.</p>
-<p class="src">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p>
-<div class="tiles"><div class="tile"><div class="k">Lifetime tokens</div><div class="v">{(_ct+_gt+_lt)/1e9:.2f}<small>billion</small></div><div class="t">Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</div></div><div class="tile"><div class="k">Sessions</div><div class="v">{tok["sessions"]:,}</div></div><div class="tile"><div class="k">Replies</div><div class="v">{tok["assistant_messages"]:,}</div></div><div class="tile"><div class="k">Cache reads</div><div class="v">{k.get("cache_read_input_tokens",0)/1e9:.2f}<small>billion</small></div><div class="t">fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</div></div></div>
-<div class="eyebrow" style="margin-top:26px">By project · every tool</div><div class="bars">{bars}</div>
-<p class="muted" style="margin-top:12px;font-size:.86rem">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies and cache reads count the Claude Code side only; the project split counts Claude, GPT and my own GPUs, and ChatGPT web use, which has no project, sits in Private projects; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPUs: mostly the Crucix lab, read from the model server&rsquo;s log, plus a private chat app on my 3080, counted from its own usage ledger. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
+<div class="band-head"><div><span class="eyebrow">Built with AI assistance</span><h2>I had the ideas long before I had the time to learn every field they needed. Working with an AI agent took that ceiling off.</h2></div></div>
+<div class="two-up"><div><dl class="spec"><dt>I</dt><dd>set the direction and the standard.</dd><dt>The agent</dt><dd>does the legwork.</dd><dt>I</dt><dd>read, test and own what ships.</dd></dl>
+<p>The projects on this page are the result, and so is the way of working behind them, which is the part I have learned the most from.</p>
+<p class="muted">The same count the home page shows: Claude Code transcripts on this Mac since {first}, plus GPT, deduplicated.</p></div>
+<div><div class="eyebrow">By project · every tool</div><div class="bars">{bars}</div></div></div>
+<div class="statrow"><div><span>Lifetime tokens</span><b>{(_ct+_gt+_lt)/1e9:.2f} billion</b><small>Claude {_ct/1e9:.2f} B · GPT {_gt/1e9:.2f} B · others {_lt/1e6:.1f} M</small></div><div><span>Sessions</span><b>{tok["sessions"]:,}</b></div><div><span>Replies</span><b>{tok["assistant_messages"]:,}</b></div><div><span>Cache reads</span><b>{k.get("cache_read_input_tokens",0)/1e9:.2f} billion</b><small>fresh input {(k.get("input_tokens",0)+k.get("cache_creation_input_tokens",0))/1e6:,.0f} M · output {k.get("output_tokens",0)/1e6:,.0f} M</small></div></div>
+<p class="muted">Counted by <a href="https://github.com/ahk02x/ahk02x.github.io/blob/main/tools/tokens.py">tools/tokens.py</a>. Streamed messages are deduplicated; a session's tokens are split evenly across the project folders it touched. Private projects are summed, never named. Sessions, replies and cache reads count the Claude Code side only; the project split counts Claude, GPT and my own GPUs, and ChatGPT web use, which has no project, sits in Private projects; the GPT figure is mostly an estimate of ChatGPT web use since 2023; &ldquo;others&rdquo; is local open models on my own GPUs: mostly the Crucix lab, read from the model server&rsquo;s log, plus a private chat app on my 3080, counted from its own usage ledger. Totals include cache reads; these are usage counters, not unique generated words or a cost estimate.</p></section>'''
 gtok = json.load(open('data/gpt_tokens.json')) if os.path.exists('data/gpt_tokens.json') else {}
 ghist = json.load(open('data/gpt_history.json')) if os.path.exists('data/gpt_history.json') else {}  # ChatGPT web estimate (2023 on), tools/gpt_history.py
 ltok = json.load(open('data/local_tokens.json')) if os.path.exists('data/local_tokens.json') else {}  # local open models: Crucix lab (fixed, from the ollama journal) + the 3080 chat app (tools/local_tokens.py)
 _ct, _gt = (tok or {}).get('total_tokens', 0), gtok.get('total_tokens', 0) + ghist.get('tokens', 0); _lt = ltok.get('total_tokens', 0); _mx = max(_ct, _gt, 1)
 def activity():
+    """The AI-token activity snapshot: stats strip, heatmap, and the dated facts the home page quotes."""
     import datetime as dt
     days = collections.Counter()
     for d in (tok or {}).get('by_day', []): days[d['day']] += d['tokens']
     for d, v in gtok.get('by_day', {}).items(): days[d] += v
     for d, v in ghist.get('by_day', {}).items(): days[d] += v
-    if not days: return '', ''
+    if not days: return {}
     today = dt.date.fromisoformat(max(max(days), gtok.get('updated', '0000')[:10]))
     on = sorted(dt.date.fromisoformat(d) for d, v in days.items() if v)
     best = run = 0; prev = None
     for d in on:
         run = run + 1 if prev and (d - prev).days == 1 else 1; best = max(best, run); prev = d
-    cur = 0; d = today
+    # The current streak ends on the snapshot day, or the day before it if that day has no data yet.
+    end = today if days.get(today.isoformat()) else today - dt.timedelta(days=1)
+    cur = 0; d = end
     while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
-    if not cur and days.get((today - dt.timedelta(days=1)).isoformat()):
-        d = today - dt.timedelta(days=1)
-        while days.get(d.isoformat()): cur += 1; d -= dt.timedelta(days=1)
     def short(n): return f"{n/1e9:.2f}B" if n >= 1e9 else f"{n/1e6:.1f}M" if n >= 1e6 else f"{n:,}"
     lt = (tok or {}).get('longest_task_min', 0)
     stats = [(short(_ct + _gt + _lt), 'Lifetime tokens'), (short(max(days.values())), 'Peak day'),
              (f"{lt//60}h {lt%60:02d}m" if lt else '—', 'Longest task'), (f"{best} days", 'Longest streak'), (f"{cur} days", 'Current streak')]
     strip = ''.join(f'<div><b>{v}</b><span>{k}</span></div>' for v, k in stats)
-    return strip, grid_html(days, today)
+    return {'strip': strip, 'grid': grid_html(days, today), 'today': today, 'streak': cur, 'streak_end': end}
 def grid_html(days, today):
     import datetime as dt
     nz = sorted(v for v in days.values() if v); q = [nz[int(len(nz) * f)] for f in (.25, .5, .75, .9)] if nz else [1] * 4
@@ -182,21 +187,64 @@ def gh_grid():
     g = json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}
     if not g: return ''
     return grid_html(collections.Counter(g['by_day']), dt.date.fromisoformat(max(max(g['by_day']), gtok.get('updated', '0000')[:10])))
+def _day_short(value):
+    """A date a reader can hold: '11 Nov'. The counters are daily, so the clock and zone are noise."""
+    try: return datetime.date.fromisoformat(value[:10]).strftime('%-d %b')
+    except (TypeError, ValueError): return '—'
 def _next_update():
     import datetime as dt
     from zoneinfo import ZoneInfo
     tz = ZoneInfo('America/Toronto'); now = dt.datetime.now(tz)
-    return (now.date() + dt.timedelta(days=1)).isoformat() + ' 00:00 ET'
+    return (now.date() + dt.timedelta(days=1)).strftime('%-d %b')  # the counters refresh overnight, Toronto time
+_act = activity()
+def sq_through(week):
+    """The last day the snapshot covers: its weeks are whole Mon-Sun ones, so it is good through that Sunday."""
+    try: d = datetime.date.fromisoformat(week) + datetime.timedelta(days=6)
+    except (TypeError, ValueError): return '—'
+    return d.strftime('%-d %B %Y')
+def sq_facts():
+    """The SQ figures the home page quotes, from the committed trends snapshot and the token export. Missing = a dash."""
+    t = json.load(open('data/sq_trends.json')) if os.path.exists('data/sq_trends.json') else {}
+    tot = t.get('totals') or {}
+    hours = tot.get('hours'); weeks = sum(1 for w in t.get('weeks', []) if w.get('hours'))
+    spent = sum(p['tokens'] for p in (tok or {}).get('top_projects', []) if p['project'] in SQ_REPOS)
+    num = lambda v: f"{v:,}" if isinstance(v, int) else '—'
+    # Every drive figure on the SQ pages comes from this one snapshot, so no page can quote a stale count.
+    # The snapshot is whole weeks only (tools/sq_trends.py): the date it is good through is printed with it.
+    return {'{{sq_hours}}': f"{hours:,.1f}" if isinstance(hours, (int, float)) else '—', '{{sq_weeks}}': str(weeks) if weeks else '—',
+            '{{sq_tokens}}': f"{spent/1e9:.2f}B" if spent else '—',
+            '{{sq_captures}}': num(tot.get('captures')), '{{sq_samples}}': num(tot.get('samples')),
+            '{{sq_through}}': sq_through(t.get('through_week')), **sq_live(t)}
+def sq_live(t):
+    """The two SQ readouts that move every week: last week's driving and its misfire rate, from data/sq_trends.json,
+    which the publish job refreshes with the health card. The verdict itself stays on the card. Missing = a dash."""
+    driven = [w for w in t.get('weeks', []) if w.get('hours') and isinstance(w.get('misfire_hr'), (int, float))]
+    last, prev = (driven[-1] if driven else {}), (driven[-2] if len(driven) > 1 else {})
+    lm, pm = last.get('misfire_hr'), prev.get('misfire_hr')
+    if isinstance(lm, (int, float)) and isinstance(pm, (int, float)) and pm:
+        ch = (lm - pm) / pm * 100
+        vs = f"{'down' if ch < 0 else 'up'} {abs(ch):.0f}% on the week before ({pm:g} an hour)"
+    else:
+        vs = 'no earlier week to compare'
+    wk = sq_through(last.get('week')) if last else '—'
+    hrs, trips = last.get('hours'), last.get('captures')
+    return {'{{sq_wk_hours}}': f"{hrs:g}" if isinstance(hrs, (int, float)) else '—',
+            '{{sq_wk_trips}}': f"{trips:,}" if isinstance(trips, int) else '—',
+            '{{sq_mis_last}}': f"{lm:g}" if isinstance(lm, (int, float)) else '—',
+            '{{sq_mis_vs}}': html.escape(vs), '{{sq_mis_week}}': wk}
 subs = {'{{claude_tokens}}': f"{_ct:,}" if _ct else '—', '{{gpt_tokens}}': f"{_gt:,}" if _gt else '—',
         '{{claude_pct}}': f"{max(_ct/_mx*100, 1 if _ct else 0):.1f}", '{{gpt_pct}}': f"{max(_gt/_mx*100, 1 if _gt else 0):.1f}",
-        '{{tokens_updated}}': (gtok.get('updated', '') + ' ET') if gtok.get('updated') else '—',
+        '{{tokens_updated}}': _day_short(gtok.get('updated', '')),
         '{{tokens_next}}': _next_update(),
         '{{gpt_note}}': f" · GPT includes ~{ghist['tokens']/1e6:,.0f}M estimated ChatGPT use since {ghist.get('since', '2023')}" if ghist.get('tokens') else '',
         '{{sq_months}}': sq_month_bars(),
-        '{{tk_strip}}': activity()[0], '{{tk_grid}}': activity()[1], '{{gh_grid}}': gh_grid(), '{{gh_total}}': str((json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}).get('total', '—')),
+        '{{tk_strip}}': _act.get('strip', ''), '{{tk_grid}}': _act.get('grid', ''), '{{gh_grid}}': gh_grid(), '{{gh_total}}': str((json.load(open('data/github.json')) if os.path.exists('data/github.json') else {}).get('total', '—')),
         '{{tokens_b}}': f"{tok.get('total_tokens',0)/1e9:.2f}" if tok else '—', '{{sessions}}': f"{tok.get('sessions',0):,}" if tok else '—',
         '{{sq_word}}': word, '{{sq_cls}}': cls, '{{sq_window}}': ' to '.join(hc.get('window', ['', ''])), '{{token_card}}': token_card(),
         '{{tokens_since}}': (tok.get('first') or '')[:7], '{{sq_generated}}': html.escape(hc.get('generated', ''))}
+subs.update(sq_facts())
+# Dated by the activity snapshot, not by the clock, so a rebuild on another day changes nothing.
+subs['{{snapshot_day}}'] = f"{_act['today'].day} {_act['today'].strftime('%b %Y')}" if _act else '—'
 for g, svg in GLYPHS.items(): subs['{{glyph:' + g + '}}'] = svg
 entries = []
 for src in sorted(glob.glob('src/pages/*.html')):
@@ -209,32 +257,46 @@ posts = sorted([e for e in entries if e['meta']['path'].startswith('/writing/') 
 def when(d):
     try: return datetime.date.fromisoformat(d).strftime('%b %Y')
     except ValueError: return ''
+# Field notes for projects still running are held back for now: the index shows the title unlinked
+# with "Write-up coming soon". The pages still build. Dates and summaries are off the list for now too.
+SOON = {'/writing/claude-code-on-call.html', '/writing/memory-as-infrastructure.html', '/writing/fleet-patch.html',
+        '/writing/lanwatch.html', '/writing/partswatch.html', '/writing/everything-i-ever-kept.html'}
 def post_item(e):
-    mt = e['meta']; blurb = mt.get('summary') or mt.get('description', '')
-    # The list dates each note by when the PROJECT was built (front matter `built: YYYY-MM`), not when
-    # the write-up was published; `status` tints it with the projects-list colour. No `built` = publish date.
-    built, st = mt.get('built', ''), mt.get('status', 'written')
-    label = ('Written ' if st == 'written' else 'Built ') + when(built + '-01') if built else when(e['date'])
+    mt = e['meta']
+    # `status` tints the row with the projects-list colour; the chip names the kind, never a date.
+    st = mt.get('status', 'written')
+    if mt['path'] in SOON:
+        return (f'<div class="item st-{st}"><div class="t"><span>{html.escape(mt["title"])}</span></div>'
+                f'<span class="chip kind">Write-up coming soon</span></div>')
+    label = 'Written' if st == 'written' else 'Built'
     return (f'<div class="item st-{st}"><div class="t"><a href="{mt["path"]}">{html.escape(mt["title"])}</a></div>'
-            f'<time datetime="{built or e["date"]}" class="chip">{label}</time><p class="d">{html.escape(blurb)}</p></div>')
+            f'<span class="chip kind">{label}</span></div>')
 subs['{{writing_list}}'] = ''.join(post_item(e) for e in sorted(posts, key=lambda e: (e['meta'].get('built') or e['date'][:7], e['date']), reverse=True))
 def when_long(d):
     try: return datetime.date.fromisoformat(d).strftime('%B %Y')
     except ValueError: return ''
 subs['{{latest_notes}}'] = ''.join(f'<a class="article-link" href="{e["meta"]["path"]}"><span>{when_long(e["date"])} · Field note {int(e["meta"].get("note", "0") or 0):03}</span><strong>{html.escape(e["meta"]["title"])} <span aria-hidden="true">↗</span></strong></a>' for e in posts[:3])
+# Home: three notes I picked, in this order, as the writing index's own rows (post_item, untouched), each
+# chip prefixed with its field-note number; plus the count and the title the Now panel quotes.
+# A path that no longer exists fails the build instead of quietly showing two rows.
+HOME_NOTES = ['/writing/go-x509.html', '/writing/memory-as-infrastructure.html', '/writing/ahkira.html']
+by_path = {e['meta']['path']: e for e in posts}
+home_posts = [by_path[p] for p in HOME_NOTES]
+subs['{{latest_rows}}'] = ''.join(post_item(e).replace('class="chip">', f'class="chip">Field note {int(e["meta"].get("note", "0") or 0):03} · ', 1) for e in home_posts)
+subs['{{writing_count}}'] = str(len(posts))
+subs['{{now_latest}}'] = f'<a href="{posts[0]["meta"]["path"]}">{html.escape(posts[0]["meta"]["title"])}</a>' if posts else '—'
 # Structured data (schema.org JSON-LD): the site and its author on every page, the About page as his
-# profile, each write-up as an Article he wrote. alternateName carries the full name in the spellings
-# people actually type, so a search for any of them matches these pages.
+# profile, each write-up as an Article he wrote. The public name is Amir Khademi only; the longer
+# legal name stays off every page except /photo-rights.html, which a copyright claim points at.
 SITE = 'https://ahk02x.dev'
 PERSON_ID, WEBSITE_ID = SITE + '/#person', SITE + '/#website'
 PERSON = {'@type': 'Person', '@id': PERSON_ID, 'name': 'Amir Khademi',
-          'alternateName': ['Amir Hossein Khademi', 'Amir-Hossein Khademi', 'Amirhossein Khademi'],
-          'givenName': 'Amir Hossein', 'familyName': 'Khademi',
+          'givenName': 'Amir', 'familyName': 'Khademi',
           'url': SITE + '/', 'mainEntityOfPage': SITE + '/about.html',
-          'jobTitle': 'Platform & Security Engineer',
-          'description': 'Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
+          'jobTitle': 'Platform Engineer',
+          'description': 'Platform Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.',
           'email': 'mailto:amir@ahk02x.com',
-          'knowsAbout': ['Platform engineering', 'Security engineering', 'Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Payments infrastructure', 'PKI and TLS', 'Identity and access management', 'Secrets management', 'Network security', 'Vulnerability triage', 'Go', 'Python', 'HashiCorp Nomad, Consul and Vault', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
+          'knowsAbout': ['Platform engineering', 'Site reliability engineering', 'Linux', 'Kubernetes', 'Observability', 'Identity and access management', 'Home infrastructure', 'Vehicle telemetry', 'AI agent tooling'],
           'sameAs': ['https://github.com/ahk02x', 'https://www.linkedin.com/in/amirh-khademi/']}
 WEBSITE = {'@type': 'WebSite', '@id': WEBSITE_ID, 'url': SITE + '/', 'name': 'ahk02x — field notes',
            'alternateName': 'Amir Khademi — field notes', 'inLanguage': 'en',
@@ -256,13 +318,6 @@ def jsonld(meta, body):
                       'isPartOf': {'@id': WEBSITE_ID}, 'about': {'@id': PERSON_ID}})
     data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     return '<script type="application/ld+json">' + data + '</script>\n'
-def bare(title, desc, path, body, extra_head=''):
-    """Full-screen pages (the drawer home): same head and metadata, own stylesheet, no shared header."""
-    full = chrome(title, desc, path, '', path, extra_head)
-    head = full.split('<body>')[0].replace('<link rel="stylesheet" href="/style.css">', '<link rel="stylesheet" href="/assets/home.css">')
-    head = re.sub(r'<link rel="preconnect"[^\n]*\n<link rel="stylesheet" href="https://fonts[^\n]*\n', '', head)
-    head = head.replace('<script src="/assets/site.js" defer></script>', '<script src="/assets/home.js" defer></script>').replace('#f2f0e9', '#d4d5d1')
-    return head + '<body class="bare">\n' + body + '\n</body>\n</html>'
 def bust(page):
     """Content-hash every local CSS/JS link, so new HTML never pairs with a stylesheet an edge or browser cached earlier."""
     import hashlib
@@ -277,24 +332,30 @@ for e in entries:
     meta, body = e['meta'], e['body']
     for a, b in subs.items(): body = body.replace(a, b)
     if meta['path'].startswith('/sq/'):  # one tab strip is the only navigation between SQ pages
-        tabs = [('/sq/', 'Overview'), ('/sq/health.html', 'Weekly health'), ('/sq/trends.html', 'Trends'), ('/sq/gallery.html', 'Gallery'), ('/sq/build-log.html', 'Build log')]
         strip = '<nav class="sq-tabs" aria-label="SQ5 sections">' + ''.join(
-            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
+            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in SQ_TABS) + '</nav>'
         body = body.replace('</section>', '</section>' + strip, 1)
-    if meta['path'] in ('/writing/ahkira.html', '/writing/ahkira-next.html'):  # write-up + coming-soon tabs
-        tabs = [('/writing/ahkira.html', 'The write-up'), ('/writing/ahkira-next.html', 'Coming soon')]
-        strip = '<nav class="sq-tabs" aria-label="ahkira sections">' + ''.join(
-            f'<a href="{h}"{" aria-current=\"page\"" if h == meta["path"] else ""}>{t}</a>' for h, t in tabs) + '</nav>'
-        body = body.replace('</section>', '</section>' + strip, 1)
+    # No page ends in a dead end. Every SQ tab hands the reader the next tab (the last one goes back to
+    # Projects), and every field note ends at the index. A page that writes its own Next row keeps it.
+    if 'class="nextnav"' not in body:
+        nxt = None
+        if meta['path'].startswith('/sq/'):
+            paths = [h for h, _ in SQ_TABS]
+            i = paths.index(meta['path']) + 1 if meta['path'] in paths else len(paths)
+            nxt = (SQ_TABS[i][0], 'Next &mdash; SQ', SQ_TABS[i][1]) if i < len(paths) else ('/projects/', 'Next &mdash; 02', 'Projects')
+        elif meta['path'].startswith('/writing/') and meta.get('note'):
+            nxt = ('/writing/', 'Next &mdash; 04', 'All write-ups')
+        if nxt:
+            row = f'<a class="nextnav" href="{nxt[0]}"><span class="eyebrow">{nxt[1]}</span><span>{nxt[2]} &rarr;</span></a>\n'
+            cut = body.rindex('</main>')
+            body = body[:cut] + row + body[cut:]
     if 'id="main"' not in body:
         body = body.replace('<main ', '<main id="main" ', 1)
-    body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')
+    if meta['path'] != '/':  # home is the one page that is not an inner page
+        body = body.replace('<main id="main" class="wrap', '<main id="main" class="wrap inner-page')
     if meta['path'].startswith('/writing/') and '<time datetime=' in body and 'class="byline"' not in body:
         body = body.replace('</h1>', '</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>', 1)
-    if meta.get('layout') == 'bare':
-        out = bare(meta['title'], meta.get('description', ''), meta['path'], body, jsonld(meta, body))
-    else:
-        out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), ('<meta name="robots" content="noindex,nofollow">\n' if meta.get('noindex') else '') + jsonld(meta, body))
+    out = chrome(meta['title'], meta.get('description', ''), meta['path'], body, meta.get('nav', meta['path']), ('<meta name="robots" content="noindex,nofollow">\n' if meta.get('noindex') else '') + jsonld(meta, body))
     dest = meta['path'].lstrip('/') or 'index.html'
     if dest.endswith('/'): dest += 'index.html'
     os.makedirs(os.path.dirname(dest) or '.', exist_ok=True); open(dest, 'w').write(bust(out)); pages.append(meta['path'])
@@ -318,7 +379,7 @@ for entry in os.scandir(public_root):
         os.unlink(entry.path)
 public_files = ['style.css', 'robots.txt', '.well-known/security.txt', 'sitemap.xml', 'feed.xml', 'CNAME', '.nojekyll', 'data/tokens.json', 'data/gpt_tokens.json', 'data/github.json', 'data/sq_trends.json', 'sq/health.json']
 public_files += [(p.lstrip('/') or 'index.html') + ('index.html' if p.endswith('/') and p != '/' else '') for p in pages]
-public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/sq-gallery/*') + glob.glob('assets/infra/*') + glob.glob('assets/fleet-patch/*') if os.path.isfile(p)]
+public_files += [p for p in glob.glob('assets/*') + glob.glob('assets/fonts/*') + glob.glob('assets/sq-gallery/*') + glob.glob('assets/infra/*') + glob.glob('assets/about/*') + glob.glob('assets/fleet-patch/*') if os.path.isfile(p)]
 public_files += [p for p in glob.glob('*.txt') if re.fullmatch(r'[0-9a-f]{32}\.txt', p)]  # IndexNow key, see tools/indexnow.py
 for source in public_files:
     if os.path.exists(source):

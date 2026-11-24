@@ -60,6 +60,7 @@ peak = lambda k: max((x[k] for x in out if x.get(k) is not None), default=None)
 doc = {'generated': datetime.datetime.now().astimezone().isoformat(timespec='minutes'),
        'through_week': out[-1]['week'],
        'totals': {'hours': r(sum(x['hours'] for x in out)), 'captures': sum(x['captures'] for x in out),
+                  'samples': sum(c.get('samples') or 0 for c in caps),
                   'boost_psi': peak('boost_psi'), 'rpm_max': peak('rpm_max'), 'oil_max': peak('oil_max')},
        'weeks': out}
 json.dump(doc, open(a.out, 'w'), separators=(',', ':'))

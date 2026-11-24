@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="66ac6185-5211-4805-810d-381f26235587"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>/* cyrillic-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("1058191f-f64d-46f6-b3dc-76fb01ff087a") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("ecd0f812-6b16-4aa9-9c0c-737999bcd287") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("2b81a7e5-5f1d-484d-a612-4eac5c1eeedb") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("72c8eb55-3650-4771-897b-366d5575349c") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("d38554d8-a281-42cc-aa9b-57b734c53a90") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("1058191f-f64d-46f6-b3dc-76fb01ff087a") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("ecd0f812-6b16-4aa9-9c0c-737999bcd287") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("2b81a7e5-5f1d-484d-a612-4eac5c1eeedb") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("72c8eb55-3650-4771-897b-366d5575349c") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("d38554d8-a281-42cc-aa9b-57b734c53a90") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("1058191f-f64d-46f6-b3dc-76fb01ff087a") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("ecd0f812-6b16-4aa9-9c0c-737999bcd287") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("2b81a7e5-5f1d-484d-a612-4eac5c1eeedb") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("72c8eb55-3650-4771-897b-366d5575349c") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("d38554d8-a281-42cc-aa9b-57b734c53a90") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("55b9bc9c-9fa3-44ea-82d6-d19d82b402e0") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("32abc650-031d-46fe-91c0-1be72a1d16ba") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* symbols2 */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("410719be-559e-41dd-a3cb-42a9aa61bf22") format('woff2');
+  unicode-range: U+2000-2001, U+2004-2008, U+200A, U+23B8-23BD, U+2500-259F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("26133462-8429-4399-9907-5e0504971577") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("5098bc14-b363-42bb-b2b6-c70d5654f114") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("260b74c6-c4f0-462b-b58b-448a8f9e49d6") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* cyrillic-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("55b9bc9c-9fa3-44ea-82d6-d19d82b402e0") format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("32abc650-031d-46fe-91c0-1be72a1d16ba") format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* symbols2 */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("410719be-559e-41dd-a3cb-42a9aa61bf22") format('woff2');
+  unicode-range: U+2000-2001, U+2004-2008, U+200A, U+23B8-23BD, U+2500-259F;
+}
+/* vietnamese */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("26133462-8429-4399-9907-5e0504971577") format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("5098bc14-b363-42bb-b2b6-c70d5654f114") format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("260b74c6-c4f0-462b-b58b-448a8f9e49d6") format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+</style>
+
+<style>
+body{margin:0;background:#d4d5d1;color:#1b1c1a;font-family:Geist,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#1b1c1a;text-decoration:none}a:hover{color:oklch(0.55 0.15 45)}
+input::placeholder{color:#7a7c76}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,40px)">
+
+<header style="position:sticky;top:0;z-index:5;background:#d4d5d1;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:16px 0;border-bottom:1px solid #1b1c1a">
+  <button type="button" sc-camel-on-click="{{ goHome }}" style="border:0;background:none;padding:0;cursor:pointer;display:flex;gap:12px;align-items:center;font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:#1b1c1a"><span>AHK / 02X</span><span style="color:#5e605a">Personal archive</span></button>
+  <nav style="display:flex;flex-wrap:wrap;gap:4px">
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+      <button type="button" sc-camel-on-click="{{ n.go }}" style="border:1px solid {{ n.bd }};background:{{ n.bg }};color:{{ n.fg }};padding:7px 10px;cursor:pointer;font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase" style-hover="border-color:#1b1c1a">{{ n.label }}</button>
+    </sc-for>
+  </nav>
+  <a href="mailto:amir@ahk02x.com" style="font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase">05 Contact ↗</a>
+</header>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<div data-screen-label="Home" style="display:flex;flex-direction:column">
+  <section style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-end;padding:clamp(48px,8vw,96px) 0 56px;border-bottom:1px solid #a9aba5">
+    <div style="flex:1 1 420px;display:flex;flex-direction:column;gap:28px">
+      <h1 style="margin:0;font-weight:500;font-size:clamp(56px,9vw,112px);line-height:.92;letter-spacing:-.045em">Amir<br>Khademi</h1>
+      <p style="margin:0;max-width:32ch;font-size:clamp(20px,2.2vw,26px);line-height:1.3;letter-spacing:-.01em;text-wrap:pretty">Site reliability engineer. I like knowing how things work — especially the things I use every day.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <button type="button" sc-camel-on-click="{{ goProjects }}" style="border:0;cursor:pointer;padding:14px 20px;background:#1b1c1a;color:#e9eae6;font-size:15px;font-weight:500">See what I'm building →</button>
+        <button type="button" sc-camel-on-click="{{ goAbout }}" style="cursor:pointer;padding:14px 20px;border:1px solid #1b1c1a;background:transparent;color:#1b1c1a;font-size:15px;font-weight:500">About me</button>
+      </div>
+    </div>
+    <aside style="flex:1 1 340px;display:flex;flex-direction:column;border:1px solid #1b1c1a;background:#dcddd9">
+      <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #1b1c1a;font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase"><span>Now</span><span style="color:#5e605a">Nov 2026</span></div>
+      <sc-for list="{{ now }}" as="n" hint-placeholder-count="3">
+        <div style="display:flex;gap:16px;padding:14px 16px;border-bottom:1px solid #b9bbb5;font-size:15px;line-height:1.4">
+          <span style="flex:0 0 76px;font:400 11px/1.9 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ n.k }}</span><span>{{ n.v }}</span>
+        </div>
+      </sc-for>
+      <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;font:400 11px 'Geist Mono',monospace;color:#5e605a"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.6 0.15 145)"></span>35-day build streak</div>
+    </aside>
+  </section>
+
+  <section style="display:flex;flex-wrap:wrap;gap:32px;padding:56px 0;border-bottom:1px solid #a9aba5">
+    <figure style="flex:1 1 380px;margin:0;display:flex;flex-direction:column;gap:8px">
+      <img src="4cbd012a-be02-4d2a-bb6d-27e8b676eda6" alt="Grey Audi SQ5 with its bonnet open beneath an evening sky" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid #1b1c1a;display:block;background:#cbccc7">
+      <figcaption style="font:400 11px 'Geist Mono',monospace;color:#5e605a">My daily driver. Also the reason SQ exists.</figcaption>
+    </figure>
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;justify-content:space-between;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <span style="display:flex;gap:10px;align-items:center;font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a"><span style="display:flex;gap:6px;align-items:center;color:oklch(0.52 0.17 25)"><span style="width:7px;height:7px;background:oklch(0.55 0.17 25)"></span>Live</span>Featured / SQ</span>
+        <h2 style="margin:0;font-size:clamp(32px,4vw,44px);font-weight:500;line-height:1.02;letter-spacing:-.03em;text-wrap:balance">I taught myself my car's diagnostic cable.</h2>
+        <p style="margin:0;max-width:44ch;font-size:17px;line-height:1.5;color:#3a3c38;text-wrap:pretty">The tuning cable only talked to a Windows app, so I worked out the framing and checksum byte by byte and built a read-only logger. Hundreds of drives later, it showed misfires clustered just after upshifts.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #1b1c1a">
+        <div style="padding:12px 12px 0 0;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px 'Geist Mono',monospace;color:#5e605a;text-transform:uppercase">Logged</span><span style="font-size:22px;font-weight:500;letter-spacing:-.02em">5× / sec</span></div>
+        <div style="padding:12px 12px 0 0;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px 'Geist Mono',monospace;color:#5e605a;text-transform:uppercase">Logger</span><span style="font-size:22px;font-weight:500;letter-spacing:-.02em">Pi</span></div>
+        <div style="padding:12px 12px 0 0;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px 'Geist Mono',monospace;color:#5e605a;text-transform:uppercase">Tokens</span><span style="font-size:22px;font-weight:500;letter-spacing:-.02em">3.20B</span></div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:20px"><a href="https://ahk02x.dev/sq/" style="font-size:15px;font-weight:500">Inside the SQ garage ↗</a><button type="button" sc-camel-on-click="{{ goProjects }}" style="border:0;background:none;padding:0;cursor:pointer;font-size:15px;font-weight:500;color:#5e605a">All projects →</button></div>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;padding:56px 0;border-bottom:1px solid #a9aba5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;padding-bottom:16px;border-bottom:1px solid #1b1c1a">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">04 / Writing</span><h2 style="margin:0;font-size:28px;font-weight:500;letter-spacing:-.02em">Latest write-ups.</h2></div>
+      <button type="button" sc-camel-on-click="{{ goWriting }}" style="border:0;background:none;padding:0;cursor:pointer;font-size:15px;font-weight:500;color:#1b1c1a">All 10 →</button>
+    </div>
+    <sc-for list="{{ latest }}" as="w" hint-placeholder-count="3">
+      <a href="{{ w.href }}" style="display:flex;flex-wrap:wrap;gap:8px 32px;align-items:baseline;padding:20px 0;border-bottom:1px solid #b9bbb5" style-hover="background:#cdcec9">
+        <span style="flex:1 1 240px;font-size:22px;font-weight:500;letter-spacing:-.02em">{{ w.t }}</span>
+        <span style="flex:2 1 340px;font-size:15px;line-height:1.45;color:#3a3c38;text-wrap:pretty">{{ w.d }}</span>
+        <span style="flex:0 0 auto;display:flex;gap:6px;align-items:center;font:500 11px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:{{ w.c }}"><span style="width:7px;height:7px;background:{{ w.c }}"></span>{{ w.tag }} {{ w.date }}</span>
+      </a>
+    </sc-for>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:24px;padding:56px 0;border-bottom:1px solid #a9aba5">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Fig 01 / Activity · daily</span><h2 style="margin:0;font-size:28px;font-weight:500;letter-spacing:-.02em">Built with an AI agent, every day.</h2></div>
+      <div style="display:flex;border:1px solid #1b1c1a">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="2">
+          <button type="button" sc-camel-on-click="{{ t.select }}" style="border:0;padding:9px 14px;font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;background:{{ t.bg }};color:{{ t.fg }}">{{ t.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));border-top:1px solid #1b1c1a">
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="5">
+        <div style="display:flex;flex-direction:column;gap:4px;padding:16px 16px 16px 0;border-bottom:1px solid #b9bbb5"><span style="font-size:30px;font-weight:500;letter-spacing:-.03em;font-variant-numeric:tabular-nums">{{ s.v }}</span><span style="font-size:13px;color:#5e605a">{{ s.k }}</span></div>
+      </sc-for>
+    </div>
+    <div style="overflow-x:auto">
+      <div style="display:grid;grid-template-rows:repeat(7,11px);grid-auto-flow:column;grid-auto-columns:11px;gap:3px;width:max-content">
+        <sc-for list="{{ cells }}" as="c" hint-placeholder-count="0"><span title="{{ c.t }}" style="background:{{ c.bg }}"></span></sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font:400 11px 'Geist Mono',monospace;color:#5e605a"><span>{{ caption }}</span><button type="button" sc-camel-on-click="{{ goProjects }}" style="border:0;background:none;padding:0;cursor:pointer;font:inherit;color:#1b1c1a;text-decoration:underline;text-underline-offset:3px">Where the tokens went →</button></div>
+  </section>
+
+  <section style="display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center;padding:48px 0">
+    <div style="flex:1 1 260px;display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">06 / ahkira</span><h2 style="margin:0;font-size:28px;font-weight:500;letter-spacing:-.02em">Still curious? Ask.</h2></div>
+    <div style="flex:2 1 460px;min-width:0;display:flex;flex-direction:column;gap:12px">
+      <form sc-camel-on-submit="{{ submitAsk }}" style="display:flex;border:1px solid #1b1c1a;background:#e6e7e3">
+        <input value="{{ q }}" sc-camel-on-change="{{ onQ }}" placeholder="What runs on jarvis?" style="flex:1;min-width:0;border:0;background:transparent;padding:16px;font:400 16px Geist,sans-serif;color:#1b1c1a;outline:none">
+        <button type="submit" style="border:0;background:#1b1c1a;color:#e9eae6;padding:0 22px;font:500 14px Geist,sans-serif;cursor:pointer">Ask ↵</button>
+      </form>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ prompts }}" as="p" hint-placeholder-count="3">
+          <button type="button" sc-camel-on-click="{{ p.pick }}" style="border:1px solid #a9aba5;background:transparent;padding:7px 12px;font:400 13px Geist,sans-serif;color:#3a3c38;cursor:pointer" style-hover="border-color:#1b1c1a;color:#1b1c1a">{{ p.t }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInner }}" hint-placeholder-val="{{ false }}">
+  <section style="display:flex;flex-wrap:wrap;gap:24px 48px;align-items:flex-end;padding:clamp(48px,7vw,88px) 0 40px;border-bottom:1px solid #1b1c1a">
+    <div style="flex:1 1 420px;display:flex;flex-direction:column;gap:16px">
+      <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ hero.n }} / {{ hero.label }}</span>
+      <h1 style="margin:0;font-weight:500;font-size:clamp(48px,7.5vw,96px);line-height:.94;letter-spacing:-.045em;text-wrap:balance">{{ hero.title }}</h1>
+    </div>
+    <p style="flex:1 1 320px;margin:0;max-width:40ch;font-size:clamp(18px,1.8vw,21px);line-height:1.4;color:#3a3c38;text-wrap:pretty">{{ hero.intro }}</p>
+  </section>
+</sc-if>
+
+<sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="About" style="display:flex;flex-direction:column">
+  <section style="display:flex;flex-wrap:wrap;gap:40px;padding:48px 0;border-bottom:1px solid #a9aba5">
+    <div style="flex:2 1 420px;display:flex;flex-direction:column;gap:18px;font-size:19px;line-height:1.55;max-width:58ch">
+      <p style="margin:0;text-wrap:pretty">That includes the car I drive, the servers in my office, and the tools I build when something keeps annoying me. A small question has a habit of turning into a project.</p>
+      <p style="margin:0;color:#3a3c38;text-wrap:pretty">I'm a site reliability engineer. Away from work, you'll usually find me somewhere between a terminal, the car and a 3D printer.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;padding-top:8px">
+        <sc-for list="{{ aboutJump }}" as="j" hint-placeholder-count="4"><span style="border:1px solid #a9aba5;padding:6px 10px;font:400 12px 'Geist Mono',monospace">{{ j }}</span></sc-for>
+      </div>
+    </div>
+    <figure style="flex:1 1 300px;margin:0;display:flex;flex-direction:column;gap:8px">
+      <img src="4cbd012a-be02-4d2a-bb6d-27e8b676eda6" alt="Grey Audi SQ5 with its bonnet open beneath an evening sky" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid #1b1c1a;display:block;background:#cbccc7">
+      <figcaption style="font:400 11px 'Geist Mono',monospace;color:#5e605a">My daily driver. Also the reason SQ exists.</figcaption>
+    </figure>
+  </section>
+
+  <section style="display:flex;flex-wrap:wrap;gap:24px 48px;padding:48px 0;border-bottom:1px solid #a9aba5">
+    <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Why I build</span><h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em">Something of my own.</h2></div>
+    <div style="flex:2 1 420px;display:flex;flex-direction:column;gap:16px;font-size:17px;line-height:1.6;color:#2a2b28;max-width:62ch">
+      <p style="margin:0;text-wrap:pretty">At work, I help keep systems running that people depend on. At home, I want to build things I can keep, understand and change myself. That's why there's a lab in my office, why I save my project history, and why I keep coming back to local software.</p>
+      <p style="margin:0;text-wrap:pretty">One early attempt was a little assistant I called Jarvis. In a Windows terminal, I taught it to say hello. Then I tried to get it to remember things. The long-term ambition is a personal assistant running on hardware I control, with a memory I can take with me.</p>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:24px;padding:48px 0;border-bottom:1px solid #a9aba5">
+    <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Some stories</span><h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em">A small question, then a project.</h2></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));border-top:1px solid #1b1c1a;border-left:1px solid #1b1c1a">
+      <sc-for list="{{ stories }}" as="s" hint-placeholder-count="6">
+        <a href="{{ s.href }}" style="display:flex;flex-direction:column;gap:12px;padding:20px;border-right:1px solid #1b1c1a;border-bottom:1px solid #1b1c1a" style-hover="background:#cdcec9">
+          <span style="font:400 11px 'Geist Mono',monospace;color:#5e605a">{{ s.n }}</span>
+          <span style="font-size:21px;font-weight:500;letter-spacing:-.02em;line-height:1.2;text-wrap:balance">{{ s.t }}</span>
+          <span style="font-size:15px;line-height:1.5;color:#3a3c38;text-wrap:pretty">{{ s.d }}</span>
+          <span style="margin-top:auto;font-size:14px;font-weight:500">{{ s.cta }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-direction:column;gap:24px;padding:48px 0;border-bottom:1px solid #a9aba5">
+    <div style="display:flex;flex-wrap:wrap;gap:16px 48px;align-items:flex-end">
+      <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Experience</span><h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em">Where I've worked.</h2></div>
+      <p style="flex:2 1 400px;margin:0;font-size:17px;line-height:1.5;color:#3a3c38;max-width:56ch;text-wrap:pretty">Seven years across cloud infrastructure, telecom and financial systems. More responsibility each time, and a little closer to the systems people depend on.</p>
+    </div>
+    <sc-for list="{{ work }}" as="w" hint-placeholder-count="3">
+      <div style="display:flex;flex-wrap:wrap;gap:12px 48px;padding:24px 0;border-top:1px solid #1b1c1a">
+        <div style="flex:1 1 220px;display:flex;flex-direction:column;gap:6px"><span style="font:400 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ w.n }}</span><span style="font-size:24px;font-weight:500;letter-spacing:-.02em">{{ w.t }}</span></div>
+        <div style="flex:2 1 420px;display:flex;flex-direction:column;gap:12px;max-width:64ch">
+          <p style="margin:0;font-size:16px;line-height:1.6;color:#2a2b28;text-wrap:pretty">{{ w.d }}</p>
+          <span style="align-self:start;display:flex;gap:8px;align-items:baseline;border:1px solid #1b1c1a;padding:8px 12px;font-size:15px"><span style="font-size:20px;font-weight:600;letter-spacing:-.02em">{{ w.k }}</span>{{ w.kd }}</span>
+        </div>
+      </div>
+    </sc-for>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:24px;padding-top:24px;border-top:1px solid #1b1c1a">
+      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="3">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ t.k }}</span><span style="font-size:15px;line-height:1.5">{{ t.v }}</span></div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="display:flex;flex-wrap:wrap;gap:24px 48px;padding:48px 0">
+    <div style="flex:1 1 280px;display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Off the clock</span><h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em">Away from the terminal.</h2></div>
+    <div style="flex:2 1 420px;display:flex;flex-direction:column;gap:20px;max-width:62ch">
+      <p style="margin:0;font-size:17px;line-height:1.6;color:#2a2b28;text-wrap:pretty">Cars, the gym, soccer and pickleball. And 3D printing, although that tends to bring me straight back to the desk with another idea. If one of these projects overlaps with something you're working on, I'd enjoy hearing about it.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px"><a href="mailto:amir@ahk02x.com" style="padding:14px 20px;background:#1b1c1a;color:#e9eae6;font-size:15px;font-weight:500">Say hello →</a><a href="https://github.com/ahk02x" style="padding:14px 20px;border:1px solid #1b1c1a;font-size:15px;font-weight:500">GitHub ↗</a></div>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isProjects }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Projects" style="display:flex;flex-direction:column">
+  <a href="https://ahk02x.dev/sq/" style="display:flex;flex-wrap:wrap;gap:24px 40px;padding:32px 0;border-bottom:1px solid #a9aba5" style-hover="background:#cdcec9">
+    <img src="4cbd012a-be02-4d2a-bb6d-27e8b676eda6" alt="Grey Audi SQ5" style="flex:1 1 280px;max-width:420px;aspect-ratio:16/10;object-fit:cover;border:1px solid #1b1c1a;background:#cbccc7">
+    <div style="flex:2 1 380px;display:flex;flex-direction:column;gap:12px">
+      <span style="display:flex;gap:6px;align-items:center;font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:oklch(0.52 0.17 25)"><span style="width:7px;height:7px;background:oklch(0.55 0.17 25)"></span>Live · 3.20B tokens</span>
+      <span style="font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em;line-height:1.05">SQ · Vehicle Intelligence Platform</span>
+      <span style="font-size:16px;line-height:1.55;color:#3a3c38;max-width:58ch;text-wrap:pretty">Not more data, more understanding. Built on a 2025 Audi SQ5, logged five times a second through a reverse-engineered cable and a Pi in the footwell. Build log, a weekly health card the car writes about itself, and the tools built for it.</span>
+      <span style="font-size:15px;font-weight:500">Open the garage ↗</span>
+    </div>
+  </a>
+  <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;padding:20px 0;border-bottom:1px solid #1b1c1a">
+    <div style="display:flex;flex-wrap:wrap;border:1px solid #1b1c1a">
+      <sc-for list="{{ pFilters }}" as="f" hint-placeholder-count="4">
+        <button type="button" sc-camel-on-click="{{ f.select }}" style="border:0;padding:8px 14px;font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
+      </sc-for>
+    </div>
+    <span style="font:400 12px 'Geist Mono',monospace;color:#5e605a">{{ pCount }}</span>
+  </div>
+  <sc-for list="{{ projects }}" as="p" hint-placeholder-count="6">
+    <div style="display:flex;flex-wrap:wrap;gap:8px 32px;align-items:baseline;padding:22px 0;border-bottom:1px solid #b9bbb5">
+      <div style="flex:1 1 240px;display:flex;flex-direction:column;gap:8px">
+        <span style="display:flex;gap:6px;align-items:center;font:500 11px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:{{ p.c }}"><span style="width:7px;height:7px;background:{{ p.c }}"></span>{{ p.tag }}<span style="color:#5e605a">{{ p.tok }}</span></span>
+        <span style="font-size:clamp(22px,2.4vw,28px);font-weight:500;letter-spacing:-.025em;line-height:1.1">{{ p.t }}</span>
+      </div>
+      <div style="flex:2 1 400px;display:flex;flex-direction:column;gap:10px">
+        <span style="font-size:15px;line-height:1.55;color:#3a3c38;text-wrap:pretty">{{ p.d }}</span>
+        <sc-if value="{{ p.hasPost }}" hint-placeholder-val="{{ false }}"><a href="{{ p.href }}" style="align-self:start;font:400 12px 'Geist Mono',monospace;text-decoration:underline;text-underline-offset:3px">Read: {{ p.post }} →</a></sc-if>
+      </div>
+    </div>
+  </sc-for>
+  <section style="display:flex;flex-wrap:wrap;gap:32px 48px;padding:56px 0;border-bottom:1px solid #a9aba5">
+    <div style="flex:1 1 300px;display:flex;flex-direction:column;gap:16px">
+      <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Built with AI assistance</span>
+      <h2 style="margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:500;letter-spacing:-.03em;line-height:1.05">I had the ideas long before I had the time to learn every field they needed.</h2>
+      <div style="display:flex;flex-direction:column;border-top:1px solid #1b1c1a">
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #b9bbb5;font-size:15px"><strong style="flex:0 0 84px;font-weight:600">I</strong>set the direction and the standard.</div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #b9bbb5;font-size:15px"><strong style="flex:0 0 84px;font-weight:600">The agent</strong>does the legwork.</div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid #b9bbb5;font-size:15px"><strong style="flex:0 0 84px;font-weight:600">I</strong>read, test and own what ships.</div>
+      </div>
+    </div>
+    <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a;padding-bottom:8px;border-bottom:1px solid #1b1c1a"><span>Tokens by project</span><span>13.67B total</span></div>
+      <sc-for list="{{ bars }}" as="b" hint-placeholder-count="8">
+        <div style="display:flex;align-items:center;gap:12px;font-size:13px">
+          <span style="flex:0 0 110px">{{ b.k }}</span>
+          <span style="flex:1;height:10px;background:#c6c7c2"><span style="display:block;height:100%;width:{{ b.w }};background:{{ b.c }}"></span></span>
+          <span style="flex:0 0 48px;text-align:right;font-family:'Geist Mono',monospace">{{ b.v }}</span>
+        </div>
+      </sc-for>
+      <span style="font:400 11px 'Geist Mono',monospace;color:#5e605a;padding-top:6px">Counted by tools/tokens.py · usage counters, not cost.</span>
+    </div>
+  </section>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInfra }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Infra" style="display:flex;flex-direction:column">
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));border-bottom:1px solid #a9aba5">
+    <sc-for list="{{ infraStats }}" as="s" hint-placeholder-count="3">
+      <div style="display:flex;flex-direction:column;gap:6px;padding:28px 24px 28px 0;border-bottom:1px solid #b9bbb5">
+        <span style="font:400 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ s.k }}</span>
+        <span style="display:flex;align-items:baseline;gap:8px"><span style="font-size:48px;font-weight:500;letter-spacing:-.04em;color:{{ s.c }}">{{ s.v }}</span><span style="font:400 12px 'Geist Mono',monospace;color:{{ s.c }}">{{ s.u }}</span></span>
+        <span style="font-size:14px;color:#3a3c38">{{ s.d }}</span>
+      </div>
+    </sc-for>
+  </section>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;padding:20px 0;border-bottom:1px solid #a9aba5;font:400 12px 'Geist Mono',monospace">
+    <span style="color:#5e605a;padding:7px 8px 7px 0">ON THIS PAGE</span>
+    <sc-for list="{{ infraSections }}" as="s" hint-placeholder-count="6"><span style="border:1px solid #a9aba5;padding:6px 10px">{{ s.n }} {{ s.short }}</span></sc-for>
+  </div>
+  <sc-for list="{{ infraSections }}" as="s" hint-placeholder-count="3">
+    <section style="display:flex;flex-wrap:wrap;gap:32px 48px;padding:48px 0;border-bottom:1px solid #a9aba5">
+      <div style="flex:1 1 380px;display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-direction:column;gap:6px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">{{ s.n }}</span><h2 style="margin:0;font-size:clamp(30px,3.6vw,42px);font-weight:500;letter-spacing:-.03em;line-height:1.05;text-wrap:balance">{{ s.t }}</h2></div>
+        <sc-for list="{{ s.paras }}" as="p" hint-placeholder-count="1"><p style="margin:0;font-size:16px;line-height:1.6;color:#2a2b28;max-width:60ch;text-wrap:pretty">{{ p }}</p></sc-for>
+        <sc-for list="{{ s.items }}" as="i" hint-placeholder-count="0">
+          <div style="display:flex;flex-wrap:wrap;gap:4px 16px;padding-top:12px;border-top:1px solid #b9bbb5;font-size:16px;line-height:1.5">
+            <span style="flex:0 0 120px;font:500 12px/1.9 'Geist Mono',monospace;color:oklch(0.5 0.15 45)">{{ i.k }}</span><span style="flex:1 1 240px;color:#2a2b28;text-wrap:pretty">{{ i.v }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <figure style="flex:1 1 320px;margin:0;display:flex;flex-direction:column;gap:10px">
+        <img src="{{ s.img }}" alt="{{ s.alt }}" style="width:100%;aspect-ratio:4/3;object-fit:cover;border:1px solid #1b1c1a;display:block;background:#cbccc7">
+        <figcaption style="font-size:13px;line-height:1.45;color:#5e605a"><span style="font-family:'Geist Mono',monospace;color:oklch(0.5 0.15 45)">{{ s.date }}</span> — {{ s.cap }}</figcaption>
+      </figure>
+    </section>
+  </sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isWriting }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Writing" style="display:flex;flex-wrap:wrap-reverse;gap:24px 48px;padding-bottom:24px">
+  <div style="flex:3 1 480px;min-width:0;display:flex;flex-direction:column">
+    <sc-for list="{{ posts }}" as="w" hint-placeholder-count="5">
+      <a href="{{ w.href }}" style="display:flex;flex-direction:column;gap:10px;padding:28px 0;border-bottom:1px solid #b9bbb5" style-hover="background:#cdcec9">
+        <span style="display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font:500 11px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase"><span style="display:flex;gap:6px;align-items:center;color:{{ w.c }}"><span style="width:7px;height:7px;background:{{ w.c }}"></span>{{ w.tag }}</span><span style="color:#5e605a">{{ w.date }}</span></span>
+        <span style="font-size:clamp(26px,3.2vw,36px);font-weight:500;letter-spacing:-.03em;line-height:1.05">{{ w.t }}</span>
+        <span style="max-width:62ch;font-size:16px;line-height:1.55;color:#3a3c38;text-wrap:pretty">{{ w.d }}</span>
+      </a>
+    </sc-for>
+  </div>
+  <aside style="flex:1 1 220px;align-self:flex-start;display:flex;flex-direction:column;gap:24px;padding-top:28px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Filter</span>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <sc-for list="{{ wFilters }}" as="f" hint-placeholder-count="3">
+          <button type="button" sc-camel-on-click="{{ f.select }}" style="border:1px solid #1b1c1a;padding:8px 12px;font:500 12px 'Geist Mono',monospace;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }}">{{ f.label }}</button>
+        </sc-for>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px;line-height:1.5;color:#3a3c38;border-top:1px solid #1b1c1a;padding-top:12px">
+      <span><strong style="font-weight:600">Built</strong> — I made a thing; here's what it measured.</span>
+      <span><strong style="font-weight:600">Written</strong> — an essay, no new code.</span>
+    </div>
+    <a href="https://ahk02x.dev/writing/go-x509.html" style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #1b1c1a;padding-top:12px">
+      <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Start here</span>
+      <span style="font-size:18px;font-weight:500;letter-spacing:-.01em">Two bytes each →</span>
+    </a>
+  </aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ isAsk }}" hint-placeholder-val="{{ false }}">
+<div data-screen-label="Ask" style="display:flex;flex-wrap:wrap;gap:40px;padding:40px 0 56px">
+  <div style="flex:2 1 460px;min-width:0;display:flex;flex-direction:column;border:1px solid #1b1c1a;background:#dcddd9;min-height:420px">
+    <div style="display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #1b1c1a;font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase"><span>ahkira</span><span style="display:flex;gap:6px;align-items:center;color:#5e605a"><span style="width:7px;height:7px;border-radius:50%;background:oklch(0.6 0.15 145)"></span>Online</span></div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;padding:20px 16px">
+      <sc-if value="{{ hasAsked }}" hint-placeholder-val="{{ false }}">
+        <div style="align-self:flex-end;max-width:80%;background:#1b1c1a;color:#e9eae6;padding:12px 14px;font-size:15px;line-height:1.45">{{ asked }}</div>
+        <div style="align-self:flex-start;max-width:80%;border:1px solid #a9aba5;padding:12px 14px;font:400 12px 'Geist Mono',monospace;color:#5e605a">ahkira's answer streams here</div>
+      </sc-if>
+      <sc-if value="{{ notAsked }}" hint-placeholder-val="{{ true }}">
+        <span style="font:400 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Try one</span>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <sc-for list="{{ prompts }}" as="p" hint-placeholder-count="3">
+            <button type="button" sc-camel-on-click="{{ p.pick }}" style="border:1px solid #a9aba5;background:transparent;padding:8px 12px;font:400 14px Geist,sans-serif;color:#3a3c38;cursor:pointer" style-hover="border-color:#1b1c1a;color:#1b1c1a">{{ p.t }}</button>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <form sc-camel-on-submit="{{ submitChat }}" style="display:flex;border-top:1px solid #1b1c1a;background:#e6e7e3">
+      <input value="{{ q }}" sc-camel-on-change="{{ onQ }}" placeholder="Ask about a project, a write-up, or the hardware…" style="flex:1;min-width:0;border:0;background:transparent;padding:16px;font:400 16px Geist,sans-serif;color:#1b1c1a;outline:none">
+      <button type="submit" style="border:0;background:#1b1c1a;color:#e9eae6;padding:0 22px;font:500 14px Geist,sans-serif;cursor:pointer">Send ↵</button>
+    </form>
+  </div>
+  <aside style="flex:1 1 260px;display:flex;flex-direction:column;gap:20px;font-size:15px;line-height:1.5;color:#3a3c38">
+    <div style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #1b1c1a;padding-top:12px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">What it is</span><span>The start of my own assistant — the long game on the infra page, already named.</span></div>
+    <a href="https://ahk02x.dev/writing/ahkira.html" style="display:flex;flex-direction:column;gap:6px;border-top:1px solid #1b1c1a;padding-top:12px"><span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Where it runs</span><span>Read <span style="text-decoration:underline;text-underline-offset:3px;color:#1b1c1a">The GPU stayed home</span> — what it runs on, and how I tried to break it.</span></a>
+    <span style="font:400 11px 'Geist Mono',monospace;color:oklch(0.5 0.15 45)">Ask page not reviewed — share its URL to match the real one.</span>
+  </aside>
+</div>
+</sc-if>
+
+<sc-if value="{{ isInner }}" hint-placeholder-val="{{ false }}">
+  <button type="button" sc-camel-on-click="{{ next.go }}" style="width:100%;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:16px;padding:32px 0;border:0;border-top:1px solid #1b1c1a;background:none;cursor:pointer;color:#1b1c1a;text-align:left" style-hover="color:oklch(0.55 0.15 45)">
+    <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">Next — {{ next.n }}</span>
+    <span style="font-size:clamp(28px,4vw,48px);font-weight:500;letter-spacing:-.035em">{{ next.label }} →</span>
+  </button>
+</sc-if>
+
+<footer style="display:flex;flex-wrap:wrap;gap:24px 48px;padding:32px 0 40px;border-top:1px solid #1b1c1a">
+  <div style="flex:2 1 260px;display:flex;flex-direction:column;gap:8px">
+    <span style="font:500 11px 'Geist Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:#5e605a">05 / Contact</span>
+    <a href="mailto:amir@ahk02x.com" style="font-size:22px;font-weight:500;letter-spacing:-.02em">amir@ahk02x.com ↗</a>
+    <span style="font-size:13px;color:#5e605a">Amir Khademi · online as ahk02x</span>
+  </div>
+  <div style="flex:1 1 140px;display:flex;flex-direction:column;gap:6px;font:400 12px 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:.04em">
+    <span style="color:#5e605a;font-weight:500">Directory</span>
+    <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5"><button type="button" sc-camel-on-click="{{ n.go }}" style="align-self:start;border:0;background:none;padding:0;cursor:pointer;font:inherit;letter-spacing:inherit;color:#1b1c1a;text-transform:uppercase">{{ n.label }}</button></sc-for>
+  </div>
+  <div style="flex:1 1 140px;display:flex;flex-direction:column;gap:6px;font:400 12px 'Geist Mono',monospace;text-transform:uppercase;letter-spacing:.04em">
+    <span style="color:#5e605a;font-weight:500">Elsewhere</span>
+    <a href="https://x.com/ahk02x">X ↗</a><a href="https://www.linkedin.com/in/amirh-khademi/">LinkedIn ↗</a><a href="https://github.com/ahk02x">GitHub ↗</a>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script="" data-props="{&quot;startPage&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;about&quot;,&quot;projects&quot;,&quot;infra&quot;,&quot;writing&quot;,&quot;ask&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { page: null, tab: 'ai', q: '', asked: '', pf: 'All', wf: 'All' };
+  grid(seed, fn) {
+    let s = seed; const r = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const ramp = ['#c6c7c2', 'oklch(0.82 0.06 45)', 'oklch(0.72 0.11 45)', 'oklch(0.6 0.15 45)', 'oklch(0.45 0.13 45)'];
+    const start = new Date('2025-11-16').getTime();
+    return Array.from({ length: 52 * 7 }, (_, i) => ({ bg: ramp[fn(Math.floor(i / 7), r)], t: new Date(start + i * 864e5).toISOString().slice(0, 10) }));
+  }
+  renderVals() {
+    const page = this.state.page ?? this.props.startPage ?? 'home';
+    const go = p => () => { this.setState({ page: p }); window.scrollTo(0, 0); };
+    if (!this._g) this._g = {
+      ai: this.grid(3, (w, r) => w < 33 ? (r() < .7 ? 0 : 1) : (r() < .06 ? 0 : Math.min(4, 1 + Math.floor(r() * 4)))),
+      gh: this.grid(9, (w, r) => w < 31 ? 0 : (r() < .35 ? 0 : 1 + Math.floor(r() * 4)))
+    };
+    const RED = 'oklch(0.52 0.17 25)', AMB = 'oklch(0.55 0.13 70)', BLU = 'oklch(0.48 0.13 255)', GRN = 'oklch(0.5 0.13 150)';
+    const W = 'https://ahk02x.dev/writing/', A = 'https://ahk02x.dev/assets/infra/';
+    const pages = [['about', '01', 'About'], ['projects', '02', 'Projects'], ['infra', '03', 'Infra'], ['writing', '04', 'Writing'], ['ask', '06', 'ahkira']];
+    const heroes = {
+      about: { title: "Hi, I'm Amir.", intro: 'I like knowing how things work. Especially the things I use every day.' },
+      projects: { title: 'A peek at each.', intro: 'Not the whole thing. What each one is for, what it taught me, and where it stands. Infrastructure details stay home.' },
+      infra: { title: 'The hardware I run.', intro: 'Humble beginnings. Most of it is second-hand or rescued, and all of it is mine to break. The goal: my own datacenter, run from my room.' },
+      writing: { title: 'Write-ups.', intro: 'Long-form, with the numbers that back each claim.' },
+      ask: { title: 'Ask about my work.', intro: 'ahkira answers questions about the projects, the write-ups and the hardware.' }
+    };
+    const idx = pages.findIndex(p => p[0] === page);
+    const nxt = idx >= 0 ? pages[(idx + 1) % pages.length] : null;
+    const setQ = q => this.setState({ q });
+    const seg = (opts, cur, key) => opts.map(o => ({ label: o, bg: cur === o ? '#1b1c1a' : 'transparent', fg: cur === o ? '#e9eae6' : '#1b1c1a', select: () => this.setState({ [key]: o }) }));
+    const tagC = { Written: AMB, Running: GRN, Built: BLU };
+    const allProjects = [
+      ['certguard', "I found a bug in Go's certificate parser: a 260 KB certificate costs about 24 MB to read, before the server decides whether to trust it. I reported it, then built a small Go library that turns that certificate away for about 100 bytes.", 'Written', 'Two bytes each', 'go-x509.html'],
+      ['Alert board', 'One board for every alert in the house, and hooks that made the AI agent I work with answer each alert in writing before it could end its turn. For the hours nobody was typing, a background job answered instead.', 'Written', 'I gave Claude Code a pager', 'claude-code-on-call.html', '0.50B'],
+      ['PHOSPHOR wall', 'A portrait screen on the wall that is the alarm surface for everything else. It latches red until a human clears it, on purpose, and reads from the hallway.', 'Written', 'The wall stays red until I say so', 'phosphor-wall.html', '0.36B'],
+      ['Memory as infrastructure', "The AI agent's memory is a folder of one-fact files. A linter keeps them tidy, a nightly job checks the facts against the real machines, and git keeps the history.", 'Written', 'Memory as infrastructure', 'memory-as-infrastructure.html'],
+      ['fleet-patch', 'A fortnightly patch cycle for a small Proxmox fleet, graded on evidence of what actually updated rather than on the schedule having run.', 'Written', 'The timer firing is not evidence', 'fleet-patch.html', '0.01B'],
+      ['lanwatch', 'Internal traffic versus traffic that leaves the house, as two different facts, because a home network full of IoT devices should have to explain itself.', 'Written', 'Internal is not internet', 'lanwatch.html', '0.08B'],
+      ['llmbench', "The same open AI models on a gaming GPU, an older GPU and my laptop. The laptop beat a real graphics card 11 to 1 on a model that didn't fit on the card.", 'Written', 'It has to fit', 'llmbench.html'],
+      ['IoT', 'House devices driven by my own code, no vendor cloud: strip lights, a TV, a retired phone as a camera. Learn what the device speaks, prove it with a tiny script, wrap it in an HTTP API, then a phone page.', 'Running', null, null, '0.85B'],
+      ['Coach Claude', "My gym coach. Every set gets logged against a weekly plan, a progress page tracks the lifts, and the day's notification comes with a line for that body part. Leg day gets the worst of it.", 'Running', null, null, '0.32B'],
+      ['macwatch', 'An hourly snapshot of what malware would touch on the Mac, diffed against the last, plus a five-minute check for commands wedged on a prompt. A log is not an alert; the wall is.', 'Running', null, null, '0.19B'],
+      ['netdash', 'A live dashboard for the home firewall: throughput, per-device rates, who is talking to what, what got blocked, and CPU temperature read straight from the box.', 'Running', null, null, '0.17B'],
+      ['Crucix — local-model lab', 'Where a small open model on my own GPU genuinely helps and where it only looks like it does. 99 days, 7,538 model calls, roughly 11 GPU-hours. No edge so far — and a lab that can refuse its own idea is the entire point.', 'Running'],
+      ['flowtrace', 'Walks every conversation in a packet capture through the DNS, TCP, TLS and application stages and shows where it stalled. Where the silence starts names the guilty layer.', 'Built', null, null, '0.50B'],
+      ['Inbox hub', 'WhatsApp and Telegram land in one chat, each message sorted into a tier from urgent to mute, with a line saying why it reached me. Voice notes are transcribed locally.', 'Built', null, null, '0.15B']
+    ].map(([t, d, tag, post, file, tok]) => ({ t, d, tag, post, hasPost: !!post, href: file ? W + file : '', c: tagC[tag], tok: tok ? '· ' + tok : '' }));
+    const projects = this.state.pf === 'All' ? allProjects : allProjects.filter(p => p.tag === this.state.pf);
+    const allPosts = [
+      ['Two bytes each', 'Built', 'Nov 2026', "I found a bug in Go's certificate parser where a 260 KB certificate costs about 24 MB to read. I reported it, then built a small library that rejects that certificate for about 100 bytes.", 'go-x509.html'],
+      ['It has to fit', 'Built', 'Nov 2026', 'I ran the same open models on a gaming GPU, an older GPU and my laptop. The laptop beat a real GPU 11 to 1, and the reason is one word: fit.', 'llmbench.html'],
+      ['The GPU stayed home', 'Built', 'Nov 2026', "I had a card that could run the model fast. I still didn't let the internet near it. What ahkira runs on instead, and how I tried to break it.", 'ahkira.html'],
+      ['Everything I ever kept', 'Written', 'Nov 2026', 'A survey of my own archive: 127,206 files, two years that turned out to be software and not me, three years I kept nothing, and why I log everything I own.', 'everything-i-ever-kept.html'],
+      ['The part matters, not the store', 'Built', 'Oct 2026', 'A watcher for eight car parts across fifty-two store pages and the classifieds, built so that a price drop is a fact about the part, not the store, and so that it sends one message.', 'partswatch.html'],
+      ['The timer firing is not evidence', 'Built', 'Oct 2026', 'A fortnightly unattended patch cycle for a small Proxmox fleet that earns a green only for what actually updated and came back, never for the timer having fired.', 'fleet-patch.html'],
+      ['I gave Claude Code a pager', 'Built', 'Sep 2026', 'One board rebuilt by cron, four layers that made the alerts impossible to ignore, a written ledger of verdicts, and a responder for when nobody is typing.', 'claude-code-on-call.html'],
+      ['Internal is not internet', 'Built', 'Aug 2026', 'Why the firewall cannot see what stays in the house, why its summary double-counts what leaves, and a chart that admits when it was not looking.', 'lanwatch.html'],
+      ['Memory as infrastructure', 'Built', 'Aug 2026', 'The notes an AI agent keeps, run like any other state: one fact per file, an index of triggers, a linter in the commit hook, and a nightly check against the machines.', 'memory-as-infrastructure.html'],
+      ['The wall stays red until I say so', 'Built', 'Aug 2026', 'A portrait monitor as the alarm surface: it latches red until a human clears it, degrades on purpose when its feed dies, and stops rendering for an empty room.', 'phosphor-wall.html']
+    ].map(([t, tag, date, d, f]) => ({ t, tag, date, d, href: W + f, c: tag === 'Built' ? BLU : AMB }));
+    const posts = this.state.wf === 'All' ? allPosts : allPosts.filter(p => p.tag === this.state.wf);
+    const barData = [['SQ', 3.20], ['IoT', 0.85], ['Alert board', 0.50], ['flowtrace', 0.50], ['PHOSPHOR wall', 0.36], ['Coach Claude', 0.32], ['macwatch', 0.19], ['netdash', 0.17], ['ahk02x.dev', 0.17], ['Private', 4.36]];
+    const ai = this.state.tab === 'ai';
+    return {
+      isHome: page === 'home', isAbout: page === 'about', isProjects: page === 'projects', isInfra: page === 'infra', isWriting: page === 'writing', isAsk: page === 'ask', isInner: page !== 'home',
+      goHome: go('home'), goAbout: go('about'), goProjects: go('projects'), goWriting: go('writing'), goAsk: go('ask'),
+      nav: pages.map(([id, n, l]) => ({ label: n + ' ' + l, go: go(id), bg: page === id ? '#1b1c1a' : 'transparent', fg: page === id ? '#e9eae6' : '#1b1c1a', bd: page === id ? '#1b1c1a' : 'transparent' })),
+      hero: idx >= 0 ? { n: pages[idx][1], label: pages[idx][2], ...heroes[page] } : {},
+      next: nxt ? { n: nxt[1], label: nxt[2], go: go(nxt[0]) } : {},
+      now: [{ k: 'Latest', v: 'Two bytes each — a Go certificate bug' }, { k: 'Running', v: 'Crucix: 99 days, no edge so far' }, { k: 'Next', v: 'A datacenter in my room, for ahkira' }],
+      latest: allPosts.slice(0, 3),
+      tabs: [['ai', 'AI tokens'], ['gh', 'GitHub']].map(([id, label]) => ({ label, bg: this.state.tab === id ? '#1b1c1a' : 'transparent', fg: this.state.tab === id ? '#e9eae6' : '#1b1c1a', select: () => this.setState({ tab: id }) })),
+      stats: (ai ? [['13.67B', 'Lifetime tokens'], ['553.5M', 'Peak day'], ['4h 17m', 'Longest task'], ['2,931', 'Sessions'], ['35 days', 'Current streak']] : [['1,614', 'Contributions / year']]).map(([v, k]) => ({ v, k })),
+      cells: ai ? this._g.ai : this._g.gh,
+      caption: ai ? 'Claude + GPT tokens per day, Dec–Nov · illustrative data' : 'GitHub contributions per day, Dec–Nov · illustrative data',
+      q: this.state.q, onQ: e => setQ(e.target.value),
+      prompts: ['What runs on jarvis?', 'Why is the firewall from 2011?', 'What did the laptop beat?'].map(t => ({ t, pick: () => setQ(t) })),
+      submitAsk: e => { e.preventDefault(); if (this.state.q.trim()) { this.setState({ page: 'ask', asked: this.state.q, q: '' }); window.scrollTo(0, 0); } },
+      submitChat: e => { e.preventDefault(); if (this.state.q.trim()) this.setState({ asked: this.state.q, q: '' }); },
+      asked: this.state.asked, hasAsked: !!this.state.asked, notAsked: !this.state.asked,
+      aboutJump: ['Why I build', 'Some stories', 'Experience', 'Off the clock'],
+      stories: [
+        ["I taught myself my car's diagnostic cable.", 'Framing and checksum, byte by byte. Hundreds of drives later: misfires clustered just after upshifts.', 'Inside the SQ garage →', 'https://ahk02x.dev/sq/'],
+        ["Sometimes it's just a part that won't fit.", 'A washer-fluid adapter, round after round: the lip, the neck, the filter tabs. The notches needed to stay square.', '', ''],
+        ['I want to see the evidence.', 'From an unexpected memory cost to a report to the Go team, a public issue, and a small library called certguard.', 'Read "Two bytes each" →', W + 'go-x509.html'],
+        ['I gave an AI a pager.', 'An alert board the coding agent had to answer, in writing, before moving on to my request.', 'The pager experiment →', W + 'claude-code-on-call.html'],
+        ['The wall stays red until I say so.', "A portrait monitor that keeps an alert visible until I acknowledge it — and says when it doesn't know.", 'Meet the wall →', W + 'phosphor-wall.html'],
+        ['Eight parts. Fifty-two store pages.', 'A watcher that follows the part across stores and sends one useful message.', 'How partswatch works →', W + 'partswatch.html'],
+        ['I read everything I ever kept.', '127,206 files — and two of those years were software activity, not me.', 'What the archive said →', W + 'everything-i-ever-kept.html']
+      ].map(([t, d, cta, href], i) => ({ n: String(i + 1).padStart(2, '0'), t, d, cta, href: href || undefined })),
+      work: [
+        { n: '01 / Foundations', t: 'Cloud & software', d: 'Systems administrator on a large cloud platform, supporting hundreds of customers across Linux and Windows. Automated VMware tasks with PowerShell and Python, hardened 100+ servers to a healthcare compliance standard. Also president of a 600-intern community.', k: '~⅓', kd: 'less manual work for the team' },
+        { n: '02 / Scale', t: 'Telecom', d: 'Kept mobile provisioning flowing for millions of LTE and 5G subscribers. Wrote outage playbooks, built patch procedures for on-prem and cloud, and pursued product defects with vendors.', k: '98%', kd: 'provisioning success rate' },
+        { n: '03 / Responsibility', t: 'Financial institutions', d: 'Onboarded partner organisations onto a shared platform across two data centres — config, change, release migrations and zero-drop certificate rotations. mTLS, SAML, OIDC, HSM signing, site-to-site VPNs.', k: '90%', kd: 'vulnerabilities remediated within SLA' }
+      ],
+      tools: [
+        { k: 'Systems & automation', v: 'Linux, Python, Bash, PowerShell, Ansible, Docker, Helm, Nomad, Consul, Vault' },
+        { k: 'Visibility & cloud', v: 'Splunk, Elastic, AWS, Azure' },
+        { k: 'Identity & networks', v: 'TLS & PKI, Keycloak, CyberArk, F5, FortiGate, IPsec' }
+      ],
+      projects, pFilters: seg(['All', 'Written', 'Running', 'Built'], this.state.pf, 'pf'), pCount: (projects.length + (this.state.pf === 'All' ? 1 : 0)) + ' projects',
+      bars: barData.map(([k, v]) => ({ k, v: v.toFixed(2) + 'B', w: (v / 4.36 * 100) + '%', c: k === 'Private' ? '#8a8c86' : 'oklch(0.6 0.15 45)' })),
+      posts, wFilters: seg(['All', 'Built', 'Written'], this.state.wf, 'wf'),
+      infraStats: [
+        { k: 'Oldest box', v: '2011', u: 'vintage', d: 'and it is the firewall for the whole house', c: RED },
+        { k: 'Storage', v: '6.9', u: 'TB usable', d: 'three drives on ZFS, one can die', c: BLU },
+        { k: 'Idle draw', v: '111', u: 'watts', d: 'the server that runs everything', c: GRN }
+      ],
+      infraSections: [
+        { n: '01', short: 'Network', t: 'Network', img: A + 'shelf-t.jpg', alt: 'Aruba switch on a white shelf with patch cables and a router on top', date: 'Nov 2026', cap: 'Every run in the house lands here. The bracket under the switch is one I designed and 3D-printed.', paras: [], items: [
+          { k: 'blackwall', v: 'A Dell Vostro 460 (i5-2400, 8 GB) turned into an OPNsense firewall. DNS, DHCP and traffic accounting — the only thing between the house and the internet.' },
+          { k: 'Switching', v: 'An Aruba Instant On 1930 managed switch, and a spare router working as a WiFi access point.' },
+          { k: 'What it counts', v: 'Traffic inside the house and traffic leaving it, kept as two different facts.' }] },
+        { n: '02', short: 'Firewall', t: 'The firewall is a 2011 office PC.', img: A + 'blackwall-t.jpg', alt: 'Dell desktop tower lying open on the floor', date: 'Jul 2026', cap: 'blackwall with the side off, before the swap — still the original Dell supply.', paras: ['One Sandy Bridge i5, 8 GB, no graphics card. The original Dell power supply died and took the whole house\'s internet with it, so a Corsair RM650x from an old gaming PC went in. That is the entire repair history.', 'Rescuing hardware is the point, not a constraint.'], items: [] },
+        { n: '03', short: 'Servers', t: 'jarvis is the one that matters.', img: A + 'jarvis-t.jpg', alt: 'Black mid-tower PC with its glass side panel off', date: 'Aug 2026', cap: 'jarvis, open, on the day it was brought to life from leftover parts.', paras: ['Proxmox VE with Home Assistant and nine containers: a local language model, speech-to-text, Git hosting, a password manager, a file share and the car\'s data pipeline.'], items: [
+          { k: 'CPU / RAM', v: 'Ryzen 5 5600GE, 32 GB DDR4' },
+          { k: 'GPU', v: 'RTX 2070 SUPER — for the model and transcription, not games' },
+          { k: 'Storage', v: '1 TB NVMe + 3× 4 TB IronWolf in RAIDZ1, ~6.9 TB usable' },
+          { k: 'Idle', v: '~111 W — the number I actually watch' }] },
+        { n: '04', short: 'sentry', t: 'The box that runs the room.', img: A + 'sentry-t.jpg', alt: 'Mini PC on a 3D-printed stand on top of a desktop tower', date: 'Nov 2026', cap: 'sentry on its over-engineered printed stand, fan in the base, on top of blackwall. A new fan would have been cheaper.', paras: ['An Intel N5105 mini PC with 8 GB: the wall display, the Stream Deck, the lights, and the camera that watches the door. Keeping it off jarvis means the room can be rebooted without touching anything the house depends on.', 'Then its fan died. I designed a whole stand instead, with a fan built into the base.'], items: [] },
+        { n: '05', short: 'Desk & wall', t: 'Desk and wall.', img: A + 'buildday-t.jpg', alt: 'Bedroom floor during a PC build with a monitor showing a BIOS screen', date: 'Aug 2026', cap: 'Build day. The BIOS flash is on the screen; the floor is the workbench.', paras: [], items: [
+          { k: 'PHOSPHOR', v: 'A Dell U2719D in portrait. Shows the health of everything and latches alarms until I clear them.' },
+          { k: 'Stream Deck', v: 'MK.2 — fifteen keys for the room, the lights and the PC\'s power.' },
+          { k: 'AMIR-PC', v: 'Ryzen 9 3900X, RTX 3080 12 GB, 32 GB, Windows 11.' },
+          { k: 'MacBook Pro', v: '14", M3, 16 GB. Where everything gets written.' }] },
+        { n: '06', short: 'Next', t: "Where it's going: hybrid AI.", img: A + 'shelf-t.jpg', alt: 'Network shelf', date: 'Plan', cap: 'Replace with a sketch or render of the planned rack.', paras: ['The heavy, private work runs on hardware I own, so my data stays mine. The cloud handles what it is genuinely better at.', 'The plan: NVIDIA DGX Sparks and RTX PRO 6000 Blackwell cards, Ubiquiti end to end, proper NAS storage. The long game is my own LLM. It already has a name — ahkira.'], items: [] }
+      ]
+    };
+  }
+}
+</script>
+
+
+</body></html>

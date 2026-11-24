@@ -67,21 +67,26 @@ else:
 findings = d.get('findings', [])
 f_html = ''.join(f'<li><span class="chip {CLS.get(f.get("sev",""),"")}">{html.escape(f.get("sev",""))}</span><div>{html.escape(f.get("text",""))}' + (f'<em><b>do</b>{html.escape(f["action"])}</em>' if f.get('action') else '') + '</div></li>' for f in findings) or ('<li><span class="chip ok">OK</span><div>Nothing unusual this week.</div></li>' if status == 'OK' else '<li><span class="chip">No data</span><div>No finding details available. An incomplete report is not a healthy verdict.</div></li>')
 HC_STYLE = '''<style>
-.hc{--hc-ok:#1f9e6e;--hc-warn:#d98a1c;--hc-crit:#e5484d}
-.hc .verdict{border-left:6px solid var(--hc-v,transparent)}
+/* The card sits on the paper now, so state is a rule and a square, never a reversed panel.
+   Hues come from the shared status tokens, which already flip for the dark theme. */
+.hc{--hc-ok:var(--st-run);--hc-warn:var(--st-written);--hc-crit:var(--st-live);--hc-none:var(--quiet)}
+.hc .verdict{padding-left:18px;border-left:3px solid var(--hc-v,var(--hc-none))}
 .hc .verdict.ok{--hc-v:var(--hc-ok)}.hc .verdict.warn{--hc-v:var(--hc-warn)}.hc .verdict.crit{--hc-v:var(--hc-crit)}
-.hc .verdict .word{color:var(--hc-v,inherit)}
-.hc .verdict.ok,.hc .verdict.warn{color:#efefeb}
-.hc .verdict li em{color:inherit;opacity:.78}
-.hc .verdict .chip{padding:3px 7px;border-radius:4px;text-decoration:none;font-weight:700}
-.hc .verdict .chip.ok{color:var(--hc-ok);background:color-mix(in srgb,var(--hc-ok) 16%,transparent)}
-.hc .verdict .chip.warn{color:var(--hc-warn);background:color-mix(in srgb,var(--hc-warn) 16%,transparent)}
-.hc .verdict .chip.crit{color:var(--hc-crit);background:color-mix(in srgb,var(--hc-crit) 16%,transparent)}
-.hc .tile.hc-ok{box-shadow:inset 0 3px var(--hc-ok)}.hc .tile.hc-warn{box-shadow:inset 0 3px var(--hc-warn)}.hc .tile.hc-crit{box-shadow:inset 0 3px var(--hc-crit)}
-.hc .tile.hc-warn .t{color:var(--hc-warn)}.hc .tile.hc-crit .t{color:var(--hc-crit)}
-.hc .hc-updated{display:flex;flex-wrap:wrap;gap:6px 18px;margin:22px 0 0;font:12px var(--mono);color:var(--fg-2)}
-.hc .hc-updated span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--hc-ok)}
-.hc .hc-updated.late .hc-next{color:var(--hc-crit)}.hc .hc-updated.late .hc-next::before{background:var(--hc-crit)}
+/* No data is its own state: quiet, not critical. Before this it fell through to the critical look. */
+.hc .verdict.unknown{--hc-v:var(--hc-none)}
+.hc .verdict.unknown .word{color:var(--quiet)}
+.hc .verdict li em{color:var(--ink-3)}
+.hc .verdict .chip{text-decoration:none;font-weight:600;color:var(--ink)}
+.hc .verdict .chip.ok::before{background:var(--hc-ok)}
+.hc .verdict .chip.warn::before{background:none;border:1px solid var(--hc-warn)}
+.hc .verdict .chip.crit::before{background:var(--hc-crit)}
+.hc .tile.hc-ok{border-top:2px solid var(--hc-ok)}.hc .tile.hc-warn{border-top:2px solid var(--hc-warn)}.hc .tile.hc-crit{border-top:2px solid var(--hc-crit)}
+.hc .tile.hc-ok,.hc .tile.hc-warn,.hc .tile.hc-crit{padding-top:14px}
+.hc .tile.hc-warn .t,.hc .tile.hc-crit .t{color:var(--ink-2);font-weight:500}
+.hc .hc-updated{display:flex;flex-wrap:wrap;gap:6px 18px;margin:22px 0 0;font:12px var(--mono);color:var(--ink-3)}
+.hc .hc-updated:empty{display:none}
+.hc .hc-updated span::before{content:'';display:inline-block;width:7px;height:7px;margin-right:8px;background:var(--hc-ok)}
+.hc .hc-updated.late .hc-next{color:var(--ink);font-weight:500}.hc .hc-updated.late .hc-next::before{background:var(--hc-crit)}
 </style>
 '''
 win = d.get('window', ['', '']); gen = (d.get('generated') or '')[:10]
@@ -101,7 +106,7 @@ nav: /projects/
 <h2>Which cylinder</h2>
 {chart}
 <h2>How this is made</h2>
-<p>A Raspberry Pi in the footwell logs 53 engine-computer channels five times a second on every drive and pushes the data home. A Sunday job compares the week to the week before and to a four-week baseline. The verdict rules are written down: oil at or above 130 °C or transmission fluid at or above 110 °C flags; a crank below 9.6 V flags; misfires at 1.5× the baseline flag and 1.25× is a watch; any Pi boot storm is a watch. Nothing here is a guess, and nothing here is live: this is a static snapshot by design. More in <a href="/sq/">the garage</a>.</p>
+<p>A Raspberry Pi in the footwell logs 58 engine-computer channels about two and a half times a second on every drive, off the car's own bus, and pushes the data home. A weekly job compares the week to the week before and to a four-week baseline. The verdict rules are written down: oil at or above 130 °C or transmission fluid at or above 110 °C flags; a crank below 9.6 V flags; misfires at 1.5× the baseline flag and 1.25× is a watch; any Pi boot storm is a watch. Where a channel is known to be unreliable it is left out rather than guessed at, and nothing here is live: this is a static snapshot by design. More in <a href="/sq/">the garage</a>.</p>
 </main>
 '''
 os.makedirs(os.path.join(site, 'src', 'pages'), exist_ok=True); os.makedirs(os.path.join(site, 'sq'), exist_ok=True)

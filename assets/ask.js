@@ -12,13 +12,17 @@
   const wait = ms => new Promise(r => setTimeout(r, still ? 0 : ms));
   const EASE = 'cubic-bezier(.2,.8,.2,1)';
   let pose = 'hello', busy = false, rest;
+  let handed = null;  // a question handed over in ?q= by the home page, before anyone has pressed send
 
-  function onLight() {  // the moon has a light and a dark colouring; pick by the page's own --bg
-    const v = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
-    const m = /^#([0-9a-f]{6})$/i.exec(v);
-    if (!m) return !matchMedia('(prefers-color-scheme: dark)').matches;
-    const n = parseInt(m[1], 16);
-    return (0.2126 * (n >> 16) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255)) / 255 > 0.5;
+  // The moon has a light and a dark colouring. Pick it the way the rest of the site decides the theme:
+  // an explicit choice on <html> wins, otherwise the OS preference. This used to read --bg and measure
+  // its luminance, which silently disagreed with the toggle (a stored Light choice under an OS set to
+  // dark gave a light page with a dark moon) and now cannot work at all, because the theme's colours
+  // are oklch() and no longer parse as six hex digits.
+  function onLight() {
+    const chosen = document.documentElement.dataset.theme;
+    if (chosen === 'light' || chosen === 'dark') return chosen === 'light';
+    return !matchMedia('(prefers-color-scheme: dark)').matches;
   }
   function show(p, pop = true) {
     const changed = p !== pose;
@@ -229,7 +233,15 @@
       });
       form.hidden = false;
     } else if (tries < 40) setTimeout(() => mountTurnstile(tries + 1), 250);
-    // No Turnstile after 10 s (blocked, offline): the box stays hidden and the vetted answers carry on.
+    else if (handed) {
+      // No Turnstile after 10 s (blocked, offline) and someone arrived here carrying a question: the box
+      // never appears, so say that out loud instead of dropping the question without a word.
+      const p = document.createElement('p');
+      p.textContent = 'The bot check did not load, so the typing box is unavailable and your question was not sent. The prepared answers below still work.';
+      bubble('bot', [p]);
+      announce(p.textContent);
+    }
+    // Otherwise: the box stays hidden and the vetted answers carry on, which needs no explanation.
   }
 
   async function ask(text) {
@@ -292,6 +304,13 @@
     const box = form.querySelector('textarea'), count = form.querySelector('.ask-count');
     const tally = () => { count.textContent = box.value.length > 400 ? `${box.value.length} / 500` : ''; };
     box.addEventListener('input', tally);
+    // The home page's ask box and its suggestion links hand the question over as ?q=. Prefill it and
+    // stop there: nobody pressed send, and auto-submitting would also fire before the bot check.
+    handed = new URLSearchParams(location.search).get('q');
+    if (handed && !box.value) {
+      box.value = handed.trim().slice(0, 500);  // maxlength does not apply to a value set in script
+      tally();
+    }
     box.addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); form.requestSubmit(); }
     });

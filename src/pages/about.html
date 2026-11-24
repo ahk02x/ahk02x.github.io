@@ -1,117 +1,242 @@
-title: Amir Khademi (Amir Hossein Khademi), Platform & Security Engineer — About
-description: Amir Khademi (Amir Hossein Khademi or Amir-Hossein Khademi), platform and security engineer on payment systems, car enthusiast and hands-on builder. Stories from my lab and SQ5.
+title: Amir Khademi, Platform Engineer — About
+description: Amir Khademi, Platform Engineer, car enthusiast and hands-on builder. Stories from my lab and SQ5.
 path: /about.html
 ---
-<main class="wrap narrow wide-body about-page">
+<main class="wrap about-page">
 <style>
-.about-page .about-intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:center;padding:20px 0 42px}
-.about-page .about-intro h1{font-size:clamp(54px,6.5vw,86px);max-width:8ch}
-.about-page .about-intro .eyebrow{color:var(--muted)}
-.about-page .about-deck{font-size:clamp(22px,2.3vw,30px);line-height:1.25;letter-spacing:-.035em;margin:25px 0 20px;max-width:24ch}
-.about-page .about-intro p:not(.about-deck){max-width:47ch;color:var(--fg-2)}
-.about-page figure{margin:0;min-width:0}
-.about-page .about-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 65%}
-.about-page figcaption{font:11px/1.6 var(--mono);color:var(--muted);margin-top:12px}
-.about-page .about-links{display:flex;flex-wrap:wrap;gap:12px 24px;margin-top:25px;font-size:14px;font-weight:700}
-.about-page .about-section{display:grid;grid-template-columns:190px minmax(0,1fr);gap:36px;padding:38px 0;border-top:1px solid var(--soft-line)}
-.about-page .about-section>h2{margin:0;font-size:24px;line-height:1.1;letter-spacing:-.045em;text-transform:none}
-.about-page .about-section h3{font-size:25px;line-height:1.15;margin:0 0 12px;letter-spacing:-.035em}
-.about-page .about-section p{max-width:64ch}
-.about-page .about-section p:last-child{margin-bottom:0}
-.about-page .about-story+.about-story{margin-top:30px;padding-top:30px;border-top:1px solid var(--soft-line)}
-.about-page .about-story a{font-size:14px;font-weight:700}
-.about-page .about-career{margin:0;display:grid;gap:24px}
-.about-page .about-career dt{font-weight:700;margin:0 0 5px}
-.about-page .about-career dd{margin:0;color:var(--fg-2);max-width:64ch}
-.about-page .about-small{font-size:13px;color:var(--muted);margin-top:22px}
-@media(max-width:720px){.about-page .about-intro{grid-template-columns:1fr;padding-top:10px}.about-page .about-intro h1{max-width:none}.about-page .about-photo img{aspect-ratio:5/4}.about-page .about-section{grid-template-columns:1fr;gap:22px;padding:30px 0}.about-page .about-section>h2{font-size:22px}.about-page .about-deck{max-width:28ch}}
-.about-page .about-jumps{display:flex;flex-wrap:wrap;gap:8px 24px;padding:0 0 24px;font:12px/1.5 var(--mono)}
-.about-page .about-jumps a{display:inline-flex;align-items:center;min-height:36px}
-.about-page .about-section h2{scroll-margin-top:24px}
-.about-page .about-role{margin-top:32px;padding-top:28px;border-top:1px solid var(--soft-line)}
-.about-page .about-role-label{font:11px/1.5 var(--mono);color:var(--muted);margin-bottom:12px}
-.about-page .about-work-intro{font-size:21px;line-height:1.5;letter-spacing:-.02em}
-.about-page .about-toolbox{margin-top:32px;padding:24px;border:1px solid var(--soft-line)}
-.about-page .about-toolbox>h3{font-size:21px;margin-bottom:22px}
-.about-page .about-toolbox>a{font-size:14px;font-weight:700}
+/* Page layout only. Every colour is a theme token; nothing here has a fill outside the one dark band, a radius or a shadow.
+   Order: who I am, then the stories (the cable story is the page's one dark band), then why I build, where I've worked, off the clock. */
+.about-page{font-size:17px;line-height:1.55}
+.about-page p{margin:0;text-wrap:pretty}
+.about-page .eyebrow{margin:0}
+.about-page h2{margin:0;font-size:34px;font-weight:500;line-height:1.1;letter-spacing:-.02em;text-wrap:balance;scroll-margin-top:96px}
+.about-page h3{margin:0;font-weight:500;letter-spacing:-.02em;text-wrap:balance}
+.about-page figure{margin:0;min-width:0;display:flex;flex-direction:column;gap:8px}
+.about-page figcaption{margin:0;font:400 12px/1.5 var(--mono);color:var(--quiet)}
+.about-page figure img,.about-page figure video{display:block;width:100%;height:auto;border:1px solid var(--ink);background:var(--img)}
+.about-page .big{font-size:clamp(21px,2.4vw,26px);line-height:1.3;letter-spacing:-.01em}
+.about-page .mid{font-size:21px;line-height:1.35;letter-spacing:-.01em}
+.about-page .body{color:var(--ink-2)}
+.about-page .head{display:flex;flex-direction:column;gap:8px}
+.about-page .row{display:flex;flex-wrap:wrap}
+
+/* 1. Opening */
+.about-page .opening{padding:clamp(48px,7vw,80px) 0 56px;align-items:flex-end;gap:40px 64px}
+.about-page .opening-copy{flex:2 1 480px;min-width:0;display:flex;flex-direction:column;gap:28px}
+.about-page .opening h1{margin:0;font-size:clamp(46px,9vw,72px);line-height:.92;letter-spacing:-.045em}
+.about-page .opening .big{max-width:30ch}
+.about-page .opening .body{display:flex;flex-direction:column;gap:14px;max-width:56ch}
+.about-page .about-cycle{flex:1 1 300px;max-width:400px}
+.about-page .about-cycle video{aspect-ratio:1}
+.about-page .onpage{gap:8px 28px;padding:14px 0;border-top:1px solid var(--line-2);font:500 11px/1.5 var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.about-page .onpage span{color:var(--quiet)}
+
+/* 2. Stories */
+.about-page .stories-head{padding:56px 0 40px;border-top:1px solid var(--line)}
+/* The one dark band. Its background runs edge to edge through border-image, which paints past the box
+   without widening the page (a 100vw width would add a sideways scroll wherever scrollbars take room). */
+.about-page .field{padding:72px 0;display:flex;flex-direction:column;gap:56px;background:var(--band);color:var(--band-ink);border-image:conic-gradient(var(--band) 0 0) fill 0//0 100vmax}
+.about-page .field .eyebrow,.about-page .field figcaption{color:var(--band-quiet)}
+.about-page .field a{color:var(--band-ink)}
+.about-page .field a:hover{color:var(--band-reading)}
+.about-page .field figure img,.about-page .field figure video{border-color:var(--band-line);background:var(--band-img)}
+.about-page .field .reading{color:var(--band-reading)}
+.about-page .field-top{align-items:center;gap:40px 64px}
+.about-page .field-copy{flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.about-page .field-copy h3,.about-page .part-copy h3{font-size:34px;line-height:1.1}
+.about-page .field-copy p{max-width:52ch}
+.about-page .field-video{flex:1.3 1 420px}
+.about-page .field-video video{aspect-ratio:5/4}
+.about-page .field-low{align-items:flex-start;gap:32px 40px;padding-top:32px;border-top:1px solid var(--band-line)}
+.about-page .field-low figure{flex:1 1 240px}
+.about-page .field-low img{aspect-ratio:4/3;object-fit:cover}
+.about-page .field-low .became{flex:1 1 280px;min-width:0;align-self:center;display:flex;flex-direction:column;gap:16px}
+.about-page .part{padding:72px 0;align-items:center;gap:36px 72px}
+.about-page .part figure{flex:1 1 300px;max-width:440px}
+.about-page .part video{aspect-ratio:1}
+.about-page .part-copy{flex:1.4 1 380px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.about-page .part-copy p{max-width:54ch}
+.about-page .things{border-top:1px solid var(--line)}
+.about-page .thing{padding:30px 0;border-bottom:1px solid var(--line-3);align-items:baseline;gap:10px 48px}
+.about-page .thing:last-child{border-bottom:0}
+.about-page .thing>.eyebrow{flex:0 0 150px}
+.about-page .thing h3{flex:1 1 280px;min-width:0;font-size:24px;line-height:1.15}
+.about-page .thing-b{flex:1.6 1 380px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.about-page .go{align-self:flex-start;font-size:15px;font-weight:500}
+
+/* 3. Why I build */
+.about-page .why{padding:80px 0;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:48px}
+.about-page .why-top{align-items:flex-start;gap:40px 64px}
+.about-page .why-top .head{flex:1.3 1 420px;min-width:0}
+.about-page .why-top .big{margin-top:32px;max-width:27ch}
+.about-page .why-top figure{flex:1 1 320px;max-width:480px}
+.about-page .why-top img{aspect-ratio:4/3;object-fit:cover}
+.about-page .three{gap:20px 48px}
+.about-page .three p{flex:1 1 280px;min-width:0}
+
+/* 4. Experience */
+.about-page .work{padding:80px 0 56px;border-top:1px solid var(--line)}
+.about-page .work>.head{margin-bottom:32px}
+.about-page .work-intro{gap:20px 64px;margin-bottom:56px}
+.about-page .work-intro p{flex:1 1 380px;min-width:0}
+.about-page .role{padding:36px 0;border-top:1px solid var(--line-2);gap:24px 64px}
+.about-page .role-h{flex:1 1 280px;max-width:380px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.about-page .role-h h3{font-size:24px;line-height:1.15}
+.about-page .role-h .mid{margin-top:10px}
+.about-page .role-b{flex:2 1 420px;min-width:0;columns:2 300px;column-gap:48px}
+.about-page .role-b p{margin:0 0 14px;break-inside:avoid}
+.about-page .tools-wrap{padding-top:28px;border-top:1px solid var(--line)}
+.about-page .tools-wrap h3{margin-bottom:24px;font-size:24px;line-height:1.15}
+.about-page .tools{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:24px 40px}
+.about-page .tools>div{display:flex;flex-direction:column;gap:8px}
+.about-page .tools dt{margin:0;font:500 11px/1.5 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--quiet)}
+.about-page .tools dd{margin:0;font-size:15px;line-height:1.5}
+
+/* 5. Off the clock */
+.about-page .outside{padding:80px 0 64px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:40px}
+.about-page .outside-top{align-items:flex-end;gap:24px 64px}
+.about-page .outside-top .head{flex:1 1 320px;min-width:0}
+.about-page .outside-top p{flex:1.4 1 380px;min-width:0;max-width:60ch}
+.about-page .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:28px 24px}
+.about-page .shots img{aspect-ratio:4/3;object-fit:cover}
+.about-page .closing{align-items:flex-end;justify-content:space-between;gap:28px 64px;padding-top:16px}
+.about-page .closing>p{flex:1 1 420px;min-width:0;max-width:46ch}
+.about-page .closing-act{flex:0 1 auto;display:flex;flex-direction:column;gap:14px}
+.about-page .actions{display:flex;flex-wrap:wrap;gap:12px}
+.about-page .note{font-size:13px;line-height:1.5;color:var(--quiet)}
+.about-page .nextnav>span:last-child{font-size:34px;line-height:1.1;letter-spacing:-.02em}
+
+@media (max-width:700px){
+  .about-page .field,.about-page .part,.about-page .why,.about-page .work,.about-page .outside{padding-top:44px;padding-bottom:44px}
+  .about-page .thing>.eyebrow{flex-basis:100%}
+  .about-page .why-top .big{max-width:none}
+}
 </style>
-<section class="about-intro" aria-labelledby="about-title">
-<div>
-<div class="eyebrow">Amir Khademi / About me</div>
+
+<section class="opening row" aria-labelledby="about-title">
+<div class="opening-copy">
+<span class="eyebrow">01 / About</span>
 <h1 id="about-title">Hi, I'm Amir.</h1>
-<p class="about-deck">I like knowing how things work. Especially the things I use every day.</p>
-<p>That includes the car I drive, the servers in my office, and the tools I build when something keeps annoying me. A small question has a habit of turning into a project.</p>
-<p>I'm a platform and security engineer on a payments platform. Most of my hard tickets are certificates, logins and firewalls. Away from work, you'll usually find me somewhere between a terminal, the car and a 3D printer.</p>
-<div class="about-links"><a href="mailto:amir@ahk02x.com">Say hello &rarr;</a><a href="/projects/">See what I'm building &rarr;</a></div>
+<p class="big">I like knowing how things work. Especially the things I use every day.</p>
+<div class="body">
+<p>That includes the car I drive, the servers in my office, the dashboards I build so I can see exactly what my own setup is doing, and the tools I build when something keeps annoying me. A small question has a habit of turning into a project.</p>
+<p>I'm a platform engineer. Away from work, you'll usually find me somewhere between a terminal, the car and a 3D printer.</p>
 </div>
-<figure class="about-photo"><img src="/assets/sq-gallery/2026-07-10-car.jpg" alt="My grey Audi SQ5 with its bonnet open beneath an evening sky" width="1200" height="1600" srcset="/assets/sq-gallery/2026-07-10-car-t.jpg 480w, /assets/sq-gallery/2026-07-10-car.jpg 1200w" sizes="(max-width:720px) 85vw, 420px"><figcaption>My daily driver. Also the reason SQ exists.</figcaption></figure>
+</div>
+<figure class="about-cycle"><video src="/assets/about/everything.mp4" poster="/assets/about/everything-t.jpg" width="600" height="600" muted loop playsinline autoplay preload="none" aria-label="My logo, ahkira the site mascot waving hello, then one picture from each thing I have built: the lab machines, the car and its logger, the models I designed, the dashboards, and the opening of each write-up"></video><figcaption>One frame from everything on this site.</figcaption></figure>
+</section>
+<nav class="onpage row" aria-label="On this page"><span>On this page</span><a href="#stories-title">Some stories</a><a href="#ownership-title">Why I build</a><a href="#work-title">Experience</a><a href="#outside-title">Off the clock</a></nav>
+
+<section aria-labelledby="stories-title">
+<div class="stories-head head"><span class="eyebrow">Some stories</span><h2 id="stories-title">A small question, then a project.</h2></div>
+
+<article class="field">
+<div class="field-top row">
+<div class="field-copy">
+<span class="eyebrow">01 / The cable</span>
+<h3>I taught myself my car's diagnostic cable.</h3>
+<p>The tuning cable only talked to a Windows app. I wanted to understand what my own car was doing, so I worked out the framing and checksum byte by byte and built a read-only logger. That gave me the channel map, and the car logs over its own internal bus now. Hundreds of drives later, it showed a pattern I hadn't seen before: <span class="reading">nearly 40%</span> of misfire counts land in the second after an upshift.</p>
+</div>
+<figure class="field-video"><video src="/assets/about/sq-box.mp4" poster="/assets/about/sq-box-t.jpg" width="700" height="560" muted loop playsinline autoplay preload="none" aria-label="The SQ logger box coming apart and going back together: lid screws, honeycomb lid, clock module, Raspberry Pi, CAN adapter, OBD-II pigtail and printed base"></video><figcaption>The logger box, taken apart. <a href="/sq/logger.html">Drive it yourself</a>.</figcaption></figure>
+</div>
+<div class="field-low row">
+<figure><img src="/assets/sq-gallery/2026-08-28-installed.jpg" alt="The logger box mounted beside the red passenger seat" width="1200" height="1600" loading="lazy" style="object-position:center 72%"><figcaption>The logger, installed beside the passenger seat.</figcaption></figure>
+<figure><img src="/assets/sq-gallery/2026-06-10-hood-session.jpg" alt="A laptop on a towel on the car's hood, cabled to a small hub" width="1200" height="1600" loading="lazy" style="object-position:center 55%"><figcaption>A session at the car, laptop on the hood.</figcaption></figure>
+<div class="became">
+<p class="mid">That became SQ. The car is still my daily driver; it just gives me a lot more to think about now.</p>
+<a class="go" href="/sq/">Inside the SQ garage &rarr;</a>
+</div>
+</div>
+</article>
+
+<article class="part row">
+<figure><video src="/assets/about/sqfill-evolution.mp4" poster="/assets/about/sqfill-evolution-t.jpg" width="720" height="720" muted loop playsinline autoplay preload="none" aria-label="Every version of the washer-fluid adapter, one after another: funnels first, then sockets, then collars and the final splash ring"></video><figcaption>Every version, in order. 33 seconds.</figcaption></figure>
+<div class="part-copy">
+<span class="eyebrow">02 / The part</span>
+<h3>Sometimes it's just a part that won't fit.</h3>
+<p class="body">A washer-fluid adapter sent me through round after round of small changes: the lip, the neck, the filter tabs. The notches needed to stay square. It sounds tiny until you're holding the part and it still isn't right. I enjoy that connection between an idea on a screen and something I can actually use.</p>
+</div>
+</article>
+
+<div class="things">
+<article class="thing row"><span class="eyebrow">03 / The parser</span><h3>I want to see the evidence.</h3><div class="thing-b"><p class="body">A certificate parser led me from an unexpected memory cost to a report to the Go team, a public issue, and a small library called certguard. I like following a question far enough to make it reproducible. The write-up includes the measurements and the limits of what they show.</p><a class="go" href="/writing/go-x509.html">Read “The Go certificate bug” &rarr;</a></div></article>
+<article class="thing row"><span class="eyebrow">04 / The pager</span><h3>I gave an AI a pager.</h3><div class="thing-b"><p class="body">My home fleet had plenty of ways to alert me, but the coding agent started each session without that context. I built an alert board it had to answer, in writing, before moving on to my request. The hooks are currently off; the experiment taught me a lot about making an agent account for what it actually checked.</p><a class="go" href="/writing/claude-code-on-call.html">The pager experiment &rarr;</a></div></article>
+<article class="thing row"><span class="eyebrow">05 / The price</span><h3>Eight parts. Fifty‑two store pages.</h3><div class="thing-b"><p class="body">I wanted to know when a car part got cheaper, without checking every shop myself or getting fifty versions of the same notification. So I built a watcher that follows the part across stores and sends one useful message.</p><a class="go" href="/writing/partswatch.html">How partswatch works &rarr;</a></div></article>
+<article class="thing row"><span class="eyebrow">06 / The archive</span><h3>I read everything I ever kept.</h3><div class="thing-b"><p class="body">127,206 files. I went looking for the story in my own archive and found that two of those years were software activity, not me. Keeping the originals matters to me. So does being honest about what they can actually tell me.</p></div></article>
+</div>
 </section>
 
-<nav class="about-jumps" aria-label="On this page"><a href="#ownership-title">Why I build</a><a href="#stories-title">Some stories</a><a href="#work-title">Experience</a><a href="#outside-title">Off the clock</a></nav>
-
-<section class="about-section" aria-labelledby="ownership-title">
-<h2 id="ownership-title">Something<br>of my own.</h2>
-<div><p>At work, I help keep systems running that people depend on. At home, I want to build things I can keep, understand and change myself. That's why there's a lab in my office, why I save my project history, and why I keep coming back to local software.</p>
+<section class="why" aria-labelledby="ownership-title">
+<div class="why-top row">
+<div class="head">
+<span class="eyebrow">Why I build</span>
+<h2 id="ownership-title">Something of my own.</h2>
+<p class="big">At work, I help keep systems running that people depend on. At home, I want to build things I can keep, understand and change myself.</p>
+</div>
+<figure><img src="/assets/infra/jarvis.jpg" alt="A black mid-tower PC with a glass side panel, showing the graphics card, a cooling fan and a hard drive" width="1394" height="1600" loading="lazy" style="object-position:center 45%"><figcaption>jarvis, the lab server.</figcaption></figure>
+</div>
+<div class="three row body">
+<p>That's why there's a lab in my office, why I save my project history, and why I keep coming back to local software.</p>
 <p>One early attempt was a little assistant I called Jarvis. In a Windows terminal, I taught it to say hello. Then I tried to get it to remember things. It was rough, and I kept going back with the next error and the next idea.</p>
-<p>That still feels like the right way to learn: pick something I actually want, get a small part working, and keep asking questions. The long-term ambition is a personal assistant running on hardware I control, with a memory I can take with me.</p></div>
-</section>
-
-<section class="about-section" aria-labelledby="stories-title">
-<h2 id="stories-title">Some stories.</h2>
-<div>
-<article class="about-story"><h3>I taught myself my car's diagnostic cable.</h3><p>The tuning cable only talked to a Windows app. I wanted to understand what my own car was doing, so I worked out the framing and checksum byte by byte and built a read-only logger. Hundreds of drives later, it showed a pattern I hadn't seen before: misfires clustered just after upshifts.</p><p>That became SQ. The car is still my daily driver; it just gives me a lot more to think about now.</p><a href="/sq/">Inside the SQ garage &rarr;</a></article>
-<article class="about-story"><h3>Sometimes it's just a part that won't fit.</h3><p>A washer-fluid adapter sent me through round after round of small changes: the lip, the neck, the filter tabs. The notches needed to stay square. It sounds tiny until you're holding the part and it still isn't right. I enjoy that connection between an idea on a screen and something I can actually use.</p></article>
-<article class="about-story"><h3>I want to see the evidence.</h3><p>A certificate parser led me from an unexpected memory cost to a report to the Go team, a public issue, and a small library called certguard. I like following a question far enough to make it reproducible. The write-up includes the measurements and the limits of what they show.</p><a href="/writing/go-x509.html">Read “Two bytes each” &rarr;</a></article>
-<article class="about-story"><h3>I gave an AI a pager.</h3><p>My home fleet had plenty of ways to alert me, but the coding agent started each session without that context. I built an alert board it had to answer, in writing, before moving on to my request. The hooks are currently off; the experiment taught me a lot about making an agent account for what it actually checked.</p><a href="/writing/claude-code-on-call.html">The pager experiment &rarr;</a></article>
-<article class="about-story"><h3>Eight parts. Fifty-two store pages.</h3><p>I wanted to know when a car part got cheaper, without checking every shop myself or getting fifty versions of the same notification. So I built a watcher that follows the part across stores and sends one useful message.</p><a href="/writing/partswatch.html">How partswatch works &rarr;</a></article>
-<article class="about-story"><h3>I read everything I ever kept.</h3><p>127,206 files. I went looking for the story in my own archive and found that two of those years were software activity, not me. Keeping the originals matters to me. So does being honest about what they can actually tell me.</p><a href="/writing/everything-i-ever-kept.html">What the archive said &rarr;</a></article>
+<p>That still feels like the right way to learn: pick something I actually want, get a small part working, and keep asking questions. The long-term ambition is a personal assistant running on hardware I control, with a memory I can take with me.</p>
 </div>
 </section>
 
-<section class="about-section" aria-labelledby="work-title">
-<h2 id="work-title">Where I've<br>worked.</h2>
-<div>
-<p class="about-work-intro">Cloud infrastructure, telecom, financial services and now payments. More responsibility each time, and a little closer to the systems people depend on.</p>
-<p>I started with an honours degree in software engineering. My first team lead role was a Java app that taught children Braille. Since then, the work has grown from looking after servers to carrying changes through production and helping teams recover when things go wrong.</p>
-<article class="about-role"><div class="about-role-label">01 / Foundations</div><h3>Cloud &amp; software</h3>
-<p>I started as a systems administrator on a large cloud platform, supporting hundreds of customers across Linux and Windows. I automated VMware tasks with PowerShell and Python, hardened more than 100 servers to a healthcare compliance standard, and worked on Cisco switches and ASA firewalls.</p>
-<p><strong>The automation cut the team's manual work by about a third.</strong> It made me want to look for the next repetitive job worth fixing.</p>
-<p>Alongside the technical work, I was president of the intern community across two provinces: a few hundred interns, a calendar of social and career events, and site leads checking in each week. Keeping people connected and staying within budget was a different kind of systems problem.</p></article>
-<article class="about-role"><div class="about-role-label">02 / Scale</div><h3>Telecom</h3>
-<p>I helped keep mobile provisioning flowing for millions of LTE and 5G subscribers. I wrote outage playbooks, built patch procedures for on-premises and cloud systems, and carried those changes through review.</p>
-<p>The work also meant pursuing product defects with vendors and building a tool that took repetitive cleanup off the frontline network operations team. <strong>The platform portfolio maintained a 98% provisioning success rate.</strong></p>
-<p>The team won the company's Team of the Year award for a world-first launch with a major software partner.</p></article>
-<article class="about-role"><div class="about-role-label">03 / Responsibility</div><h3>Financial services</h3>
-<p>This is the part I'm proudest of. I worked with the banks and credit unions on a financial services platform, owning the hub service between them. For each partner, I wrote the configuration, raised the change, and carried it through development, testing and production.</p>
+<section class="work" aria-labelledby="work-title">
+<div class="head"><span class="eyebrow">Experience</span><h2 id="work-title">Where I've worked.</h2></div>
+<div class="work-intro row body">
+<p>Seven years across cloud infrastructure, telecom and financial services. I've had the privilege of working on critical systems people rely on, in telecom and financial services. As time went on, the responsibility grew, and so did my experience.</p>
+<p>I started with an honours degree in software engineering. My first team lead role was a Java app that taught children Braille. Since then, the work has grown from looking after servers to seeing changes through to production end to end: hunting down bugs, writing the infrastructure as code, and building the playbooks teams use when things go wrong.</p>
+</div>
+<article class="role row"><div class="role-h"><span class="eyebrow">01 / Foundations</span><h3>Cloud &amp; software</h3><p class="mid">I started as a systems administrator on a large cloud platform, supporting hundreds of customers across Linux and Windows.</p></div>
+<div class="role-b body">
+<p>I automated VMware tasks with PowerShell and Python, hardened more than 100 servers to a healthcare compliance standard, and worked on Cisco switches and ASA firewalls.</p>
+<p>The automation cut the team's manual work by about a third. It made me want to look for the next repetitive job worth fixing.</p>
+<p>Alongside the technical work, I also ran the intern community, with social and career events and site leads checking in each week. Keeping people connected and staying within budget was a different kind of systems problem.</p>
+</div></article>
+<article class="role row"><div class="role-h"><span class="eyebrow">02 / Scale</span><h3>Telecom</h3><p class="mid">I was a senior systems analyst on the OSS platforms that provision the wireless network.</p></div>
+<div class="role-b body">
+<p>When someone activates a phone or changes a plan, that flow is what makes it happen, for millions of customers. I watched system health and KPIs, found the bottlenecks in LTE, 4G and 5G provisioning, and fixed them.</p>
+<p>When things broke, I wrote the outage playbook the team used to recover faster. I wrote Methods of Procedure to patch on-premises and cloud systems and close vulnerabilities, and presented each change at change management.</p>
+<p>I chased product defects with third-party vendors and tested the fixes with their engineers, built an automation tool that took customer-profile cleanup off the frontline NOC team, and led cross-functional projects to meet provisioning requirements across the whole OSS portfolio.</p>
+</div></article>
+<article class="role row"><div class="role-h"><span class="eyebrow">03 / Responsibility</span><h3>Financial institutions</h3><p class="mid">This is the part I'm proudest of.</p></div>
+<div class="role-b body">
+<p>For each change, I wrote the configuration, raised it, and carried it through development, testing and production.</p>
 <p>I ran major release migrations, wrote the automation that made them repeatable, and rotated certificates without dropping traffic. The hard tickets involved mTLS, SAML and OIDC federation, HSM signing, and site-to-site VPNs that only made sense once you found the cause.</p>
-<p>In practice that meant Keycloak realms and clients built with Ansible, mTLS keystores and truststores redeployed without breaking a partner, and the yearly HSM key rotation, with the risk written up before the change went in. I was on call for all of it and wrote the postmortems.</p>
-<p>That work spanned two data centres, with Nomad, Consul, Vault, Ansible, AWS and Bitbucket pipelines. In a regulated environment, a mistake can affect somebody's payment. A recovery plan is part of the job.</p>
-<p>I also handled the staff side: Azure AD single sign-on, Intune and Autopilot, plus testing and rollout for an organisation-wide Windows 11 migration. <strong>Vulnerability remediation stayed at 90% within SLA.</strong></p></article>
-<article class="about-role"><div class="about-role-label">04 / Now</div><h3>Payments, platform &amp; security</h3>
-<p>Today I'm on the platform engineering team of a payments platform at a large tech company. Before that I was on its network and security team, and most of what follows comes from there.</p>
-<p>I handled vulnerability response for the network. When a vendor advisory landed, I worked out what was exposed, what closed it, and who needed to know. I triaged scanner findings on the network gear and worked security-operations escalations through to a cause. Audits and access reviews come around on a schedule, and I put the evidence together for them.</p>
-<p>When something failed, I wrote the root-cause analysis and pushed the redesign that came out of it. For an identity-platform migration I mapped the OIDC and SAML login flow end to end, since nobody had written it down, and wrote the validation plan for break-glass access and user migration.</p>
-<p>I wrote the network sections of client architecture documents and checked them against the device configs, and contributed to the business case for replacing part of the network stack. I built a small internal tool and took it through the company's app-approval process. I use AI agents to cross-check documents, under redaction rules so no secret leaves the box.</p>
-<p>I also screened and interviewed candidates for the team, and ran the knowledge transfer so after-hours support stopped depending on one person. Earlier at the same company I supported customer platforms on OpenShift and Kubernetes.</p></article>
-<div class="about-toolbox"><h3>Tools I keep coming back to</h3>
-<dl class="about-career">
-<div><dt>Systems &amp; automation</dt><dd>Linux, Bash, PowerShell, Ansible, Docker and Helm. Python for most things, Go for <a href="/writing/go-x509.html">certguard</a>.</dd></div>
-<div><dt>Platform</dt><dd>Nomad, Consul and Vault, at work and in my own lab. OpenShift and Kubernetes on the support side. Traefik and Proxmox.</dd></div>
-<div><dt>Network</dt><dd>Cisco IOS and NX-OS, Firepower, F5 BIG-IP, FortiGate, route-based IPsec with failover, packet-capture planning.</dd></div>
-<div><dt>Identity &amp; PKI</dt><dd>TLS and X.509 with openssl, SAML, OIDC and OAuth2, Keycloak, CyberArk, mTLS keystores and truststores, HSM-held keys and PKCS#11 tooling, Vault PKI as my own CA in the lab.</dd></div>
-<div><dt>Security</dt><dd>Vulnerability triage against CVEs and vendor advisories, firewall rule-base review, access-review and audit evidence, incident RCAs, fuzzing in Go.</dd></div>
+<p>That work spanned two data centres. I turned business requirements into configuration as code, so every change was reviewed, repeatable and shipped through a pipeline instead of by hand.</p>
+<p>I also carried L2/L3 production support on an on-call rotation for SLA-bound systems: responding to critical incidents, finding the root cause, writing the postmortem, and patching under pressure when it couldn't wait. Where the same manual step kept coming back, I wrote the Bash or Python to take it away.</p>
+<p>I also handled Microsoft 365, Azure AD single sign-on, Intune and Autopilot, plus testing and rollout for an organisation-wide Windows 11 migration.</p>
+</div></article>
+<div class="tools-wrap">
+<h3>Tools I keep coming back to</h3>
+<dl class="tools">
+<div><dt>Systems &amp; automation</dt><dd>Linux, Python, Bash, PowerShell, Ansible, Docker, Helm, Nomad and Consul.</dd></div>
 <div><dt>Visibility &amp; cloud</dt><dd>Splunk, Elastic, AWS and Azure.</dd></div>
+<div><dt>Identity &amp; secrets</dt><dd>Vault for secrets and PKI, mTLS and the certificate lifecycle, SAML and OIDC with Keycloak, Azure AD single sign-on and CyberArk.</dd></div>
+<div><dt>Networks &amp; security</dt><dd>Cisco switches and ASA firewalls, OPNsense, VLANs, DNS, site-to-site IPsec VPNs and Tenable vulnerability scanning.</dd></div>
 </dl>
-<p class="about-small">I studied Kubernetes and Terraform on AWS through courses and self-directed work. I've also worked as a scrum master.</p>
+</div>
+</section>
+
+<section class="outside" aria-labelledby="outside-title">
+<div class="outside-top row">
+<div class="head"><span class="eyebrow">Off the clock</span><h2 id="outside-title">Away from the terminal.</h2></div>
+<p class="body">Cars, the gym, soccer and pickleball. And 3D printing, although that tends to bring me straight back to the desk with another idea. I like making useful things, whether that's a part for the car or a better way to arrange the lab.</p>
+</div>
+<div class="shots">
+<figure><img src="/assets/sq-gallery/2026-09-12-parked.jpg" alt="The grey SQ5 parked in a lot in front of trees" width="1200" height="1600" loading="lazy" style="object-position:center 47%"><figcaption>The car, parked under the trees.</figcaption></figure>
+<figure><img src="/assets/sq-gallery/2026-08-06-case-v2-pi.jpg" alt="Raspberry Pi seated in the black printed case base" width="1200" height="1600" loading="lazy" style="object-position:center 42%"><figcaption>A printed case, with the Pi inside.</figcaption></figure>
+<figure><img src="/assets/infra/buildday.jpg" alt="A room during a PC build: a monitor showing a BIOS screen, a lit tower on the desk, a second open PC on the floor, a 3D printer behind, cables everywhere" width="1344" height="1600" loading="lazy" style="object-position:center 30%"><figcaption>Build day in the lab.</figcaption></figure>
+</div>
+<div class="closing row">
+<p class="mid">This site is where I keep the projects and the stories behind them. Some are useful, some are experiments, and some are still taking shape. If one of them overlaps with something you're working on, I'd enjoy hearing about it.</p>
+<div class="closing-act">
+<div class="actions"><a class="btn" href="mailto:amir@ahk02x.com">Say hello &rarr;</a><a class="btn ghost" href="https://github.com/ahk02x">GitHub &nearr;</a></div>
+<p class="note">Amir Khademi, online as ahk02x.</p>
 </div>
 </div>
 </section>
 
-<section class="about-section" aria-labelledby="outside-title">
-<h2 id="outside-title">Away from<br>the terminal.</h2>
-<div><p>Cars, the gym, soccer and pickleball. And 3D printing, although that tends to bring me straight back to the desk with another idea. I like making useful things, whether that's a part for the car or a better way to arrange the lab.</p>
-<p>This site is where I keep the projects and the stories behind them. Some are useful, some are experiments, and some are still taking shape. If one of them overlaps with something you're working on, I'd enjoy hearing about it.</p>
-<div class="about-links"><a href="mailto:amir@ahk02x.com">amir@ahk02x.com &rarr;</a><a href="https://github.com/ahk02x">GitHub &rarr;</a><a href="/writing/">Field notes &rarr;</a></div>
-<p class="about-small">Amir Hossein Khademi, also written Amir-Hossein Khademi. Online as ahk02x.</p></div>
-</section>
+<a class="nextnav" href="/projects/"><span class="eyebrow">Next &mdash; 02</span><span>Projects &rarr;</span></a>
 </main>

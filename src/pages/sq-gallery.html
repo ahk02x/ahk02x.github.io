@@ -7,21 +7,49 @@ nav: /projects/
 <section class="hero"><div class="eyebrow">SQ5 · how the logger got built · in date order</div><h1>Gallery</h1>
 <p class="lede">From the first live readout on a laptop to a printed box by the passenger seat. Renders are the case as modelled; photos are the real thing. Tap any picture for the full size.</p></section>
 <style>
-.gl h2{font:12px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:34px 0 12px}
-.gl .gl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.gl figure{margin:0;min-width:0;padding:10px;border:1px solid var(--soft-line);background:var(--card);border-radius:10px}
+/* Page layout only, on the archive theme: a plate number, a picture and its caption, divided by
+   hairlines. No card, no radius, no fill behind a picture. */
+.gl h2{font:500 12px/1.5 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--quiet);margin:34px 0 0;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.gl .gl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.gl figure{margin:0;min-width:0;padding:20px 24px 24px;border-right:1px solid var(--line-3);border-bottom:1px solid var(--line-3)}
+.gl .gl-grid>figure:nth-child(3n){border-right:0;padding-right:0}
+.gl .gl-grid>figure:nth-child(3n+1){padding-left:0}
 .gl .gl-pics{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px}
-.gl .gl-pics a,.gl .gl-pics video{display:block;aspect-ratio:4/5;overflow:hidden;border-radius:6px;background:var(--bg-2)}
+.gl .gl-pics a,.gl .gl-pics video{display:block;aspect-ratio:4/5;overflow:hidden;border:1px solid var(--ink);background:var(--img)}
 .gl .gl-pics img,.gl .gl-pics video{width:100%;height:100%;object-fit:cover;display:block}
-.gl .gl-render img{object-fit:contain;background:#fffde6}
-.gl figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--fg-2)}
-.gl figcaption time{display:block;margin-bottom:3px;font:11px var(--mono);letter-spacing:.04em;color:var(--muted)}
-@media (max-width:860px){.gl .gl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.gl .gl-grid{grid-template-columns:1fr}}
+.gl .gl-render img{object-fit:contain;background:var(--img)}
+.gl figcaption{margin-top:10px;font-size:13px;line-height:1.45;color:var(--ink-3)}
+.gl figcaption time{display:block;margin-bottom:3px;font:400 11px var(--mono);letter-spacing:.04em;color:var(--quiet)}
+@media (max-width:860px){.gl .gl-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.gl .gl-grid>figure:nth-child(3n),.gl .gl-grid>figure:nth-child(3n+1){border-right:1px solid var(--line-3);padding-left:24px;padding-right:24px}
+.gl .gl-grid>figure:nth-child(2n){border-right:0;padding-right:0}
+.gl .gl-grid>figure:nth-child(2n+1){padding-left:0}}
+@media (max-width:520px){.gl .gl-grid{grid-template-columns:1fr}
+.gl .gl-grid>figure{border-right:0;padding-left:0;padding-right:0}}
 </style>
 <div class="gl">
+<h2>March 2026</h2>
+<div class="gl-grid">
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-03-30-car-meet.jpg"><img src="/assets/sq-gallery/2026-03-30-car-meet-t.jpg" alt="The grey SQ5 nose to nose with a grey Audi coupe at a night car meet, headlights on" loading="lazy"></a></div>
+<figcaption><time datetime="2026-03-30">Mar 30</time>Trying to work on my phone photography skills. This was at a car meet.</figcaption></figure>
+</div>
+<h2>June 2026</h2>
+<div class="gl-grid">
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-06-10-front-quarter.jpg"><img src="/assets/sq-gallery/2026-06-10-front-quarter-t.jpg" alt="Front quarter of the grey SQ5, with a second dark car's red-caliper wheel in front" loading="lazy"></a></div>
+<figcaption><time datetime="2026-06-10">Jun 10</time>The car in June, before the logger existed.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-06-10-hood-session.jpg"><img src="/assets/sq-gallery/2026-06-10-hood-session-t.jpg" alt="Laptop, phone and a USB hub on a blanket over the SQ5's hood, a cable running into the car" loading="lazy"></a></div>
+<figcaption><time datetime="2026-06-10">Jun 10</time>Laptop on a blanket on the hood, cabled into the car for a tuning session.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-06-11-lap-session.jpg"><img src="/assets/sq-gallery/2026-06-11-lap-session-t.jpg" alt="Laptop on my lap in the driver's seat, a list of tunes on the screen" loading="lazy"></a></div>
+<figcaption><time datetime="2026-06-11">Jun 11</time>Picking from the tune list on the laptop, from the driver's seat.</figcaption></figure>
+</div>
 <h2>July 2026</h2>
 <div class="gl-grid">
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-08-bumper-off.jpg"><img src="/assets/sq-gallery/2026-07-08-bumper-off-t.jpg" alt="The SQ5 on a shop lift with the front bumper off, hood up, a front wheel off and a pan of coolant underneath" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-08">Jul 8</time>Bumper off for the thermostat fix, the coolant drained into the pan.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-08-intercoolers.jpg"><img src="/assets/sq-gallery/2026-07-08-intercoolers-t.jpg" alt="A big black front-mount intercooler standing behind the slim silver stock intercooler on a shop floor" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-08">Jul 8</time>Old and new: the stock intercooler in front, the much bigger replacement behind.</figcaption></figure>
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-08-intercooler-in.jpg"><img src="/assets/sq-gallery/2026-07-08-intercooler-in-t.jpg" alt="Looking up at the front of the SQ5 on a blue two-post lift, bumper off, the big intercooler behind the crash bar" loading="lazy"></a></div>
+<figcaption><time datetime="2026-07-08">Jul 8</time>The new intercooler in, seen from under the car.</figcaption></figure>
 <figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-07-10-car.jpg"><img src="/assets/sq-gallery/2026-07-10-car-t.jpg" alt="Grey Audi SQ5 with the hood open in a parking lot at dusk" loading="lazy"></a></div>
 <figcaption><time datetime="2026-07-10">Jul 10</time>The car, a week into logging.</figcaption></figure>
 <figure><div class="gl-pics"><video src="/assets/sq-gallery/2026-07-12-first-live.mp4" poster="/assets/sq-gallery/2026-07-12-first-live-t.jpg" muted loop playsinline autoplay preload="none" aria-label="Laptop showing a live engine dashboard"></video></div>
@@ -44,11 +72,16 @@ nav: /projects/
 <figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-06-case-v2-pi.jpg"><img src="/assets/sq-gallery/2026-08-06-case-v2-pi-t.jpg" alt="Raspberry Pi seated in the black printed case base" loading="lazy"></a><a href="/assets/sq-gallery/2026-08-06-case-v2-cabled.jpg"><img src="/assets/sq-gallery/2026-08-06-case-v2-cabled-t.jpg" alt="The Pi in its case with power and data cables connected" loading="lazy"></a></div>
 <figcaption><time datetime="2026-08-06">Aug 6</time>v2 printed, Pi seated and cabled.</figcaption></figure>
 <figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-06-lid-sq.jpg"><img src="/assets/sq-gallery/2026-08-06-lid-sq-t.jpg" alt="Black case with a honeycomb lid and a red SQ logo" loading="lazy"></a></div>
-<figcaption><time datetime="2026-08-06">Aug 6</time>The honeycomb lid with the red SQ inlay.</figcaption></figure>
+<figcaption><time datetime="2026-08-06">Aug 6</time>The honeycomb lid with the red SQ inlay. <a href="/sq/logger.html">The finished box, layer by layer</a>.</figcaption></figure>
 <figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-28-installed.jpg"><img src="/assets/sq-gallery/2026-08-28-installed-t.jpg" alt="The logger box mounted beside the red passenger seat" loading="lazy"></a></div>
 <figcaption><time datetime="2026-08-28">Aug 28</time>Installed by the passenger seat.</figcaption></figure>
 <figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-08-31-in-car-session.jpg"><img src="/assets/sq-gallery/2026-08-31-in-car-session-t.jpg" alt="Laptop and the SQ logger box on the passenger seat" loading="lazy"></a></div>
 <figcaption><time datetime="2026-08-31">Aug 31</time>Working on the logger from the passenger seat.</figcaption></figure>
+</div>
+<h2>September 2026</h2>
+<div class="gl-grid">
+<figure><div class="gl-pics"><a href="/assets/sq-gallery/2026-09-12-parked.jpg"><img src="/assets/sq-gallery/2026-09-12-parked-t.jpg" alt="The grey SQ5 parked in a lot in front of trees" loading="lazy"></a></div>
+<figcaption><time datetime="2026-09-12">Sep 12</time>Parked under the trees.</figcaption></figure>
 </div>
 </div>
 </main>

@@ -7,21 +7,26 @@ nav: /projects/
 <section class="hero"><div class="eyebrow">SQ5 · week of Nov 13 to Nov 20 · generated 2026-11-20</div><h1>Weekly health</h1>
 <p class="lede">What the car's own logger says about the last seven days, in the words I'd want to read on a Sunday evening. Verdict first, then what to do, then the evidence with its threshold.</p></section>
 <style>
-.hc{--hc-ok:#1f9e6e;--hc-warn:#d98a1c;--hc-crit:#e5484d}
-.hc .verdict{border-left:6px solid var(--hc-v,transparent)}
+/* The card sits on the paper now, so state is a rule and a square, never a reversed panel.
+   Hues come from the shared status tokens, which already flip for the dark theme. */
+.hc{--hc-ok:var(--st-run);--hc-warn:var(--st-written);--hc-crit:var(--st-live);--hc-none:var(--quiet)}
+.hc .verdict{padding-left:18px;border-left:3px solid var(--hc-v,var(--hc-none))}
 .hc .verdict.ok{--hc-v:var(--hc-ok)}.hc .verdict.warn{--hc-v:var(--hc-warn)}.hc .verdict.crit{--hc-v:var(--hc-crit)}
-.hc .verdict .word{color:var(--hc-v,inherit)}
-.hc .verdict.ok,.hc .verdict.warn{color:#efefeb}
-.hc .verdict li em{color:inherit;opacity:.78}
-.hc .verdict .chip{padding:3px 7px;border-radius:4px;text-decoration:none;font-weight:700}
-.hc .verdict .chip.ok{color:var(--hc-ok);background:color-mix(in srgb,var(--hc-ok) 16%,transparent)}
-.hc .verdict .chip.warn{color:var(--hc-warn);background:color-mix(in srgb,var(--hc-warn) 16%,transparent)}
-.hc .verdict .chip.crit{color:var(--hc-crit);background:color-mix(in srgb,var(--hc-crit) 16%,transparent)}
-.hc .tile.hc-ok{box-shadow:inset 0 3px var(--hc-ok)}.hc .tile.hc-warn{box-shadow:inset 0 3px var(--hc-warn)}.hc .tile.hc-crit{box-shadow:inset 0 3px var(--hc-crit)}
-.hc .tile.hc-warn .t{color:var(--hc-warn)}.hc .tile.hc-crit .t{color:var(--hc-crit)}
-.hc .hc-updated{display:flex;flex-wrap:wrap;gap:6px 18px;margin:22px 0 0;font:12px var(--mono);color:var(--fg-2)}
-.hc .hc-updated span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;background:var(--hc-ok)}
-.hc .hc-updated.late .hc-next{color:var(--hc-crit)}.hc .hc-updated.late .hc-next::before{background:var(--hc-crit)}
+/* No data is its own state: quiet, not critical. Before this it fell through to the critical look. */
+.hc .verdict.unknown{--hc-v:var(--hc-none)}
+.hc .verdict.unknown .word{color:var(--quiet)}
+.hc .verdict li em{color:var(--ink-3)}
+.hc .verdict .chip{text-decoration:none;font-weight:600;color:var(--ink)}
+.hc .verdict .chip.ok::before{background:var(--hc-ok)}
+.hc .verdict .chip.warn::before{background:none;border:1px solid var(--hc-warn)}
+.hc .verdict .chip.crit::before{background:var(--hc-crit)}
+.hc .tile.hc-ok{border-top:2px solid var(--hc-ok)}.hc .tile.hc-warn{border-top:2px solid var(--hc-warn)}.hc .tile.hc-crit{border-top:2px solid var(--hc-crit)}
+.hc .tile.hc-ok,.hc .tile.hc-warn,.hc .tile.hc-crit{padding-top:14px}
+.hc .tile.hc-warn .t,.hc .tile.hc-crit .t{color:var(--ink-2);font-weight:500}
+.hc .hc-updated{display:flex;flex-wrap:wrap;gap:6px 18px;margin:22px 0 0;font:12px var(--mono);color:var(--ink-3)}
+.hc .hc-updated:empty{display:none}
+.hc .hc-updated span::before{content:'';display:inline-block;width:7px;height:7px;margin-right:8px;background:var(--hc-ok)}
+.hc .hc-updated.late .hc-next{color:var(--ink);font-weight:500}.hc .hc-updated.late .hc-next::before{background:var(--hc-crit)}
 </style>
 <p class="hc-updated" data-health-updated></p>
 <p class="snapshot-notice" data-stale-notice hidden><strong>Historical snapshot.</strong> This report is more than two weeks old or has no valid date. Its verdict describes the recorded week, not the car today.</p>
@@ -34,5 +39,5 @@ nav: /projects/
 <path d="M44.0,184.0 V166.1 a4,4 0 0 1 4,-4 H125.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--fg-2)"><title>cylinder 1: 0.34× the median of its five siblings</title></path><text x="86.5" y="202" text-anchor="middle">cyl 1</text><path d="M143.0,184.0 V150.1 a4,4 0 0 1 4,-4 H224.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--fg-2)"><title>cylinder 2: 0.59× the median of its five siblings</title></path><text x="185.5" y="202" text-anchor="middle">cyl 2</text><path d="M242.0,184.0 V80.6 a4,4 0 0 1 4,-4 H323.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--crit)"><title>cylinder 3: 1.68× the median of its five siblings</title></path><text x="284.5" y="202" text-anchor="middle">cyl 3</text><path d="M341.0,184.0 V77.2 a4,4 0 0 1 4,-4 H422.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--crit)"><title>cylinder 4: 1.74× the median of its five siblings</title></path><text x="383.5" y="202" text-anchor="middle">cyl 4</text><path d="M440.0,184.0 V168.1 a4,4 0 0 1 4,-4 H521.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--fg-2)"><title>cylinder 5: 0.31× the median of its five siblings</title></path><text x="482.5" y="202" text-anchor="middle">cyl 5</text><path d="M539.0,184.0 V43.7 a4,4 0 0 1 4,-4 H620.0 a4,4 0 0 1 4,4 V184.0 Z" fill="var(--crit)"><title>cylinder 6: 2.26× the median of its five siblings</title></path><text x="581.5" y="202" text-anchor="middle">cyl 6</text><text x="581.5" y="32.7" text-anchor="middle" class="lbl">2.3×</text><line x1="44" x2="624" y1="184" y2="184" stroke="var(--line-2)"/></svg>
 <figcaption>Each cylinder's warm misfire rate this week as a multiple of the median of the other five. Amber from 1.25×, red from 1.5×. Exact values are listed below; 1× means the same rate as the sibling median.</figcaption></figure><table class="cylinder-data"><caption>Warm misfire rate / sibling median</caption><thead><tr><th scope="col">Cylinder</th><th scope="col">Ratio</th><th scope="col">Threshold band</th></tr></thead><tbody><tr><th scope="row">Cylinder 1</th><td class="num">0.34×</td><td>Below 1.25×</td></tr><tr><th scope="row">Cylinder 2</th><td class="num">0.59×</td><td>Below 1.25×</td></tr><tr><th scope="row">Cylinder 3</th><td class="num">1.68×</td><td>At least 1.5×</td></tr><tr><th scope="row">Cylinder 4</th><td class="num">1.74×</td><td>At least 1.5×</td></tr><tr><th scope="row">Cylinder 5</th><td class="num">0.31×</td><td>Below 1.25×</td></tr><tr><th scope="row">Cylinder 6</th><td class="num">2.26×</td><td>At least 1.5×</td></tr></tbody></table>
 <h2>How this is made</h2>
-<p>A Raspberry Pi in the footwell logs 53 engine-computer channels five times a second on every drive and pushes the data home. A Sunday job compares the week to the week before and to a four-week baseline. The verdict rules are written down: oil at or above 130 °C or transmission fluid at or above 110 °C flags; a crank below 9.6 V flags; misfires at 1.5× the baseline flag and 1.25× is a watch; any Pi boot storm is a watch. Nothing here is a guess, and nothing here is live: this is a static snapshot by design. More in <a href="/sq/">the garage</a>.</p>
+<p>A Raspberry Pi in the footwell logs 58 engine-computer channels about two and a half times a second on every drive, off the car's own bus, and pushes the data home. A weekly job compares the week to the week before and to a four-week baseline. The verdict rules are written down: oil at or above 130 °C or transmission fluid at or above 110 °C flags; a crank below 9.6 V flags; misfires at 1.5× the baseline flag and 1.25× is a watch; any Pi boot storm is a watch. Where a channel is known to be unreliable it is left out rather than guessed at, and nothing here is live: this is a static snapshot by design. More in <a href="/sq/">the garage</a>.</p>
 </main>

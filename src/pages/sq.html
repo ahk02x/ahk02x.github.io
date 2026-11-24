@@ -1,15 +1,362 @@
 title: SQ · Vehicle Intelligence Platform
-description: Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged with a reverse-engineered diagnostic cable and a Raspberry Pi, what the data taught him, and a weekly health card the car writes about itself.
+description: Amir Khademi's 2025 Audi SQ5: what's on it, how it is logged by a Raspberry Pi reading the car's own CAN bus, what the data taught him, and a weekly health card the car writes about itself.
 path: /sq/
 nav: /projects/
 ---
+<style>
+/* The SQ hero: the wordmark turns into the gauge mark once on load (the astra animation), then holds on the mark.
+   It is the hero's one focal point, centred under the eyebrow. The box is a fixed square, so nothing moves while
+   it plays; its margins trim the mark's own empty border. Inks come from the --sq-* tokens, so each theme ends on
+   its own mark (the light one or the dark one, as the static images did). */
+.sq-hero .eyebrow{text-align:center}
+.hero h1.sq-name{--sq-box:max(2.75em,180px);flex:0 0 100%;line-height:0;letter-spacing:0}
+/* The name stays in the heading for readers and search; it is clipped to nothing, not laid over any text. */
+.sq-name .sq-word{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.sq-anim{display:block;width:var(--sq-box);height:var(--sq-box);max-width:none;margin:calc(var(--sq-box) * -.1) auto calc(var(--sq-box) * -.11);overflow:visible;cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.sq-anim .sqa-word{fill:var(--ink)}
+.sq-anim .sqa-stop{stop-color:var(--sq-red)}
+.sq-anim .sqa-glow{stroke:var(--sq-red)}
+.sq-anim .lk-ring{stroke:var(--sq-ring)}
+.sq-anim .lk-red{stroke:var(--sq-red)}
+.sq-anim .lk-needle{fill:var(--sq-red)}
+</style>
 <main class="wrap">
-<section class="hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1>SQ</h1>
-<p class="lede">A car that I log, tune, and argue with. I bought it to drive it. Then I wanted to know what it was actually doing, and the factory gauges answer almost nothing. This is the hobby, and the start of SQ: a vehicle intelligence platform. The car’s data goes in, a brain works out what it means, and what comes back is a sentence a person can act on. Not more data, more understanding.</p>
+<section class="hero sq-hero"><div class="eyebrow">Vehicle Intelligence Platform · built on a 2025 Audi SQ5</div><h1 class="sq-name"><span class="sq-word">SQ</span><svg class="sq-anim" id="sq-anim" viewBox="0 0 256 256" shape-rendering="geometricPrecision" aria-hidden="true" focusable="false">
+<defs>
+<radialGradient id="sqa-cut"><stop class="sqa-stop" offset="0" stop-opacity="0.55"/><stop class="sqa-stop" offset="0.45" stop-opacity="0.16"/><stop class="sqa-stop" offset="1" stop-opacity="0"/></radialGradient>
+<filter id="sqa-soft" x="-60" y="-60" width="376" height="376" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<text class="sqa-word" text-rendering="geometricPrecision" display="none"><tspan>S</tspan><tspan>Q</tspan></text>
+<g class="sqa-moving"></g>
+<g class="sqa-locked">
+<path class="lk-ring" d="M 176.75 206.02 A 92 92 0 1 1 206.02 176.75" fill="none" stroke-width="9" stroke-linecap="round"/>
+<line class="lk-ring" x1="71.43" y1="184.57" x2="82.75" y2="173.25" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-ring" x1="58.72" y1="168" x2="67.38" y2="163" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="50.73" y1="148.71" x2="60.39" y2="146.12" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="48" y1="128" x2="64" y2="128" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-ring" x1="50.73" y1="107.29" x2="60.39" y2="109.88" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="58.72" y1="88" x2="67.38" y2="93" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="71.43" y1="71.43" x2="82.75" y2="82.75" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-ring" x1="88" y1="58.72" x2="93" y2="67.38" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="107.29" y1="50.73" x2="109.88" y2="60.39" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="128" y1="48" x2="128" y2="64" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-ring" x1="148.71" y1="50.73" x2="146.12" y2="60.39" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="168" y1="58.72" x2="163" y2="67.38" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-ring" x1="184.57" y1="71.43" x2="173.25" y2="82.75" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-ring" x1="197.28" y1="88" x2="188.62" y2="93" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-red" x1="205.27" y1="107.29" x2="195.61" y2="109.88" stroke-width="4.5" stroke-linecap="round"/>
+<line class="lk-red" x1="208" y1="128" x2="192" y2="128" stroke-width="7" stroke-linecap="round"/>
+<line class="lk-red" x1="205.27" y1="148.71" x2="195.61" y2="146.12" stroke-width="4.5" stroke-linecap="round"/>
+<path class="lk-needle" d="M 165.83 175.02 L 211.09 216.03 A 3.5 3.5 0 0 0 216.03 211.09 L 175.02 165.83 A 6.5 6.5 0 0 0 165.83 175.02 Z"/>
+<path class="lk-red" d="M 154 96 C 146 87 112 84 103 95 C 94 106 100 118 114 124 C 130 131 150 134 154 148 C 157 163 143 172 126 171 C 113 170 104 164 101 156" transform="translate(-3 -3)" fill="none" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg></h1>
+<script>
+/* SQ -> the mark (astra, approved 11-19). Without script the locked mark above is what shows.
+   window.sqHero.renderAt(seconds) draws one frame; ?t=SECONDS freezes on it. Click or tap replays. */
+(() => {
+  'use strict';
+  const art = document.getElementById('sq-anim');
+  if (!art || !art.getBBox) return;
+  const locked = art.querySelector('.sqa-locked');
+  const moving = art.querySelector('.sqa-moving');
+  const word = art.querySelector('.sqa-word');
+  const [wordS, wordQ] = word.children;
+  for (const part of locked.children) moving.append(part.cloneNode(true));
+  // The moving copies are coloured per frame, so only the ticks that never change colour keep a class.
+  for (const part of moving.children) if (!part.classList.contains('lk-ring') || part.tagName !== 'line') part.removeAttribute('class');
+  const ring = moving.firstElementChild;
+  const ticks = [...moving.querySelectorAll('line')];
+  const letter = moving.lastElementChild;
+  const needle = letter.previousElementSibling;
+  const ringD = ring.getAttribute('d');
+  const needleD = needle.getAttribute('d');
+  const svgElement = tag => document.createElementNS(art.namespaceURI, tag);
+  const disc = svgElement('circle');
+  disc.setAttribute('r', 70);
+  disc.setAttribute('fill', 'url(#sqa-cut)');
+  moving.insertBefore(disc, ring);
+  const glow = svgElement('path');
+  for (const [k,v] of [['class','sqa-glow'],['fill','none'],['stroke-width',12],['stroke-linejoin','round'],['filter','url(#sqa-soft)']])
+    glow.setAttribute(k, v);
+  moving.insertBefore(glow, needle);
+  const caps = [svgElement('ellipse'), svgElement('ellipse')];
+  moving.append(...caps);
+  letter.removeAttribute('transform');
+  letter.setAttribute('stroke-linecap', 'butt');
+
+  const clamp = x => Math.min(1, Math.max(0, x));
+  const phase = (t, a, b) => clamp((t-a)/(b-a));
+  const ease = x => x*x*x*(10+x*(-15+6*x));
+  const mix = (a,b,p) => a + (b-a)*p;
+  const blend = (a,b,p) => a.map((v,i) => mix(v,b[i],p));
+  const rgb = (a,b,p) => 'rgb(' + blend(a,b,p).map(Math.round).join(' ') + ')';
+  const radians = Math.PI / 180;
+
+  // The inks are the theme's: the page ink for the letters, the mark's graphite and red (style.css --sq-*).
+  let white, graphite, red, hot;
+  function readInks() {
+    const ink = token => {
+      art.style.color = 'var(' + token + ')';
+      const v = getComputedStyle(art).color.match(/[\d.]+/g).slice(0, 3).map(Number);
+      art.style.color = '';
+      return v;
+    };
+    white = ink('--ink'); graphite = ink('--sq-ring'); red = ink('--sq-red'); hot = ink('--sq-hot');
+  }
+  readInks();
+
+  function halve(a,b,c,d) {
+    const ab = blend(a,b,.5), bc = blend(b,c,.5), cd = blend(c,d,.5);
+    const left = blend(ab,bc,.5), right = blend(bc,cd,.5);
+    return [...ab,...left,...blend(left,right,.5),...right,...cd,...d];
+  }
+  /* ---------- the opening wordmark is real type; the geometry is fitted to it ---------- */
+  var WORD_FONT = '"Helvetica Neue", Helvetica, Inter, "SF Pro Display", Arial, sans-serif';
+  var WORD_WEIGHT = 500, WORD_SIZE = 140, WORD_TRACK = -0.012;   // size in logo units (256 box)
+  function measureWordmark() {
+    var P = 400, k = WORD_SIZE / P, OX = 100, OY = 520;
+    var c = document.createElement('canvas'); c.width = 1400; c.height = 760;
+    var g = c.getContext('2d', { willReadFrequently: true });
+    g.font = WORD_WEIGHT + ' ' + P + 'px ' + WORD_FONT;
+    g.textBaseline = 'alphabetic'; g.fillStyle = 'white';
+    function box(ch) {
+      var m = g.measureText(ch);
+      return { adv: m.width * k, l: -m.actualBoundingBoxLeft * k, r: m.actualBoundingBoxRight * k,
+               t: -m.actualBoundingBoxAscent * k, b: m.actualBoundingBoxDescent * k };
+    }
+    function runs(ch, horizontal, at) {
+      g.clearRect(0, 0, c.width, c.height); g.fillText(ch, OX, OY);
+      var px = Math.round(at / k), d, n, out = [], len = 0, i;
+      if (horizontal) { d = g.getImageData(0, OY + px, c.width, 1).data; n = c.width; }
+      else { d = g.getImageData(OX + px, 0, 1, c.height).data; n = c.height; }
+      for (i = 0; i < n; i++) {
+        if (d[i * 4 + 3] >= 128) len++;
+        else if (len) { out.push(len * k); len = 0; }
+      }
+      if (len) out.push(len * k);
+      return out;
+    }
+    function mean(a) { var s = 0; a.forEach(function (v) { s += v; }); return a.length ? s / a.length : 0; }
+    var S = box('S'), Q = box('Q'), O = box('O');
+    if (!(S.r - S.l > 10 && O.b - O.t > 10)) {     // no canvas metrics: Helvetica Neue Medium, measured
+      S = { adv: 90.72, l: 4.62, r: 86.1, t: -102.34, b: 2.38 };
+      Q = { adv: 106.4, l: 5.32, r: 101.08, t: -102.34, b: 9.1 };
+      O = { adv: 106.4, l: 5.32, r: 101.08, t: -102.34, b: 2.38 };
+    }
+    var sw = mean(runs('S', false, (S.l + S.r) / 2));
+    var ow = mean(runs('O', true, (O.t + O.b) / 2).concat(runs('O', false, (O.l + O.r) / 2)));
+    if (!(sw > 4 && sw < 40)) sw = 15.05;
+    if (!(ow > 4 && ow < 40)) ow = 15.93;
+    var track = WORD_TRACK * WORD_SIZE;
+    var Y = 128 - (O.t + O.b) / 2;
+    var right = Math.max(Q.r, O.r);
+    var xS = 128 - (S.l + S.adv + track + right) / 2;
+    var xQ = xS + S.adv + track;
+    return {
+      Y: Y, xS: xS, xQ: xQ,
+      s: { x0: xS + S.l, x1: xS + S.r, y0: Y + S.t, y1: Y + S.b, w: sw },
+      bowl: { cx: xQ + (O.l + O.r) / 2, cy: Y + (O.t + O.b) / 2,
+              rx: (O.r - O.l - ow) / 2, ry: (O.b - O.t - ow) / 2, w: ow },
+      q: { x1: xQ + Q.r, y1: Y + Q.b }
+    };
+  }
+  const WM = measureWordmark();
+  for (const [k,v] of [['font-family',WORD_FONT],['font-weight',WORD_WEIGHT],['font-size',WORD_SIZE]]) word.setAttribute(k,v);
+  wordS.setAttribute('x',WM.xS);
+  wordQ.setAttribute('x',WM.xQ);
+  word.setAttribute('y',WM.Y);
+  word.removeAttribute('display');
+  const S_FIT = [0.8717,0.3049,0.8688,0.1324,0.6854,0.0763,0.4928,0.0692,0.1968,0.0836,0.1439,0.1962,0.1389,0.2836,
+    0.1355,0.4269,0.327,0.4526,0.5446,0.4942,0.8449,0.5255,0.8773,0.5916,0.9076,0.6778,0.9109,0.8099,0.8419,0.8436,
+    0.7787,0.8785,0.7243,0.9112,0.5824,0.9281,0.581,0.9281,0.2056,0.942,0.0954,0.8038,0.0942,0.6588];
+  const sStart = S_FIT.map((v,i) => i%2 ? WM.s.y0+v*(WM.s.y1-WM.s.y0) : WM.s.x0+v*(WM.s.x1-WM.s.x0));
+  const B = WM.bowl, Rx = B.rx+B.w/2, Ry = B.ry+B.w/2;
+  const tailAt = (u,v) => [B.cx+u*Rx, B.cy+v*Ry];
+  const tailStart = [...tailAt(-.0857,.4261), ...tailAt(.6879,1.0425), 0,0,
+    ...tailAt(1.0935,1.0425), ...tailAt(.2978,.4081), 0,0];
+  const sEnd = [154,96,
+    ...halve([154,96],[146,87],[112,84],[103,95]),
+    94,106,100,118,114,124,
+    130,131,150,134,154,148,
+    ...halve([154,148],[157,163],[143,172],[126,171]),
+    113,170,104,164,101,156].map(v => v-3);
+
+  function drawLetter(t,p,pull) {
+    const pts = blend(sStart,sEnd,p);
+    for (let i=0; i<pts.length; i+=2) pts[i] -= pull;
+    let d = 'M ' + pts.slice(0,2).join(' ');
+    for (let i=2; i<pts.length; i+=6) d += ' C ' + pts.slice(i,i+6).join(' ');
+    letter.setAttribute('d',d);
+    const ink = rgb(white,red,ease(phase(t,1.12,1.96)));
+    const weight = mix(WM.s.w,13,p);
+    letter.setAttribute('stroke',ink);
+    letter.setAttribute('stroke-width',weight);
+    for (const [i,cap] of caps.entries()) {
+      const k = i ? pts.length-2 : 0, j = i ? k-2 : k+2;
+      const angle = Math.atan2(pts[j+1]-pts[k+1],pts[j]-pts[k])/radians;
+      cap.setAttribute('transform','translate('+pts[k]+' '+pts[k+1]+') rotate('+angle+')');
+      cap.setAttribute('rx',p*weight/2);
+      cap.setAttribute('ry',weight/2);
+      cap.setAttribute('fill',ink);
+    }
+  }
+
+  function drawRing(p,gap) {
+    const cx = mix(B.cx,128,p), cy = mix(B.cy,128,p);
+    const rx = mix(B.rx,92,p), ry = mix(B.ry,92,p);
+    const at = a => [cx+rx*Math.cos(a*radians),cy+ry*Math.sin(a*radians)].join(' ');
+    const arc = ' A '+rx+' '+ry+' 0 0 1 ';
+    ring.setAttribute('d',gap===1 ? ringD :
+      'M '+at(45+13*gap)+arc+at(225)+arc+at(405-13*gap)+(gap===0?' Z':''));
+    ring.setAttribute('stroke',rgb(white,graphite,p));
+    ring.setAttribute('stroke-width',mix(B.w,9,p));
+  }
+
+  const departures = [2.10,2.195,2.325,2.425,2.57,2.68,2.815,2.915,3.025];
+  const kicks = [9,6,8,5,9,7,5.5,8,4.5];
+  function limiter(t) {
+    let angle = -23*ease(phase(t,1.96,2.052))*(1-ease(phase(t,2.052,2.10)));
+    for (let i=0; i<departures.length; i++) {
+      const age = t-departures[i];
+      const duration = i+1<departures.length ? departures[i+1]-departures[i] : .095;
+      if (age<0 || age>=duration) continue;
+      const u = age/duration;
+      angle -= kicks[i]*ease(phase(u,.03,.53))*(1-ease(phase(u,.53,1)));
+      break;
+    }
+    return angle;
+  }
+  const hits = departures.map((t,i) => ({t,k:i ? .45+.55*kicks[i-1]/9 : 1}));
+  hits.push({t:departures[departures.length-1]+.095, k:.45+.55*kicks[kicks.length-1]/9});
+  function glowAt(t) {
+    let v = 0;
+    for (const h of hits) {
+      const dt = t-h.t;
+      if (dt<0) break;
+      if (dt<.15) v = Math.max(v,h.k*(1-dt/.15)**2);
+    }
+    const dl = t-settled;
+    if (dl>=0 && dl<.5) v = Math.max(v,.55*(1-dl/.5)**2);
+    return v;
+  }
+
+  const sweepStart=3.43, far=4.49, returning=4.65, arrival=5.63, settled=5.83, END=6.35;
+  const handIn=.56, handMid=.66, handOut=.78;
+  function sweep(t) {
+    if (t<far) return -273*ease(phase(t,sweepStart,far));
+    if (t<returning) return -273+3*ease(phase(t,far,returning));
+    if (t<arrival) return -270+272.5*ease(phase(t,returning,arrival));
+    return 2.5*(1-ease(phase(t,arrival,settled)));
+  }
+  function crossing(fraction,start,end) {
+    let lo=0, hi=1;
+    for (let i=0;i<24;i++) {
+      const mid=(lo+hi)/2;
+      if (ease(mid)<fraction) lo=mid;
+      else hi=mid;
+    }
+    return mix(start,end,(lo+hi)/2);
+  }
+  const events = ticks.map((line,i) => {
+    const x=Number(line.getAttribute('x1')), y=Number(line.getAttribute('y1'));
+    const bearing = 135+i*15;
+    const travel = 405-bearing;
+    return {line,x,y,innerX:Number(line.getAttribute('x2')),innerY:Number(line.getAttribute('y2')),
+      drawn:crossing(travel/273,sweepStart,far),
+      lit:crossing((270-travel)/272.5,returning,arrival)};
+  });
+  function drawTicks(t) {
+    for (const [i,e] of events.entries()) {
+      const p=ease(phase(t,e.drawn,e.drawn+.076));
+      e.line.style.opacity=p;
+      if (!p) continue;
+      e.line.setAttribute('x2',mix(e.x,e.innerX,p));
+      e.line.setAttribute('y2',mix(e.y,e.innerY,p));
+      if (i>=14) e.line.setAttribute('stroke',rgb(graphite,red,ease(phase(t,e.lit,e.lit+.075))));
+    }
+  }
+
+  let now = END;
+  function draw(t) {
+    now = t;
+    const done=t>=END;
+    locked.style.display=done?'':'none';
+    moving.style.display=done?'none':'';
+    const typeOn=done?0:1-ease(phase(t,handMid,handOut));
+    word.style.display=typeOn>0?'':'none';
+    word.setAttribute('opacity',typeOn);
+    moving.setAttribute('opacity',ease(phase(t,handIn,handMid)));
+    if (done) return;
+    const p=ease(phase(t,.91,1.99));
+    const pull=2.8*ease(phase(t,.78,.94))*(1-ease(phase(t,.94,1.27)));
+    drawRing(p,ease(phase(t,3.11,3.42)));
+    drawLetter(t,p,pull);
+    const angle=limiter(t);
+    const a=blend(tailStart,
+      [165.83,175.02,211.09,216.03,3.5,3.5,216.03,211.09,175.02,165.83,6.5,6.5],p);
+    const d=p===1?needleD:
+      'M '+a[0]+' '+a[1]+' L '+a[2]+' '+a[3]+' A '+a[4]+' '+a[5]+' 0 0 0 '+a[6]+' '+a[7]+
+      ' L '+a[8]+' '+a[9]+' A '+a[10]+' '+a[11]+' 0 0 0 '+a[0]+' '+a[1]+' Z';
+    const sweepAngle=sweep(t);
+    const rotation='rotate('+(angle+sweepAngle)+' 128 128)';
+    const travel=ease(clamp(-sweepAngle/19));
+    const retract=travel ? ' translate(170.425 170.425) rotate(45) scale('+
+      mix(1,.44,travel)+' 1) rotate(-45) translate(-170.425 -170.425)' : '';
+    needle.setAttribute('d',d);
+    needle.setAttribute('transform',rotation+retract);
+    const tailInk=blend(white,red,ease(phase(t,1.67,2.10)));
+    const lit=glowAt(t);
+    needle.setAttribute('fill',rgb(tailInk,hot,lit*.75));
+    glow.style.display=disc.style.display=lit>.002?'':'none';
+    if (lit>.002) {
+      glow.setAttribute('d',d);
+      glow.setAttribute('transform',rotation+retract);
+      glow.setAttribute('opacity',.7*lit);
+      const turn=(angle+sweepAngle)*radians;
+      const mx=(a[0]+a[2]+a[6]+a[8])/4-128, my=(a[1]+a[3]+a[7]+a[9])/4-128;
+      disc.setAttribute('cx',128+mx*Math.cos(turn)-my*Math.sin(turn));
+      disc.setAttribute('cy',128+mx*Math.sin(turn)+my*Math.cos(turn));
+      disc.setAttribute('opacity',.85*lit);
+    }
+    drawTicks(t);
+  }
+
+  let request=0;
+  const renderAt = seconds => {
+    cancelAnimationFrame(request);
+    draw(Math.max(0,Number(seconds)||0));
+  };
+  // The clock starts on the first painted frame, so a page opened in a background tab still plays when it is seen.
+  function play() {
+    cancelAnimationFrame(request);
+    let start=null;
+    draw(0);
+    function frame(stamp) {
+      if (start===null) start=stamp;
+      const t=(stamp-start)/1000;
+      draw(t);
+      if (t<END) request=requestAnimationFrame(frame);
+    }
+    request=requestAnimationFrame(frame);
+  }
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  art.addEventListener('click', () => { if (!still.matches) play(); });
+  // A theme switch mid-play repaints the frame in the new inks; the locked mark follows the tokens by itself.
+  const repaint = () => { readInks(); if (now<END) draw(now); };
+  new MutationObserver(repaint).observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', repaint);
+  window.sqHero = {renderAt, play, END};
+  const frozen = new URLSearchParams(location.search).get('t');
+  if (frozen!==null) renderAt(frozen);
+  else if (still.matches) renderAt(END);
+  else play();
+})();
+</script>
 <div class="readouts">
-<div class="readout"><div class="k">Logged</div><div class="v">364<small>drives</small></div><div class="s">824,705 samples at the gate, integrity clean</div></div>
-<div class="readout"><div class="k">Channels</div><div class="v">53<small>× 5 Hz</small></div><div class="s">engine-computer RAM, not generic OBD</div></div>
-<div class="readout"><div class="k">Plugs, September</div><div class="v">−38%<small>misfires</small></div><div class="s">the change that mattered most</div></div>
+<div class="readout"><div class="k">Logged</div><div class="v">{{sq_captures}}<small>sessions</small></div><div class="s">{{sq_samples}} samples over {{sq_hours}} hours, to {{sq_through}}</div></div>
+<div class="readout"><div class="k">Driven, week to {{sq_mis_week}}</div><div class="v">{{sq_wk_hours}}<small>hours</small></div><div class="s">{{sq_wk_trips}} logged sessions. <a href="/sq/health.html">What the weekly health card made of it</a></div></div>
+<div class="readout"><div class="k">Misfires, same week</div><div class="v">{{sq_mis_last}}<small>an hour</small></div><div class="s">{{sq_mis_vs}}</div></div>
 </div></section>
 
 <h2>Where it stands</h2>
@@ -46,22 +393,23 @@ nav: /projects/
 </dl>
 
 <h2>How the data gets from the car to this page</h2>
-<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 900 150" role="img" aria-label="Data path: car ECU to diagnostic cable to Raspberry Pi to home server to Sunday job to health card">
+<figure class="diagram-figure"><svg class="diagram" viewBox="0 0 900 150" role="img" aria-label="Data path: car ECU to the CAN bus to a USB-to-CAN adapter and Raspberry Pi to home server to Sunday job to health card">
 <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
-<g class="box"><rect x="10" y="40" width="130" height="64" rx="6"/><rect x="190" y="40" width="130" height="64" rx="6"/><rect x="370" y="40" width="130" height="64" rx="6"/><rect x="550" y="40" width="130" height="64" rx="6"/><rect x="730" y="40" width="160" height="64" rx="6"/></g>
+<g class="box"><rect x="10" y="40" width="130" height="64"/><rect x="190" y="40" width="130" height="64"/><rect x="370" y="40" width="130" height="64"/><rect x="550" y="40" width="130" height="64"/><rect x="730" y="40" width="160" height="64"/></g>
 <g class="flow" marker-end="url(#ar)"><path d="M140,72 H188"/><path d="M320,72 H368"/><path d="M500,72 H548"/><path d="M680,72 H728"/></g>
-<g class="lbl" text-anchor="middle"><text x="75" y="66">Engine computer</text><text x="255" y="66">Diagnostic cable</text><text x="435" y="66">Raspberry Pi</text><text x="615" y="66">Home server</text><text x="810" y="66">Sunday job</text></g>
-<g text-anchor="middle"><text x="75" y="88">53 RAM variables</text><text x="255" y="88">protocol reverse-engineered</text><text x="435" y="88">logs every drive, 5 Hz</text><text x="615" y="88">master copy, one normalizer</text><text x="810" y="88">week vs week vs baseline</text></g>
+<g class="lbl" text-anchor="middle"><text x="75" y="66">Engine computer</text><text x="255" y="66">CAN tap</text><text x="435" y="66">Raspberry Pi</text><text x="615" y="66">Home server</text><text x="810" y="66">Sunday job</text></g>
+<g text-anchor="middle"><text x="75" y="88">58 RAM variables</text><text x="255" y="88">three wires, read only</text><text x="435" y="88">logs every drive, 2.5 Hz</text><text x="615" y="88">master copy, one normalizer</text><text x="810" y="88">week vs week vs baseline</text></g>
 <g text-anchor="middle"><text x="435" y="130">away from home: keeps data, retries every 10 min</text><text x="810" y="130">→ one verdict, in words</text></g>
-</svg><ol class="mobile-flow"><li><div><strong>Engine computer</strong><small>53 RAM variables</small></div></li><li><div><strong>Diagnostic cable</strong><small>Reverse-engineered serial protocol</small></div></li><li><div><strong>Raspberry Pi</strong><small>Logs every drive, five times a second</small></div></li><li><div><strong>Home server</strong><small>Master copy, one normalizer</small></div></li><li><div><strong>Sunday job</strong><small>Week vs week vs baseline → health card</small></div></li></ol><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
-<p>The car came with a diagnostic cable whose Windows app I didn't want to depend on, so I reverse-engineered the cable. The protocol is request and response over a serial link: a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of 53 engine-computer variables. These are not generic OBD values. They come straight from the engine computer's own memory: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda (how rich or lean the engine is running), voltage at the module. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/obd-cable-protocol-re">obd-cable-protocol-re</a>.</p>
-<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer, a step that checks and renames it, so nothing reaches the database by a side door.</p>
-<p>The case is fanless by evidence, not by hope: 121,072 temperature samples over two weeks, a maximum of 67.7 °C on the chip, zero throttling. The first case failed on measurement, not material. I left 1.2 mm of clearance for a board edge that sticks out 1.2 mm. That is zero clearance, and the hold-down legs snapped. The second is written in OpenSCAD with fit assertions that caught four real collisions before anything was printed. Rule since then: when adding a port, model the connector, not just the board.</p>
+</svg><ol class="mobile-flow"><li><div><strong>Engine computer</strong><small>58 RAM variables</small></div></li><li><div><strong>CAN tap</strong><small>Three wires onto the car's own bus, read only</small></div></li><li><div><strong>Raspberry Pi</strong><small>Logs every drive, about two and a half times a second</small></div></li><li><div><strong>Home server</strong><small>Master copy, one normalizer</small></div></li><li><div><strong>Sunday job</strong><small>Week vs week vs baseline → health card</small></div></li></ol><figcaption>Read only, end to end. Nothing in this chain can write to the car.</figcaption></figure>
+<p>Two ways into the car got built, and only one of them is in the car today. The tune came with a tuning cable and a Windows app I didn't want to depend on, so I reverse-engineered the cable: request and response over a serial link, a framed message with a 16-bit checksum, a handshake that opens "measurement mode," then about five reads a second of engine-computer variables. That work produced the channel map, which is the whole prize: which address in the engine computer's memory holds which value, at what scale. It still works with a laptop plugged in, and it is not how the car logs. The full write-up, including the bug that made a million readings silently wrong, is in <a href="https://github.com/ahk02x/obd-cable-protocol-re">obd-cable-protocol-re</a>.</p>
+<p>Since July 19, 2026 the logging path is the car's own internal network, the CAN bus. A small USB-to-CAN adapter sits on three wires at the diagnostic port and asks for the same channels the cable did, with no vendor hardware in the chain: 58 of them come back about two and a half times a second. They are not generic OBD values. They come from the engine computer's own memory: per-cylinder misfire counters, knock correction per cylinder, oil and transmission temperatures, boost, lambda (how rich or lean the engine is running), voltage at the module. The wiring, and why one pin at the port is deliberately left unconnected, is on <a href="/sq/logger.html">the logger tab</a>.</p>
+<p>A Raspberry Pi 4 in the passenger footwell runs the logger on every drive. Each drive is saved on the Pi first. When the car is parked at home, the Pi joins the home WiFi and sends everything over to jarvis, the home server, which keeps the master copy. Away from home it holds on to the data and tries again every ten minutes. Every row goes through one normalizer, a step that checks and renames it, so nothing reaches the database by a side door.</p>
+<p>It rides in a printed box with no fan, which took two attempts and 121,072 temperature samples to earn. That story, and the box itself taken apart from the lid screws down to the base, is on <a href="/sq/logger.html">the logger tab</a>.</p>
 
 <h2>What the data taught me</h2>
 <ul>
 <li><strong>Misfires are a rate, not a count.</strong> The counter never resets on its own, so only rates per 10,000 firings compared week to week mean anything. Day-to-day noise is about five times what a naive model predicts. Single days lie.</li>
-<li><strong>Cylinder 3 misfires about twice as often as the others, and the story changed.</strong> Before the new plugs the excess was the same at every load. The plugs cut the warm misfire rate across all six cylinders by about a third and made what was left depend on load. Same symptom, different shape, different suspect.</li>
+<li><strong>The cylinder that stands out keeps changing, and that is the finding.</strong> Through September it was cylinder 3, at about twice the rate of the others, and the excess was the same at every load. New plugs cut the warm misfire rate across all six by 38% and made what was left depend on load. By early November cylinder 3 had drifted back to the pack and cylinder 6 was the one flagged. On the current card both are above the line, cylinder 6 at 2.1× its siblings and cylinder 3 at 1.6×. One week is a symptom. Only the run of weeks is a diagnosis.</li>
 <li><strong>Nearly 40% of all misfire counts land in the second after an upshift,</strong> which is under 10% of driving time. That is not one cylinder's fault. It is shared, with cylinders 3, 4 and 6 about twice 1, 2 and 5 inside that window.</li>
 <li><strong>Cylinder 4 dislikes cold oil.</strong> With the coolant warm but the oil under 50 °C it misfires at nearly three times its warm-oil rate. Nothing else does that.</li>
 <li><strong>The battery problem was my logger.</strong> On long parks the Pi fell into boot storms, up to 128 reboots in a day, each one a drain. The fix is a hardware low-voltage cutoff, not more software.</li>
@@ -70,7 +418,7 @@ nav: /projects/
 </ul>
 
 <h2>The weekly health card</h2>
-<p>Every Sunday a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
+<p>Once a week a job compares the week to the week before and to a four-week baseline and writes one message: the verdict in words first, then what to do, then the evidence with its threshold in the same sentence. "Oil peaked at 104 °C, fine, worry starts at 130." No channel names, no units nobody asked about. <a href="/sq/health.html">The current card is here</a>, as a static snapshot. It is deliberately not a live feed: a live feed of a car tells the world when it is and isn't home.</p>
 
 <h2>The idea</h2>
 <p>Raw vehicle data has little value; understanding has a lot. Instead of asking the owner to understand the car, SQ understands the car for the owner. The goal is a screen that says <em>"Your vehicle is healthy. Nothing unusual has changed since your last drive."</em> instead of a page of voltages.</p>
@@ -127,7 +475,7 @@ nav: /projects/
 <div class="grid">
 <div class="card st-live"><div class="head">{{glyph:code}}<h3>The code</h3></div><p>Two repositories: the platform app (403 commits, run through issues and pull requests) and the garage research bench (113 commits). Both private for now; the app has a public demo.</p><div class="foot"><span class="chip live">live</span><a class="more" href="https://sq-sq-dev.vercel.app">Demo →</a></div></div>
 <a class="card st-built" href="https://github.com/ahk02x/obd-cable-protocol-re"><div class="head">{{glyph:plug}}<h3>obd-cable-protocol-re</h3></div><p>Reverse-engineering the diagnostic cable: USB capture, frame recovery, checksums across 285,832 frames, and the signed-channel bug that made a million readings silently wrong.</p><div class="foot"><span class="chip live">built</span><span class="more">GitHub →</span></div></a>
-<a class="card st-written" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches classifieds every fifteen minutes and fifty-odd store prices hourly for the car's wanted-parts list, and sends one message when something moves.</p><div class="foot"><span class="chip live">written</span><span class="more">Read →</span></div></a>
+<a class="card st-run" href="/writing/partswatch.html"><div class="head">{{glyph:tag}}<h3>partswatch</h3></div><p>Watches the classifieds every fifteen minutes and fifty-two store pages every hour for the car's wanted-parts list, and sends one message when a price actually moves.</p><div class="foot"><span class="chip live">running</span><span class="more">Read →</span></div></a>
 </div>
 
 <h2>Rules I keep</h2>

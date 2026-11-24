@@ -10,7 +10,7 @@
       toggle.setAttribute('aria-label', `Switch to ${next} theme`);
     }
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.content = current() === 'dark' ? '#171c19' : '#f2f0e9';
+    if (meta) meta.content = current() === 'dark' ? '#121311' : '#d4d5d1';
   };
   if (toggle) {
     toggle.hidden = false;
@@ -22,6 +22,38 @@
   }
   system.addEventListener('change', sync);
   sync();
+  // Activity: without this script both heatmaps show, each under its own heading. Here they become tabs:
+  // the control is revealed, one panel shows at a time, arrow keys / Home / End move between tabs.
+  document.querySelectorAll('.act-tabs[role="tablist"]').forEach(list => {
+    const tabs = [...list.querySelectorAll('[role="tab"]')].filter(tab => document.getElementById(tab.getAttribute('aria-controls')));
+    if (tabs.length < 2) return;
+    const panel = tab => document.getElementById(tab.getAttribute('aria-controls'));
+    const select = (tab, focus) => {
+      tabs.forEach(other => {
+        const on = other === tab;
+        other.setAttribute('aria-selected', String(on));
+        other.tabIndex = on ? 0 : -1;
+        panel(other).hidden = !on;
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, index) => {
+      const target = panel(tab);
+      target.setAttribute('role', 'tabpanel');
+      target.setAttribute('aria-labelledby', tab.id);
+      tab.addEventListener('click', () => select(tab, false));
+      tab.addEventListener('keydown', event => {
+        const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+        const next = step ? tabs[(index + step + tabs.length) % tabs.length]
+          : event.key === 'Home' ? tabs[0] : event.key === 'End' ? tabs[tabs.length - 1] : null;
+        if (!next) return;
+        event.preventDefault();
+        select(next, true);
+      });
+    });
+    list.hidden = false;
+    select(tabs.find(tab => tab.getAttribute('aria-selected') === 'true') || tabs[0], false);
+  });
   // A static snapshot can outlive the build. Keep the original verdict as history.
   document.querySelectorAll('[data-health-date]').forEach(element => {
     const value = element.dataset.healthDate;

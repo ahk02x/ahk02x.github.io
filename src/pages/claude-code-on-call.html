@@ -14,7 +14,7 @@ note: 1
 <blockquote>The fix wasn't making the agent smarter. It was making it unable to pretend it hadn't seen the alerts.</blockquote>
 
 <h2>One board, built by cron</h2>
-<p>Every five minutes a cron job assembles a single Markdown file from every alert source on the network: a status JSON from the monitoring box, the alert file on the home server, a health file one container writes, the local Mac watchdog log, a case-tracker's state, and the outgoing message queues of two Telegram relays. Each alert comes out as one line with the condition and the action, because a condition alone is half an alert. "Govee light offline" is a fact. "Govee light offline. DO: unplug it at the wall, wait 10 s, plug it back in" is something a person or an agent can act on at three in the morning.</p>
+<p>Every five minutes a cron job assembles a single Markdown file from every alert source on the network: a status JSON from the monitoring box, the alert file on the home server, a health file one container writes, the local Mac watchdog log, and the outgoing message queues of two Telegram relays. Each alert comes out as one line with the condition and the action, because a condition alone is half an alert. "Govee light offline" is a fact. "Govee light offline. DO: unplug it at the wall, wait 10 s, plug it back in" is something a person or an agent can act on at three in the morning.</p>
 <p>The board timestamps itself. If that timestamp is more than ten minutes old, the job that builds the board has died, and the file's own header says the list is not current. Unknown never means healthy.</p>
 
 <h2>Four rungs</h2>

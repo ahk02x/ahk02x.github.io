@@ -3,73 +3,83 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>The GPU stayed home · Amir Khademi</title>
-<meta name="description" content="How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
+<title>Why ahkira doesn&#x27;t run at home · Amir Khademi</title>
+<meta name="description" content="How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, what runs instead, and how he tried to break it.">
 <link rel="canonical" href="https://ahk02x.dev/writing/ahkira.html">
 <link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
 <script src="/assets/theme-init.js?v=f2452f3a34"></script>
-<link rel="stylesheet" href="/style.css?v=57363d9474">
-<script src="/assets/site.js?v=be9b4d6f6f" defer></script>
+<link rel="preload" href="/assets/fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/geist-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/style.css?v=01056ba9a2">
+<script src="/assets/site.js?v=223ff57988" defer></script>
 <meta name="theme-color" content="#d4d5d1">
-<meta property="og:title" content="The GPU stayed home · Amir Khademi">
-<meta property="og:description" content="How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.">
+<meta property="og:title" content="Why ahkira doesn&#x27;t run at home · Amir Khademi">
+<meta property="og:description" content="How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, what runs instead, and how he tried to break it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ahk02x.dev/writing/ahkira.html">
 <meta property="og:image" content="https://ahk02x.dev/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="ahk02x — field notes" href="/feed.xml">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","alternateName":["Amir Hossein Khademi","Amir-Hossein Khademi","Amirhossein Khademi"],"givenName":"Amir Hossein","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform & Security Engineer","description":"Platform and security engineer on payment systems. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Security engineering","Site reliability engineering","Linux","Kubernetes","Observability","Payments infrastructure","PKI and TLS","Identity and access management","Secrets management","Network security","Vulnerability triage","Go","Python","HashiCorp Nomad, Consul and Vault","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/ahkira.html#article","url":"https://ahk02x.dev/writing/ahkira.html","mainEntityOfPage":"https://ahk02x.dev/writing/ahkira.html","headline":"The GPU stayed home","description":"How Amir Khademi built ahkira, the chat box coming to this site: why the first plan was a model on his own RTX 3080, why he dropped it, and what runs instead.","datePublished":"2026-11-03","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://ahk02x.dev/#website","url":"https://ahk02x.dev/","name":"ahk02x — field notes","alternateName":"Amir Khademi — field notes","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"}},{"@type":"Person","@id":"https://ahk02x.dev/#person","name":"Amir Khademi","givenName":"Amir","familyName":"Khademi","url":"https://ahk02x.dev/","mainEntityOfPage":"https://ahk02x.dev/about.html","jobTitle":"Platform Engineer","description":"Platform Engineer. Writes about car telemetry, home infrastructure and agent tooling at ahk02x.dev.","email":"mailto:amir@ahk02x.com","knowsAbout":["Platform engineering","Site reliability engineering","Linux","Kubernetes","Observability","Identity and access management","Home infrastructure","Vehicle telemetry","AI agent tooling"],"sameAs":["https://github.com/ahk02x","https://www.linkedin.com/in/amirh-khademi/"]},{"@type":"Article","@id":"https://ahk02x.dev/writing/ahkira.html#article","url":"https://ahk02x.dev/writing/ahkira.html","mainEntityOfPage":"https://ahk02x.dev/writing/ahkira.html","headline":"Why ahkira doesn't run at home","description":"How Amir Khademi built ahkira, the chat box on this site: why the first plan was a model on his own RTX 3080, why he dropped it, what runs instead, and how he tried to break it.","datePublished":"2026-11-03","inLanguage":"en","author":{"@id":"https://ahk02x.dev/#person"},"publisher":{"@id":"https://ahk02x.dev/#person"},"isPartOf":{"@id":"https://ahk02x.dev/#website"},"image":"https://ahk02x.dev/assets/og.png"}]}</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <div class="site-shell">
-<a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><a class="site-brand" href="/">ahk02x.dev</a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span>About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span>Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span>Infra</a><a href="/writing/" aria-current="page"><span class="nav-no" aria-hidden="true">04</span>Writing</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span>Contact</a></nav><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></header>
+<header class="site-header"><a class="site-brand" href="/"><span>AHK / 02X</span> <span>Personal archive</span></a><nav class="site-nav" aria-label="Main navigation"><a href="/about.html"><span class="nav-no" aria-hidden="true">01</span> About</a><a href="/projects/"><span class="nav-no" aria-hidden="true">02</span> Projects</a><a href="/infra.html"><span class="nav-no" aria-hidden="true">03</span> Infra</a><a href="/writing/" aria-current="page"><span class="nav-no" aria-hidden="true">04</span> Writing</a><a href="/ask/"><span class="nav-no" aria-hidden="true">06</span> ahkira</a><a href="mailto:amir@ahk02x.com"><span class="nav-no" aria-hidden="true">05</span> Contact <span aria-hidden="true">↗</span></a><button class="theme-toggle" type="button" hidden><span data-theme-label>Dark</span></button></nav></header>
 <main id="main" class="wrap inner-page narrow">
-<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-03">3 November 2026</time></div><h1>The GPU stayed home</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>
-<p class="lede">I wanted a chat box on this site that answers questions about my work. I had the hardware to run it myself. The hard part was deciding not to.</p></section><nav class="sq-tabs" aria-label="ahkira sections"><a href="/writing/ahkira.html" aria-current="page">The write-up</a><a href="/writing/ahkira-next.html">Coming soon</a></nav>
+<section class="hero"><div class="eyebrow">Writing · <time datetime="2026-11-03">3 November 2026</time></div><h1>Why ahkira doesn't run at home</h1><p class="byline">By <a href="/about.html">Amir Khademi</a></p>
+<p class="lede">I wanted a chat box on this site that answers questions about my work. My own GPU could run the model fast enough. I decided not to use it, and this is why.</p></section>
 
-<p>ahkira is the little helper that will live on this site. Before any code got written it got three rules: it can't put my home network at risk, it can't go rogue and start sharing things it shouldn't, and when a recruiter shows up it has to work. Order mattered too. Plumbing and guard rails first. The mascot and the name last.</p>
+<dl class="statrow" style="margin-bottom:32px">
+<div><dt>Attack cases</dt><dd>81, all pass</dd></div>
+<div><dt>Unit tests</dt><dd>70</dd></div>
+<div><dt>Path into my house</dt><dd>None</dd></div>
+</dl>
+
+<p>ahkira is the helper on this site. Before any code got written it had three rules: it can't put my home network at risk, it can't start sharing things it shouldn't, and when a visitor shows up it has to work. Plumbing and guard rails came first. The name and the mascot came last.</p>
 
 <h2>The first plan: run it on my own card</h2>
-<p>The obvious move was my gaming PC. RTX 3080, 12 GB, and I had just benchmarked it. A 30-billion-parameter mixture-of-experts model did about 43 tokens a second with only half of it on the card. A 14B model did about 72. Plenty for a chat. So the plan was simple: model on my PC, a tunnel from the website to it, no hosting bill.</p>
+<p>The obvious move was my gaming PC. RTX 3080, 12 GB, and I had just <a href="/writing/llmbench.html">benchmarked it</a>. A 30-billion-parameter mixture-of-experts model did about 43 tokens a second with only half of it on the card. A 14B model did about 72. Plenty for a chat. So the plan was: model on my PC, a tunnel from the website to it, no hosting bill.</p>
 
 <h2>Why I didn't</h2>
-<p>Speed was never the problem. The tunnel was.</p>
+<p>The model was fast enough. The tunnel was the problem.</p>
 <ul>
-<li><strong>It opens the house.</strong> A public endpoint that ends at my PC is a live path from the internet onto my home network. That same machine holds my personal files and has remote access on.</li>
-<li><strong>It ties the site to my home.</strong> Anything that links a public page to where I live is a real risk, not a theory.</li>
-<li><strong>It isn't always on.</strong> That PC sleeps, reboots and plays games. A recruiter would hit a dead box.</li>
-<li><strong>Abuse lands on my power bill.</strong> Every bad actor would be burning my GPU, with nothing in front to slow them down.</li>
+<li><strong>It opens the house.</strong> A public endpoint that ends at my PC is a live path from the internet onto my home network. That machine holds my personal files.</li>
+<li><strong>It ties the site to my home.</strong> Anything that links a public page to where I live is a real risk.</li>
+<li><strong>It isn't always on.</strong> That PC sleeps, reboots and plays games. A visitor would hit a dead box.</li>
+<li><strong>Abuse lands on my power bill.</strong> Anyone abusing it would be running my GPU, with nothing in front to slow them down.</li>
 </ul>
-<p>My other GPU box was worse. It runs the house's voice assistant and sits next to the backups. So instead of promising to be careful, I made the home risk zero by design: nothing in my house is reachable from this site. At all.</p>
+<p>My other GPU box was worse. It runs the house's voice assistant and sits next to the backups. So instead of promising to be careful, I set it up so nothing in my house is reachable from this site.</p>
 
 <h2>What runs instead</h2>
-<p>Once it's public, your question will go to a small hosted server at the edge of the internet, running an open-source model there. My home network isn't part of it.</p>
+<p>Your question goes to a small hosted server outside my house, running an open-source model. My home network isn't part of it.</p>
 <ul>
-<li><strong>The page works without the model.</strong> Eleven questions have answers I wrote and checked myself, and they work with JavaScript off. Only a question you type goes to the server. If the server is down, ahkira is napping. That's a designed state, not an error.</li>
-<li><strong>Nothing private to leak.</strong> The model only ever sees the public pages of this site, after a filter strips anything sensitive. No fine-tuning, no private notes, nothing personal in its context. This is the rule that actually keeps me safe.</li>
+<li><strong>The page works without the model.</strong> Eleven common questions have fixed answers that I checked, and they work with JavaScript off. Only a question you type goes to the server. If the server is down, the page says ahkira is napping and the fixed answers still work.</li>
+<li><strong>Nothing private to leak.</strong> Besides your question, the model only sees the public pages of this site, after a filter strips anything sensitive. No private notes, nothing personal, and I never trained or tuned it on anything of mine. This is the rule that actually keeps me safe.</li>
 <li><strong>Guards in front.</strong> A bot check, per-visitor and daily limits, short questions, short answers, a hidden tripwire for anyone fishing for its instructions, a reply checker, and an off switch.</li>
-<li><strong>Chats are saved.</strong> Emails and phone numbers get blanked before anything is stored, and saved chats never go back into what it reads.</li>
+<li><strong>Chats are saved.</strong> The page says so above the box: they are kept so ahkira can get better, and may be used to train a later version. Emails and phone numbers get blanked before anything is stored, and a saved chat never goes back into what the model reads.</li>
 </ul>
 
 <h2>Trying to break it</h2>
-<p>This is where the 3080 earned its spot after all. It became the lab. Same server code, run locally against the same family of model, fake secrets planted as bait, and scripted attacks thrown at it: jailbreaks, prompt extraction, leak attempts, plain abuse.</p>
-<p>Then two frontier AI models took turns playing attacker, two rounds each. Every trick that worked got fixed and became a permanent test. The suite is now 81 attack cases with zero failures, plus 70 unit tests.</p>
-<p>The most useful lesson was the uncomfortable one. Round two showed the reply checker is basically a word list: the attacker got 56 of 62 rephrased versions past it. So the checker is a seatbelt, not the wall. The wall is that there's nothing private in the model's context to begin with. That's why my claim is "this many attacks, zero leaks," and never "it can't be tricked."</p>
+<p>The 3080 still got used, as the test machine. Same server code, run locally against the same family of model, fake secrets planted as bait, and scripted attacks thrown at it: jailbreaks, attempts to pull out its instructions, leak attempts, plain abuse.</p>
+<p>Then two frontier AI models took turns playing attacker, two rounds each. Every trick that worked got fixed and became a permanent test. The suite is now 81 attack cases, all passing, plus 70 unit tests.</p>
+<p>Round two also showed a weak spot. The reply checker, the filter that scans answers before they go out, is basically a word list. The attacker got 56 of 62 reworded attempts past it. So the checker isn't what keeps things safe. What keeps things safe is that there's nothing private in what the model reads in the first place. That's why I say "81 attacks, no leaks" and never "it can't be tricked."</p>
 
 <h2>Small things that bit me</h2>
 <ul>
-<li>The hosted model "thinks" by default. It burned its whole answer budget reasoning and came back empty until I turned that off.</li>
-<li>It copied an example sentence out of its own persona word for word and tripped the echo guard. Persona instructions don't include copyable sentences anymore.</li>
+<li>The hosted model "thinks" by default. It used up its whole answer budget thinking and came back empty until I turned that off.</li>
+<li>It copied an example sentence from its own instructions word for word and tripped the echo guard. Its instructions don't include sentences it could copy anymore.</li>
 <li>The bot check fails in a headless browser, so the end-to-end tests run in a visible one.</li>
 </ul>
 
 <h2>Where it stands</h2>
-<p>ahkira is running privately on the real setup. Every refusal path has been checked and every live test turn has passed. Public launch is next. Everything after that is on the <a href="/writing/ahkira-next.html">Coming soon</a> tab.</p>
+<p>ahkira is live. Before it went public it ran privately on the real setup, every refusal path was checked, and every live test turn passed. What's done and what's still planned is on <a href="/ask/">the ask page</a>, next to the box.</p>
+<hr>
+<p class="muted">Questions or corrections: <a href="mailto:amir@ahk02x.com">amir@ahk02x.com</a>.</p>
+<a class="nextnav" href="/writing/"><span class="eyebrow">Next &mdash; 04</span><span>All write-ups &rarr;</span></a>
 </main>
-<footer class="site-footer"><nav class="social-links" aria-label="Social profiles"><a href="https://x.com/ahk02x" rel="me">X</a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn</a></nav><span>AHK02X</span></footer>
+<footer class="site-footer"><div><span class="eyebrow">05 / Contact</span><a href="mailto:amir@ahk02x.com">amir@ahk02x.com <span aria-hidden="true">↗</span></a><span>Amir Khademi · online as ahk02x</span></div><nav aria-label="Directory"><span class="eyebrow">Directory</span><a href="/about.html">01 About</a><a href="/projects/">02 Projects</a><a href="/infra.html">03 Infra</a><a href="/writing/">04 Writing</a><a href="/ask/">06 ahkira</a></nav><nav class="social-links" aria-label="Social profiles"><span class="eyebrow">Elsewhere</span><a href="https://x.com/ahk02x" rel="me">X <span aria-hidden="true">↗</span></a><a href="https://www.linkedin.com/in/amirh-khademi/" rel="me">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/ahk02x" rel="me">GitHub <span aria-hidden="true">↗</span></a></nav></footer>
 </div>
 </body>
 </html>
