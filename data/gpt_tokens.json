@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-24 00:00",
- "total_tokens": 1434069513,
+ "updated": "2026-11-25 00:00",
+ "total_tokens": 2223602383,
  "by_kind": {
-  "input_tokens": 1427687292,
-  "cached_input_tokens": 1393285888,
-  "output_tokens": 6382221,
-  "reasoning_output_tokens": 2914276,
-  "total_tokens": 1434069513
+  "input_tokens": 2214931321,
+  "cached_input_tokens": 2170759552,
+  "output_tokens": 8671062,
+  "reasoning_output_tokens": 4023911,
+  "total_tokens": 2223602383
  },
- "sessions": 374,
+ "sessions": 464,
  "first": "2026-10-31",
- "last": "2026-11-24",
+ "last": "2026-11-25",
  "by_day": {
   "2026-10-31": 28751,
   "2026-11-01": 11402417,
@@ -33,17 +33,22 @@
   "2026-11-20": 42605344,
   "2026-11-21": 25938887,
   "2026-11-22": 508964278,
-  "2026-11-23": 108986777,
-  "2026-11-24": 1394641
+  "2026-11-23": 47205484,
+  "2026-11-24": 815522161,
+  "2026-11-25": 37186643
  },
  "top_projects": [
   {
+   "project": "iot",
+   "tokens": 439201207
+  },
+  {
    "project": "Sq",
-   "tokens": 80106728
+   "tokens": 80242158
   },
   {
    "project": "alertboard",
-   "tokens": 54108726
+   "tokens": 54526464
   },
   {
    "project": "ahkira-bot",
@@ -51,7 +56,7 @@
   },
   {
    "project": "sq-garage",
-   "tokens": 23080922
+   "tokens": 23142603
   },
   {
    "project": "ahkira",
@@ -67,15 +72,11 @@
   },
   {
    "project": "fleet-patch",
-   "tokens": 11553797
-  },
-  {
-   "project": "iot",
-   "tokens": 6250178
+   "tokens": 11909855
   },
   {
    "project": "macwatch",
-   "tokens": 319313
+   "tokens": 380994
   },
   {
    "project": "Crucix",
@@ -87,7 +88,7 @@
   },
   {
    "project": "workout",
-   "tokens": 94841
+   "tokens": 156522
   },
   {
    "project": "partswatch",
