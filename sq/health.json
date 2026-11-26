@@ -1,19 +1,19 @@
 {
  "status": "WATCH",
  "window": [
-  "Nov 18",
-  "Nov 25"
+  "Nov 19",
+  "Nov 26"
  ],
- "generated": "2026-11-25",
+ "generated": "2026-11-26",
  "findings": [
   {
    "sev": "WATCH",
-   "text": "the Pi rebooted 85 times across 4 overnight park(s) \u2014 that is what drains the battery",
+   "text": "the Pi rebooted 59 times across 1 overnight park(s) \u2014 that is what drains the battery",
    "action": "unplug the OBD dongle when the car sits overnight"
   },
   {
    "sev": "WATCH",
-   "text": "36% of your boost was on cold oil",
+   "text": "33% of your boost was on cold oil",
    "action": "oil takes ~13 min to warm up \u2014 go easy until then"
   },
   {
