@@ -1,21 +1,11 @@
 {
  "status": "WATCH",
  "window": [
-  "Nov 19",
-  "Nov 26"
+  "Nov 20",
+  "Nov 27"
  ],
- "generated": "2026-11-26",
+ "generated": "2026-11-27",
  "findings": [
-  {
-   "sev": "WATCH",
-   "text": "the Pi rebooted 59 times across 1 overnight park(s) \u2014 that is what drains the battery",
-   "action": "unplug the OBD dongle when the car sits overnight"
-  },
-  {
-   "sev": "WATCH",
-   "text": "33% of your boost was on cold oil",
-   "action": "oil takes ~13 min to warm up \u2014 go easy until then"
-  },
   {
    "sev": "WATCH",
    "text": "idle is rougher than normal (fits the misfires)",

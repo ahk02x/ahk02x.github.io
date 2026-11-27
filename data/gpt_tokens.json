@@ -1,16 +1,16 @@
 {
- "updated": "2026-11-26 00:00",
- "total_tokens": 2418426715,
+ "updated": "2026-11-27 00:00",
+ "total_tokens": 2524447800,
  "by_kind": {
-  "input_tokens": 2409286786,
-  "cached_input_tokens": 2361627008,
-  "output_tokens": 9139929,
-  "reasoning_output_tokens": 4278765,
-  "total_tokens": 2418426715
+  "input_tokens": 2514954747,
+  "cached_input_tokens": 2465117952,
+  "output_tokens": 9493053,
+  "reasoning_output_tokens": 4432620,
+  "total_tokens": 2524447800
  },
- "sessions": 490,
+ "sessions": 501,
  "first": "2026-10-31",
- "last": "2026-11-25",
+ "last": "2026-11-26",
  "by_day": {
   "2026-10-31": 28751,
   "2026-11-01": 11402417,
@@ -35,12 +35,13 @@
   "2026-11-22": 508964278,
   "2026-11-23": 47205484,
   "2026-11-24": 763702972,
-  "2026-11-25": 283830164
+  "2026-11-25": 229455078,
+  "2026-11-26": 160396171
  },
  "top_projects": [
   {
    "project": "iot",
-   "tokens": 568238737
+   "tokens": 574638594
   },
   {
    "project": "Sq",
@@ -48,7 +49,7 @@
   },
   {
    "project": "alertboard",
-   "tokens": 54188412
+   "tokens": 57939427
   },
   {
    "project": "ahkira-bot",
@@ -67,12 +68,12 @@
    "tokens": 15981890
   },
   {
-   "project": "llmbench",
-   "tokens": 13271341
+   "project": "fleet-patch",
+   "tokens": 15016539
   },
   {
-   "project": "fleet-patch",
-   "tokens": 11265524
+   "project": "llmbench",
+   "tokens": 13271341
   },
   {
    "project": "macwatch",
